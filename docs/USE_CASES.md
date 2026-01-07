@@ -177,19 +177,21 @@ A tile-based ship design tool for planning Space Haven spacecraft layouts before
 - **Expected (Confirm):** All structures removed from grid
 - **Expected (Cancel):** No changes made
 
-### UC-055: Autosave to Local Storage (Planned)
+### UC-055: Autosave to Local Storage
 - **Action:** User places/erases/moves/rotates structures
-- **Expected:** Planner automatically saves progress to localStorage
+- **Expected:** Planner automatically saves progress to localStorage (debounced, 1s delay)
 - **Expected:** No account is required
+- **Implementation:** Uses same JSON format as manual save (v2)
 
-### UC-056: Restore Autosave on Reload (Planned)
+### UC-056: Restore Autosave on Reload
 - **Action:** User refreshes the page or closes and reopens the site
 - **Expected:** Planner restores the last autosaved project automatically
 
-### UC-057: Clear Local Autosave (Planned)
-- **Action:** User chooses “New Project” / “Reset”
-- **Expected:** Local autosave state is cleared (after confirmation)
-- **Expected:** Planner returns to an empty canvas
+### UC-057: Clear Local Autosave
+- **Action:** User clicks "📄 New" button
+- **Expected:** Confirmation dialog appears if structures exist
+- **Expected (Confirm):** Local autosave state is cleared, planner returns to empty canvas
+- **Expected (Cancel):** No changes made
 
 ### UC-058: Create Shareable Link (Planned)
 - **Action:** User clicks “Share” / “Copy link”
@@ -219,7 +221,7 @@ A tile-based ship design tool for planning Space Haven spacecraft layouts before
 
 ---
 
-## Keyboard Shortcuts (Future Enhancement)
+## Keyboard Shortcuts
 
 ### UC-070: Press 1 for Place Mode
 - **Action:** User presses '1' key
@@ -231,7 +233,8 @@ A tile-based ship design tool for planning Space Haven spacecraft layouts before
 
 ### UC-072: Press Q/E to Rotate
 - **Action:** User presses 'Q' or 'E' while a structure is selected
-- **Expected:** Selected structure rotates 90° counter-clockwise/clockwise
+- **Expected:** Preview rotates 90° counter-clockwise (Q) or clockwise (E)
+- **Expected:** Rotation persists for subsequent placements until changed
 
 ### UC-073: Press Escape to Deselect
 - **Action:** User presses Escape key
@@ -261,25 +264,33 @@ A tile-based ship design tool for planning Space Haven spacecraft layouts before
 
 ## Data Integrity
 
-### UC-090: JSON Structure Format
+### UC-090: JSON Structure Format (v2)
 - **Expected structure:**
 ```json
 {
-  "version": 1,
+  "version": 2,
   "gridSize": { "width": 54, "height": 54 },
   "preset": "2x2",
   "structures": [
     {
-      "id": 1234567890.123,
-      "category": "power",
-      "item": "system_core_x1",
+      "id": "1736150400000-abc1234",
+      "structureId": "system_core_x1",
+      "categoryId": "power",
       "x": 10,
       "y": 5,
+      "rotation": 0,
       "layer": "Systems"
     }
   ]
 }
 ```
+- **Field notes:**
+  - `version`: Format version (currently 2). Loader supports v1 migration.
+  - `id`: Unique string identifier (timestamp + random suffix).
+  - `structureId`: Key referencing the structure definition in the catalog.
+  - `categoryId`: Key referencing the category in the catalog.
+  - `rotation`: Rotation angle in degrees (0, 90, 180, 270).
+  - `layer`: Layer assignment (Hull, Rooms, Systems, Furniture).
 
 ### UC-091: Structure ID Uniqueness
 - **Expected:** Each placed structure has a unique ID (timestamp + random)

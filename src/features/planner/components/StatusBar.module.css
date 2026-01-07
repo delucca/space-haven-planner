@@ -1,0 +1,12 @@
+.statusBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.left,
+.right {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+

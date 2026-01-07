@@ -1,0 +1,746 @@
+import type { StructureCategory, StructureCatalog, StructureDef, LayerId } from '../types'
+
+/**
+ * Category to default layer mapping.
+ * Structures auto-assign to their category's default layer when placed.
+ */
+export const CATEGORY_LAYER_MAP: Record<string, LayerId> = {
+  hull: 'Hull',
+  power: 'Systems',
+  life_support: 'Systems',
+  system: 'Systems',
+  airlock: 'Rooms',
+  storage: 'Rooms',
+  food: 'Rooms',
+  resource: 'Rooms',
+  facility: 'Rooms',
+  robots: 'Systems',
+  furniture: 'Furniture',
+}
+
+/**
+ * Static structure catalog - fallback data sourced from Space Haven Wiki.
+ * This serves as the default when wiki API is unavailable.
+ */
+export const STATIC_CATALOG: StructureCatalog = {
+  categories: [
+    {
+      id: 'hull',
+      name: 'Hull & Walls',
+      color: '#3a4a5c',
+      defaultLayer: 'Hull',
+      items: [
+        { id: 'hull', name: 'Hull Tile', size: [1, 1], color: '#4a5a6c', categoryId: 'hull' },
+        { id: 'wall', name: 'X1 Wall', size: [1, 1], color: '#5a6a7c', categoryId: 'hull' },
+        { id: 'door_x1', name: 'X1 Door', size: [1, 1], color: '#6a8a9c', categoryId: 'hull' },
+        { id: 'door_x2', name: 'X2 Door', size: [2, 1], color: '#6a8a9c', categoryId: 'hull' },
+        {
+          id: 'spacesuit_door',
+          name: 'Spacesuit Door',
+          size: [1, 1],
+          color: '#7a9aac',
+          categoryId: 'hull',
+        },
+        { id: 'window_2', name: 'Window 2-tile', size: [2, 1], color: '#8ab4cc', categoryId: 'hull' },
+        { id: 'window_3', name: 'Window 3-tile', size: [3, 1], color: '#8ab4cc', categoryId: 'hull' },
+        { id: 'window_4', name: 'Window 4-tile', size: [4, 1], color: '#8ab4cc', categoryId: 'hull' },
+      ],
+    },
+    {
+      id: 'power',
+      name: 'Power',
+      color: '#cc8844',
+      defaultLayer: 'Systems',
+      items: [
+        {
+          id: 'system_core_x1',
+          name: 'System Core X1',
+          size: [2, 3],
+          color: '#ffaa44',
+          categoryId: 'power',
+        },
+        {
+          id: 'system_core_x2',
+          name: 'System Core X2',
+          size: [3, 3],
+          color: '#ffaa44',
+          categoryId: 'power',
+        },
+        {
+          id: 'system_core_x3',
+          name: 'System Core X3',
+          size: [4, 3],
+          color: '#ffaa44',
+          categoryId: 'power',
+        },
+        {
+          id: 'power_gen_x1',
+          name: 'X1 Power Generator',
+          size: [2, 2],
+          color: '#dd9944',
+          categoryId: 'power',
+        },
+        {
+          id: 'power_gen_x2',
+          name: 'X2 Power Generator',
+          size: [3, 2],
+          color: '#dd9944',
+          categoryId: 'power',
+        },
+        {
+          id: 'power_gen_x3',
+          name: 'X3 Power Generator',
+          size: [4, 3],
+          color: '#dd9944',
+          categoryId: 'power',
+        },
+        {
+          id: 'energium_gen',
+          name: 'Energium Generator',
+          size: [2, 2],
+          color: '#cc8833',
+          categoryId: 'power',
+        },
+        {
+          id: 'power_node_small',
+          name: 'Small Power Node',
+          size: [1, 1],
+          color: '#bb7722',
+          categoryId: 'power',
+        },
+        {
+          id: 'power_node_large',
+          name: 'Large Power Node',
+          size: [2, 1],
+          color: '#bb7722',
+          categoryId: 'power',
+        },
+        {
+          id: 'power_capacity',
+          name: 'Power Capacity Node',
+          size: [2, 2],
+          color: '#aa6622',
+          categoryId: 'power',
+        },
+        {
+          id: 'backup_power',
+          name: 'Backup Power Node',
+          size: [2, 2],
+          color: '#996622',
+          categoryId: 'power',
+        },
+        { id: 'solar_panel', name: 'Solar Panel', size: [3, 2], color: '#4488cc', categoryId: 'power' },
+        {
+          id: 'power_conduit',
+          name: 'Power Conduit',
+          size: [1, 1],
+          color: '#bb7722',
+          categoryId: 'power',
+        },
+      ],
+    },
+    {
+      id: 'life_support',
+      name: 'Life Support',
+      color: '#44aa88',
+      defaultLayer: 'Systems',
+      items: [
+        {
+          id: 'oxygen_gen',
+          name: 'Oxygen Generator',
+          size: [2, 2],
+          color: '#44ccaa',
+          categoryId: 'life_support',
+        },
+        {
+          id: 'gas_scrubber',
+          name: 'Gas Scrubber',
+          size: [2, 2],
+          color: '#55bbaa',
+          categoryId: 'life_support',
+        },
+        {
+          id: 'thermal_reg',
+          name: 'Thermal Regulator',
+          size: [2, 2],
+          color: '#ff6644',
+          categoryId: 'life_support',
+        },
+        {
+          id: 'wall_thermal',
+          name: 'Wall Thermal Regulator',
+          size: [1, 2],
+          color: '#ff7755',
+          categoryId: 'life_support',
+        },
+        { id: 'air_vent', name: 'Air Vent', size: [1, 1], color: '#66ccbb', categoryId: 'life_support' },
+      ],
+    },
+    {
+      id: 'system',
+      name: 'Systems & Combat',
+      color: '#cc4444',
+      defaultLayer: 'Systems',
+      items: [
+        { id: 'hyperdrive', name: 'Hyperdrive', size: [4, 5], color: '#4466cc', categoryId: 'system' },
+        {
+          id: 'hyperium_drive',
+          name: 'Hyperium Hyperdrive',
+          size: [4, 5],
+          color: '#5577dd',
+          categoryId: 'system',
+        },
+        {
+          id: 'hull_stabilizer',
+          name: 'Hull Stabilizer',
+          size: [3, 2],
+          color: '#6688cc',
+          categoryId: 'system',
+        },
+        {
+          id: 'nav_console',
+          name: 'Navigation Console',
+          size: [2, 2],
+          color: '#5588bb',
+          categoryId: 'system',
+        },
+        {
+          id: 'ops_console',
+          name: 'Operations Console',
+          size: [2, 2],
+          color: '#5588bb',
+          categoryId: 'system',
+        },
+        {
+          id: 'weapons_console',
+          name: 'Weapons Console',
+          size: [2, 2],
+          color: '#cc5555',
+          categoryId: 'system',
+        },
+        {
+          id: 'shields_console',
+          name: 'Shields Console',
+          size: [2, 2],
+          color: '#55aacc',
+          categoryId: 'system',
+        },
+        { id: 'scanner', name: 'Scanner', size: [2, 2], color: '#66bb88', categoryId: 'system' },
+        {
+          id: 'shield_gen',
+          name: 'Shield Generator',
+          size: [3, 3],
+          color: '#55ccdd',
+          categoryId: 'system',
+        },
+        {
+          id: 'shield_gen_small',
+          name: 'Small Shield Generator',
+          size: [2, 2],
+          color: '#55ccdd',
+          categoryId: 'system',
+        },
+        {
+          id: 'energy_turret',
+          name: 'Energy Turret',
+          size: [3, 3],
+          color: '#dd6655',
+          categoryId: 'system',
+        },
+        {
+          id: 'rocket_turret',
+          name: 'Rocket Turret',
+          size: [3, 3],
+          color: '#cc5544',
+          categoryId: 'system',
+        },
+        { id: 'autoturret', name: 'Autoturret', size: [2, 2], color: '#bb4433', categoryId: 'system' },
+        {
+          id: 'point_defense',
+          name: 'Point Defense Turret',
+          size: [2, 2],
+          color: '#aa4433',
+          categoryId: 'system',
+        },
+        {
+          id: 'targeting_jammer',
+          name: 'Targeting Jammer',
+          size: [2, 2],
+          color: '#9966cc',
+          categoryId: 'system',
+        },
+      ],
+    },
+    {
+      id: 'airlock',
+      name: 'Airlock & Hangar',
+      color: '#8866aa',
+      defaultLayer: 'Rooms',
+      items: [
+        { id: 'airlock_x1', name: 'X1 Airlock', size: [4, 3], color: '#9977bb', categoryId: 'airlock' },
+        { id: 'pod_hangar', name: 'Pod Hangar', size: [6, 5], color: '#8866aa', categoryId: 'airlock' },
+        {
+          id: 'shuttle_hangar',
+          name: 'Shuttle Hangar',
+          size: [8, 6],
+          color: '#7755aa',
+          categoryId: 'airlock',
+        },
+        {
+          id: 'spacesuit_locker',
+          name: 'Space Suit Locker',
+          size: [2, 1],
+          color: '#aa88cc',
+          categoryId: 'airlock',
+        },
+      ],
+    },
+    {
+      id: 'storage',
+      name: 'Storage',
+      color: '#888866',
+      defaultLayer: 'Rooms',
+      items: [
+        {
+          id: 'storage_small',
+          name: 'Small Storage',
+          size: [2, 2],
+          color: '#999977',
+          categoryId: 'storage',
+        },
+        {
+          id: 'storage_large',
+          name: 'Large Storage',
+          size: [3, 2],
+          color: '#aaaa88',
+          categoryId: 'storage',
+        },
+        {
+          id: 'smuggler_storage',
+          name: 'Smuggler Storage',
+          size: [2, 2],
+          color: '#777766',
+          categoryId: 'storage',
+        },
+        {
+          id: 'body_storage',
+          name: 'Body Storage',
+          size: [2, 2],
+          color: '#665555',
+          categoryId: 'storage',
+        },
+        {
+          id: 'robot_storage',
+          name: 'Robot Storage',
+          size: [2, 2],
+          color: '#556666',
+          categoryId: 'storage',
+        },
+        { id: 'cargo_port', name: 'Cargo Port', size: [3, 2], color: '#888877', categoryId: 'storage' },
+        {
+          id: 'asteroid_cargo',
+          name: 'Asteroid Cargo Port',
+          size: [3, 2],
+          color: '#887766',
+          categoryId: 'storage',
+        },
+      ],
+    },
+    {
+      id: 'food',
+      name: 'Food & Agriculture',
+      color: '#66aa44',
+      defaultLayer: 'Rooms',
+      items: [
+        { id: 'kitchen', name: 'Kitchen', size: [3, 2], color: '#77bb55', categoryId: 'food' },
+        {
+          id: 'algae_dispenser',
+          name: 'Algae Dispenser',
+          size: [2, 2],
+          color: '#55aa66',
+          categoryId: 'food',
+        },
+        {
+          id: 'grow_bed_small',
+          name: 'Grow Bed Small',
+          size: [3, 3],
+          color: '#66cc55',
+          categoryId: 'food',
+        },
+        {
+          id: 'grow_bed_medium',
+          name: 'Grow Bed Medium',
+          size: [4, 3],
+          color: '#66cc55',
+          categoryId: 'food',
+        },
+        {
+          id: 'grow_bed_large',
+          name: 'Grow Bed Large',
+          size: [5, 4],
+          color: '#66cc55',
+          categoryId: 'food',
+        },
+        { id: 'co2_producer', name: 'CO2 Producer', size: [2, 2], color: '#88aa66', categoryId: 'food' },
+        {
+          id: 'autopsy_table',
+          name: 'Autopsy Table',
+          size: [2, 2],
+          color: '#996666',
+          categoryId: 'food',
+        },
+        {
+          id: 'alcohol_machine',
+          name: 'Alcohol Beverage Machine',
+          size: [2, 2],
+          color: '#aa8855',
+          categoryId: 'food',
+        },
+      ],
+    },
+    {
+      id: 'resource',
+      name: 'Resource & Industry',
+      color: '#aa8844',
+      defaultLayer: 'Rooms',
+      items: [
+        { id: 'recycler', name: 'Recycler', size: [3, 3], color: '#bb9955', categoryId: 'resource' },
+        { id: 'assembler', name: 'Assembler', size: [3, 3], color: '#cc9944', categoryId: 'resource' },
+        {
+          id: 'advanced_assembler',
+          name: 'Advanced Assembler',
+          size: [3, 3],
+          color: '#ddaa55',
+          categoryId: 'resource',
+        },
+        {
+          id: 'metal_refinery',
+          name: 'Metal Refinery',
+          size: [3, 3],
+          color: '#aa7744',
+          categoryId: 'resource',
+        },
+        {
+          id: 'chemical_refinery',
+          name: 'Chemical Refinery',
+          size: [3, 3],
+          color: '#88aa55',
+          categoryId: 'resource',
+        },
+        {
+          id: 'energy_refinery',
+          name: 'Energy Refinery',
+          size: [3, 3],
+          color: '#ccaa44',
+          categoryId: 'resource',
+        },
+        {
+          id: 'optronics_fab',
+          name: 'Optronics Fabricator',
+          size: [3, 3],
+          color: '#55aacc',
+          categoryId: 'resource',
+        },
+        {
+          id: 'micro_weaver',
+          name: 'Micro-Weaver',
+          size: [3, 2],
+          color: '#aa88aa',
+          categoryId: 'resource',
+        },
+        {
+          id: 'item_fabricator',
+          name: 'Item Fabricator',
+          size: [3, 2],
+          color: '#9988aa',
+          categoryId: 'resource',
+        },
+        {
+          id: 'item_workbench',
+          name: 'Item Workbench',
+          size: [2, 2],
+          color: '#887799',
+          categoryId: 'resource',
+        },
+        {
+          id: 'tools_facility',
+          name: 'Tools Facility',
+          size: [2, 2],
+          color: '#778899',
+          categoryId: 'resource',
+        },
+        {
+          id: 'water_purifier',
+          name: 'Water Purifier',
+          size: [2, 2],
+          color: '#4488bb',
+          categoryId: 'resource',
+        },
+        {
+          id: 'water_collector',
+          name: 'Water Collector',
+          size: [2, 2],
+          color: '#55aacc',
+          categoryId: 'resource',
+        },
+        { id: 'composter', name: 'Composter', size: [2, 2], color: '#775533', categoryId: 'resource' },
+        {
+          id: 'ore_processor',
+          name: 'Ore Processor',
+          size: [3, 3],
+          color: '#886644',
+          categoryId: 'resource',
+        },
+      ],
+    },
+    {
+      id: 'facility',
+      name: 'Crew Facilities',
+      color: '#6688aa',
+      defaultLayer: 'Rooms',
+      items: [
+        { id: 'bed', name: 'Bed', size: [1, 2], color: '#7799bb', categoryId: 'facility' },
+        { id: 'bunk_bed', name: 'Bunk Bed', size: [1, 2], color: '#6688aa', categoryId: 'facility' },
+        {
+          id: 'bedside_table',
+          name: 'Bedside Table',
+          size: [1, 1],
+          color: '#886644',
+          categoryId: 'facility',
+        },
+        { id: 'toilet', name: 'X1 Toilet', size: [2, 2], color: '#aabbcc', categoryId: 'facility' },
+        {
+          id: 'medical_bed',
+          name: 'Medical Bed',
+          size: [2, 2],
+          color: '#ccddee',
+          categoryId: 'facility',
+        },
+        {
+          id: 'advanced_medical',
+          name: 'Advanced Medical Bed',
+          size: [3, 2],
+          color: '#ddeeff',
+          categoryId: 'facility',
+        },
+        {
+          id: 'medical_cabinet',
+          name: 'Medical Cabinet',
+          size: [1, 2],
+          color: '#bbccdd',
+          categoryId: 'facility',
+        },
+        {
+          id: 'research_lab',
+          name: 'Research Lab',
+          size: [3, 2],
+          color: '#aabbdd',
+          categoryId: 'facility',
+        },
+        {
+          id: 'research_bench',
+          name: 'Research Workbench',
+          size: [2, 2],
+          color: '#99aacc',
+          categoryId: 'facility',
+        },
+        {
+          id: 'learning_computer',
+          name: 'Learning Computer',
+          size: [2, 2],
+          color: '#88aacc',
+          categoryId: 'facility',
+        },
+        {
+          id: 'advanced_learning',
+          name: 'Advanced Learning System',
+          size: [3, 2],
+          color: '#77aadd',
+          categoryId: 'facility',
+        },
+        {
+          id: 'hypersleep',
+          name: 'Hypersleep Chamber',
+          size: [2, 3],
+          color: '#55ccee',
+          categoryId: 'facility',
+        },
+        {
+          id: 'hypersleep_x2',
+          name: 'X2 Hypersleep Tank',
+          size: [3, 3],
+          color: '#44bbdd',
+          categoryId: 'facility',
+        },
+        {
+          id: 'arcade',
+          name: 'Arcade Machine',
+          size: [2, 2],
+          color: '#ff88aa',
+          categoryId: 'facility',
+        },
+        { id: 'jukebox', name: 'Jukebox', size: [2, 2], color: '#ffaa88', categoryId: 'facility' },
+        {
+          id: 'personal_entertainment',
+          name: 'Personal Entertainment',
+          size: [1, 1],
+          color: '#ee99aa',
+          categoryId: 'facility',
+        },
+        {
+          id: 'surgical_facility',
+          name: 'Surgical Enhancement',
+          size: [3, 2],
+          color: '#99bbcc',
+          categoryId: 'facility',
+        },
+        {
+          id: 'enslavement',
+          name: 'Enslavement Facility',
+          size: [2, 2],
+          color: '#554444',
+          categoryId: 'facility',
+        },
+      ],
+    },
+    {
+      id: 'robots',
+      name: 'Robots',
+      color: '#55aaaa',
+      defaultLayer: 'Systems',
+      items: [
+        {
+          id: 'salvage_station',
+          name: 'Salvage Robot Station',
+          size: [2, 2],
+          color: '#66bbbb',
+          categoryId: 'robots',
+        },
+        {
+          id: 'logistics_station',
+          name: 'Logistics Robot Station',
+          size: [2, 2],
+          color: '#77cccc',
+          categoryId: 'robots',
+        },
+        {
+          id: 'robot_workbench',
+          name: 'Robot Workbench',
+          size: [2, 2],
+          color: '#55aaaa',
+          categoryId: 'robots',
+        },
+      ],
+    },
+    {
+      id: 'furniture',
+      name: 'Furniture & Decoration',
+      color: '#aa8877',
+      defaultLayer: 'Furniture',
+      items: [
+        { id: 'chair', name: 'X1 Chair', size: [1, 1], color: '#bb9988', categoryId: 'furniture' },
+        { id: 'couch', name: 'X1 Couch', size: [2, 1], color: '#aa8877', categoryId: 'furniture' },
+        {
+          id: 'table_small',
+          name: 'X1 Table Small',
+          size: [2, 1],
+          color: '#997766',
+          categoryId: 'furniture',
+        },
+        {
+          id: 'table_medium',
+          name: 'X1 Table Medium',
+          size: [3, 1],
+          color: '#997766',
+          categoryId: 'furniture',
+        },
+        {
+          id: 'table_large',
+          name: 'X1 Table Large',
+          size: [4, 1],
+          color: '#997766',
+          categoryId: 'furniture',
+        },
+        {
+          id: 'cover_object',
+          name: 'Cover Object',
+          size: [1, 1],
+          color: '#666655',
+          categoryId: 'furniture',
+        },
+        { id: 'light', name: 'Light', size: [1, 1], color: '#ffee88', categoryId: 'furniture' },
+        { id: 'wall_light', name: 'Wall Light', size: [1, 1], color: '#ffdd77', categoryId: 'furniture' },
+        {
+          id: 'floor_light',
+          name: 'In-floor Light',
+          size: [1, 1],
+          color: '#ffcc66',
+          categoryId: 'furniture',
+        },
+        {
+          id: 'plant_small',
+          name: 'Decorative Plant',
+          size: [1, 1],
+          color: '#55aa55',
+          categoryId: 'furniture',
+        },
+        { id: 'green_wall', name: 'Green Wall', size: [1, 2], color: '#44aa44', categoryId: 'furniture' },
+        {
+          id: 'deco_screen',
+          name: 'Decorative Screen',
+          size: [2, 1],
+          color: '#6699bb',
+          categoryId: 'furniture',
+        },
+        {
+          id: 'deco_object',
+          name: 'Decorative Object',
+          size: [1, 1],
+          color: '#aa8899',
+          categoryId: 'furniture',
+        },
+        {
+          id: 'holy_cow',
+          name: 'Decorative Holy Cow',
+          size: [1, 1],
+          color: '#ffddaa',
+          categoryId: 'furniture',
+        },
+      ],
+    },
+  ],
+}
+
+/**
+ * Get the current catalog (static fallback for now, wiki refresh planned)
+ */
+export function getCatalog(): StructureCatalog {
+  return STATIC_CATALOG
+}
+
+/**
+ * Find a structure definition by its ID
+ */
+export function findStructureById(
+  catalog: StructureCatalog,
+  structureId: string
+): { category: StructureCategory; structure: StructureDef } | null {
+  for (const category of catalog.categories) {
+    const structure = category.items.find((item) => item.id === structureId)
+    if (structure) {
+      return { category, structure }
+    }
+  }
+  return null
+}
+
+/**
+ * Find a category by its ID
+ */
+export function findCategoryById(
+  catalog: StructureCatalog,
+  categoryId: string
+): StructureCategory | null {
+  return catalog.categories.find((cat) => cat.id === categoryId) ?? null
+}
+

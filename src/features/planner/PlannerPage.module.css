@@ -1,0 +1,104 @@
+.container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+/* Left Panel - Palette */
+.leftPanel {
+  width: 280px;
+  min-width: 280px;
+  background-color: var(--color-bg-secondary);
+  border-right: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.header {
+  padding: var(--spacing-lg);
+  border-bottom: 1px solid var(--color-border);
+  background: linear-gradient(180deg, #1f2937 0%, var(--color-bg-secondary) 100%);
+}
+
+.title {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--color-accent-blue);
+  text-transform: uppercase;
+}
+
+.subtitle {
+  margin: var(--spacing-xs) 0 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.palette {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--spacing-sm);
+}
+
+/* Main Area */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.toolbarRow {
+  padding: var(--spacing-md) var(--spacing-lg);
+  background-color: var(--color-bg-secondary);
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  gap: var(--spacing-xl);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.canvasContainer {
+  flex: 1;
+  overflow: auto;
+  background-color: var(--color-bg-primary);
+  padding: var(--spacing-xl);
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.statusBar {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  background-color: var(--color-bg-secondary);
+  border-top: 1px solid var(--color-border);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Right Panel - Layers & Selection */
+.rightPanel {
+  width: 200px;
+  min-width: 200px;
+  background-color: var(--color-bg-secondary);
+  border-left: 1px solid var(--color-border);
+  padding: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+.layers {
+  flex: 0 0 auto;
+}
+
+.selection {
+  flex: 1;
+}
+
