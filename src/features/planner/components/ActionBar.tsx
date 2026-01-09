@@ -96,6 +96,11 @@ export function ActionBar() {
     }
   }, [state.structures.length, dispatch])
 
+  const handleRefreshCatalog = useCallback(() => {
+    if (state.catalogStatus.isRefreshing) return
+    dispatch({ type: 'REQUEST_CATALOG_REFRESH' })
+  }, [state.catalogStatus.isRefreshing, dispatch])
+
   return (
     <div className={styles.actionBar}>
       <input
@@ -125,6 +130,17 @@ export function ActionBar() {
       </div>
 
       <div className={styles.group}>
+        <button
+          className={styles.button}
+          onClick={handleRefreshCatalog}
+          disabled={state.catalogStatus.isRefreshing}
+          title="Refresh structure catalog from wiki"
+        >
+          {state.catalogStatus.isRefreshing ? '⏳ Refreshing...' : '🔄 Refresh Catalog'}
+        </button>
+      </div>
+
+      <div className={styles.group}>
         <button className={styles.buttonDanger} onClick={handleClear}>
           🗑️ Clear All
         </button>
@@ -132,4 +148,3 @@ export function ActionBar() {
     </div>
   )
 }
-

@@ -53,6 +53,3 @@ export function useKeyboardShortcuts(dispatch: Dispatch<PlannerAction>) {
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [handleKeyDown])
 }
-
-
-

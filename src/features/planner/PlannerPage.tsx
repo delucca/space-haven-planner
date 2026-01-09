@@ -1,7 +1,7 @@
 import { PlannerProvider, usePlanner } from './state'
 import { CanvasViewport } from './canvas'
 import { Palette, Toolbar, LayerPanel, StatusBar, ActionBar } from './components'
-import { useKeyboardShortcuts, useAutosave } from './hooks'
+import { useKeyboardShortcuts, useAutosave, useCatalogRefresh } from './hooks'
 import styles from './PlannerPage.module.css'
 
 function PlannerContent() {
@@ -12,6 +12,9 @@ function PlannerContent() {
 
   // Enable localStorage autosave
   useAutosave(state, dispatch)
+
+  // Enable catalog refresh from wiki
+  useCatalogRefresh(state, dispatch)
 
   return (
     <div className={styles.container}>

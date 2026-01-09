@@ -1,12 +1,7 @@
 import { useRef, useEffect, useCallback } from 'react'
 import { usePlanner, canPlaceAt } from '../state'
 import { findStructureById, getRotatedSize } from '@/data'
-import {
-  createRenderContext,
-  renderScene,
-  getTileFromMouse,
-  type PreviewInfo,
-} from './renderer'
+import { createRenderContext, renderScene, getTileFromMouse, type PreviewInfo } from './renderer'
 import styles from './CanvasViewport.module.css'
 
 function generateId(): string {
@@ -39,7 +34,13 @@ export function CanvasViewport() {
     if (!found) return null
 
     const [width, height] = getRotatedSize(found.structure.size, previewRotation)
-    const isValid = canPlaceAt(state, selection.structureId, hoveredTile.x, hoveredTile.y, previewRotation)
+    const isValid = canPlaceAt(
+      state,
+      selection.structureId,
+      hoveredTile.x,
+      hoveredTile.y,
+      previewRotation
+    )
 
     return {
       x: hoveredTile.x,
@@ -76,7 +77,13 @@ export function CanvasViewport() {
         if (tool === 'place' && selection) {
           const found = findStructureById(catalog, selection.structureId)
           if (found) {
-            const isValid = canPlaceAt(state, selection.structureId, tile.x, tile.y, previewRotation)
+            const isValid = canPlaceAt(
+              state,
+              selection.structureId,
+              tile.x,
+              tile.y,
+              previewRotation
+            )
             if (isValid) {
               dispatch({
                 type: 'PLACE_STRUCTURE',
@@ -164,6 +171,3 @@ export function CanvasViewport() {
     </div>
   )
 }
-
-
-

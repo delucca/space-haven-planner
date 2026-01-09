@@ -1,11 +1,7 @@
 import { useEffect, useRef, useCallback } from 'react'
 import type { Dispatch } from 'react'
 import type { PlannerState, PlannerAction } from '../state/types'
-import {
-  createProjectFile,
-  parseProjectFile,
-  deserializeStructures,
-} from '@/lib/serialization'
+import { createProjectFile, parseProjectFile, deserializeStructures } from '@/lib/serialization'
 
 const STORAGE_KEY = 'space-haven-planner-autosave'
 const DEBOUNCE_MS = 1000
@@ -81,6 +77,3 @@ export function clearAutosave(): void {
     console.warn('Failed to clear autosave:', err)
   }
 }
-
-
-

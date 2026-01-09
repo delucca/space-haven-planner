@@ -41,9 +41,27 @@ export const STATIC_CATALOG: StructureCatalog = {
           color: '#7a9aac',
           categoryId: 'hull',
         },
-        { id: 'window_2', name: 'Window 2-tile', size: [2, 1], color: '#8ab4cc', categoryId: 'hull' },
-        { id: 'window_3', name: 'Window 3-tile', size: [3, 1], color: '#8ab4cc', categoryId: 'hull' },
-        { id: 'window_4', name: 'Window 4-tile', size: [4, 1], color: '#8ab4cc', categoryId: 'hull' },
+        {
+          id: 'window_2',
+          name: 'Window 2-tile',
+          size: [2, 1],
+          color: '#8ab4cc',
+          categoryId: 'hull',
+        },
+        {
+          id: 'window_3',
+          name: 'Window 3-tile',
+          size: [3, 1],
+          color: '#8ab4cc',
+          categoryId: 'hull',
+        },
+        {
+          id: 'window_4',
+          name: 'Window 4-tile',
+          size: [4, 1],
+          color: '#8ab4cc',
+          categoryId: 'hull',
+        },
       ],
     },
     {
@@ -129,7 +147,13 @@ export const STATIC_CATALOG: StructureCatalog = {
           color: '#996622',
           categoryId: 'power',
         },
-        { id: 'solar_panel', name: 'Solar Panel', size: [3, 2], color: '#4488cc', categoryId: 'power' },
+        {
+          id: 'solar_panel',
+          name: 'Solar Panel',
+          size: [3, 2],
+          color: '#4488cc',
+          categoryId: 'power',
+        },
         {
           id: 'power_conduit',
           name: 'Power Conduit',
@@ -173,7 +197,13 @@ export const STATIC_CATALOG: StructureCatalog = {
           color: '#ff7755',
           categoryId: 'life_support',
         },
-        { id: 'air_vent', name: 'Air Vent', size: [1, 1], color: '#66ccbb', categoryId: 'life_support' },
+        {
+          id: 'air_vent',
+          name: 'Air Vent',
+          size: [1, 1],
+          color: '#66ccbb',
+          categoryId: 'life_support',
+        },
       ],
     },
     {
@@ -182,7 +212,13 @@ export const STATIC_CATALOG: StructureCatalog = {
       color: '#cc4444',
       defaultLayer: 'Systems',
       items: [
-        { id: 'hyperdrive', name: 'Hyperdrive', size: [4, 5], color: '#4466cc', categoryId: 'system' },
+        {
+          id: 'hyperdrive',
+          name: 'Hyperdrive',
+          size: [4, 5],
+          color: '#4466cc',
+          categoryId: 'system',
+        },
         {
           id: 'hyperium_drive',
           name: 'Hyperium Hyperdrive',
@@ -254,7 +290,13 @@ export const STATIC_CATALOG: StructureCatalog = {
           color: '#cc5544',
           categoryId: 'system',
         },
-        { id: 'autoturret', name: 'Autoturret', size: [2, 2], color: '#bb4433', categoryId: 'system' },
+        {
+          id: 'autoturret',
+          name: 'Autoturret',
+          size: [2, 2],
+          color: '#bb4433',
+          categoryId: 'system',
+        },
         {
           id: 'point_defense',
           name: 'Point Defense Turret',
@@ -277,8 +319,20 @@ export const STATIC_CATALOG: StructureCatalog = {
       color: '#8866aa',
       defaultLayer: 'Rooms',
       items: [
-        { id: 'airlock_x1', name: 'X1 Airlock', size: [4, 3], color: '#9977bb', categoryId: 'airlock' },
-        { id: 'pod_hangar', name: 'Pod Hangar', size: [6, 5], color: '#8866aa', categoryId: 'airlock' },
+        {
+          id: 'airlock_x1',
+          name: 'X1 Airlock',
+          size: [4, 3],
+          color: '#9977bb',
+          categoryId: 'airlock',
+        },
+        {
+          id: 'pod_hangar',
+          name: 'Pod Hangar',
+          size: [6, 5],
+          color: '#8866aa',
+          categoryId: 'airlock',
+        },
         {
           id: 'shuttle_hangar',
           name: 'Shuttle Hangar',
@@ -336,7 +390,13 @@ export const STATIC_CATALOG: StructureCatalog = {
           color: '#556666',
           categoryId: 'storage',
         },
-        { id: 'cargo_port', name: 'Cargo Port', size: [3, 2], color: '#888877', categoryId: 'storage' },
+        {
+          id: 'cargo_port',
+          name: 'Cargo Port',
+          size: [3, 2],
+          color: '#888877',
+          categoryId: 'storage',
+        },
         {
           id: 'asteroid_cargo',
           name: 'Asteroid Cargo Port',
@@ -381,7 +441,13 @@ export const STATIC_CATALOG: StructureCatalog = {
           color: '#66cc55',
           categoryId: 'food',
         },
-        { id: 'co2_producer', name: 'CO2 Producer', size: [2, 2], color: '#88aa66', categoryId: 'food' },
+        {
+          id: 'co2_producer',
+          name: 'CO2 Producer',
+          size: [2, 2],
+          color: '#88aa66',
+          categoryId: 'food',
+        },
         {
           id: 'autopsy_table',
           name: 'Autopsy Table',
@@ -404,8 +470,20 @@ export const STATIC_CATALOG: StructureCatalog = {
       color: '#aa8844',
       defaultLayer: 'Rooms',
       items: [
-        { id: 'recycler', name: 'Recycler', size: [3, 3], color: '#bb9955', categoryId: 'resource' },
-        { id: 'assembler', name: 'Assembler', size: [3, 3], color: '#cc9944', categoryId: 'resource' },
+        {
+          id: 'recycler',
+          name: 'Recycler',
+          size: [3, 3],
+          color: '#bb9955',
+          categoryId: 'resource',
+        },
+        {
+          id: 'assembler',
+          name: 'Assembler',
+          size: [3, 3],
+          color: '#cc9944',
+          categoryId: 'resource',
+        },
         {
           id: 'advanced_assembler',
           name: 'Advanced Assembler',
@@ -483,7 +561,13 @@ export const STATIC_CATALOG: StructureCatalog = {
           color: '#55aacc',
           categoryId: 'resource',
         },
-        { id: 'composter', name: 'Composter', size: [2, 2], color: '#775533', categoryId: 'resource' },
+        {
+          id: 'composter',
+          name: 'Composter',
+          size: [2, 2],
+          color: '#775533',
+          categoryId: 'resource',
+        },
         {
           id: 'ore_processor',
           name: 'Ore Processor',
@@ -500,7 +584,13 @@ export const STATIC_CATALOG: StructureCatalog = {
       defaultLayer: 'Rooms',
       items: [
         { id: 'bed', name: 'Bed', size: [1, 2], color: '#7799bb', categoryId: 'facility' },
-        { id: 'bunk_bed', name: 'Bunk Bed', size: [1, 2], color: '#6688aa', categoryId: 'facility' },
+        {
+          id: 'bunk_bed',
+          name: 'Bunk Bed',
+          size: [1, 2],
+          color: '#6688aa',
+          categoryId: 'facility',
+        },
         {
           id: 'bedside_table',
           name: 'Bedside Table',
@@ -669,7 +759,13 @@ export const STATIC_CATALOG: StructureCatalog = {
           categoryId: 'furniture',
         },
         { id: 'light', name: 'Light', size: [1, 1], color: '#ffee88', categoryId: 'furniture' },
-        { id: 'wall_light', name: 'Wall Light', size: [1, 1], color: '#ffdd77', categoryId: 'furniture' },
+        {
+          id: 'wall_light',
+          name: 'Wall Light',
+          size: [1, 1],
+          color: '#ffdd77',
+          categoryId: 'furniture',
+        },
         {
           id: 'floor_light',
           name: 'In-floor Light',
@@ -684,7 +780,13 @@ export const STATIC_CATALOG: StructureCatalog = {
           color: '#55aa55',
           categoryId: 'furniture',
         },
-        { id: 'green_wall', name: 'Green Wall', size: [1, 2], color: '#44aa44', categoryId: 'furniture' },
+        {
+          id: 'green_wall',
+          name: 'Green Wall',
+          size: [1, 2],
+          color: '#44aa44',
+          categoryId: 'furniture',
+        },
         {
           id: 'deco_screen',
           name: 'Decorative Screen',
@@ -743,4 +845,3 @@ export function findCategoryById(
 ): StructureCategory | null {
   return catalog.categories.find((cat) => cat.id === categoryId) ?? null
 }
-

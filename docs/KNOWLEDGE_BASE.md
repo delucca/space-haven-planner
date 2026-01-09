@@ -52,14 +52,16 @@ Mouse/keyboard input → dispatch(PlannerAction) → plannerReducer → PlannerS
   → ActionBar → download JSON / load JSON / export PNG
 ```
 
-### “Source of truth” pointers
+### "Source of truth" pointers
 - **Product/behavior spec**: `docs/USE_CASES.md`
 - **Project facts & decisions**: `docs/CONSTITUTION.md`
 - **Configuration**: `package.json`, `vite.config.ts`, `tsconfig*.json`, `eslint.config.js`, `.prettierrc`
 - **Entry point(s)**: `index.html`, `src/main.tsx`, `src/App.tsx`, `src/features/planner/PlannerPage.tsx`
 - **Core domain logic**: `src/features/planner/state/reducer.ts`, `src/features/planner/canvas/renderer.ts`, `src/data/types.ts`
-- **Data catalog**: `src/data/catalog/structures.ts`
-- **External integrations**: none in code today (planned: Space Haven wiki via MediaWiki API; see `docs/CONSTITUTION.md`)
+- **Data catalog (static)**: `src/data/catalog/structures.ts` — offline-first fallback, always available
+- **Data catalog (wiki)**: `src/data/catalog/wiki.ts` — dynamic fetch, parse, and merge logic
+- **Catalog caching**: `src/data/catalog/cache.ts` — localStorage persistence with TTL
+- **External integrations**: Optional wiki refresh from [Space Haven Wiki](https://spacehaven.fandom.com/) via MediaWiki API (see "Wiki integration" section below)
 
 ---
 
@@ -112,6 +114,8 @@ pnpm preview     # serve the built app locally
 - **Imports**: use the `@/` alias for `src/` (configured in `vite.config.ts` + `tsconfig.app.json`).
 - **Styling**: CSS Modules for components (`*.module.css`), plus `src/styles/global.css`.
 - **State management**: reducer + Context (`PlannerProvider` / `usePlanner*` hooks); update state only via `PlannerAction`.
+  - **Catalog state**: `PlannerState` includes `catalog`, `catalogStatus` (source, isRefreshing, lastUpdatedAt, lastError), and `catalogRefreshRequestId` for triggering refreshes.
+  - **Catalog refresh hook**: `useCatalogRefresh` handles the async load/refresh lifecycle outside the reducer.
 - **Error handling**:
   - User-triggered file errors show `alert(...)` (load/export).
   - Autosave failures warn and keep the app usable (`console.warn` + best-effort).
@@ -119,8 +123,9 @@ pnpm preview     # serve the built app locally
 - **Logging/observability**: `console.warn`/`console.error` only (no telemetry).
 - **Testing strategy**:
   - Vitest + Testing Library are configured (see `vite.config.ts`, `src/test/setup.ts`).
-  - Tests should be added as `src/**/*.{test,spec}.{ts,tsx}` (currently there are no test files).
+  - Tests should be added as `src/**/*.{test,spec}.{ts,tsx}`.
   - Global test APIs (`describe`, `it`, `expect`) are available without imports (see `tsconfig.app.json` types).
+  - Current tests: `src/data/catalog/cache.test.ts`, `src/data/catalog/wiki.test.ts`.
 
 ---
 
@@ -140,9 +145,88 @@ pnpm preview     # serve the built app locally
 - **Gotchas**:
   - **Preset changes don't prune structures**: switching canvas size keeps existing placements; some may end up out of bounds (see UC-082).
   - **Autosave key**: `space-haven-planner-autosave` (see `src/features/planner/hooks/useAutosave.ts`).
+  - **Catalog cache key**: `space-haven-planner-catalog-cache` (see `src/data/catalog/cache.ts`).
   - **Project JSON versioning**: current format is **v2**; loader migrates v1 (`category`/`item` → `categoryId`/`structureId`) (see `src/lib/serialization/project.ts`).
   - **Unknown structure IDs in loaded projects**: they'll deserialize, but won't render (and won't collide / be erasable) because lookups fail; consider filtering or surfacing a warning if/when this becomes common.
   - **DPR scaling**: canvas uses `window.devicePixelRatio` for crisp rendering on HiDPI displays; coordinate math must account for this in `renderer.ts`.
+  - **Wiki structure IDs vs static IDs**: Wiki-derived structures use IDs generated from page titles (e.g., `pod_hangar`), which may differ from static catalog IDs. The merge logic handles this via name matching, but edge cases may exist.
+
+---
+
+## Wiki integration
+
+### How it works
+
+The planner can optionally refresh its structure catalog from the [Space Haven community wiki](https://spacehaven.fandom.com/) via the MediaWiki Action API. The wiki integration **supplements** the static catalog—it never replaces it entirely.
+
+#### Discovery strategy (multi-source)
+
+1. **Category fetching**: Queries multiple wiki categories:
+   - `Category:Facilities`
+   - `Category:Power`
+   - `Category:System`
+   - `Category:Production Facilities`
+2. **AllPages fallback**: Also queries `Special:AllPages` API to catch structures not in any category
+3. **Page filtering**: Uses `SKIP_PAGES` set (~80+ entries) to exclude meta pages, resources, data logs, game mechanics pages, etc.
+4. **Deduplication**: Merges results from all sources into a unique set
+
+#### Content fetching
+
+- Fetches page content in batches (50 pages per request via MediaWiki API)
+- Extracts revision IDs for cache validation
+
+#### Parsing
+
+- **Footprint extraction**: Multiple regex patterns for wiki text (e.g., "needs a 3x2 tile area", "footprint of 2x3", infobox `|size = NxM`)
+- **Category inference**: From infobox `|category =` field, wiki `[[Category:...]]` links, or page name keywords
+- **ID generation**: Page titles → snake_case IDs (e.g., "Pod Hangar" → `pod_hangar`)
+- **Color generation**: Deterministic HSL color from structure name hash (for structures without static catalog match)
+
+#### Merging with static catalog
+
+The `buildCatalogFromWikiData()` function implements a **merge strategy**:
+
+1. Wiki structures are parsed and matched against static catalog by name similarity
+2. **Size priority**: Wiki footprint → static catalog size → default 2×2
+3. **Color priority**: Static catalog color → generated color
+4. **Category priority**: Parsed wiki category → static catalog category → "Other"
+5. **Static-only structures preserved**: Structures in static catalog without wiki pages (hull, walls, doors, windows) are automatically included in the final catalog
+
+This ensures:
+- Wiki updates are reflected (new structures, updated sizes)
+- Static structures without dedicated wiki pages remain available
+- Existing saved projects with static structure IDs continue to work
+
+### Caching
+
+- Cached in `localStorage` with key `space-haven-planner-catalog-cache`
+- TTL: 7 days (refreshes automatically if stale and online)
+- Manual refresh via "Refresh Catalog" button in ActionBar
+- Cache includes `fetchedAt` timestamp and `revisionKey` (hash of wiki revision IDs)
+
+### Fallback behavior
+
+- **Offline**: Uses built-in static catalog (`src/data/catalog/structures.ts`)
+- **Fetch failure**: Keeps current catalog, shows non-intrusive error in StatusBar
+- **Missing footprint**: Falls back to static catalog size or default 2×2
+- **Unknown structures in saved projects**: Still renderable if they exist in static catalog
+
+### Known limitations / gotchas
+
+- **Cloudflare/CAPTCHA**: Fandom wikis may occasionally return challenge pages instead of JSON. The app detects this (checks `content-type` header) and falls back gracefully.
+- **Wiki markup changes**: Footprint parsing relies on common patterns; unusual wiki formatting may not be recognized.
+- **Category inference**: Not all structures map cleanly to our categories; some may end up in "Other".
+- **No real-time sync**: Wiki changes are only picked up on refresh (manual or TTL expiry).
+- **Skip list maintenance**: New meta/resource pages on the wiki may need to be added to `SKIP_PAGES` in `wiki.ts`.
+- **Category coverage**: If the wiki reorganizes categories, `STRUCTURE_CATEGORIES` may need updating.
+
+### Key files
+
+- `src/data/catalog/wiki.ts` — wiki fetch, parse, merge logic, and skip list
+- `src/data/catalog/cache.ts` — localStorage caching with TTL
+- `src/data/catalog/structures.ts` — static fallback catalog (source of truth for offline)
+- `src/features/planner/hooks/useCatalogRefresh.ts` — React hook for load/refresh lifecycle
+- `src/data/catalog/__fixtures__/wikitext.ts` — test fixtures for wiki parsing
 
 ---
 
@@ -166,12 +250,20 @@ pnpm preview     # serve the built app locally
   - Canvas interaction/rendering: `src/features/planner/canvas/`
   - State/actions/invariants: `src/features/planner/state/`
   - Domain types/presets/catalog: `src/data/`
+  - Wiki integration/parsing: `src/data/catalog/wiki.ts`
   - Save/load/export formats: `src/lib/serialization/`
 - **What to avoid**:
   - Mixing pixel units and tile units (always convert at boundaries like renderers).
   - Mutating state in-place (keep reducer/state immutable; clone `Set`s when updating).
   - Breaking offline/local-first constraints (avoid introducing required network calls).
   - Silent data loss in migrations/import (if dropping unknown structures, surface it to the user).
+  - Removing structures from static catalog that may exist in saved projects.
+- **Wiki integration changes**:
+  - To add new wiki categories: update `STRUCTURE_CATEGORIES` array in `wiki.ts`
+  - To skip new meta pages: add to `SKIP_PAGES` set in `wiki.ts`
+  - To improve category mapping: update `WIKI_CATEGORY_MAP` in `wiki.ts`
+  - To improve footprint parsing: add patterns to `parseFootprintFromWikiText()` in `wiki.ts`
+  - Always ensure static catalog remains the offline fallback
 - **Verification checklist**:
   - [ ] Update `docs/USE_CASES.md` if user-visible behavior changes; update `docs/CONSTITUTION.md` if project facts/decisions change
   - [ ] `pnpm lint`
@@ -179,5 +271,6 @@ pnpm preview     # serve the built app locally
   - [ ] `pnpm test:run` (add/adjust tests as needed)
   - [ ] `pnpm build`
   - [ ] If changing the project file format: bump/migrate `PROJECT_VERSION` and keep load backward-compatible
+  - [ ] If changing wiki parsing: add test cases to `src/data/catalog/__fixtures__/wikitext.ts` and `wiki.test.ts`
 
 

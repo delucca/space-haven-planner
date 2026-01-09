@@ -5,6 +5,18 @@ import { getRotatedSize } from '@/data/types'
 import type { PlannerState, PlannerAction } from './types'
 
 /**
+ * Create initial catalog status
+ */
+function createInitialCatalogStatus(): PlannerState['catalogStatus'] {
+  return {
+    source: 'built_in',
+    isRefreshing: false,
+    lastUpdatedAt: null,
+    lastError: null,
+  }
+}
+
+/**
  * Create initial planner state
  */
 export function createInitialState(): PlannerState {
@@ -22,6 +34,8 @@ export function createInitialState(): PlannerState {
     hoveredTile: null,
     isDragging: false,
     catalog: getCatalog(),
+    catalogStatus: createInitialCatalogStatus(),
+    catalogRefreshRequestId: 0,
   }
 }
 
@@ -236,12 +250,50 @@ export function plannerReducer(state: PlannerState, action: PlannerAction): Plan
         ...state,
         ...action.state,
         catalog: state.catalog, // Keep current catalog
+        catalogStatus: state.catalogStatus,
+        catalogRefreshRequestId: state.catalogRefreshRequestId,
       }
 
     case 'NEW_PROJECT':
       return {
         ...createInitialState(),
         catalog: state.catalog, // Keep current catalog
+        catalogStatus: state.catalogStatus,
+        catalogRefreshRequestId: state.catalogRefreshRequestId,
+      }
+
+    // Catalog refresh actions
+    case 'REQUEST_CATALOG_REFRESH':
+      return {
+        ...state,
+        catalogRefreshRequestId: state.catalogRefreshRequestId + 1,
+        catalogStatus: {
+          ...state.catalogStatus,
+          isRefreshing: true,
+          lastError: null,
+        },
+      }
+
+    case 'SET_CATALOG':
+      return {
+        ...state,
+        catalog: action.catalog,
+        catalogStatus: {
+          ...state.catalogStatus,
+          source: action.source,
+          isRefreshing: false,
+          lastUpdatedAt: Date.now(),
+          lastError: null,
+        },
+      }
+
+    case 'SET_CATALOG_STATUS':
+      return {
+        ...state,
+        catalogStatus: {
+          ...state.catalogStatus,
+          ...action.status,
+        },
       }
 
     default:
@@ -272,6 +324,3 @@ export function canPlaceAt(
   // Collision check
   return !hasCollision(state, x, y, width, height)
 }
-
-
-

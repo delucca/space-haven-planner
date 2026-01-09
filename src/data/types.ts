@@ -100,5 +100,3 @@ export function getStructureBounds(
     height,
   }
 }
-
-

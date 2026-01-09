@@ -43,10 +43,7 @@ export function Palette() {
                     data-selected={isSelected}
                   >
                     <span className={styles.itemInfo}>
-                      <span
-                        className={styles.itemColor}
-                        style={{ backgroundColor: item.color }}
-                      />
+                      <span className={styles.itemColor} style={{ backgroundColor: item.color }} />
                       <span className={styles.itemName}>{item.name}</span>
                     </span>
                     <span className={styles.itemSize}>
@@ -62,6 +59,3 @@ export function Palette() {
     </div>
   )
 }
-
-
-

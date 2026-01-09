@@ -2,13 +2,31 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: var(--spacing-md);
 }
 
 .left,
+.center,
 .right {
   font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
 }
 
+.center {
+  flex: 1;
+  text-align: center;
+}
 
+.error {
+  color: var(--color-danger, #e74c3c);
+  cursor: help;
+}
 
+.refreshing {
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+.catalogInfo {
+  cursor: default;
+}

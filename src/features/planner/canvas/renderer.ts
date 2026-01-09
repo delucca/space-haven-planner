@@ -261,4 +261,3 @@ export function exportToPNG(
 
   return canvas.toDataURL('image/png')
 }
-

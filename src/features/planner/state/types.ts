@@ -24,6 +24,21 @@ export interface HoverState {
 }
 
 /**
+ * Catalog data source
+ */
+export type CatalogSource = 'built_in' | 'wiki_cache' | 'wiki_fresh'
+
+/**
+ * Catalog refresh status
+ */
+export interface CatalogStatus {
+  readonly source: CatalogSource
+  readonly isRefreshing: boolean
+  readonly lastUpdatedAt: number | null
+  readonly lastError: string | null
+}
+
+/**
  * Complete planner application state
  */
 export interface PlannerState {
@@ -49,8 +64,10 @@ export interface PlannerState {
   readonly hoveredTile: HoverState | null
   readonly isDragging: boolean
 
-  // Catalog (static for now, will support wiki refresh)
+  // Catalog (supports wiki refresh)
   readonly catalog: StructureCatalog
+  readonly catalogStatus: CatalogStatus
+  readonly catalogRefreshRequestId: number
 }
 
 /**
@@ -86,5 +103,7 @@ export type PlannerAction =
   | { type: 'LOAD_PROJECT'; state: Partial<PlannerState> }
   | { type: 'NEW_PROJECT' }
 
-
-
+  // Catalog refresh actions
+  | { type: 'REQUEST_CATALOG_REFRESH' }
+  | { type: 'SET_CATALOG'; catalog: StructureCatalog; source: CatalogSource }
+  | { type: 'SET_CATALOG_STATUS'; status: Partial<CatalogStatus> }
