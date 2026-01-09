@@ -2,7 +2,8 @@
 
 **Universal collaboration protocols for AI agents**
 
-> **Project-specific facts**: see `docs/CONSTITUTION.md`
+> **Project-specific facts**: see `docs/CONSTITUTION.md`  
+> **Durable repo knowledge**: see `docs/KNOWLEDGE_BASE.md` (keep it updated)
 
 ---
 
@@ -28,6 +29,8 @@
 - Read relevant files completely - don't skim
 - Use `.aid` folder if it exists
 - Understand **why** current code works the way it does
+- Read `docs/KNOWLEDGE_BASE.md` (if present) to bootstrap repo context
+- When you learn durable repo knowledge, update `docs/KNOWLEDGE_BASE.md`
 
 ### 3. REUSE FIRST
 - Extend existing patterns before creating new
@@ -42,16 +45,7 @@
 ### 5. EXECUTE WITH PRECISION
 - Minimal change that solves the problem
 - Follow existing conventions
-- Write new docs only when requested; **always keep existing docs/specs in sync** when behavior changes (e.g., update `docs/USE_CASES.md` if present).
-
----
-
-## DOCUMENTATION & SPECS (NON-NEGOTIABLE)
-
-- **Source of truth**: If the repo has `docs/USE_CASES.md`, treat it as the contract for user-visible behavior.
-- **Required updates**: Any change that alters UI/UX, behavior, data formats, or flows must update `docs/USE_CASES.md` in the same change set.
-- **Related docs**: If the change affects architecture/product decisions, also update `docs/CONSTITUTION.md` and any other relevant docs under `docs/`.
-- **PR hygiene**: A PR that changes behavior but does not update docs/specs is incomplete and should not be merged.
+- Document only when requested
 
 ---
 
@@ -104,7 +98,6 @@ Types: feat, fix, refactor, test, docs, chore, style, perf
 - ✅ Actually works end-to-end
 - ✅ Edge cases handled
 - ✅ Tests added/updated
-- ✅ Docs/specs updated for any behavior change (start with `docs/USE_CASES.md`, then any other affected docs)
 - ✅ No debug code or TODOs
 
 ---
@@ -137,7 +130,7 @@ Query latest via: Context7 → BrightData → web_search
 - ❌ Auto-agree with everything
 - ❌ Skip searching for existing solutions
 - ❌ Guess when uncertain
-- ❌ Write new docs unless requested (updating existing docs/specs to match behavior is required)
+- ❌ Write docs unless requested
 - ❌ Commit secrets
 - ❌ Skip tests for critical paths
 - ❌ Swallow errors

@@ -109,3 +109,5 @@ This is a utility product; the moat is mostly execution + distribution rather th
 
 **Break-even point:** a handful of monthly donations typically covers hosting + domain.
 
+
+

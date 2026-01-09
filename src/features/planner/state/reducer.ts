@@ -273,3 +273,5 @@ export function canPlaceAt(
   return !hasCollision(state, x, y, width, height)
 }
 
+
+

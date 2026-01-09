@@ -30,3 +30,5 @@ export const ZOOM_MAX = 24
 
 /** PNG export scale (pixels per tile) */
 export const EXPORT_SCALE = 20
+
+

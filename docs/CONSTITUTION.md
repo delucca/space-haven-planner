@@ -28,17 +28,19 @@ It’s meant to feel like Excalidraw: open → plan → export/share → close.
 
 ---
 
-## Tech stack (rewrite target)
+## Tech stack (current)
 
-This repo currently contains a prototype reference (`reference/spacehaven-planner.jsx`). The production app will be a clean rewrite.
+This repo contains the current planner SPA implementation under `src/`, and keeps an older prototype reference in `reference/spacehaven-planner.jsx` for historical context.
 
-### Recommended stack
+### Stack
 
-- **Frontend**: React 18 + TypeScript
+- **Frontend**: React + TypeScript (see `package.json` for exact pinned versions)
 - **Build**: Vite (SPA) + pnpm
-- **Styling**: CSS (CSS Modules or vanilla) + CSS variables (dark theme first)
+- **Styling**: CSS Modules + `src/styles/global.css` (dark theme first)
 - **Tests**: Vitest + React Testing Library (unit/integration); Playwright (optional smoke E2E)
-- **Hosting**: static hosting (Vercel / Netlify / GitHub Pages)
+- **Lint/format**: ESLint (flat config) + Prettier
+- **Hosting**: Vercel (planned; not deployed yet)
+- **Node**: Vite 7 requires Node.js ^20.19.0 || >=22.12.0
 
 ### Why Vite over Next.js
 
@@ -65,8 +67,8 @@ This repo currently contains a prototype reference (`reference/spacehaven-planne
 
 A **structure** is a placeable item with:
 
-- `categoryKey` (e.g. `power`, `hull`)
-- `itemKey` (e.g. `system_core_x1`)
+- `categoryId` (e.g. `power`, `hull`)
+- `structureId` (e.g. `system_core_x1`)
 - `name`
 - `size` in tiles at rotation `0` → `[width, height]`
 - `defaultLayer` (Hull, Rooms, Systems, Furniture)
@@ -77,7 +79,7 @@ A **structure** is a placeable item with:
 A **placed structure** is an instance on the canvas:
 
 - `id`: unique (UUID recommended)
-- `categoryKey`, `itemKey`
+- `categoryId`, `structureId`
 - `x`, `y`: top-left anchor tile (at the current rotation)
 - `rotation`: `0 | 90 | 180 | 270`
 - `layer`: derived from the catalog’s `defaultLayer`
@@ -164,12 +166,14 @@ The planner is free to use. Monetization is **donationware**:
 
 ## Prototype reference
 
-The current prototype is stored in `reference/spacehaven-planner.jsx`.
-It is a reference implementation only; the production app will be a clean rewrite.
+The prototype is stored in `reference/spacehaven-planner.jsx`.
+It is a historical reference; the current implementation lives in `src/`.
 
 ---
 
 ## Updating this file
 
 When product/architecture decisions change, update this constitution in the same PR as the code change.
+
+
 
