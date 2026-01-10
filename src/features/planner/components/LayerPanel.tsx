@@ -63,6 +63,7 @@ export function LayerPanel() {
           <p>• Click structure to select</p>
           <p>• Click grid to place</p>
           <p>• Q/E to rotate</p>
+          <p>• +/- to zoom in/out</p>
           <p>• Use Erase tool to remove</p>
           <p>• Save/Load as JSON</p>
           <p>• Export as PNG image</p>
@@ -71,4 +72,3 @@ export function LayerPanel() {
     </div>
   )
 }
-

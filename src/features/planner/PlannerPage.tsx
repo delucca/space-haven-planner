@@ -8,7 +8,7 @@ function PlannerContent() {
   const { state, dispatch } = usePlanner()
 
   // Enable keyboard shortcuts
-  useKeyboardShortcuts(dispatch)
+  useKeyboardShortcuts(dispatch, state.zoom)
 
   // Enable localStorage autosave
   useAutosave(state, dispatch)

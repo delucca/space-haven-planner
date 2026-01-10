@@ -27,7 +27,7 @@ export const DEFAULT_ZOOM = 12
 /** Zoom range limits */
 export const ZOOM_MIN = 6
 export const ZOOM_MAX = 24
+export const ZOOM_STEP = 2
 
 /** PNG export scale (pixels per tile) */
 export const EXPORT_SCALE = 20
-
