@@ -20,15 +20,70 @@
   min-width: 120px;
 }
 
-.slider {
-  width: 80px;
-  cursor: pointer;
+.zoomControl {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background-color: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  overflow: hidden;
 }
 
-.zoomValue {
-  font-size: var(--font-size-xs);
+.zoomButton {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.zoomButton:hover:not(:disabled) {
+  background-color: var(--color-border);
+}
+
+.zoomButton:disabled {
+  color: var(--color-text-muted);
+  cursor: not-allowed;
+}
+
+.zoomInputWrapper {
+  display: flex;
+  align-items: center;
+  min-width: 52px;
+  padding: 0 var(--spacing-xs);
+  border-left: 1px solid var(--color-border);
+  border-right: 1px solid var(--color-border);
+}
+
+.zoomInput {
+  width: 36px;
+  padding: 0;
+  font-size: var(--font-size-sm);
+  font-family: inherit;
+  color: var(--color-text-primary);
+  background-color: transparent;
+  border: none;
+  text-align: right;
+  outline: none;
+}
+
+.zoomInput:focus {
+  background-color: var(--color-bg-secondary);
+  border-radius: 2px;
+}
+
+.zoomSuffix {
+  font-size: var(--font-size-sm);
   color: var(--color-text-secondary);
-  width: 32px;
+  margin-left: 1px;
 }
 
 .toolButton {
@@ -54,11 +109,64 @@
 .checkbox {
   display: flex;
   align-items: center;
-  gap: var(--spacing-xs);
+  gap: var(--spacing-sm);
   font-size: var(--font-size-sm);
   cursor: pointer;
+  user-select: none;
 }
 
 .checkbox input {
-  cursor: pointer;
+  /* Hide default checkbox */
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
 }
+
+.checkboxIndicator {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  background-color: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
+  border-radius: 3px;
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+}
+
+/* Checkmark */
+.checkboxIndicator::after {
+  content: '';
+  position: absolute;
+  display: none;
+  left: 5px;
+  top: 2px;
+  width: 4px;
+  height: 8px;
+  border: solid var(--color-bg-primary);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* Hover state */
+.checkbox:hover .checkboxIndicator {
+  border-color: var(--color-accent-blue);
+  background-color: var(--color-bg-secondary);
+}
+
+/* Checked state */
+.checkbox input:checked + .checkboxIndicator {
+  background-color: var(--color-accent-green);
+  border-color: var(--color-accent-green);
+}
+
+.checkbox input:checked + .checkboxIndicator::after {
+  display: block;
+}
+
+/* Focus state */
+.checkbox input:focus-visible + .checkboxIndicator {
+  outline: 2px solid var(--color-accent-blue);
+  outline-offset: 2px;
+}
+

@@ -68,14 +68,18 @@ Handled by `useKeyboardShortcuts` hook (`src/features/planner/hooks/useKeyboardS
 | `Ctrl/Cmd + +/-` | Zoom in/out (also works) |
 | `Q`              | Rotate counter-clockwise |
 | `E`              | Rotate clockwise         |
-| `1`              | Select Place tool        |
-| `2`              | Select Erase tool        |
+| `1`              | Select Hull tool         |
+| `2`              | Select Place tool        |
+| `3`              | Select Erase tool        |
 | `Escape`         | Clear selection          |
 
 **Note**: Shortcuts are disabled when focus is in input/textarea/select elements.
-**Note**: There is currently no keyboard shortcut for the Hull tool; use the toolbar button.
 
-### Initial zoom (fit-to-width)
+### Zoom system
+
+The zoom level is expressed internally as **pixels per tile** but displayed to users as a **percentage relative to fit-to-width**.
+
+#### Initial zoom (fit-to-width)
 
 On app load, the zoom level is dynamically calculated to fit the grid width within the viewport:
 
@@ -84,6 +88,17 @@ On app load, the zoom level is dynamically calculated to fit the grid width with
 - Formula: `optimalZoom = floor((viewportWidth - sidePanels - padding - border) / gridWidth)`
 - Result is clamped to `ZOOM_MIN`–`ZOOM_MAX` and snapped to `ZOOM_STEP`
 - Only runs once on mount (uses a ref flag to prevent re-calculation)
+
+#### Zoom control UI
+
+The toolbar displays zoom as +/− buttons with an **editable percentage input** in between:
+
+- **100%** = the zoom level at which the grid exactly fits the available canvas width
+- Percentage is **dynamic**: recalculates on viewport resize and preset change
+- **Editable input**: Click the percentage to type a custom value (Enter to apply, Escape to cancel)
+- Input values are converted back to pixels-per-tile, clamped to `ZOOM_MIN`–`ZOOM_MAX`, and snapped to `ZOOM_STEP`
+- Uses `useSyncExternalStore` to subscribe to window resize events
+- Calculation logic in `Toolbar.tsx` mirrors `useInitialZoom.ts` (same layout constants)
 
 ### Tools
 
@@ -171,10 +186,22 @@ pnpm preview     # serve the built app locally
   - Cross-cutting utilities live under `src/lib/`.
 - **Imports**: use the `@/` alias for `src/` (configured in `vite.config.ts` + `tsconfig.app.json`).
 - **Styling**: CSS Modules for components (`*.module.css`), plus `src/styles/global.css`.
+  - **Custom checkboxes**: Native checkboxes are hidden (`opacity: 0; position: absolute`) and replaced with styled `<span>` indicators. Pattern:
+    ```html
+    <label className={styles.checkbox}>
+      <input type="checkbox" ... />
+      <span className={styles.checkboxIndicator} />
+      Label text
+    </label>
+    ```
+    CSS uses `input:checked + .checkboxIndicator` to style the checked state. See `Toolbar.module.css` and `LayerPanel.module.css` for examples.
 - **State management**: reducer + Context (`PlannerProvider` / `usePlanner*` hooks); update state only via `PlannerAction`.
   - **Catalog state**: `PlannerState` includes `catalog` and `catalogStatus` (source, isParsing, lastUpdatedAt, lastError, jarFileName).
   - **Catalog load hook**: `useCatalogRefresh` loads cached user-uploaded JAR catalog on mount (if present) and otherwise ensures the built-in snapshot is active.
   - **Local UI state**: Purely presentational state (e.g., search queries, transient UI modes) should use local `useState` in components rather than polluting global `PlannerState`. Examples: `Palette.tsx` keeps search query local; `CanvasViewport.tsx` keeps drag-selection + pending erase confirmation local.
+- **Form controls**:
+  - Checkboxes: Use the custom checkbox pattern (hidden native + styled span indicator)
+  - Selects/inputs: Use CSS variables from `global.css` for consistent styling
 - **Dialogs**:
   - Use the native `<dialog>` element via `dialog.showModal()` + CSS Modules for a consistent look and better accessibility.
   - Reuse existing patterns: `JarImportDialog.tsx` and `ConfirmDialog.tsx` (avoid `window.confirm`).
@@ -205,7 +232,7 @@ pnpm preview     # serve the built app locally
 - **Invariants**:
   - **Tile grid math**: coordinates are integer tile indices, origin at **(0,0)** top-left; x→right, y→down (see `docs/CONSTITUTION.md`).
   - **Canvas presets**: preset labels/dimensions come from `src/data/presets.ts` (`GRID_PRESETS`), where **1 unit = 27 tiles**.
-  - **Zoom constants**: `ZOOM_MIN`, `ZOOM_MAX`, `ZOOM_STEP`, `DEFAULT_ZOOM` are also in `src/data/presets.ts`.
+  - **Zoom constants**: `ZOOM_MIN` (6), `ZOOM_MAX` (72), `ZOOM_STEP` (2), `DEFAULT_ZOOM` (12) are in `src/data/presets.ts`.
   - **Initial zoom**: Dynamically calculated on mount to fit grid width in viewport (see `useInitialZoom` hook).
   - **Rotation**: only `0 | 90 | 180 | 270`; footprint uses `getRotatedSize(...)` (`src/data/types.ts`).
   - **Tile rotation**: `rotateTilePosition()` in `renderer.ts` and `reducer.ts` handles rotating individual tiles within a structure's layout.
@@ -232,7 +259,7 @@ pnpm preview     # serve the built app locally
   - **Space restrictions for airlocks/cargo ports**: These structures have large "Space" restriction areas that define where space must be. All Space restriction tiles are included (not just adjacent ones) and rendered as red blocked areas.
   - **Gap filling in structures**: The converter fills gaps within the core bounding box to ensure solid rectangles. Without this, structures like airlocks would appear as scattered tiles.
   - **FloorDeco tiles**: Treated as `access` tiles (crew can walk on them), not `construction`. This affects collision and rendering.
-  - **Layout constants in useInitialZoom**: The hook hardcodes panel widths (280px left, 200px right) and padding (24px × 2). If PlannerPage.module.css changes, update the hook constants.
+  - **Layout constants duplication**: Both `useInitialZoom.ts` and `Toolbar.tsx` hardcode panel widths (280px left, 200px right) and padding (24px × 2). If `PlannerPage.module.css` changes, update **both** files' constants.
   - **JAR category IDs are not sequential**: The JAR uses non-sequential category IDs (e.g., 1506, 1507, 1508, 1516, 1519, 1522, 2880, 3359, 4243). Do NOT assume sequential IDs when mapping categories.
   - **Category display order is descending**: The game displays categories with higher `order` values first (leftmost). This is counterintuitive but matches the game UI.
   - **MainCat filtering is essential**: Only include structures from MainCat 1512 (OBJECTS). Structures from MainCat 1525 (SANDBOX) are debug/internal items that shouldn't appear in the planner. The parser extracts `parentId` from `<mainCat id="..."/>` child element.
@@ -442,7 +469,7 @@ The wiki is **no longer the primary catalog source**. It now provides supplement
 - **Placed structure**: an instance on the grid with `x`, `y`, `rotation`, and derived `layer`.
 - **Layer**: visibility grouping (`Hull | Rooms | Systems | Furniture`); rendering + PNG export only include visible layers.
 - **Rotation**: `0/90/180/270` degrees; affects footprint via `getRotatedSize` and tile positions via `rotateTilePosition`.
-- **Zoom**: pixels-per-tile scale factor; range `ZOOM_MIN` (6) to `ZOOM_MAX` (24), step `ZOOM_STEP` (2).
+- **Zoom**: pixels-per-tile scale factor; range `ZOOM_MIN` (6) to `ZOOM_MAX` (72), step `ZOOM_STEP` (2). Displayed as percentage where **100% = fit-to-width** (dynamically calculated based on viewport width, grid width, and panel sizes).
 - **Autosave**: debounced persistence of the current project JSON into `localStorage`.
 - **Hull tile**: a 1×1 painted hull cell (distinct from hull structures like walls/doors).
 - **JAR**: the game's `spacehaven.jar` file, a ZIP archive containing game data in XML format.

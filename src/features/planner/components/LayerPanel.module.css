@@ -33,10 +33,66 @@
   border-radius: var(--border-radius-sm);
   cursor: pointer;
   transition: background-color var(--transition-fast);
+  user-select: none;
 }
 
 .layerItem:hover {
   background-color: var(--color-bg-tertiary);
+}
+
+/* Hide default checkbox */
+.layerItem input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.layerCheckbox {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  background-color: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
+  border-radius: 3px;
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+}
+
+/* Checkmark */
+.layerCheckbox::after {
+  content: '';
+  position: absolute;
+  display: none;
+  left: 5px;
+  top: 2px;
+  width: 4px;
+  height: 8px;
+  border: solid var(--color-bg-primary);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* Hover state */
+.layerItem:hover .layerCheckbox {
+  border-color: var(--color-accent-blue);
+  background-color: var(--color-bg-secondary);
+}
+
+/* Checked state */
+.layerItem input:checked + .layerCheckbox {
+  background-color: var(--color-accent-green);
+  border-color: var(--color-accent-green);
+}
+
+.layerItem input:checked + .layerCheckbox::after {
+  display: block;
+}
+
+/* Focus state */
+.layerItem input:focus-visible + .layerCheckbox {
+  outline: 2px solid var(--color-accent-blue);
+  outline-offset: 2px;
 }
 
 .layerName {
@@ -84,3 +140,4 @@
 .helpText p {
   margin: 0;
 }
+

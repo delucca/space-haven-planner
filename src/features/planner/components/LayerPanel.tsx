@@ -28,6 +28,7 @@ export function LayerPanel() {
                 checked={visibleLayers.has(layer)}
                 onChange={() => handleLayerToggle(layer)}
               />
+              <span className={styles.layerCheckbox} />
               <span className={styles.layerName}>{layer}</span>
             </label>
           ))}
@@ -64,7 +65,7 @@ export function LayerPanel() {
           <p>• Click grid to place</p>
           <p>• Q/E to rotate</p>
           <p>• +/- to zoom in/out</p>
-          <p>• Use Erase tool to remove</p>
+          <p>• 1/2/3 for Hull/Place/Erase</p>
           <p>• Save/Load as JSON</p>
           <p>• Export as PNG image</p>
         </div>
