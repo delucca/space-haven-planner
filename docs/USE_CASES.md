@@ -40,6 +40,13 @@ A tile-based ship design tool for planning Space Haven spacecraft layouts before
 - **Action:** User views structure in palette
 - **Expected:** Each structure displays its tile dimensions (e.g., "3×2") on the right side
 
+### UC-016: Search Structures in Palette
+- **Action:** User types a query in the palette search box
+- **Expected:** While the query is non-empty, the palette switches from categorized sections to a flat list of matching structures only
+- **Expected:** Matching is case-insensitive against structure name **or** category name (e.g., typing "Power" shows all items in the "Power" category)
+- **Expected:** If no structures match, an empty-state message ("No matching structures") is displayed
+- **Expected:** Clearing the search box returns the palette to the normal categorized view
+
 ---
 
 ## Structure Catalog (Future Enhancement)
