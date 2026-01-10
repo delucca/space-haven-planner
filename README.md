@@ -27,7 +27,7 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
 - **Layer visibility** toggles (Hull, Rooms, Systems, Furniture)
 - **Autosave** to localStorage—pick up where you left off
 - **Export** as JSON (editable) or PNG (shareable)
-- **Keyboard shortcuts**: 1 (place), 2 (erase), Q/E (rotate), Escape (deselect)
+- **Keyboard shortcuts**: 1 (place), 2 (erase), Q/E (rotate), +/- (zoom), Escape (deselect)
 
 ---
 

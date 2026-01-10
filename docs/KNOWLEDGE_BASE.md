@@ -52,6 +52,23 @@ Mouse/keyboard input → dispatch(PlannerAction) → plannerReducer → PlannerS
   → ActionBar → download JSON / load JSON / export PNG
 ```
 
+### Keyboard shortcuts
+
+Handled by `useKeyboardShortcuts` hook (`src/features/planner/hooks/useKeyboardShortcuts.ts`):
+
+| Shortcut | Action |
+|----------|--------|
+| `+` / `=` | Zoom in |
+| `-` / `_` | Zoom out |
+| `Ctrl/Cmd + +/-` | Zoom in/out (also works) |
+| `Q` | Rotate counter-clockwise |
+| `E` | Rotate clockwise |
+| `1` | Select Place tool |
+| `2` | Select Erase tool |
+| `Escape` | Clear selection |
+
+**Note**: Shortcuts are disabled when focus is in input/textarea/select elements.
+
 ### "Source of truth" pointers
 - **Product/behavior spec**: `docs/USE_CASES.md`
 - **Project facts & decisions**: `docs/CONSTITUTION.md`
@@ -125,7 +142,12 @@ pnpm preview     # serve the built app locally
   - Vitest + Testing Library are configured (see `vite.config.ts`, `src/test/setup.ts`).
   - Tests should be added as `src/**/*.{test,spec}.{ts,tsx}`.
   - Global test APIs (`describe`, `it`, `expect`) are available without imports (see `tsconfig.app.json` types).
-  - Current tests: `src/data/catalog/cache.test.ts`, `src/data/catalog/wiki.test.ts`.
+  - `@testing-library/user-event` is available for simulating user interactions in component tests.
+  - Current tests:
+    - `src/data/catalog/cache.test.ts` — catalog caching logic
+    - `src/data/catalog/wiki.test.ts` — wiki parsing and merge logic
+    - `src/features/planner/hooks/useKeyboardShortcuts.test.ts` — keyboard shortcut handling
+    - `src/features/planner/components/Palette.test.tsx` — palette UI (search, category expand/collapse)
 
 ---
 
@@ -134,6 +156,7 @@ pnpm preview     # serve the built app locally
 - **Invariants**:
   - **Tile grid math**: coordinates are integer tile indices, origin at **(0,0)** top-left; x→right, y→down (see `docs/CONSTITUTION.md`).
   - **Canvas presets**: preset labels/dimensions come from `src/data/presets.ts` (`GRID_PRESETS`), where **1 unit = 27 tiles**.
+  - **Zoom constants**: `ZOOM_MIN`, `ZOOM_MAX`, `ZOOM_STEP`, `DEFAULT_ZOOM` are also in `src/data/presets.ts`.
   - **Rotation**: only `0 | 90 | 180 | 270`; footprint uses `getRotatedSize(...)` (`src/data/types.ts`).
   - **Placement validity**: must be within bounds and **must not overlap** any existing structure (collision is global across layers).
   - **Layer assignment**: placed structure `layer` is derived from the selected catalog category’s `defaultLayer`.
@@ -239,6 +262,7 @@ This ensures:
 - **Placed structure**: an instance on the grid with `x`, `y`, `rotation`, and derived `layer`.
 - **Layer**: visibility grouping (`Hull | Rooms | Systems | Furniture`); rendering + PNG export only include visible layers.
 - **Rotation**: `0/90/180/270` degrees; affects footprint via `getRotatedSize`.
+- **Zoom**: pixels-per-tile scale factor; range `ZOOM_MIN` (6) to `ZOOM_MAX` (24), step `ZOOM_STEP` (2).
 - **Autosave**: debounced persistence of the current project JSON into `localStorage`.
 
 ---
