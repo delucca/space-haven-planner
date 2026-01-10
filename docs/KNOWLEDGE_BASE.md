@@ -115,13 +115,14 @@ The zoom level is expressed internally as **pixels per tile** but displayed to u
 
 #### Initial zoom (fit-to-width)
 
-On app load, the zoom level is dynamically calculated to fit the grid width within the viewport:
+On app load (and after NEW_PROJECT), the zoom level is dynamically calculated to fit the grid width within the viewport:
 
 - Handled by `useInitialZoom` hook (`src/features/planner/hooks/useInitialZoom.ts`)
-- Accounts for: left panel (280px), right panel (200px), canvas container padding (48px), canvas border (4px)
+- Accounts for: left panel (280px), right panel (320px), canvas container padding (48px), canvas border (4px)
 - Formula: `optimalZoom = floor((viewportWidth - sidePanels - padding - border) / gridWidth)`
 - Result is clamped to `ZOOM_MIN`–`ZOOM_MAX` and snapped to `ZOOM_STEP`
-- Only runs once on mount (uses a ref flag to prevent re-calculation)
+- Recalculates when `gridWidth` changes (handles NEW_PROJECT reset)
+- Exports `calculateFitZoom()` for use in other components (e.g., Toolbar percentage display)
 
 #### Zoom control UI
 
@@ -165,6 +166,77 @@ Hull tiles are separate from structures:
 - **Auto-walls**: Walls automatically render on hull perimeter
 - **Merged perimeters**: Adjacent hull tiles share walls (only outer edges get walls)
 - **Erasable**: Erase tool removes hull tiles as well as structures (confirmation is required unless the selection contains only hull tiles)
+
+### CAD-style layer system
+
+The planner uses a CAD-style hierarchy for organizing structures: **UserLayers → UserGroups → Structures**.
+
+#### Data model
+
+| Entity        | Fields                                                        | Purpose                          |
+| ------------- | ------------------------------------------------------------- | -------------------------------- |
+| `UserLayer`   | `id`, `name`, `isVisible`, `isLocked`, `order`                | Top-level organization           |
+| `UserGroup`   | `id`, `layerId`, `name`, `isVisible`, `isLocked`, `order`, `categoryId?` | Groups within layers   |
+| `PlacedStructure` | `orgLayerId`, `orgGroupId` (+ existing fields)            | Organization references          |
+
+#### Default layer
+
+A single "Default" layer (`layer-default`) is created on app start and after NEW_PROJECT. Users can create additional layers as needed.
+
+#### Auto-assignment on placement
+
+When placing a structure:
+
+1. Structure is assigned to the **active layer** (`activeLayerId` in state)
+2. `groupId` is set to `null` (no group by default)
+3. Users can organize structures into groups manually via the LayerPanel
+
+#### Visibility and interactivity rules
+
+| Condition               | Visible | Interactive (selectable/erasable) |
+| ----------------------- | ------- | --------------------------------- |
+| Layer visible, unlocked | ✅      | ✅                                |
+| Layer visible, locked   | ✅      | ❌                                |
+| Layer hidden            | ❌      | ❌                                |
+| Group hidden            | ❌      | ❌                                |
+| Group locked            | ✅      | ❌                                |
+
+**Important**: Collision detection remains **global** across all layers (hidden/locked structures still block placement).
+
+#### Layer behaviors
+
+- **Active layer selection**: There's always one layer selected (`activeLayerId`). Clicking a layer selects it; it cannot be deselected.
+- **Auto-select on create**: Creating a new layer or group automatically selects it.
+- **Locked layer protection**: Locked layers cannot be deleted (delete button is hidden, reducer guards against the action).
+- **Persistence**: `activeLayerId` is saved in project files and restored on load.
+
+#### UI components
+
+- `LayerPanel.tsx`: Tree view with layers → groups → items
+- Actions: Create/rename/delete layers and groups, toggle visibility/lock, drag-reorder layers
+- Header controls: Toggle all visible, toggle all locked, collapse/expand all
+- Add layer: `+` button reveals input form; Add group button hidden when layer is locked
+
+#### Persistence
+
+Project file format v4 includes:
+
+```typescript
+{
+  version: 4,
+  // ... existing fields ...
+  userLayers: SerializedUserLayer[],
+  userGroups: SerializedUserGroup[],
+  activeLayerId: string | null,  // Persisted active layer selection
+  structures: [{
+    // ... existing fields ...
+    orgLayerId: string,
+    orgGroupId: string | null,
+  }]
+}
+```
+
+Migration from v3: A single "Default" layer is created, all structures get `orgLayerId: 'layer-default'`.
 
 ### "Source of truth" pointers
 
@@ -306,7 +378,7 @@ pnpm preview     # serve the built app locally
   - **Preset changes don't prune structures**: switching canvas size keeps existing placements; some may end up out of bounds (see UC-082).
   - **Autosave key**: `space-haven-planner-autosave` (see `src/features/planner/hooks/useAutosave.ts`).
   - **JAR catalog cache key**: `space-haven-planner-jar-catalog` (see `src/data/jarCatalog/cache.ts`).
-  - **Project JSON versioning**: current format is **v2**; loader migrates v1 (`category`/`item` → `categoryId`/`structureId`) (see `src/lib/serialization/project.ts`).
+  - **Project JSON versioning**: current format is **v4**; loader migrates v1→v4 (see `src/lib/serialization/project.ts`). Migration adds `orgLayerId`/`orgGroupId` to structures and default user layers.
   - **Unknown structure IDs in loaded projects**: they'll deserialize, but won't render (and won't collide / be erasable) because lookups fail.
   - **Interaction hit-testing**: for selection/erase, prefer tile-level footprints (includes `construction` + `blocked` + `access`) via `getStructureTiles(...).all` in `src/features/planner/state/reducer.ts`. Size-only bounding boxes can miss tiles when a `tileLayout` is present.
   - **DPR scaling**: canvas uses `window.devicePixelRatio` for crisp rendering on HiDPI displays; coordinate math must account for this in `renderer.ts`.
@@ -314,7 +386,7 @@ pnpm preview     # serve the built app locally
   - **Space restrictions for airlocks/cargo ports**: These structures have large "Space" restriction areas that define where space must be. All Space restriction tiles are included (not just adjacent ones) and rendered as red blocked areas.
   - **Gap filling in structures**: The converter fills gaps within the core bounding box to ensure solid rectangles. Without this, structures like airlocks would appear as scattered tiles.
   - **FloorDeco tiles**: Treated as `access` tiles (crew can walk on them), not `construction`. This affects collision and rendering.
-  - **Layout constants duplication**: Both `useInitialZoom.ts` and `Toolbar.tsx` hardcode panel widths (280px left, 200px right) and padding (24px × 2). If `PlannerPage.module.css` changes, update **both** files' constants.
+  - **Layout constants duplication**: Both `useInitialZoom.ts` and `Toolbar.tsx` hardcode panel widths (280px left, 320px right) and padding (24px × 2). If `PlannerPage.module.css` changes, update **both** files' constants.
   - **JAR category IDs are not sequential**: The JAR uses non-sequential category IDs (e.g., 1506, 1507, 1508, 1516, 1519, 1522, 2880, 3359, 4243). Do NOT assume sequential IDs when mapping categories.
   - **Category display order is descending**: The game displays categories with higher `order` values first (leftmost). This is counterintuitive but matches the game UI.
   - **MainCat filtering is essential**: Only include structures from MainCat 1512 (OBJECTS). Structures from MainCat 1525 (SANDBOX) are debug/internal items that shouldn't appear in the planner. The parser extracts `parentId` from `<mainCat id="..."/>` child element.
@@ -522,7 +594,9 @@ The wiki is **no longer the primary catalog source**. It now provides supplement
 - **TileLayout**: detailed tile-level data for a structure, including individual tile positions and types.
 - **StructureTile**: a single tile within a structure's layout with `x`, `y`, `type` (construction/blocked/access), and `walkCost`.
 - **Placed structure**: an instance on the grid with `x`, `y`, `rotation`, and derived `layer`.
-- **Layer**: visibility grouping (`Hull | Rooms | Systems | Furniture`); rendering + PNG export only include visible layers.
+- **Layer (system)**: game-aligned visibility grouping (`Hull | Rooms | Systems | Furniture`); used for render ordering.
+- **UserLayer**: CAD-style user-defined layer for organization; controls visibility and lock state.
+- **UserGroup**: CAD-style group within a layer; organizes structures by category or custom grouping.
 - **Rotation**: `0/90/180/270` degrees; affects footprint via `getRotatedSize` and tile positions via `rotateTilePosition`.
 - **Zoom**: pixels-per-tile scale factor; range `ZOOM_MIN` (6) to `ZOOM_MAX` (72), step `ZOOM_STEP` (2). Displayed as percentage where **100% = fit-to-width** (dynamically calculated based on viewport width, grid width, and panel sizes).
 - **Autosave**: debounced persistence of the current project JSON into `localStorage`.

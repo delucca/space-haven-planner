@@ -1,9 +1,42 @@
-import type { Rotation, StructureDef, StructureTile } from '@/data/types'
-import { DEFAULT_PRESET, DEFAULT_ZOOM, LAYERS, ZOOM_MAX, ZOOM_MIN } from '@/data/presets'
-import { findStructureById } from '@/data/catalog'
+import type {
+  Rotation,
+  StructureDef,
+  StructureTile,
+  UserLayer,
+  UserGroup,
+  PlacedStructure,
+  LayerId,
+} from '@/data/types'
+import { DEFAULT_PRESET, LAYERS, ZOOM_MAX, ZOOM_MIN } from '@/data/presets'
+import { findStructureById, findCategoryById } from '@/data/catalog'
 import { getRotatedSize } from '@/data/types'
 import { getBuiltinCatalog } from '@/data/jarCatalog'
 import type { PlannerState, PlannerAction } from './types'
+
+/**
+ * Generate a unique ID for layers/groups
+ */
+function generateId(): string {
+  return `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`
+}
+
+/**
+ * Default user layer - single "Default" layer
+ */
+const DEFAULT_USER_LAYERS: UserLayer[] = [
+  { id: 'layer-default', name: 'Default', isVisible: true, isLocked: false, order: 0 },
+]
+
+/**
+ * Map system LayerId to default user layer ID
+ * All system layers map to the single default layer
+ */
+const SYSTEM_LAYER_TO_USER_LAYER: Record<LayerId, string> = {
+  Hull: 'layer-default',
+  Rooms: 'layer-default',
+  Systems: 'layer-default',
+  Furniture: 'layer-default',
+}
 
 /**
  * Create initial catalog status
@@ -40,13 +73,20 @@ export function createInitialState(): PlannerState {
   return {
     gridSize: { width: DEFAULT_PRESET.width, height: DEFAULT_PRESET.height },
     presetLabel: DEFAULT_PRESET.label,
-    zoom: DEFAULT_ZOOM,
+    zoom: 100, // Start at 100% zoom (full width)
     showGrid: true,
     tool: 'hull',
     selection: null,
     previewRotation: 0,
     visibleLayers: new Set(LAYERS),
     expandedCategories: new Set(['hull']),
+    // CAD-style layers and groups
+    userLayers: DEFAULT_USER_LAYERS,
+    userGroups: [],
+    activeLayerId: 'layer-default', // Default layer is active
+    activeGroupId: null,
+    expandedLayerIds: new Set(DEFAULT_USER_LAYERS.map((l) => l.id)),
+    expandedGroupIds: new Set(),
     structures: [],
     hullTiles: new Set(),
     hoveredTile: null,
@@ -54,6 +94,90 @@ export function createInitialState(): PlannerState {
     catalog: getBuiltinCatalog(),
     catalogStatus: createInitialCatalogStatus(),
   }
+}
+
+/**
+ * Get or create a group for a category within a layer
+ */
+function getOrCreateCategoryGroup(
+  state: PlannerState,
+  layerId: string,
+  categoryId: string,
+  categoryName: string
+): { groups: readonly UserGroup[]; groupId: string } {
+  // Check if group already exists for this category in this layer
+  const existingGroup = state.userGroups.find(
+    (g) => g.layerId === layerId && g.categoryId === categoryId
+  )
+  if (existingGroup) {
+    return { groups: state.userGroups, groupId: existingGroup.id }
+  }
+
+  // Create new group
+  const maxOrder = state.userGroups
+    .filter((g) => g.layerId === layerId)
+    .reduce((max, g) => Math.max(max, g.order), -1)
+
+  const newGroup: UserGroup = {
+    id: generateId(),
+    layerId,
+    name: categoryName,
+    isVisible: true,
+    isLocked: false,
+    order: maxOrder + 1,
+    categoryId,
+  }
+
+  return { groups: [...state.userGroups, newGroup], groupId: newGroup.id }
+}
+
+/**
+ * Find the user layer for a given structure based on its system layer
+ */
+function findUserLayerForSystemLayer(state: PlannerState, systemLayer: LayerId): string {
+  const defaultLayerId = SYSTEM_LAYER_TO_USER_LAYER[systemLayer]
+  const layer = state.userLayers.find((l) => l.id === defaultLayerId)
+  if (layer) return layer.id
+
+  // Fallback to first layer if default not found
+  return state.userLayers[0]?.id ?? 'layer-hull'
+}
+
+/**
+ * Check if a structure is visible based on its layer and group visibility
+ */
+export function isStructureVisible(state: PlannerState, struct: PlacedStructure): boolean {
+  // Check user layer visibility
+  const layer = state.userLayers.find((l) => l.id === struct.orgLayerId)
+  if (!layer || !layer.isVisible) return false
+
+  // Check group visibility if structure is in a group
+  if (struct.orgGroupId) {
+    const group = state.userGroups.find((g) => g.id === struct.orgGroupId)
+    if (group && !group.isVisible) return false
+  }
+
+  return true
+}
+
+/**
+ * Check if a structure is interactive (can be selected/erased)
+ * Must be visible AND not locked
+ */
+export function isStructureInteractive(state: PlannerState, struct: PlacedStructure): boolean {
+  if (!isStructureVisible(state, struct)) return false
+
+  // Check user layer lock
+  const layer = state.userLayers.find((l) => l.id === struct.orgLayerId)
+  if (layer?.isLocked) return false
+
+  // Check group lock if structure is in a group
+  if (struct.orgGroupId) {
+    const group = state.userGroups.find((g) => g.id === struct.orgGroupId)
+    if (group?.isLocked) return false
+  }
+
+  return true
 }
 
 /**
@@ -193,11 +317,14 @@ function hasCollision(
 }
 
 /**
- * Find structure at given tile position
+ * Find structure at given tile position (only interactive structures)
  */
 function findStructureAt(state: PlannerState, x: number, y: number): string | null {
   const targetKey = hullTileKey(x, y)
   for (const struct of state.structures) {
+    // Only find interactive structures (visible and not locked)
+    if (!isStructureInteractive(state, struct)) continue
+
     const found = findStructureById(state.catalog, struct.structureId)
     if (!found) continue
     const tiles = getStructureTiles(found.structure, struct.x, struct.y, struct.rotation)
@@ -309,6 +436,248 @@ export function plannerReducer(state: PlannerState, action: PlannerAction): Plan
       }
     }
 
+    // CAD-style user layer actions
+    case 'CREATE_LAYER': {
+      const maxOrder = state.userLayers.reduce((max, l) => Math.max(max, l.order), -1)
+      const newLayer: UserLayer = {
+        id: generateId(),
+        name: action.name,
+        isVisible: true,
+        isLocked: false,
+        order: maxOrder + 1,
+      }
+      return {
+        ...state,
+        userLayers: [...state.userLayers, newLayer],
+        activeLayerId: newLayer.id, // Auto-select the new layer
+        activeGroupId: null,
+      }
+    }
+
+    case 'RENAME_LAYER': {
+      return {
+        ...state,
+        userLayers: state.userLayers.map((l) =>
+          l.id === action.layerId ? { ...l, name: action.name } : l
+        ),
+      }
+    }
+
+    case 'TOGGLE_LAYER_VISIBLE': {
+      return {
+        ...state,
+        userLayers: state.userLayers.map((l) =>
+          l.id === action.layerId ? { ...l, isVisible: !l.isVisible } : l
+        ),
+      }
+    }
+
+    case 'TOGGLE_LAYER_LOCK': {
+      return {
+        ...state,
+        userLayers: state.userLayers.map((l) =>
+          l.id === action.layerId ? { ...l, isLocked: !l.isLocked } : l
+        ),
+      }
+    }
+
+    case 'DELETE_LAYER_AND_ITEMS': {
+      // Don't allow deleting locked layers
+      const layerToDelete = state.userLayers.find((l) => l.id === action.layerId)
+      if (layerToDelete?.isLocked) {
+        return state
+      }
+
+      // Delete all structures in this layer
+      const remainingStructures = state.structures.filter((s) => s.orgLayerId !== action.layerId)
+      // Delete all groups in this layer
+      const remainingGroups = state.userGroups.filter((g) => g.layerId !== action.layerId)
+      // Delete the layer itself
+      const remainingLayers = state.userLayers.filter((l) => l.id !== action.layerId)
+
+      // If deleting the active layer, select another one (there should always be one selected)
+      let newActiveLayerId = state.activeLayerId
+      let newActiveGroupId = state.activeGroupId
+      if (state.activeLayerId === action.layerId) {
+        // Select the first remaining layer, or null if none left
+        newActiveLayerId = remainingLayers.length > 0 ? remainingLayers[0].id : null
+        newActiveGroupId = null
+      }
+
+      return {
+        ...state,
+        userLayers: remainingLayers,
+        userGroups: remainingGroups,
+        structures: remainingStructures,
+        activeLayerId: newActiveLayerId,
+        activeGroupId: newActiveGroupId,
+      }
+    }
+
+    case 'SET_ACTIVE_LAYER': {
+      return {
+        ...state,
+        activeLayerId: action.layerId,
+        activeGroupId: null, // Clear group selection when changing layer
+      }
+    }
+
+    case 'TOGGLE_LAYER_EXPANDED': {
+      const newExpanded = new Set(state.expandedLayerIds)
+      if (newExpanded.has(action.layerId)) {
+        newExpanded.delete(action.layerId)
+      } else {
+        newExpanded.add(action.layerId)
+      }
+      return {
+        ...state,
+        expandedLayerIds: newExpanded,
+      }
+    }
+
+    case 'REORDER_LAYER': {
+      return {
+        ...state,
+        userLayers: state.userLayers.map((l) =>
+          l.id === action.layerId ? { ...l, order: action.newOrder } : l
+        ),
+      }
+    }
+
+    // CAD-style user group actions
+    case 'CREATE_GROUP': {
+      const maxOrder = state.userGroups
+        .filter((g) => g.layerId === action.layerId)
+        .reduce((max, g) => Math.max(max, g.order), -1)
+      const newGroup: UserGroup = {
+        id: generateId(),
+        layerId: action.layerId,
+        name: action.name,
+        isVisible: true,
+        isLocked: false,
+        order: maxOrder + 1,
+        categoryId: action.categoryId ?? null,
+      }
+      return {
+        ...state,
+        userGroups: [...state.userGroups, newGroup],
+        activeLayerId: action.layerId, // Ensure parent layer is selected
+        activeGroupId: newGroup.id, // Auto-select the new group
+      }
+    }
+
+    case 'RENAME_GROUP': {
+      return {
+        ...state,
+        userGroups: state.userGroups.map((g) =>
+          g.id === action.groupId ? { ...g, name: action.name } : g
+        ),
+      }
+    }
+
+    case 'TOGGLE_GROUP_VISIBLE': {
+      return {
+        ...state,
+        userGroups: state.userGroups.map((g) =>
+          g.id === action.groupId ? { ...g, isVisible: !g.isVisible } : g
+        ),
+      }
+    }
+
+    case 'TOGGLE_GROUP_LOCK': {
+      return {
+        ...state,
+        userGroups: state.userGroups.map((g) =>
+          g.id === action.groupId ? { ...g, isLocked: !g.isLocked } : g
+        ),
+      }
+    }
+
+    case 'DELETE_GROUP_AND_ITEMS': {
+      // Delete all structures in this group
+      const remainingStructures = state.structures.filter((s) => s.orgGroupId !== action.groupId)
+      // Delete the group itself
+      const remainingGroups = state.userGroups.filter((g) => g.id !== action.groupId)
+
+      // Clear active selection if it was on the deleted group
+      let newActiveGroupId = state.activeGroupId
+      if (state.activeGroupId === action.groupId) {
+        newActiveGroupId = null
+      }
+
+      return {
+        ...state,
+        userGroups: remainingGroups,
+        structures: remainingStructures,
+        activeGroupId: newActiveGroupId,
+      }
+    }
+
+    case 'SET_ACTIVE_GROUP': {
+      // When setting active group, also set its parent layer as active
+      const group = state.userGroups.find((g) => g.id === action.groupId)
+      return {
+        ...state,
+        activeGroupId: action.groupId,
+        activeLayerId: group?.layerId ?? state.activeLayerId,
+      }
+    }
+
+    case 'TOGGLE_GROUP_EXPANDED': {
+      const newExpanded = new Set(state.expandedGroupIds)
+      if (newExpanded.has(action.groupId)) {
+        newExpanded.delete(action.groupId)
+      } else {
+        newExpanded.add(action.groupId)
+      }
+      return {
+        ...state,
+        expandedGroupIds: newExpanded,
+      }
+    }
+
+    case 'REORDER_GROUP': {
+      return {
+        ...state,
+        userGroups: state.userGroups.map((g) =>
+          g.id === action.groupId ? { ...g, order: action.newOrder } : g
+        ),
+      }
+    }
+
+    // Structure organization actions
+    case 'MOVE_STRUCTURE_TO_GROUP': {
+      return {
+        ...state,
+        structures: state.structures.map((s) =>
+          s.id === action.structureId
+            ? { ...s, orgLayerId: action.layerId, orgGroupId: action.groupId }
+            : s
+        ),
+      }
+    }
+
+    case 'DELETE_STRUCTURE': {
+      return {
+        ...state,
+        structures: state.structures.filter((s) => s.id !== action.structureId),
+      }
+    }
+
+    case 'LOAD_USER_LAYERS': {
+      // Determine activeLayerId: use provided value, or fall back to first layer
+      const newActiveLayerId = action.activeLayerId !== undefined 
+        ? action.activeLayerId 
+        : (action.layers.length > 0 ? action.layers[0].id : null)
+      
+      return {
+        ...state,
+        userLayers: action.layers,
+        userGroups: action.groups,
+        activeLayerId: newActiveLayerId,
+      }
+    }
+
     // Structure placement actions
     case 'PLACE_STRUCTURE': {
       const found = findStructureById(state.catalog, action.structure.structureId)
@@ -339,9 +708,65 @@ export function plannerReducer(state: PlannerState, action: PlannerAction): Plan
         return state
       }
 
+      // Determine org layer and group for the new structure
+      let structureToPlace = action.structure
+      let updatedGroups = state.userGroups
+
+      // If structure doesn't have org IDs, assign them
+      if (!structureToPlace.orgLayerId) {
+        let orgLayerId: string
+        let orgGroupId: string | null = null
+
+        if (state.activeGroupId) {
+          // Use active group
+          const activeGroup = state.userGroups.find((g) => g.id === state.activeGroupId)
+          if (activeGroup) {
+            orgLayerId = activeGroup.layerId
+            orgGroupId = activeGroup.id
+          } else {
+            orgLayerId = findUserLayerForSystemLayer(state, action.structure.layer)
+          }
+        } else if (state.activeLayerId) {
+          // Use active layer, auto-create category group
+          orgLayerId = state.activeLayerId
+          const category = findCategoryById(state.catalog, action.structure.categoryId)
+          if (category) {
+            const result = getOrCreateCategoryGroup(
+              { ...state, userGroups: updatedGroups },
+              orgLayerId,
+              category.id,
+              category.name
+            )
+            updatedGroups = result.groups
+            orgGroupId = result.groupId
+          }
+        } else {
+          // Auto-assign based on system layer and category
+          orgLayerId = findUserLayerForSystemLayer(state, action.structure.layer)
+          const category = findCategoryById(state.catalog, action.structure.categoryId)
+          if (category) {
+            const result = getOrCreateCategoryGroup(
+              { ...state, userGroups: updatedGroups },
+              orgLayerId,
+              category.id,
+              category.name
+            )
+            updatedGroups = result.groups
+            orgGroupId = result.groupId
+          }
+        }
+
+        structureToPlace = {
+          ...action.structure,
+          orgLayerId,
+          orgGroupId,
+        }
+      }
+
       return {
         ...state,
-        structures: [...state.structures, action.structure],
+        structures: [...state.structures, structureToPlace],
+        userGroups: updatedGroups,
       }
     }
 
@@ -382,11 +807,13 @@ export function plannerReducer(state: PlannerState, action: PlannerAction): Plan
       // If rect is completely out of bounds, nothing to erase
       if (x1 > x2 || y1 > y2) return state
 
-      // Remove any structures whose bounds intersects the rect
+      // Remove any interactive structures whose bounds intersects the rect
       let structuresChanged = false
       const remainingStructures: PlannerState['structures'][number][] = []
       for (const struct of state.structures) {
-        const intersects = structureIntersectsRect(state, struct, { x1, y1, x2, y2 })
+        // Only erase interactive structures (visible and not locked)
+        const canErase = isStructureInteractive(state, struct)
+        const intersects = canErase && structureIntersectsRect(state, struct, { x1, y1, x2, y2 })
         if (intersects) {
           structuresChanged = true
         } else {
@@ -424,6 +851,8 @@ export function plannerReducer(state: PlannerState, action: PlannerAction): Plan
         ...state,
         structures: [],
         hullTiles: new Set(),
+        // Reset groups but keep layers
+        userGroups: [],
       }
 
     case 'LOAD_STRUCTURES':
@@ -575,6 +1004,13 @@ export function plannerReducer(state: PlannerState, action: PlannerAction): Plan
         ...createInitialState(),
         catalog: state.catalog, // Keep current catalog
         catalogStatus: state.catalogStatus,
+        // Reset to default layer (zoom will be set by useInitialZoom hook)
+        userLayers: DEFAULT_USER_LAYERS,
+        userGroups: [],
+        activeLayerId: 'layer-default',
+        activeGroupId: null,
+        expandedLayerIds: new Set(DEFAULT_USER_LAYERS.map((l) => l.id)),
+        expandedGroupIds: new Set(),
       }
 
     // Catalog actions

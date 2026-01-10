@@ -1,5 +1,5 @@
 import { useRef, useEffect, useCallback, useState } from 'react'
-import { usePlanner, canPlaceAt } from '../state'
+import { usePlanner, canPlaceAt, isStructureInteractive } from '../state'
 import { findStructureById, getRotatedSize } from '@/data'
 import { ConfirmDialog } from '../components/ConfirmDialog'
 import {
@@ -147,10 +147,14 @@ export function CanvasViewport() {
     structures,
     hullTiles,
     catalog,
-    visibleLayers,
+    userLayers,
+    userGroups,
     hoveredTile,
     isDragging,
   } = state
+
+  // Create visibility state for rendering
+  const visibilityState = { userLayers, userGroups }
 
   // Calculate preview info
   const getPreviewInfo = useCallback((): PreviewInfo | null => {
@@ -191,7 +195,7 @@ export function CanvasViewport() {
     // Get hull preview info for hull tool
     const hullPreview = tool === 'hull' && hoveredTile && !isDragging ? hoveredTile : null
 
-    renderScene(rc, structures, hullTiles, catalog, visibleLayers, showGrid, preview, hullPreview)
+    renderScene(rc, structures, hullTiles, catalog, visibilityState, showGrid, preview, hullPreview)
 
     if (isDragging && dragRect) {
       const clamped = clampRect(dragRect, gridSize)
@@ -204,8 +208,12 @@ export function CanvasViewport() {
           hullTiles,
         })
       } else {
+        // Only show interactive structures in selection overlay (for erase tool)
         const structureBounds: { x: number; y: number; width: number; height: number }[] = []
         for (const struct of structures) {
+          // For erase tool, only show interactive structures
+          if (tool === 'erase' && !isStructureInteractive(state, struct)) continue
+
           const found = findStructureById(catalog, struct.structureId)
           if (!found) continue
           if (structureIntersectsRectByTiles(normalized, struct, found.structure)) {
@@ -228,7 +236,7 @@ export function CanvasViewport() {
     structures,
     hullTiles,
     catalog,
-    visibleLayers,
+    visibilityState,
     getPreviewInfo,
     tool,
     hoveredTile,
@@ -332,6 +340,7 @@ export function CanvasViewport() {
       if (!found) return
 
       // Don't check canPlaceAt here - let the reducer handle collision detection
+      // The reducer will auto-assign orgLayerId and orgGroupId based on active selection or category
       dispatch({
         type: 'PLACE_STRUCTURE',
         structure: {
@@ -342,6 +351,8 @@ export function CanvasViewport() {
           y: start.y,
           rotation: previewRotation,
           layer: found.category.defaultLayer,
+          orgLayerId: '', // Will be auto-assigned by reducer
+          orgGroupId: null,
         },
       })
       return
@@ -356,8 +367,12 @@ export function CanvasViewport() {
         }
       }
 
+      // Only count interactive structures (visible and not locked)
       const structureIds = new Set<string>()
       for (const struct of structures) {
+        // Skip non-interactive structures (hidden or locked)
+        if (!isStructureInteractive(state, struct)) continue
+
         const found = findStructureById(catalog, struct.structureId)
         if (!found) continue
         if (structureIntersectsRectByTiles(normalized, struct, found.structure)) {

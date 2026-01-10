@@ -24,10 +24,10 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
 - **111 structures** across 11 categories (power, life support, hull, etc.)
 - **Collision detection** prevents overlapping placements
 - **Rotation** (Q/E keys) with footprint-aware validation
-- **Layer visibility** toggles (Hull, Rooms, Systems, Furniture)
+- **CAD-style layers** with visibility, lock, and drag-reorder
 - **Autosave** to localStorage—pick up where you left off
 - **Export** as JSON (editable) or PNG (shareable)
-- **Keyboard shortcuts**: 1 (place), 2 (erase), Q/E (rotate), +/- (zoom), Escape (deselect)
+- **Keyboard shortcuts**: 1 (hull), 2 (place), 3 (erase), Q/E (rotate), +/- (zoom), Escape (deselect)
 
 ---
 

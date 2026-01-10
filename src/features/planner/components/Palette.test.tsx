@@ -59,6 +59,18 @@ function createMockState(overrides: Partial<PlannerState> = {}): PlannerState {
     previewRotation: 0,
     visibleLayers: new Set(['Hull', 'Rooms', 'Systems', 'Furniture']),
     expandedCategories: new Set(['power']),
+    // CAD-style layers and groups
+    userLayers: [
+      { id: 'layer-hull', name: 'Hull', isVisible: true, isLocked: false, order: 0 },
+      { id: 'layer-rooms', name: 'Rooms', isVisible: true, isLocked: false, order: 1 },
+      { id: 'layer-systems', name: 'Systems', isVisible: true, isLocked: false, order: 2 },
+      { id: 'layer-furniture', name: 'Furniture', isVisible: true, isLocked: false, order: 3 },
+    ],
+    userGroups: [],
+    activeLayerId: null,
+    activeGroupId: null,
+    expandedLayerIds: new Set(['layer-hull', 'layer-rooms', 'layer-systems', 'layer-furniture']),
+    expandedGroupIds: new Set(),
     structures: [],
     hoveredTile: null,
     isDragging: false,

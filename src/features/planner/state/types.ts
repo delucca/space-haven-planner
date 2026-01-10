@@ -6,6 +6,8 @@ import type {
   Rotation,
   StructureCatalog,
   ToolId,
+  UserLayer,
+  UserGroup,
 } from '@/data/types'
 
 /**
@@ -59,9 +61,21 @@ export interface PlannerState {
   readonly selection: StructureSelection | null
   readonly previewRotation: Rotation
 
-  // Layers
+  // Legacy layers (kept for backwards compatibility during transition)
   readonly visibleLayers: ReadonlySet<LayerId>
   readonly expandedCategories: ReadonlySet<string>
+
+  // CAD-style user layers and groups
+  readonly userLayers: readonly UserLayer[]
+  readonly userGroups: readonly UserGroup[]
+  /** Currently active layer for new structure placement (null = auto-assign) */
+  readonly activeLayerId: string | null
+  /** Currently active group for new structure placement (null = auto-assign to category group) */
+  readonly activeGroupId: string | null
+  /** Expanded layer IDs in the layer panel UI */
+  readonly expandedLayerIds: ReadonlySet<string>
+  /** Expanded group IDs in the layer panel UI */
+  readonly expandedGroupIds: ReadonlySet<string>
 
   // Placed structures
   readonly structures: readonly PlacedStructure[]
@@ -93,9 +107,36 @@ export type PlannerAction =
   | { type: 'CLEAR_SELECTION' }
   | { type: 'ROTATE_PREVIEW'; direction: 'cw' | 'ccw' }
 
-  // Layer actions
+  // Legacy layer actions (kept for backwards compatibility)
   | { type: 'TOGGLE_LAYER_VISIBILITY'; layer: LayerId }
   | { type: 'TOGGLE_CATEGORY_EXPANDED'; categoryId: string }
+
+  // CAD-style user layer actions
+  | { type: 'CREATE_LAYER'; name: string }
+  | { type: 'RENAME_LAYER'; layerId: string; name: string }
+  | { type: 'TOGGLE_LAYER_VISIBLE'; layerId: string }
+  | { type: 'TOGGLE_LAYER_LOCK'; layerId: string }
+  | { type: 'DELETE_LAYER_AND_ITEMS'; layerId: string }
+  | { type: 'SET_ACTIVE_LAYER'; layerId: string | null }
+  | { type: 'TOGGLE_LAYER_EXPANDED'; layerId: string }
+  | { type: 'REORDER_LAYER'; layerId: string; newOrder: number }
+
+  // CAD-style user group actions
+  | { type: 'CREATE_GROUP'; layerId: string; name: string; categoryId?: string }
+  | { type: 'RENAME_GROUP'; groupId: string; name: string }
+  | { type: 'TOGGLE_GROUP_VISIBLE'; groupId: string }
+  | { type: 'TOGGLE_GROUP_LOCK'; groupId: string }
+  | { type: 'DELETE_GROUP_AND_ITEMS'; groupId: string }
+  | { type: 'SET_ACTIVE_GROUP'; groupId: string | null }
+  | { type: 'TOGGLE_GROUP_EXPANDED'; groupId: string }
+  | { type: 'REORDER_GROUP'; groupId: string; newOrder: number }
+
+  // Structure organization actions
+  | { type: 'MOVE_STRUCTURE_TO_GROUP'; structureId: string; layerId: string; groupId: string | null }
+  | { type: 'DELETE_STRUCTURE'; structureId: string }
+
+  // Load user layers/groups (for project load/autosave)
+  | { type: 'LOAD_USER_LAYERS'; layers: UserLayer[]; groups: UserGroup[]; activeLayerId?: string | null }
 
   // Structure placement actions
   | { type: 'PLACE_STRUCTURE'; structure: PlacedStructure }

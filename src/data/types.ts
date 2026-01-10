@@ -117,7 +117,42 @@ export interface PlacedStructure {
   readonly x: number
   readonly y: number
   readonly rotation: Rotation
+  /** System layer (game-aligned, for render ordering and legacy compatibility) */
   readonly layer: LayerId
+  /** User-defined layer ID for CAD-style organization */
+  readonly orgLayerId: string
+  /** User-defined group ID within the layer (null = ungrouped) */
+  readonly orgGroupId: string | null
+}
+
+/**
+ * User-defined layer for CAD-style organization
+ * Layers contain groups, and groups contain structures
+ */
+export interface UserLayer {
+  readonly id: string
+  readonly name: string
+  readonly isVisible: boolean
+  readonly isLocked: boolean
+  /** Display order (lower = rendered first / bottom) */
+  readonly order: number
+}
+
+/**
+ * User-defined group within a layer
+ * Groups organize structures within a layer
+ */
+export interface UserGroup {
+  readonly id: string
+  /** Parent layer ID */
+  readonly layerId: string
+  readonly name: string
+  readonly isVisible: boolean
+  readonly isLocked: boolean
+  /** Display order within the layer (lower = rendered first / bottom) */
+  readonly order: number
+  /** If auto-created from catalog category, stores the categoryId */
+  readonly categoryId?: string | null
 }
 
 /** Axis-aligned bounding box for collision detection */

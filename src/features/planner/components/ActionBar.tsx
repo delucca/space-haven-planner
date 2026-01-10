@@ -10,6 +10,8 @@ import {
   downloadDataURL,
   deserializeStructures,
   deserializeHullTiles,
+  deserializeUserLayers,
+  deserializeUserGroups,
 } from '@/lib/serialization'
 import { clearJarCatalogCache } from '@/data/jarCatalog'
 import { JarImportDialog } from './JarImportDialog'
@@ -34,10 +36,13 @@ export function ActionBar() {
       state.gridSize,
       state.presetLabel,
       state.structures,
-      state.hullTiles
+      state.hullTiles,
+      state.userLayers,
+      state.userGroups,
+      state.activeLayerId
     )
     downloadProjectJSON(project)
-  }, [state.gridSize, state.presetLabel, state.structures, state.hullTiles])
+  }, [state.gridSize, state.presetLabel, state.structures, state.hullTiles, state.userLayers, state.userGroups, state.activeLayerId])
 
   const handleLoadClick = useCallback(() => {
     fileInputRef.current?.click()
@@ -64,6 +69,11 @@ export function ActionBar() {
         // Load hull tiles (v3+)
         const hullTiles = deserializeHullTiles(project.hullTiles)
         dispatch({ type: 'LOAD_HULL_TILES', tiles: hullTiles })
+
+        // Load user layers and groups (v4+)
+        const userLayers = deserializeUserLayers(project.userLayers)
+        const userGroups = deserializeUserGroups(project.userGroups)
+        dispatch({ type: 'LOAD_USER_LAYERS', layers: userLayers, groups: userGroups, activeLayerId: project.activeLayerId })
       } catch (err) {
         console.error('Failed to load project:', err)
         alert(`Failed to load project: ${err instanceof Error ? err.message : String(err)}`)
@@ -82,7 +92,7 @@ export function ActionBar() {
         state.structures,
         state.hullTiles,
         state.catalog,
-        state.visibleLayers,
+        { userLayers: state.userLayers, userGroups: state.userGroups },
         EXPORT_SCALE
       )
       downloadDataURL(dataURL, 'spacehaven-ship.png')
@@ -90,7 +100,7 @@ export function ActionBar() {
       console.error('Failed to export PNG:', err)
       alert('Failed to export PNG')
     }
-  }, [state.gridSize, state.structures, state.hullTiles, state.catalog, state.visibleLayers])
+  }, [state.gridSize, state.structures, state.hullTiles, state.catalog, state.userLayers, state.userGroups])
 
   const handleClear = useCallback(() => {
     const hasAnything = state.structures.length > 0 || state.hullTiles.size > 0

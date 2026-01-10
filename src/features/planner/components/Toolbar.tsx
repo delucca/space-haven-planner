@@ -7,7 +7,7 @@ import styles from './Toolbar.module.css'
 
 // Layout constants (must match PlannerPage.module.css and useInitialZoom.ts)
 const LEFT_PANEL_WIDTH = 280
-const RIGHT_PANEL_WIDTH = 200
+const RIGHT_PANEL_WIDTH = 320 // Updated to match larger right panel
 const CANVAS_CONTAINER_PADDING = 24 * 2 // --spacing-xl on both sides
 const CANVAS_BORDER = 2 * 2 // 2px border on both sides
 

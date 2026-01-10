@@ -6,6 +6,8 @@ import {
   parseProjectFile,
   deserializeStructures,
   deserializeHullTiles,
+  deserializeUserLayers,
+  deserializeUserGroups,
 } from '@/lib/serialization'
 
 const STORAGE_KEY = 'space-haven-planner-autosave'
@@ -24,14 +26,17 @@ export function useAutosave(state: PlannerState, dispatch: Dispatch<PlannerActio
       state.gridSize,
       state.presetLabel,
       state.structures,
-      state.hullTiles
+      state.hullTiles,
+      state.userLayers,
+      state.userGroups,
+      state.activeLayerId
     )
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(project))
     } catch (err) {
       console.warn('Failed to autosave to localStorage:', err)
     }
-  }, [state.gridSize, state.presetLabel, state.structures, state.hullTiles])
+  }, [state.gridSize, state.presetLabel, state.structures, state.hullTiles, state.userLayers, state.userGroups, state.activeLayerId])
 
   // Debounced save effect
   useEffect(() => {
@@ -75,6 +80,11 @@ export function useAutosave(state: PlannerState, dispatch: Dispatch<PlannerActio
       // Load hull tiles (v3+)
       const hullTiles = deserializeHullTiles(project.hullTiles)
       dispatch({ type: 'LOAD_HULL_TILES', tiles: hullTiles })
+
+      // Load user layers and groups (v4+)
+      const userLayers = deserializeUserLayers(project.userLayers)
+      const userGroups = deserializeUserGroups(project.userGroups)
+      dispatch({ type: 'LOAD_USER_LAYERS', layers: userLayers, groups: userGroups, activeLayerId: project.activeLayerId })
     } catch (err) {
       console.warn('Failed to load autosave from localStorage:', err)
     }

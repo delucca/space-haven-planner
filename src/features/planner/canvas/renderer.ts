@@ -4,8 +4,38 @@ import type {
   StructureCatalog,
   StructureTile,
   Rotation,
+  UserLayer,
+  UserGroup,
 } from '@/data/types'
 import { findStructureById, getRotatedSize } from '@/data'
+
+/**
+ * Visibility state needed for rendering
+ */
+export interface VisibilityState {
+  userLayers: readonly UserLayer[]
+  userGroups: readonly UserGroup[]
+}
+
+/**
+ * Check if a structure is visible based on its layer and group visibility
+ */
+function isStructureVisibleForRender(
+  visState: VisibilityState,
+  struct: PlacedStructure
+): boolean {
+  // Check user layer visibility
+  const layer = visState.userLayers.find((l) => l.id === struct.orgLayerId)
+  if (!layer || !layer.isVisible) return false
+
+  // Check group visibility if structure is in a group
+  if (struct.orgGroupId) {
+    const group = visState.userGroups.find((g) => g.id === struct.orgGroupId)
+    if (group && !group.isVisible) return false
+  }
+
+  return true
+}
 
 /** Colors for rendering */
 const COLORS = {
@@ -407,13 +437,13 @@ export function renderStructures(
   rc: RenderContext,
   structures: readonly PlacedStructure[],
   catalog: StructureCatalog,
-  visibleLayers: ReadonlySet<string>
+  visibilityState: VisibilityState
 ): void {
   // Track which access tiles have been rendered to avoid double-rendering
   const renderedAccessTiles = new Set<string>()
 
   for (const structure of structures) {
-    if (visibleLayers.has(structure.layer)) {
+    if (isStructureVisibleForRender(visibilityState, structure)) {
       renderStructure(rc, structure, catalog, renderedAccessTiles)
     }
   }
@@ -428,10 +458,11 @@ export function renderStructures(
 export function renderHullTiles(
   rc: RenderContext,
   hullTiles: ReadonlySet<string>,
-  visibleLayers: ReadonlySet<string>
+  visibilityState: VisibilityState
 ): void {
-  // Hull tiles are on the Hull layer
-  if (!visibleLayers.has('Hull')) return
+  // Hull tiles are on the Hull layer - check if the hull layer is visible
+  const hullLayer = visibilityState.userLayers.find((l) => l.id === 'layer-hull')
+  if (!hullLayer || !hullLayer.isVisible) return
 
   const { ctx, zoom } = rc
 
@@ -733,7 +764,7 @@ export function renderScene(
   structures: readonly PlacedStructure[],
   hullTiles: ReadonlySet<string>,
   catalog: StructureCatalog,
-  visibleLayers: ReadonlySet<string>,
+  visibilityState: VisibilityState,
   showGrid: boolean,
   preview: PreviewInfo | null,
   hullPreview: HullPreviewInfo | null
@@ -746,9 +777,9 @@ export function renderScene(
   }
 
   // Render hull tiles first (below structures)
-  renderHullTiles(rc, hullTiles, visibleLayers)
+  renderHullTiles(rc, hullTiles, visibilityState)
 
-  renderStructures(rc, structures, catalog, visibleLayers)
+  renderStructures(rc, structures, catalog, visibilityState)
 
   if (preview) {
     renderPreview(rc, preview)
@@ -767,7 +798,7 @@ export function exportToPNG(
   structures: readonly PlacedStructure[],
   hullTiles: ReadonlySet<string>,
   catalog: StructureCatalog,
-  visibleLayers: ReadonlySet<string>,
+  visibilityState: VisibilityState,
   scale: number
 ): string {
   const canvas = document.createElement('canvas')
@@ -790,8 +821,8 @@ export function exportToPNG(
   clearCanvas(rc)
   renderGrid(rc)
   renderCenterLines(rc)
-  renderHullTiles(rc, hullTiles, visibleLayers)
-  renderStructures(rc, structures, catalog, visibleLayers)
+  renderHullTiles(rc, hullTiles, visibilityState)
+  renderStructures(rc, structures, catalog, visibilityState)
 
   return canvas.toDataURL('image/png')
 }
