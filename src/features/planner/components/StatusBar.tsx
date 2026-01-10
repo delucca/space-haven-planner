@@ -5,14 +5,14 @@ import styles from './StatusBar.module.css'
 /**
  * Format catalog source for display
  */
-function formatCatalogSource(source: CatalogSource): string {
+function formatCatalogSource(source: CatalogSource, jarFileName: string | null): string {
   switch (source) {
-    case 'built_in':
-      return 'Built-in'
-    case 'wiki_cache':
-      return 'Wiki (cached)'
-    case 'wiki_fresh':
-      return 'Wiki (fresh)'
+    case 'jar_builtin_snapshot':
+      return 'JAR (built-in)'
+    case 'jar_user':
+      return jarFileName ? `JAR (${jarFileName})` : 'JAR (user)'
+    case 'jar_user_cache':
+      return jarFileName ? `JAR (${jarFileName}, cached)` : 'JAR (user, cached)'
   }
 }
 
@@ -38,7 +38,7 @@ export function StatusBar() {
   const state = usePlannerState()
   const { hoveredTile, structures, gridSize, catalogStatus } = state
 
-  const catalogLabel = formatCatalogSource(catalogStatus.source)
+  const catalogLabel = formatCatalogSource(catalogStatus.source, catalogStatus.jarFileName)
   const lastUpdated = formatRelativeTime(catalogStatus.lastUpdatedAt)
 
   return (
@@ -51,11 +51,11 @@ export function StatusBar() {
       <span className={styles.center}>
         {catalogStatus.lastError && (
           <span className={styles.error} title={catalogStatus.lastError}>
-            ⚠️ Catalog refresh failed
+            ⚠️ JAR parse failed
           </span>
         )}
-        {catalogStatus.isRefreshing && (
-          <span className={styles.refreshing}>Refreshing catalog...</span>
+        {catalogStatus.isParsing && (
+          <span className={styles.refreshing}>Parsing JAR file...</span>
         )}
       </span>
       <span className={styles.right}>

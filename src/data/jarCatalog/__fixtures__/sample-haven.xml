@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data>
+  <Element>
+    <!-- Sample structure: Power Generator -->
+    <me mid="1001" _name="PowerGenerator">
+      <objectInfo>
+        <name tid="5001"/>
+        <subCat id="1521"/>
+        <restrictions>
+          <l sizeX="2" sizeY="2"/>
+        </restrictions>
+      </objectInfo>
+    </me>
+    
+    <!-- Sample structure: Oxygen Generator -->
+    <me mid="1002" _name="OxygenGenerator">
+      <objectInfo>
+        <name tid="5002"/>
+        <subCat id="1522"/>
+        <restrictions>
+          <l sizeX="3" sizeY="2"/>
+        </restrictions>
+      </objectInfo>
+    </me>
+    
+    <!-- Sample structure: Hull Block (1x1) -->
+    <me mid="1003" _name="HullBlock">
+      <objectInfo>
+        <name tid="5003"/>
+        <subCat id="1520"/>
+        <restrictions>
+          <l sizeX="1" sizeY="1"/>
+        </restrictions>
+      </objectInfo>
+    </me>
+    
+    <!-- Sample structure: Bed -->
+    <me mid="1004" _name="Bed">
+      <objectInfo>
+        <name tid="5004"/>
+        <subCat id="1527"/>
+        <restrictions>
+          <l sizeX="2" sizeY="1"/>
+        </restrictions>
+      </objectInfo>
+    </me>
+    
+    <!-- Structure without restrictions (should have null size) -->
+    <me mid="1005" _name="Decoration">
+      <objectInfo>
+        <name tid="5005"/>
+        <subCat id="1528"/>
+      </objectInfo>
+    </me>
+    
+    <!-- Structure without subCat (should go to uncategorized) -->
+    <me mid="1006" _name="Unknown">
+      <objectInfo>
+        <name tid="5006"/>
+        <restrictions>
+          <l sizeX="2" sizeY="2"/>
+        </restrictions>
+      </objectInfo>
+    </me>
+  </Element>
+</data>
+

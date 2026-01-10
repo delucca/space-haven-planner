@@ -25,17 +25,25 @@ export interface HoverState {
 
 /**
  * Catalog data source
+ *
+ * - jar_builtin_snapshot: Built-in catalog shipped with the app (from reference JAR)
+ * - jar_user: Freshly parsed from user-uploaded JAR
+ * - jar_user_cache: Loaded from localStorage (user's previous JAR)
  */
-export type CatalogSource = 'built_in' | 'wiki_cache' | 'wiki_fresh'
+export type CatalogSource =
+  | 'jar_builtin_snapshot'
+  | 'jar_user'
+  | 'jar_user_cache'
 
 /**
  * Catalog refresh status
  */
 export interface CatalogStatus {
   readonly source: CatalogSource
-  readonly isRefreshing: boolean
+  readonly isParsing: boolean // True when parsing a user-uploaded JAR
   readonly lastUpdatedAt: number | null
   readonly lastError: string | null
+  readonly jarFileName: string | null // Name of the user's JAR file (if applicable)
 }
 
 /**
@@ -64,10 +72,9 @@ export interface PlannerState {
   readonly hoveredTile: HoverState | null
   readonly isDragging: boolean
 
-  // Catalog (supports wiki refresh)
+  // Catalog (JAR-based)
   readonly catalog: StructureCatalog
   readonly catalogStatus: CatalogStatus
-  readonly catalogRefreshRequestId: number
 }
 
 /**
@@ -103,7 +110,8 @@ export type PlannerAction =
   | { type: 'LOAD_PROJECT'; state: Partial<PlannerState> }
   | { type: 'NEW_PROJECT' }
 
-  // Catalog refresh actions
-  | { type: 'REQUEST_CATALOG_REFRESH' }
+  // Catalog actions
   | { type: 'SET_CATALOG'; catalog: StructureCatalog; source: CatalogSource }
   | { type: 'SET_CATALOG_STATUS'; status: Partial<CatalogStatus> }
+  | { type: 'REQUEST_JAR_PARSE' } // Start parsing a user-uploaded JAR
+  | { type: 'RESET_TO_BUILTIN_CATALOG' } // Clear user JAR and reset to built-in

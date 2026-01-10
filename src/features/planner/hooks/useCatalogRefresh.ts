@@ -1,99 +1,48 @@
 import { useEffect, useRef } from 'react'
 import type { Dispatch } from 'react'
-import type { PlannerState, PlannerAction } from '../state/types'
-import { loadCachedCatalog, saveCachedCatalog, isStale, fetchWikiCatalog } from '@/data/catalog'
+import type { PlannerState, PlannerAction, CatalogStatus } from '../state/types'
+import {
+  loadCachedJarCatalog,
+  getBuiltinCatalog,
+} from '@/data/jarCatalog'
 
 /**
- * Hook to handle catalog loading from cache and refreshing from wiki
+ * Hook to handle catalog loading from cache on mount
  *
- * On mount:
- * - Load cached catalog if valid
- * - If stale and online, attempt refresh
- *
- * On catalogRefreshRequestId change (manual refresh):
- * - Force refresh regardless of TTL
+ * Catalog source priority:
+ * 1. User-uploaded JAR (cached) - highest priority
+ * 2. Built-in JAR snapshot - primary source (already loaded by default)
  */
-export function useCatalogRefresh(state: PlannerState, dispatch: Dispatch<PlannerAction>) {
-  const { catalogRefreshRequestId, catalogStatus } = state
+export function useCatalogRefresh(_state: PlannerState, dispatch: Dispatch<PlannerAction>) {
   const isInitializedRef = useRef(false)
-  const lastRefreshRequestIdRef = useRef(catalogRefreshRequestId)
 
-  // Load from cache on mount
+  // Load catalog on mount following source priority
   useEffect(() => {
     if (isInitializedRef.current) return
     isInitializedRef.current = true
 
-    const cached = loadCachedCatalog()
-    if (cached) {
+    // Priority 1: User-uploaded JAR (cached)
+    const jarCache = loadCachedJarCatalog()
+    if (jarCache) {
       dispatch({
         type: 'SET_CATALOG',
-        catalog: cached.catalog,
-        source: 'wiki_cache',
+        catalog: jarCache.catalog,
+        source: 'jar_user_cache',
       })
-
-      // If cache is stale and online, trigger a refresh
-      if (isStale(cached.fetchedAt) && navigator.onLine) {
-        dispatch({ type: 'REQUEST_CATALOG_REFRESH' })
-      }
-    } else if (navigator.onLine) {
-      // No cache, try to fetch if online
-      dispatch({ type: 'REQUEST_CATALOG_REFRESH' })
-    }
-  }, [dispatch])
-
-  // Handle refresh requests (initial or manual)
-  useEffect(() => {
-    // Skip if this is the initial mount effect or if not refreshing
-    if (!catalogStatus.isRefreshing) return
-
-    // Skip if we already processed this request
-    if (
-      lastRefreshRequestIdRef.current === catalogRefreshRequestId &&
-      catalogRefreshRequestId > 0
-    ) {
-      // Already processed
+      dispatch({
+        type: 'SET_CATALOG_STATUS',
+        status: {
+          jarFileName: jarCache.sourceInfo.fileName,
+        } as Partial<CatalogStatus>,
+      })
       return
     }
-    lastRefreshRequestIdRef.current = catalogRefreshRequestId
 
-    let cancelled = false
-
-    async function doRefresh() {
-      try {
-        const result = await fetchWikiCatalog()
-
-        if (cancelled) return
-
-        // Save to cache
-        saveCachedCatalog(result.catalog, result.revisionKey)
-
-        // Update state
-        dispatch({
-          type: 'SET_CATALOG',
-          catalog: result.catalog,
-          source: 'wiki_fresh',
-        })
-      } catch (err) {
-        if (cancelled) return
-
-        const errorMessage = err instanceof Error ? err.message : 'Failed to refresh catalog'
-
-        console.warn('Catalog refresh failed:', errorMessage)
-
-        dispatch({
-          type: 'SET_CATALOG_STATUS',
-          status: {
-            isRefreshing: false,
-            lastError: errorMessage,
-          },
-        })
-      }
-    }
-
-    doRefresh()
-
-    return () => {
-      cancelled = true
-    }
-  }, [catalogStatus.isRefreshing, catalogRefreshRequestId, dispatch])
+    // Priority 2: Built-in JAR snapshot (already loaded by default in createInitialState)
+    dispatch({
+      type: 'SET_CATALOG',
+      catalog: getBuiltinCatalog(),
+      source: 'jar_builtin_snapshot',
+    })
+  }, [dispatch])
 }

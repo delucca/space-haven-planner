@@ -123,27 +123,50 @@ Collision detection is **global** (all layers): two placed items may not overlap
 
 ---
 
-## Structure data source (wiki + fallback)
+## Structure data source (JAR-based catalog)
 
-We ship with a **built-in static catalog** (guaranteed to work offline), and optionally refresh it from the Space Haven community wiki.
+The catalog is derived from the game's `spacehaven.jar` file, which contains authoritative structure definitions including sizes, categories, and names.
+
+### Catalog source priority
+
+1. **User-uploaded JAR**: Users can upload their own `spacehaven.jar` to get catalog data matching their game version
+2. **Built-in JAR snapshot**: A pre-generated catalog snapshot shipped with the app (from a reference JAR)
+3. **Static fallback**: Hardcoded structures for guaranteed offline functionality
+
+### JAR file location
+
+Users can find `spacehaven.jar` at:
+- **Windows**: `C:\Program Files (x86)\Steam\steamapps\common\SpaceHaven\spacehaven.jar`
+- **macOS**: `~/Library/Application Support/Steam/steamapps/common/SpaceHaven/spacehaven.jar`
+- **Linux**: `~/.steam/steam/steamapps/common/SpaceHaven/spacehaven.jar`
+
+### JAR structure
+
+The JAR file is a ZIP archive containing XML data:
+- `library/haven`: Main game library with structure definitions (`<me>` elements)
+- `library/texts`: Localization strings (`<t id="..." EN="..."/>`)
+
+Key fields extracted:
+- `mid`: Unique structure ID
+- `<name tid="..."/>`: Reference to text entry for localized name
+- `<restrictions sizeX="..." sizeY="..."/>`: Structure footprint
+
+### Caching
+
+- User-uploaded JAR catalogs are cached in localStorage
+- Cache includes source info (filename, size, parse timestamp)
+- On app load: check for cached user JAR → built-in snapshot → static fallback
+
+### Wiki as supplemental metadata
+
+The Space Haven wiki is **no longer the primary catalog source**. Instead, it provides:
+- Structure images (planned)
+- Extended descriptions (planned)
+- Wiki page links for reference
 
 - **Wiki reference**: [Space Haven Wiki](https://spacehaven.fandom.com/wiki/Space_Haven_Wiki)
-- **API approach**: use the MediaWiki Action API (`api.php`) on Fandom.
-- **CORS**: MediaWiki requires an `origin` query parameter for cross-site API calls; anonymous requests can use `origin=*`.
-  - [MediaWiki Manual:CORS](https://www.mediawiki.org/wiki/Manual:CORS)
-  - [MediaWiki API:Cross-site requests](https://www.mediawiki.org/wiki/API:Cross-site_requests)
-  - [API:Get the contents of a page](https://www.mediawiki.org/wiki/API:Get_the_contents_of_a_page)
-
-### Caching & etiquette
-
-- Cache fetched catalog in localStorage with a timestamp and revision id.
-- Refresh at most once per N days (e.g., 7) unless the user manually refreshes.
-- If fetching/parsing fails: **fall back** to the built-in catalog, no breakage.
-
-### Why we keep a fallback
-
-Wiki markup and templates can change, pages can be incomplete, and APIs can be rate-limited.
-The planner must remain usable even if the wiki is down or blocked.
+- **API approach**: MediaWiki Action API for metadata only
+- Metadata is cached separately from the catalog
 
 ---
 

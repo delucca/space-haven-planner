@@ -1,7 +1,8 @@
 import type { Rotation } from '@/data/types'
 import { DEFAULT_PRESET, DEFAULT_ZOOM, LAYERS, ZOOM_MAX, ZOOM_MIN } from '@/data/presets'
-import { getCatalog, findStructureById } from '@/data/catalog'
+import { findStructureById } from '@/data/catalog'
 import { getRotatedSize } from '@/data/types'
+import { getBuiltinCatalog } from '@/data/jarCatalog'
 import type { PlannerState, PlannerAction } from './types'
 
 /**
@@ -9,10 +10,11 @@ import type { PlannerState, PlannerAction } from './types'
  */
 function createInitialCatalogStatus(): PlannerState['catalogStatus'] {
   return {
-    source: 'built_in',
-    isRefreshing: false,
+    source: 'jar_builtin_snapshot',
+    isParsing: false,
     lastUpdatedAt: null,
     lastError: null,
+    jarFileName: null,
   }
 }
 
@@ -33,9 +35,8 @@ export function createInitialState(): PlannerState {
     structures: [],
     hoveredTile: null,
     isDragging: false,
-    catalog: getCatalog(),
+    catalog: getBuiltinCatalog(),
     catalogStatus: createInitialCatalogStatus(),
-    catalogRefreshRequestId: 0,
   }
 }
 
@@ -251,7 +252,6 @@ export function plannerReducer(state: PlannerState, action: PlannerAction): Plan
         ...action.state,
         catalog: state.catalog, // Keep current catalog
         catalogStatus: state.catalogStatus,
-        catalogRefreshRequestId: state.catalogRefreshRequestId,
       }
 
     case 'NEW_PROJECT':
@@ -259,21 +259,9 @@ export function plannerReducer(state: PlannerState, action: PlannerAction): Plan
         ...createInitialState(),
         catalog: state.catalog, // Keep current catalog
         catalogStatus: state.catalogStatus,
-        catalogRefreshRequestId: state.catalogRefreshRequestId,
       }
 
-    // Catalog refresh actions
-    case 'REQUEST_CATALOG_REFRESH':
-      return {
-        ...state,
-        catalogRefreshRequestId: state.catalogRefreshRequestId + 1,
-        catalogStatus: {
-          ...state.catalogStatus,
-          isRefreshing: true,
-          lastError: null,
-        },
-      }
-
+    // Catalog actions
     case 'SET_CATALOG':
       return {
         ...state,
@@ -281,7 +269,7 @@ export function plannerReducer(state: PlannerState, action: PlannerAction): Plan
         catalogStatus: {
           ...state.catalogStatus,
           source: action.source,
-          isRefreshing: false,
+          isParsing: false,
           lastUpdatedAt: Date.now(),
           lastError: null,
         },
@@ -293,6 +281,29 @@ export function plannerReducer(state: PlannerState, action: PlannerAction): Plan
         catalogStatus: {
           ...state.catalogStatus,
           ...action.status,
+        },
+      }
+
+    case 'REQUEST_JAR_PARSE':
+      return {
+        ...state,
+        catalogStatus: {
+          ...state.catalogStatus,
+          isParsing: true,
+          lastError: null,
+        },
+      }
+
+    case 'RESET_TO_BUILTIN_CATALOG':
+      return {
+        ...state,
+        catalog: getBuiltinCatalog(),
+        catalogStatus: {
+          source: 'jar_builtin_snapshot',
+          isParsing: false,
+          lastUpdatedAt: Date.now(),
+          lastError: null,
+          jarFileName: null,
         },
       }
 

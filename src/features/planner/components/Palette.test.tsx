@@ -64,12 +64,12 @@ function createMockState(overrides: Partial<PlannerState> = {}): PlannerState {
     isDragging: false,
     catalog: mockCatalog,
     catalogStatus: {
-      source: 'built_in',
-      isRefreshing: false,
+      source: 'jar_builtin_snapshot',
+      isParsing: false,
       lastUpdatedAt: null,
       lastError: null,
+      jarFileName: null,
     },
-    catalogRefreshRequestId: 0,
     ...overrides,
   }
 }

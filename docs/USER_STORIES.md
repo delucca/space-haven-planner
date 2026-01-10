@@ -141,17 +141,20 @@
 - Autosave/restore (localStorage)
 - Category → layer mapping
 - Rotation support in placement + preview
-- “Copy share link” UX (even before compression)
+- "Copy share link" UX (even before compression)
 
 **Complex but critical:**
 
-- Parsing structure data from the community wiki reliably (templates may change)
+- JAR file parsing for authoritative structure data (sizes, categories, names)
 - Share link compression + versioning + URL length constraints
 - Performance at large zoom with many placed tiles
 
-**Defer with MVP fallback (not a code workaround):**
+**Catalog data strategy:**
 
-- Dynamic wiki catalog refresh → ship with a static catalog and optionally refresh it with caching (planner must work offline either way)
+- **Primary source**: User-uploaded `spacehaven.jar` or built-in JAR snapshot
+- **Fallback**: Static hardcoded catalog (guaranteed offline functionality)
+- **Supplemental**: Wiki metadata for images/descriptions (not for catalog building)
+- JAR catalog is cached in localStorage with source info for persistence
 
 ---
 
