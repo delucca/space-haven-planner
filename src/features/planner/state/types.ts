@@ -1,5 +1,6 @@
 import type {
   GridSize,
+  HullTile,
   LayerId,
   PlacedStructure,
   Rotation,
@@ -68,6 +69,9 @@ export interface PlannerState {
   // Placed structures
   readonly structures: readonly PlacedStructure[]
 
+  // Hull tiles (painted with hull tool)
+  readonly hullTiles: ReadonlySet<string> // Set of "x,y" keys for O(1) lookup
+
   // Interaction state
   readonly hoveredTile: HoverState | null
   readonly isDragging: boolean
@@ -101,6 +105,11 @@ export type PlannerAction =
   | { type: 'ERASE_AT'; x: number; y: number }
   | { type: 'CLEAR_ALL_STRUCTURES' }
   | { type: 'LOAD_STRUCTURES'; structures: PlacedStructure[] }
+
+  // Hull tile actions
+  | { type: 'PLACE_HULL_TILE'; x: number; y: number }
+  | { type: 'ERASE_HULL_TILE'; x: number; y: number }
+  | { type: 'LOAD_HULL_TILES'; tiles: HullTile[] }
 
   // Interaction actions
   | { type: 'SET_HOVERED_TILE'; tile: HoverState | null }

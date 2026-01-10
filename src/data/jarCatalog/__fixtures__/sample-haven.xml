@@ -1,52 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data>
   <Element>
-    <!-- Sample structure: Power Generator -->
+    <!-- Sample structure: Power Generator (2x2 from linked tiles) -->
     <me mid="1001" _name="PowerGenerator">
+      <data/>
+      <linked>
+        <l id="100" eid="1" gridOffX="0" gridOffY="0" rot="R0" layer="0"/>
+        <l id="100" eid="2" gridOffX="1" gridOffY="0" rot="R0" layer="0"/>
+        <l id="100" eid="3" gridOffX="0" gridOffY="1" rot="R0" layer="0"/>
+        <l id="100" eid="4" gridOffX="1" gridOffY="1" rot="R0" layer="0"/>
+      </linked>
       <objectInfo>
         <name tid="5001"/>
         <subCat id="1521"/>
         <restrictions>
-          <l sizeX="2" sizeY="2"/>
+          <l type="Floor" gridX="0" gridY="-1" sizeX="2" sizeY="1"/>
         </restrictions>
       </objectInfo>
     </me>
     
-    <!-- Sample structure: Oxygen Generator -->
+    <!-- Sample structure: Oxygen Generator (3x2 from linked tiles) -->
     <me mid="1002" _name="OxygenGenerator">
+      <data/>
+      <linked>
+        <l id="101" eid="1" gridOffX="0" gridOffY="0" rot="R0" layer="0"/>
+        <l id="101" eid="2" gridOffX="1" gridOffY="0" rot="R0" layer="0"/>
+        <l id="101" eid="3" gridOffX="2" gridOffY="0" rot="R0" layer="0"/>
+        <l id="101" eid="4" gridOffX="0" gridOffY="1" rot="R0" layer="0"/>
+        <l id="101" eid="5" gridOffX="1" gridOffY="1" rot="R0" layer="0"/>
+        <l id="101" eid="6" gridOffX="2" gridOffY="1" rot="R0" layer="0"/>
+      </linked>
       <objectInfo>
         <name tid="5002"/>
         <subCat id="1522"/>
         <restrictions>
-          <l sizeX="3" sizeY="2"/>
+          <l type="Floor" gridX="0" gridY="-1" sizeX="3" sizeY="1"/>
         </restrictions>
       </objectInfo>
     </me>
     
-    <!-- Sample structure: Hull Block (1x1) -->
+    <!-- Sample structure: Hull Block (1x1 from linked tile) -->
     <me mid="1003" _name="HullBlock">
+      <data/>
+      <linked>
+        <l id="102" eid="1" gridOffX="0" gridOffY="0" rot="R0" layer="0"/>
+      </linked>
       <objectInfo>
         <name tid="5003"/>
         <subCat id="1520"/>
-        <restrictions>
-          <l sizeX="1" sizeY="1"/>
-        </restrictions>
       </objectInfo>
     </me>
     
-    <!-- Sample structure: Bed -->
+    <!-- Sample structure: Bed (2x1 from linked tiles) -->
     <me mid="1004" _name="Bed">
+      <data/>
+      <linked>
+        <l id="103" eid="1" gridOffX="0" gridOffY="0" rot="R0" layer="0"/>
+        <l id="103" eid="2" gridOffX="1" gridOffY="0" rot="R0" layer="0"/>
+      </linked>
       <objectInfo>
         <name tid="5004"/>
         <subCat id="1527"/>
         <restrictions>
-          <l sizeX="2" sizeY="1"/>
+          <l type="Floor" gridX="0" gridY="-1" sizeX="2" sizeY="1"/>
         </restrictions>
       </objectInfo>
     </me>
     
-    <!-- Structure without restrictions (should have null size) -->
+    <!-- Structure without linked tiles or data tiles (should have null size) -->
     <me mid="1005" _name="Decoration">
+      <data/>
+      <linked/>
       <objectInfo>
         <name tid="5005"/>
         <subCat id="1528"/>
@@ -55,11 +79,15 @@
     
     <!-- Structure without subCat (should go to uncategorized) -->
     <me mid="1006" _name="Unknown">
+      <data/>
+      <linked>
+        <l id="104" eid="1" gridOffX="0" gridOffY="0" rot="R0" layer="0"/>
+        <l id="104" eid="2" gridOffX="1" gridOffY="0" rot="R0" layer="0"/>
+        <l id="104" eid="3" gridOffX="0" gridOffY="1" rot="R0" layer="0"/>
+        <l id="104" eid="4" gridOffX="1" gridOffY="1" rot="R0" layer="0"/>
+      </linked>
       <objectInfo>
         <name tid="5006"/>
-        <restrictions>
-          <l sizeX="2" sizeY="2"/>
-        </restrictions>
       </objectInfo>
     </me>
   </Element>

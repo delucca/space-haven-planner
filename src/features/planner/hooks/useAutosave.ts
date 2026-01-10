@@ -1,7 +1,7 @@
 import { useEffect, useRef, useCallback } from 'react'
 import type { Dispatch } from 'react'
 import type { PlannerState, PlannerAction } from '../state/types'
-import { createProjectFile, parseProjectFile, deserializeStructures } from '@/lib/serialization'
+import { createProjectFile, parseProjectFile, deserializeStructures, deserializeHullTiles } from '@/lib/serialization'
 
 const STORAGE_KEY = 'space-haven-planner-autosave'
 const DEBOUNCE_MS = 1000
@@ -15,13 +15,13 @@ export function useAutosave(state: PlannerState, dispatch: Dispatch<PlannerActio
 
   // Save to localStorage (debounced)
   const save = useCallback(() => {
-    const project = createProjectFile(state.gridSize, state.presetLabel, state.structures)
+    const project = createProjectFile(state.gridSize, state.presetLabel, state.structures, state.hullTiles)
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(project))
     } catch (err) {
       console.warn('Failed to autosave to localStorage:', err)
     }
-  }, [state.gridSize, state.presetLabel, state.structures])
+  }, [state.gridSize, state.presetLabel, state.structures, state.hullTiles])
 
   // Debounced save effect
   useEffect(() => {
@@ -61,6 +61,10 @@ export function useAutosave(state: PlannerState, dispatch: Dispatch<PlannerActio
 
       const structures = deserializeStructures(project.structures)
       dispatch({ type: 'LOAD_STRUCTURES', structures })
+
+      // Load hull tiles (v3+)
+      const hullTiles = deserializeHullTiles(project.hullTiles)
+      dispatch({ type: 'LOAD_HULL_TILES', tiles: hullTiles })
     } catch (err) {
       console.warn('Failed to load autosave from localStorage:', err)
     }

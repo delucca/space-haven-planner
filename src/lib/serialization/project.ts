@@ -1,7 +1,7 @@
-import type { GridSize, PlacedStructure, Rotation } from '@/data/types'
+import type { GridSize, HullTile, PlacedStructure, Rotation } from '@/data/types'
 
 /** Current project file format version */
-export const PROJECT_VERSION = 2
+export const PROJECT_VERSION = 3
 
 /**
  * Project file format for JSON save/load
@@ -11,6 +11,15 @@ export interface ProjectFile {
   gridSize: GridSize
   preset: string
   structures: SerializedStructure[]
+  hullTiles?: SerializedHullTile[] // Optional for backwards compatibility
+}
+
+/**
+ * Serialized hull tile format
+ */
+export interface SerializedHullTile {
+  x: number
+  y: number
 }
 
 /**
@@ -57,18 +66,40 @@ export function deserializeStructures(data: SerializedStructure[]): PlacedStruct
 }
 
 /**
+ * Serialize hull tiles for JSON export
+ */
+export function serializeHullTiles(hullTiles: ReadonlySet<string>): SerializedHullTile[] {
+  const tiles: SerializedHullTile[] = []
+  for (const key of hullTiles) {
+    const [xStr, yStr] = key.split(',')
+    tiles.push({ x: parseInt(xStr, 10), y: parseInt(yStr, 10) })
+  }
+  return tiles
+}
+
+/**
+ * Deserialize hull tiles from JSON import
+ */
+export function deserializeHullTiles(data: SerializedHullTile[] | undefined): HullTile[] {
+  if (!data) return []
+  return data.map((t) => ({ x: t.x, y: t.y }))
+}
+
+/**
  * Create a project file object for saving
  */
 export function createProjectFile(
   gridSize: GridSize,
   preset: string,
-  structures: readonly PlacedStructure[]
+  structures: readonly PlacedStructure[],
+  hullTiles: ReadonlySet<string>
 ): ProjectFile {
   return {
     version: PROJECT_VERSION,
     gridSize,
     preset,
     structures: serializeStructures(structures),
+    hullTiles: serializeHullTiles(hullTiles),
   }
 }
 
@@ -133,6 +164,19 @@ export function parseProjectFile(data: unknown): ProjectFile {
     }
   })
 
+  // Parse hull tiles (v3+)
+  const hullTiles: SerializedHullTile[] = []
+  if (Array.isArray(obj.hullTiles)) {
+    for (const tile of obj.hullTiles) {
+      if (tile && typeof tile === 'object') {
+        const t = tile as Record<string, unknown>
+        if (typeof t.x === 'number' && typeof t.y === 'number') {
+          hullTiles.push({ x: t.x, y: t.y })
+        }
+      }
+    }
+  }
+
   return {
     version: PROJECT_VERSION,
     gridSize: {
@@ -141,6 +185,7 @@ export function parseProjectFile(data: unknown): ProjectFile {
     },
     preset: obj.preset as string,
     structures,
+    hullTiles,
   }
 }
 

@@ -23,6 +23,9 @@ export {
   generateStructureId,
 } from './converter'
 
+// Manual hull structures
+export { MANUAL_HULL_STRUCTURES, HULL_CATEGORY } from './hullStructures'
+
 // Cache
 export {
   loadCachedJarCatalog,

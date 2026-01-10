@@ -34,6 +34,9 @@ describe('convertToStructureCatalog', () => {
         subCatId: 1521, // Power category
         size: { width: 2, height: 2 },
         debugName: 'PowerGenerator',
+        tiles: [],
+        linkedTiles: [],
+        restrictions: [],
       },
       {
         mid: 1002,
@@ -41,6 +44,9 @@ describe('convertToStructureCatalog', () => {
         subCatId: 1522, // Life Support category
         size: { width: 3, height: 2 },
         debugName: 'OxygenGenerator',
+        tiles: [],
+        linkedTiles: [],
+        restrictions: [],
       },
       {
         mid: 1003,
@@ -48,6 +54,9 @@ describe('convertToStructureCatalog', () => {
         subCatId: 1520, // Hull category
         size: { width: 1, height: 1 },
         debugName: 'HullBlock',
+        tiles: [],
+        linkedTiles: [],
+        restrictions: [],
       },
     ]
 
@@ -95,6 +104,9 @@ describe('convertToStructureCatalog', () => {
         subCatId: 9999, // Unknown category
         size: { width: 2, height: 2 },
         debugName: null,
+        tiles: [],
+        linkedTiles: [],
+        restrictions: [],
       },
     ]
 
@@ -119,6 +131,9 @@ describe('convertToStructureCatalog', () => {
         subCatId: 1521,
         size: null, // No size - defaults to 2x2
         debugName: null,
+        tiles: [],
+        linkedTiles: [],
+        restrictions: [],
       },
     ]
 
@@ -142,6 +157,9 @@ describe('convertToStructureCatalog', () => {
         subCatId: 1521,
         size: { width: 2, height: 2 },
         debugName: null,
+        tiles: [],
+        linkedTiles: [],
+        restrictions: [],
       },
     ]
 
@@ -152,12 +170,15 @@ describe('convertToStructureCatalog', () => {
       gameVersion: null,
     })
 
-    // Should have no structures since name couldn't be resolved
-    const totalStructures = catalog.categories.reduce(
-      (sum, cat) => sum + cat.items.length,
-      0
-    )
-    expect(totalStructures).toBe(0)
+    // Should only have manual hull structures (no JAR structures since name couldn't be resolved)
+    // Manual hull structures are always added: 7 items (1 wall, 3 doors, 3 windows)
+    const hullCategory = catalog.categories.find((c) => c.id === 'hull')
+    const nonHullStructures = catalog.categories
+      .filter((c) => c.id !== 'hull')
+      .reduce((sum, cat) => sum + cat.items.length, 0)
+    
+    expect(nonHullStructures).toBe(0) // No JAR structures
+    expect(hullCategory?.items.length).toBe(7) // Only manual hull items
   })
 })
 

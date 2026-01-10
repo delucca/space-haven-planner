@@ -46,6 +46,8 @@ export function Palette() {
 
   const handleStructureClick = (categoryId: string, structureId: string) => {
     dispatch({ type: 'SELECT_STRUCTURE', categoryId, structureId })
+    // Auto-switch to place tool when selecting a structure
+    dispatch({ type: 'SET_TOOL', tool: 'place' })
   }
 
   return (

@@ -1,4 +1,4 @@
-import type { Rotation } from '@/data/types'
+import type { Rotation, StructureDef, StructureTile } from '@/data/types'
 import { DEFAULT_PRESET, DEFAULT_ZOOM, LAYERS, ZOOM_MAX, ZOOM_MIN } from '@/data/presets'
 import { findStructureById } from '@/data/catalog'
 import { getRotatedSize } from '@/data/types'
@@ -19,6 +19,21 @@ function createInitialCatalogStatus(): PlannerState['catalogStatus'] {
 }
 
 /**
+ * Create a hull tile key for Set storage
+ */
+export function hullTileKey(x: number, y: number): string {
+  return `${x},${y}`
+}
+
+/**
+ * Parse a hull tile key back to coordinates
+ */
+export function parseHullTileKey(key: string): { x: number; y: number } {
+  const [x, y] = key.split(',').map(Number)
+  return { x, y }
+}
+
+/**
  * Create initial planner state
  */
 export function createInitialState(): PlannerState {
@@ -27,12 +42,13 @@ export function createInitialState(): PlannerState {
     presetLabel: DEFAULT_PRESET.label,
     zoom: DEFAULT_ZOOM,
     showGrid: true,
-    tool: 'place',
+    tool: 'hull',
     selection: null,
     previewRotation: 0,
     visibleLayers: new Set(LAYERS),
     expandedCategories: new Set(['hull']),
     structures: [],
+    hullTiles: new Set(),
     hoveredTile: null,
     isDragging: false,
     catalog: getBuiltinCatalog(),
@@ -54,32 +70,130 @@ function rotateBy90(current: Rotation, direction: 'cw' | 'ccw'): Rotation {
 }
 
 /**
+ * Rotate a tile position based on structure rotation
+ * This mirrors the logic in renderer.ts for consistency
+ */
+function rotateTilePosition(
+  tile: StructureTile,
+  rotation: Rotation,
+  layoutWidth: number,
+  layoutHeight: number
+): { x: number; y: number } {
+  const { x, y } = tile
+
+  switch (rotation) {
+    case 0:
+      return { x, y }
+    case 90:
+      return { x: layoutHeight - 1 - y, y: x }
+    case 180:
+      return { x: layoutWidth - 1 - x, y: layoutHeight - 1 - y }
+    case 270:
+      return { x: y, y: layoutWidth - 1 - x }
+    default:
+      return { x, y }
+  }
+}
+
+/**
+ * Get all tiles for a structure at a position, categorized by type
+ * Returns both blocking tiles (construction/blocked) and access tiles separately
+ */
+function getStructureTiles(
+  structureDef: StructureDef,
+  structX: number,
+  structY: number,
+  rotation: Rotation
+): { blocking: Set<string>; access: Set<string>; all: Set<string> } {
+  const blocking = new Set<string>()
+  const access = new Set<string>()
+  const all = new Set<string>()
+
+  if (structureDef.tileLayout && structureDef.tileLayout.tiles.length > 0) {
+    const { tiles, width: layoutWidth, height: layoutHeight } = structureDef.tileLayout
+
+    for (const tile of tiles) {
+      const rotatedPos = rotateTilePosition(tile, rotation, layoutWidth, layoutHeight)
+      const worldX = structX + rotatedPos.x
+      const worldY = structY + rotatedPos.y
+      const key = `${worldX},${worldY}`
+
+      all.add(key)
+      if (tile.type === 'access') {
+        access.add(key)
+      } else {
+        blocking.add(key)
+      }
+    }
+  } else {
+    // Fallback: entire bounding box is blocking
+    const [width, height] = getRotatedSize(structureDef.size, rotation)
+    for (let dx = 0; dx < width; dx++) {
+      for (let dy = 0; dy < height; dy++) {
+        const key = `${structX + dx},${structY + dy}`
+        blocking.add(key)
+        all.add(key)
+      }
+    }
+  }
+
+  return { blocking, access, all }
+}
+
+/**
  * Check if a structure at given position overlaps with existing structures
+ * 
+ * Collision rules:
+ * - Blocking tiles (construction/blocked) CANNOT overlap with ANY tile of existing structures
+ * - Access tiles CAN overlap with other access tiles only
  */
 function hasCollision(
   state: PlannerState,
+  structureDef: StructureDef,
   x: number,
   y: number,
-  width: number,
-  height: number,
+  rotation: Rotation,
   excludeId?: string
 ): boolean {
+  // Get tiles for the new structure
+  const newTiles = getStructureTiles(structureDef, x, y, rotation)
+
+  // If no tiles at all, no collision possible
+  if (newTiles.all.size === 0) {
+    return false
+  }
+
+  // Check against each existing structure
   for (const struct of state.structures) {
     if (excludeId && struct.id === excludeId) continue
 
     const found = findStructureById(state.catalog, struct.structureId)
     if (!found) continue
 
-    const [sw, sh] = getRotatedSize(found.structure.size, struct.rotation)
+    // Get tiles for the existing structure
+    const existingTiles = getStructureTiles(
+      found.structure,
+      struct.x,
+      struct.y,
+      struct.rotation
+    )
 
-    // Check overlap
-    const noOverlap =
-      x + width <= struct.x || x >= struct.x + sw || y + height <= struct.y || y >= struct.y + sh
+    // Rule 1: New blocking tiles cannot overlap with ANY existing tile
+    for (const tileKey of newTiles.blocking) {
+      if (existingTiles.all.has(tileKey)) {
+        return true
+      }
+    }
 
-    if (!noOverlap) {
-      return true
+    // Rule 2: New access tiles cannot overlap with existing blocking tiles
+    // (but CAN overlap with existing access tiles)
+    for (const tileKey of newTiles.access) {
+      if (existingTiles.blocking.has(tileKey)) {
+        return true
+      }
     }
   }
+
   return false
 }
 
@@ -199,8 +313,16 @@ export function plannerReducer(state: PlannerState, action: PlannerAction): Plan
         return state
       }
 
-      // Collision check
-      if (hasCollision(state, action.structure.x, action.structure.y, width, height)) {
+      // Collision check using tile-level detection
+      if (
+        hasCollision(
+          state,
+          found.structure,
+          action.structure.x,
+          action.structure.y,
+          action.structure.rotation
+        )
+      ) {
         return state
       }
 
@@ -212,11 +334,24 @@ export function plannerReducer(state: PlannerState, action: PlannerAction): Plan
 
     case 'ERASE_AT': {
       const structId = findStructureAt(state, action.x, action.y)
-      if (!structId) return state
+      const hullKey = `${action.x},${action.y}`
+      const hasHullTile = state.hullTiles.has(hullKey)
+
+      // Nothing to erase
+      if (!structId && !hasHullTile) return state
+
+      // Erase both structure and hull tile at this position
+      let newHullTiles: ReadonlySet<string> = state.hullTiles
+      if (hasHullTile) {
+        const mutableHullTiles = new Set(state.hullTiles)
+        mutableHullTiles.delete(hullKey)
+        newHullTiles = mutableHullTiles
+      }
 
       return {
         ...state,
-        structures: state.structures.filter((s) => s.id !== structId),
+        structures: structId ? state.structures.filter((s) => s.id !== structId) : state.structures,
+        hullTiles: newHullTiles,
       }
     }
 
@@ -224,6 +359,7 @@ export function plannerReducer(state: PlannerState, action: PlannerAction): Plan
       return {
         ...state,
         structures: [],
+        hullTiles: new Set(),
       }
 
     case 'LOAD_STRUCTURES':
@@ -231,6 +367,56 @@ export function plannerReducer(state: PlannerState, action: PlannerAction): Plan
         ...state,
         structures: action.structures,
       }
+
+    // Hull tile actions
+    case 'PLACE_HULL_TILE': {
+      // Bounds check
+      if (
+        action.x < 0 ||
+        action.y < 0 ||
+        action.x >= state.gridSize.width ||
+        action.y >= state.gridSize.height
+      ) {
+        return state
+      }
+
+      const key = hullTileKey(action.x, action.y)
+      if (state.hullTiles.has(key)) {
+        return state // Already has hull tile
+      }
+
+      const newHullTiles = new Set(state.hullTiles)
+      newHullTiles.add(key)
+      return {
+        ...state,
+        hullTiles: newHullTiles,
+      }
+    }
+
+    case 'ERASE_HULL_TILE': {
+      const key = hullTileKey(action.x, action.y)
+      if (!state.hullTiles.has(key)) {
+        return state // No hull tile to erase
+      }
+
+      const newHullTiles = new Set(state.hullTiles)
+      newHullTiles.delete(key)
+      return {
+        ...state,
+        hullTiles: newHullTiles,
+      }
+    }
+
+    case 'LOAD_HULL_TILES': {
+      const newHullTiles = new Set<string>()
+      for (const tile of action.tiles) {
+        newHullTiles.add(hullTileKey(tile.x, tile.y))
+      }
+      return {
+        ...state,
+        hullTiles: newHullTiles,
+      }
+    }
 
     // Interaction actions
     case 'SET_HOVERED_TILE':
@@ -332,6 +518,6 @@ export function canPlaceAt(
     return false
   }
 
-  // Collision check
-  return !hasCollision(state, x, y, width, height)
+  // Collision check using tile-level detection
+  return !hasCollision(state, found.structure, x, y, rotation)
 }

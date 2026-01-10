@@ -5,6 +5,53 @@
 import type { StructureCatalog } from '@/data/types'
 
 /**
+ * Raw tile data extracted from <data> section
+ */
+export interface RawJarTile {
+  /** X offset from structure origin (gridOffX) */
+  readonly gridOffX: number
+  /** Y offset from structure origin (gridOffY) */
+  readonly gridOffY: number
+  /** Element type (Object, Floor, Hull, Door, Light, etc.) */
+  readonly elementType: string
+  /** Walk grid cost (255=blocked, 1=normal, 0=free) */
+  readonly walkGridCost: number
+}
+
+/**
+ * Raw linked element from <linked> section
+ * These define the actual construction tiles that make up the structure
+ */
+export interface RawJarLinkedTile {
+  /** Reference ID to another element */
+  readonly id: number
+  /** Element ID within this structure */
+  readonly eid: number
+  /** X offset from structure origin */
+  readonly gridOffX: number
+  /** Y offset from structure origin */
+  readonly gridOffY: number
+  /** Rotation (R0, R90, R180, R270) */
+  readonly rot: string
+}
+
+/**
+ * Raw restriction tile (required floor/space around structure)
+ */
+export interface RawJarRestriction {
+  /** Type of restriction (Floor, Space, etc.) */
+  readonly type: string
+  /** X offset */
+  readonly gridX: number
+  /** Y offset */
+  readonly gridY: number
+  /** Width of restriction area */
+  readonly sizeX: number
+  /** Height of restriction area */
+  readonly sizeY: number
+}
+
+/**
  * Raw structure data extracted from library/haven XML
  */
 export interface RawJarStructure {
@@ -14,10 +61,16 @@ export interface RawJarStructure {
   readonly nameTid: number
   /** Subcategory ID from objectInfo/subCat[@id] */
   readonly subCatId: number | null
-  /** Size extracted from restrictions (sizeX × sizeY) */
+  /** Size calculated from linked elements or data tiles */
   readonly size: { width: number; height: number } | null
   /** Raw _name attribute if present (for debugging) */
   readonly debugName: string | null
+  /** Detailed tile data from <data> section */
+  readonly tiles: readonly RawJarTile[]
+  /** Linked elements that define the structure's construction footprint */
+  readonly linkedTiles: readonly RawJarLinkedTile[]
+  /** Restriction tiles (required floor/space around structure) */
+  readonly restrictions: readonly RawJarRestriction[]
 }
 
 /**

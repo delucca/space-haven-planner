@@ -9,6 +9,7 @@ import {
   loadProjectFromFile,
   downloadDataURL,
   deserializeStructures,
+  deserializeHullTiles,
 } from '@/lib/serialization'
 import { clearJarCatalogCache } from '@/data/jarCatalog'
 import { JarImportDialog } from './JarImportDialog'
@@ -21,9 +22,9 @@ export function ActionBar() {
   const [isJarDialogOpen, setIsJarDialogOpen] = useState(false)
 
   const handleSave = useCallback(() => {
-    const project = createProjectFile(state.gridSize, state.presetLabel, state.structures)
+    const project = createProjectFile(state.gridSize, state.presetLabel, state.structures, state.hullTiles)
     downloadProjectJSON(project)
-  }, [state.gridSize, state.presetLabel, state.structures])
+  }, [state.gridSize, state.presetLabel, state.structures, state.hullTiles])
 
   const handleLoadClick = useCallback(() => {
     fileInputRef.current?.click()
@@ -46,6 +47,10 @@ export function ActionBar() {
 
         const structures = deserializeStructures(project.structures)
         dispatch({ type: 'LOAD_STRUCTURES', structures })
+
+        // Load hull tiles (v3+)
+        const hullTiles = deserializeHullTiles(project.hullTiles)
+        dispatch({ type: 'LOAD_HULL_TILES', tiles: hullTiles })
       } catch (err) {
         console.error('Failed to load project:', err)
         alert(`Failed to load project: ${err instanceof Error ? err.message : String(err)}`)
@@ -62,6 +67,7 @@ export function ActionBar() {
       const dataURL = exportToPNG(
         state.gridSize,
         state.structures,
+        state.hullTiles,
         state.catalog,
         state.visibleLayers,
         EXPORT_SCALE
@@ -71,7 +77,7 @@ export function ActionBar() {
       console.error('Failed to export PNG:', err)
       alert('Failed to export PNG')
     }
-  }, [state.gridSize, state.structures, state.catalog, state.visibleLayers])
+  }, [state.gridSize, state.structures, state.hullTiles, state.catalog, state.visibleLayers])
 
   const handleClear = useCallback(() => {
     if (state.structures.length === 0) return

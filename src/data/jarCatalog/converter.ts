@@ -2,8 +2,18 @@
  * Converts parsed JAR data into StructureCatalog format
  */
 
-import type { StructureCatalog, StructureCategory, StructureDef, LayerId, Size } from '@/data/types'
-import type { ParsedJarData, RawJarStructure, RawJarCategory } from './types'
+import type {
+  StructureCatalog,
+  StructureCategory,
+  StructureDef,
+  LayerId,
+  Size,
+  TileLayout,
+  StructureTile,
+  TileType,
+} from '@/data/types'
+import type { ParsedJarData, RawJarStructure, RawJarCategory, RawJarTile, RawJarLinkedTile, RawJarRestriction } from './types'
+import { MANUAL_HULL_STRUCTURES, HULL_CATEGORY } from './hullStructures'
 
 /**
  * Mapping of JAR category IDs to our internal category metadata
@@ -140,6 +150,24 @@ export function convertToStructureCatalog(jarData: ParsedJarData): StructureCata
     }
   }
 
+  // Add manual hull structures (walls, doors, windows)
+  // These aren't in the JAR build menu but are needed for ship building
+  const hullSeen = seenInCategory.get('hull') || new Set()
+  const hullList = categoryStructures.get('hull') || []
+  
+  for (const hullStruct of MANUAL_HULL_STRUCTURES) {
+    const dedupeKey = getDedupeKey(hullStruct.name, hullStruct.size)
+    if (!hullSeen.has(dedupeKey)) {
+      hullSeen.add(dedupeKey)
+      hullList.push(hullStruct)
+    }
+  }
+  
+  // Ensure hull category exists
+  if (!categoryStructures.has('hull')) {
+    categoryStructures.set('hull', hullList)
+  }
+
   // Build final categories array
   const resultCategories: StructureCategory[] = []
 
@@ -163,10 +191,15 @@ export function convertToStructureCatalog(jarData: ParsedJarData): StructureCata
     const items = categoryStructures.get(catId)
     if (!items || items.length === 0) continue
 
-    // Find category metadata
-    const catMeta =
-      Object.values(JAR_CATEGORY_MAP).find((c) => c.id === catId) ||
-      (catId === 'other' ? DEFAULT_CATEGORY : null)
+    // Find category metadata - use HULL_CATEGORY for hull
+    let catMeta
+    if (catId === 'hull') {
+      catMeta = HULL_CATEGORY
+    } else {
+      catMeta =
+        Object.values(JAR_CATEGORY_MAP).find((c) => c.id === catId) ||
+        (catId === 'other' ? DEFAULT_CATEGORY : null)
+    }
 
     if (catMeta) {
       resultCategories.push({
@@ -268,12 +301,256 @@ function convertStructure(
   // Generate color from name
   const color = generateColor(name)
 
-  return {
+  // Convert tile layout if available
+  const tileLayout = convertTileLayout(raw.tiles, raw.linkedTiles, raw.restrictions, size)
+
+  const structureDef: StructureDef = {
     id: generateStructureId(raw.mid),
     name,
     size,
     color,
     categoryId,
+  }
+
+  // Only include tileLayout if we have meaningful tile data
+  if (tileLayout && tileLayout.tiles.length > 0) {
+    return { ...structureDef, tileLayout }
+  }
+
+  return structureDef
+}
+
+/**
+ * Determine tile type based on walkGridCost and element type
+ */
+function determineTileType(walkCost: number, elementType: string): TileType {
+  // walkGridCost meanings:
+  // 255 = blocked (can't walk through)
+  // 1 = normal walkable (construction tile)
+  // 0 = free access (can walk and place items)
+
+  if (walkCost >= 255) {
+    return 'blocked'
+  }
+
+  if (walkCost === 0) {
+    return 'access'
+  }
+
+  // For walkCost = 1 or other values, check element type
+  // Light, FloorDeco elements are typically access tiles
+  if (elementType === 'Light' || elementType === 'FloorDeco') {
+    return 'access'
+  }
+
+  return 'construction'
+}
+
+/**
+ * Convert raw JAR tile data, linked elements, and restrictions to TileLayout
+ *
+ * Priority for construction tiles:
+ * 1. Linked tiles (<linked>) - define the actual structure footprint
+ * 2. Data tiles (<data>) - detailed tile info with walkGridCost
+ *
+ * Restrictions define access/blocked areas around the structure
+ */
+function convertTileLayout(
+  rawTiles: readonly RawJarTile[],
+  linkedTiles: readonly RawJarLinkedTile[],
+  restrictions: readonly RawJarRestriction[],
+  fallbackSize: Size
+): TileLayout | undefined {
+  const tileMap = new Map<string, StructureTile>()
+
+  // Step 1: Process linked tiles as construction tiles (primary source)
+  // These define the actual structure footprint
+  for (const linked of linkedTiles) {
+    const key = `${linked.gridOffX},${linked.gridOffY}`
+    // Linked tiles are always construction tiles (the structure itself)
+    tileMap.set(key, {
+      x: linked.gridOffX,
+      y: linked.gridOffY,
+      type: 'construction',
+      walkCost: 1, // Default walkable cost for construction
+    })
+  }
+
+  // Step 2: Process raw tiles from <data> section
+  // These may add detail (walkGridCost) or additional tiles
+  for (const rawTile of rawTiles) {
+    const key = `${rawTile.gridOffX},${rawTile.gridOffY}`
+    const tileType = determineTileType(rawTile.walkGridCost, rawTile.elementType)
+
+    const existing = tileMap.get(key)
+    if (existing) {
+      // Update existing tile with more specific info from data section
+      // Keep construction type but update walkCost if blocked
+      if (rawTile.walkGridCost >= 255) {
+        tileMap.set(key, {
+          x: rawTile.gridOffX,
+          y: rawTile.gridOffY,
+          type: 'blocked',
+          walkCost: rawTile.walkGridCost,
+        })
+      }
+    } else {
+      // Add new tile from data section
+      tileMap.set(key, {
+        x: rawTile.gridOffX,
+        y: rawTile.gridOffY,
+        type: tileType,
+        walkCost: rawTile.walkGridCost,
+      })
+    }
+  }
+
+  // Step 3: Process restrictions to add access/blocked tiles around the structure
+  for (const restriction of restrictions) {
+    if (restriction.type === 'Floor') {
+      // Floor restrictions indicate tiles that need floor beneath them
+      // These are typically access tiles where crew can walk/work
+      for (let dx = 0; dx < restriction.sizeX; dx++) {
+        for (let dy = 0; dy < restriction.sizeY; dy++) {
+          const x = restriction.gridX + dx
+          const y = restriction.gridY + dy
+          const key = `${x},${y}`
+
+          // Only add if not already defined by construction tiles
+          if (!tileMap.has(key)) {
+            tileMap.set(key, {
+              x,
+              y,
+              type: 'access',
+              walkCost: 0, // Floor restrictions are walkable
+            })
+          }
+        }
+      }
+    } else if (restriction.type === 'Space' || restriction.type === 'SpaceOneOnly') {
+      // Space restrictions indicate blocked areas (e.g., outside airlock)
+      for (let dx = 0; dx < restriction.sizeX; dx++) {
+        for (let dy = 0; dy < restriction.sizeY; dy++) {
+          const x = restriction.gridX + dx
+          const y = restriction.gridY + dy
+          const key = `${x},${y}`
+
+          // Only add if not already defined by construction tiles
+          if (!tileMap.has(key)) {
+            tileMap.set(key, {
+              x,
+              y,
+              type: 'blocked',
+              walkCost: 255,
+            })
+          }
+        }
+      }
+    }
+  }
+
+  // If no tiles found, return undefined
+  if (tileMap.size === 0) {
+    return undefined
+  }
+
+  // First, calculate the bounding box of construction tiles only
+  // This defines the "core" structure footprint
+  let coreMinX = Infinity,
+    coreMaxX = -Infinity,
+    coreMinY = Infinity,
+    coreMaxY = -Infinity
+  let hasCoreTiles = false
+
+  for (const tile of tileMap.values()) {
+    if (tile.type === 'construction') {
+      coreMinX = Math.min(coreMinX, tile.x)
+      coreMaxX = Math.max(coreMaxX, tile.x)
+      coreMinY = Math.min(coreMinY, tile.y)
+      coreMaxY = Math.max(coreMaxY, tile.y)
+      hasCoreTiles = true
+    }
+  }
+
+  // If no construction tiles, use fallback size centered at origin
+  if (!hasCoreTiles) {
+    coreMinX = 0
+    coreMaxX = fallbackSize[0] - 1
+    coreMinY = 0
+    coreMaxY = fallbackSize[1] - 1
+  }
+
+  // Filter tiles based on type and position:
+  // - Construction tiles: always included
+  // - Access tiles: included if within 1 tile of construction (for crew access)
+  // - Blocked tiles: ONLY included if inside the construction bounding box
+  //   (blocked tiles outside are "Space" requirements, not visual structure)
+  const ACCESS_MARGIN = 1
+  const filteredTiles: StructureTile[] = []
+
+  for (const tile of tileMap.values()) {
+    if (tile.type === 'construction') {
+      // Construction tiles are always included
+      filteredTiles.push(tile)
+    } else if (tile.type === 'access') {
+      // Access tiles: allow within 1 tile margin of construction
+      const isNearCore =
+        tile.x >= coreMinX - ACCESS_MARGIN &&
+        tile.x <= coreMaxX + ACCESS_MARGIN &&
+        tile.y >= coreMinY - ACCESS_MARGIN &&
+        tile.y <= coreMaxY + ACCESS_MARGIN
+
+      if (isNearCore) {
+        filteredTiles.push(tile)
+      }
+    } else if (tile.type === 'blocked') {
+      // Blocked tiles: ONLY include if strictly inside the construction bounding box
+      // Blocked tiles outside are "Space" requirements for clearance, not part of the structure
+      const isInsideCore =
+        tile.x >= coreMinX &&
+        tile.x <= coreMaxX &&
+        tile.y >= coreMinY &&
+        tile.y <= coreMaxY
+
+      if (isInsideCore) {
+        filteredTiles.push(tile)
+      }
+    }
+  }
+
+  if (filteredTiles.length === 0) {
+    return undefined
+  }
+
+  // Calculate final bounding box from filtered tiles
+  let minX = Infinity,
+    maxX = -Infinity,
+    minY = Infinity,
+    maxY = -Infinity
+
+  for (const tile of filteredTiles) {
+    minX = Math.min(minX, tile.x)
+    maxX = Math.max(maxX, tile.x)
+    minY = Math.min(minY, tile.y)
+    maxY = Math.max(maxY, tile.y)
+  }
+
+  // If we have tiles, calculate actual dimensions
+  const width = filteredTiles.length > 0 ? maxX - minX + 1 : fallbackSize[0]
+  const height = filteredTiles.length > 0 ? maxY - minY + 1 : fallbackSize[1]
+
+  // IMPORTANT: Normalize tile coordinates to start at (0,0)
+  // This is required for rotation to work correctly
+  const normalizedTiles: StructureTile[] = filteredTiles.map((tile) => ({
+    ...tile,
+    x: tile.x - minX,
+    y: tile.y - minY,
+  }))
+
+  return {
+    tiles: normalizedTiles,
+    width,
+    height,
   }
 }
 

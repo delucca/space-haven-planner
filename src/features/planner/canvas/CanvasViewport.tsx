@@ -20,6 +20,7 @@ export function CanvasViewport() {
     selection,
     previewRotation,
     structures,
+    hullTiles,
     catalog,
     visibleLayers,
     hoveredTile,
@@ -49,6 +50,8 @@ export function CanvasViewport() {
       height,
       color: found.structure.color,
       isValid,
+      rotation: previewRotation,
+      tileLayout: found.structure.tileLayout,
     }
   }, [selection, hoveredTile, tool, catalog, previewRotation, state])
 
@@ -60,8 +63,11 @@ export function CanvasViewport() {
     const rc = createRenderContext(canvas, gridSize, zoom)
     const preview = getPreviewInfo()
 
-    renderScene(rc, structures, catalog, visibleLayers, showGrid, preview)
-  }, [gridSize, zoom, showGrid, structures, catalog, visibleLayers, getPreviewInfo])
+    // Get hull preview info for hull tool
+    const hullPreview = tool === 'hull' && hoveredTile ? hoveredTile : null
+
+    renderScene(rc, structures, hullTiles, catalog, visibleLayers, showGrid, preview, hullPreview)
+  }, [gridSize, zoom, showGrid, structures, hullTiles, catalog, visibleLayers, getPreviewInfo, tool, hoveredTile])
 
   // Handle mouse move
   const handleMouseMove = useCallback(
@@ -74,30 +80,26 @@ export function CanvasViewport() {
 
       // Handle dragging
       if (isDragging) {
-        if (tool === 'place' && selection) {
+        if (tool === 'hull') {
+          // Paint hull tiles while dragging (left click = place, shift+click handled in mousedown)
+          dispatch({ type: 'PLACE_HULL_TILE', x: tile.x, y: tile.y })
+        } else if (tool === 'place' && selection) {
           const found = findStructureById(catalog, selection.structureId)
           if (found) {
-            const isValid = canPlaceAt(
-              state,
-              selection.structureId,
-              tile.x,
-              tile.y,
-              previewRotation
-            )
-            if (isValid) {
-              dispatch({
-                type: 'PLACE_STRUCTURE',
-                structure: {
-                  id: generateId(),
-                  structureId: selection.structureId,
-                  categoryId: selection.categoryId,
-                  x: tile.x,
-                  y: tile.y,
-                  rotation: previewRotation,
-                  layer: found.category.defaultLayer,
-                },
-              })
-            }
+            // Don't check canPlaceAt here - let the reducer handle collision detection
+            // The reducer has the most up-to-date state
+            dispatch({
+              type: 'PLACE_STRUCTURE',
+              structure: {
+                id: generateId(),
+                structureId: selection.structureId,
+                categoryId: selection.categoryId,
+                x: tile.x,
+                y: tile.y,
+                rotation: previewRotation,
+                layer: found.category.defaultLayer,
+              },
+            })
           }
         } else if (tool === 'erase') {
           dispatch({ type: 'ERASE_AT', x: tile.x, y: tile.y })
@@ -118,24 +120,30 @@ export function CanvasViewport() {
       const tile = getTileFromMouse(canvas, e.clientX, e.clientY, zoom)
       dispatch({ type: 'SET_DRAGGING', isDragging: true })
 
-      if (tool === 'place' && selection) {
+      if (tool === 'hull') {
+        // Right-click or shift+click erases hull tiles
+        if (e.shiftKey) {
+          dispatch({ type: 'ERASE_HULL_TILE', x: tile.x, y: tile.y })
+        } else {
+          dispatch({ type: 'PLACE_HULL_TILE', x: tile.x, y: tile.y })
+        }
+      } else if (tool === 'place' && selection) {
         const found = findStructureById(catalog, selection.structureId)
         if (found) {
-          const isValid = canPlaceAt(state, selection.structureId, tile.x, tile.y, previewRotation)
-          if (isValid) {
-            dispatch({
-              type: 'PLACE_STRUCTURE',
-              structure: {
-                id: generateId(),
-                structureId: selection.structureId,
-                categoryId: selection.categoryId,
-                x: tile.x,
-                y: tile.y,
-                rotation: previewRotation,
-                layer: found.category.defaultLayer,
-              },
-            })
-          }
+          // Don't check canPlaceAt here - let the reducer handle collision detection
+          // The reducer has the most up-to-date state
+          dispatch({
+            type: 'PLACE_STRUCTURE',
+            structure: {
+              id: generateId(),
+              structureId: selection.structureId,
+              categoryId: selection.categoryId,
+              x: tile.x,
+              y: tile.y,
+              rotation: previewRotation,
+              layer: found.category.defaultLayer,
+            },
+          })
         }
       } else if (tool === 'erase') {
         dispatch({ type: 'ERASE_AT', x: tile.x, y: tile.y })
@@ -165,7 +173,7 @@ export function CanvasViewport() {
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseLeave}
         style={{
-          cursor: tool === 'erase' ? 'crosshair' : 'pointer',
+          cursor: tool === 'erase' ? 'crosshair' : tool === 'hull' ? 'cell' : 'pointer',
         }}
       />
     </div>

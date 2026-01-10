@@ -7,7 +7,7 @@
  * Source: spacehaven.jar
  * Size: 186209507 bytes
  * Game Version: 0.20.0_steam_29
- * Generated: 2026-01-10T02:28:47.387Z
+ * Generated: 2026-01-10T03:51:41.228Z
  */
 
 import type { StructureCatalog } from '@/data/types'
@@ -19,8 +19,8 @@ import type { JarSourceInfo } from './types'
 export const BUILTIN_SOURCE_INFO: JarSourceInfo = {
   fileName: "spacehaven.jar",
   fileSize: 186209507,
-  lastModified: 1768012127387,
-  extractedAt: 1768012127387,
+  lastModified: 1768017101228,
+  extractedAt: 1768017101228,
   gameVersion: "0.20.0_steam_29",
 }
 
@@ -39,151 +39,1027 @@ export const BUILTIN_CATALOG: StructureCatalog = {
           "id": "mid_3489",
           "name": "Backup Power Node",
           "size": [
-            2,
+            1,
             2
           ],
           "color": "hsl(229, 47%, 36%)",
-          "categoryId": "power"
+          "categoryId": "power",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              }
+            ],
+            "width": 1,
+            "height": 1
+          }
         },
         {
           "id": "mid_2684",
           "name": "Energium Power Generator",
           "size": [
             2,
-            1
+            3
           ],
           "color": "hsl(240, 40%, 45%)",
-          "categoryId": "power"
+          "categoryId": "power",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 2,
+            "height": 4
+          }
         },
         {
           "id": "mid_3202",
           "name": "Large Power Node",
           "size": [
-            2,
+            1,
             2
           ],
           "color": "hsl(350, 56%, 45%)",
-          "categoryId": "power"
+          "categoryId": "power",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              }
+            ],
+            "width": 1,
+            "height": 1
+          }
         },
         {
           "id": "mid_3985",
           "name": "Platform",
           "size": [
-            2,
-            2
+            5,
+            4
           ],
           "color": "hsl(29, 60%, 46%)",
-          "categoryId": "power"
+          "categoryId": "power",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 4,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 3,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 4,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 4,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 3,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              }
+            ],
+            "width": 5,
+            "height": 4
+          }
         },
         {
           "id": "mid_782",
           "name": "Pod Hangar",
           "size": [
             3,
-            1
+            3
           ],
           "color": "hsl(186, 42%, 46%)",
-          "categoryId": "power"
+          "categoryId": "power",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 3,
+            "height": 4
+          }
         },
         {
           "id": "mid_3204",
           "name": "Power Capacity Node",
           "size": [
-            2,
+            1,
             2
           ],
           "color": "hsl(285, 61%, 43%)",
-          "categoryId": "power"
+          "categoryId": "power",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              }
+            ],
+            "width": 1,
+            "height": 1
+          }
         },
         {
           "id": "mid_3501",
           "name": "Power Conduit",
           "size": [
-            2,
-            2
+            1,
+            1
           ],
           "color": "hsl(59, 41%, 36%)",
-          "categoryId": "power"
+          "categoryId": "power",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 1,
+            "height": 1
+          }
         },
         {
           "id": "mid_761",
           "name": "Shuttle Hangar",
           "size": [
-            7,
-            6
+            5,
+            4
           ],
           "color": "hsl(30, 67%, 47%)",
-          "categoryId": "power"
+          "categoryId": "power",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 2,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 3,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 4,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 5,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 5,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 5,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 4,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 5,
+                "y": 4,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 4,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 3,
+                "y": 4,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 4,
+                "y": 4,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 3,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 4,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 3,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 4,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 0,
+                "y": 3,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 0,
+                "y": 4,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 0,
+                "y": 5,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 5,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 2,
+                "y": 5,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 3,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 3,
+                "y": 5,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 4,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 4,
+                "y": 5,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 5,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 5,
+                "y": 5,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 6,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 6,
+                "y": 1,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 6,
+                "y": 2,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 6,
+                "y": 3,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 6,
+                "y": 4,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 6,
+                "y": 5,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 7,
+            "height": 6
+          }
         },
         {
           "id": "mid_3269",
           "name": "Small Power Node",
           "size": [
-            2,
-            2
+            1,
+            1
           ],
           "color": "hsl(98, 67%, 39%)",
-          "categoryId": "power"
+          "categoryId": "power",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              }
+            ],
+            "width": 1,
+            "height": 1
+          }
         },
         {
           "id": "mid_2101",
           "name": "Solar Panel",
           "size": [
-            2,
-            2
+            3,
+            3
           ],
           "color": "hsl(109, 52%, 54%)",
-          "categoryId": "power"
+          "categoryId": "power",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              }
+            ],
+            "width": 3,
+            "height": 3
+          }
         },
         {
           "id": "mid_200",
           "name": "Space Suit Locker",
           "size": [
             1,
-            1
+            2
           ],
           "color": "hsl(145, 59%, 36%)",
-          "categoryId": "power"
+          "categoryId": "power",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 1,
+            "height": 3
+          }
         },
         {
           "id": "mid_120",
           "name": "X1 Airlock",
           "size": [
-            7,
+            4,
             3
           ],
           "color": "hsl(266, 61%, 43%)",
-          "categoryId": "power"
+          "categoryId": "power",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 2,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "access",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "access",
+                "walkCost": 1
+              }
+            ],
+            "width": 3,
+            "height": 3
+          }
         },
         {
           "id": "mid_708",
           "name": "X1 Power Generator",
           "size": [
             2,
-            1
+            3
           ],
           "color": "hsl(223, 53%, 54%)",
-          "categoryId": "power"
+          "categoryId": "power",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 1,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 2,
+            "height": 4
+          }
         },
         {
           "id": "mid_1530",
           "name": "X2 Power Generator",
           "size": [
             3,
-            2
+            3
           ],
           "color": "hsl(110, 47%, 44%)",
-          "categoryId": "power"
+          "categoryId": "power",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 3,
+            "height": 4
+          }
         },
         {
           "id": "mid_344",
           "name": "X3 Power Generator",
           "size": [
             4,
-            2
+            3
           ],
           "color": "hsl(301, 69%, 36%)",
-          "categoryId": "power"
+          "categoryId": "power",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 3,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 3,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 3,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 3,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 4,
+            "height": 4
+          }
         }
       ]
     },
@@ -201,7 +1077,25 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             1
           ],
           "color": "hsl(51, 46%, 37%)",
-          "categoryId": "life_support"
+          "categoryId": "life_support",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 1,
+            "height": 2
+          }
         },
         {
           "id": "mid_922",
@@ -211,7 +1105,19 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             1
           ],
           "color": "hsl(25, 65%, 48%)",
-          "categoryId": "life_support"
+          "categoryId": "life_support",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 1,
+            "height": 1
+          }
         },
         {
           "id": "mid_47",
@@ -221,7 +1127,31 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             3
           ],
           "color": "hsl(83, 42%, 51%)",
-          "categoryId": "life_support"
+          "categoryId": "life_support",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              }
+            ],
+            "width": 1,
+            "height": 3
+          }
         },
         {
           "id": "mid_2758",
@@ -231,7 +1161,25 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             2
           ],
           "color": "hsl(83, 42%, 51%)",
-          "categoryId": "life_support"
+          "categoryId": "life_support",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              }
+            ],
+            "width": 1,
+            "height": 2
+          }
         },
         {
           "id": "mid_206",
@@ -241,7 +1189,37 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             4
           ],
           "color": "hsl(83, 42%, 51%)",
-          "categoryId": "life_support"
+          "categoryId": "life_support",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              }
+            ],
+            "width": 1,
+            "height": 4
+          }
         },
         {
           "id": "mid_927",
@@ -251,37 +1229,157 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             1
           ],
           "color": "hsl(197, 50%, 48%)",
-          "categoryId": "life_support"
+          "categoryId": "life_support",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 2,
+            "height": 2
+          }
         },
         {
           "id": "mid_993",
           "name": "Spacesuit door",
           "size": [
-            3,
-            1
+            1,
+            2
           ],
           "color": "hsl(11, 44%, 46%)",
-          "categoryId": "life_support"
+          "categoryId": "life_support",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 3,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 3,
+            "height": 4
+          }
         },
         {
           "id": "mid_1798",
           "name": "Station Hull Door",
           "size": [
-            3,
-            1
+            1,
+            2
           ],
           "color": "hsl(195, 54%, 53%)",
-          "categoryId": "life_support"
+          "categoryId": "life_support",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 3,
+            "height": 3
+          }
         },
         {
           "id": "mid_918",
           "name": "Thermal Regulator",
           "size": [
-            2,
-            2
+            1,
+            1
           ],
           "color": "hsl(88, 52%, 38%)",
-          "categoryId": "life_support"
+          "categoryId": "life_support",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              }
+            ],
+            "width": 1,
+            "height": 1
+          }
         },
         {
           "id": "mid_987",
@@ -291,17 +1389,121 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             1
           ],
           "color": "hsl(218, 49%, 39%)",
-          "categoryId": "life_support"
+          "categoryId": "life_support",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              }
+            ],
+            "width": 1,
+            "height": 1
+          }
         },
         {
           "id": "mid_2757",
           "name": "Wall Window",
           "size": [
-            2,
+            1,
             2
           ],
           "color": "hsl(158, 69%, 37%)",
-          "categoryId": "life_support"
+          "categoryId": "life_support",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              }
+            ],
+            "width": 1,
+            "height": 2
+          }
+        },
+        {
+          "id": "mid_115",
+          "name": "Wall Window",
+          "size": [
+            1,
+            3
+          ],
+          "color": "hsl(158, 69%, 37%)",
+          "categoryId": "life_support",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              }
+            ],
+            "width": 1,
+            "height": 3
+          }
+        },
+        {
+          "id": "mid_2861",
+          "name": "Wall Window",
+          "size": [
+            1,
+            4
+          ],
+          "color": "hsl(158, 69%, 37%)",
+          "categoryId": "life_support",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              }
+            ],
+            "width": 1,
+            "height": 4
+          }
         },
         {
           "id": "mid_25",
@@ -311,17 +1513,53 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             1
           ],
           "color": "hsl(45, 42%, 54%)",
-          "categoryId": "life_support"
+          "categoryId": "life_support",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 1,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 3,
+            "height": 1
+          }
         },
         {
           "id": "mid_44",
           "name": "X1 Wall",
           "size": [
-            2,
-            2
+            1,
+            1
           ],
           "color": "hsl(281, 44%, 46%)",
-          "categoryId": "life_support"
+          "categoryId": "life_support",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              }
+            ],
+            "width": 1,
+            "height": 1
+          }
         },
         {
           "id": "mid_2755",
@@ -331,7 +1569,49 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             2
           ],
           "color": "hsl(196, 49%, 37%)",
-          "categoryId": "life_support"
+          "categoryId": "life_support",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 1,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 3,
+            "height": 2
+          }
         }
       ]
     },
@@ -349,27 +1629,135 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             2
           ],
           "color": "hsl(55, 53%, 43%)",
-          "categoryId": "system"
+          "categoryId": "system",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              }
+            ],
+            "width": 2,
+            "height": 2
+          }
         },
         {
           "id": "mid_4262",
           "name": "Cover Object",
           "size": [
-            2,
-            2
+            1,
+            1
           ],
           "color": "hsl(176, 58%, 51%)",
-          "categoryId": "system"
+          "categoryId": "system",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              }
+            ],
+            "width": 1,
+            "height": 1
+          }
         },
         {
           "id": "mid_2242",
           "name": "Energy Turret",
           "size": [
-            1,
-            1
+            3,
+            3
           ],
           "color": "hsl(144, 47%, 43%)",
-          "categoryId": "system"
+          "categoryId": "system",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 1,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 3,
+            "height": 4
+          }
         },
         {
           "id": "mid_2257",
@@ -379,47 +1767,311 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             1
           ],
           "color": "hsl(270, 58%, 47%)",
-          "categoryId": "system"
+          "categoryId": "system",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 2,
+            "height": 2
+          }
         },
         {
           "id": "mid_2655",
           "name": "Hyperium Hyperdrive",
           "size": [
-            6,
-            12
+            3,
+            5
           ],
           "color": "hsl(281, 58%, 41%)",
-          "categoryId": "system"
+          "categoryId": "system",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 1,
+                "y": 4,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 4,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 0,
+                "y": 3,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 0,
+                "y": 4,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 3,
+                "y": 1,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 3,
+                "y": 2,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 3,
+                "y": 3,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 3,
+                "y": 4,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 4,
+            "height": 5
+          }
         },
         {
           "id": "mid_3521",
           "name": "Hypersleep Chamber",
           "size": [
-            2,
+            5,
             2
           ],
           "color": "hsl(287, 54%, 53%)",
-          "categoryId": "system"
+          "categoryId": "system",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 1,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 4,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 3,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              }
+            ],
+            "width": 5,
+            "height": 2
+          }
         },
         {
           "id": "mid_263",
           "name": "Navigation console",
           "size": [
-            1,
-            1
+            3,
+            2
           ],
           "color": "hsl(21, 47%, 35%)",
-          "categoryId": "system"
+          "categoryId": "system",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 2,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 3,
+            "height": 3
+          }
         },
         {
           "id": "mid_2131",
           "name": "Operations console",
           "size": [
-            1,
-            1
+            3,
+            2
           ],
           "color": "hsl(83, 55%, 50%)",
-          "categoryId": "system"
+          "categoryId": "system",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 2,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 3,
+            "height": 3
+          }
         },
         {
           "id": "mid_3638",
@@ -429,47 +2081,317 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             2
           ],
           "color": "hsl(272, 51%, 38%)",
-          "categoryId": "system"
+          "categoryId": "system",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              }
+            ],
+            "width": 2,
+            "height": 2
+          }
         },
         {
           "id": "mid_2708",
           "name": "Rocket Turret",
           "size": [
-            1,
-            1
+            3,
+            3
           ],
           "color": "hsl(316, 63%, 50%)",
-          "categoryId": "system"
+          "categoryId": "system",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 1,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 3,
+            "height": 4
+          }
         },
         {
           "id": "mid_4215",
           "name": "Scanner",
           "size": [
-            2,
-            2
+            3,
+            3
           ],
           "color": "hsl(262, 61%, 52%)",
-          "categoryId": "system"
+          "categoryId": "system",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              }
+            ],
+            "width": 3,
+            "height": 3
+          }
         },
         {
           "id": "mid_470",
           "name": "Shield Generator",
           "size": [
-            1,
-            1
+            3,
+            3
           ],
           "color": "hsl(332, 52%, 42%)",
-          "categoryId": "system"
+          "categoryId": "system",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 1,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 3,
+            "height": 4
+          }
         },
         {
           "id": "mid_2127",
           "name": "Shields console",
           "size": [
-            1,
-            1
+            3,
+            2
           ],
           "color": "hsl(55, 55%, 36%)",
-          "categoryId": "system"
+          "categoryId": "system",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 2,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 3,
+            "height": 3
+          }
         },
         {
           "id": "mid_3264",
@@ -479,87 +2401,661 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             2
           ],
           "color": "hsl(245, 40%, 35%)",
-          "categoryId": "system"
+          "categoryId": "system",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              }
+            ],
+            "width": 2,
+            "height": 2
+          }
         },
         {
           "id": "mid_4231",
           "name": "Solar Panel",
           "size": [
-            2,
-            2
+            3,
+            3
           ],
           "color": "hsl(109, 52%, 54%)",
-          "categoryId": "system"
+          "categoryId": "system",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              }
+            ],
+            "width": 3,
+            "height": 3
+          }
+        },
+        {
+          "id": "mid_4232",
+          "name": "Solar Panel",
+          "size": [
+            5,
+            3
+          ],
+          "color": "hsl(109, 52%, 54%)",
+          "categoryId": "system",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 4,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 4,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 4,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 3,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 3,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 3,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              }
+            ],
+            "width": 5,
+            "height": 3
+          }
         },
         {
           "id": "mid_2724",
           "name": "Targeting Jammer",
           "size": [
-            1,
-            1
+            3,
+            3
           ],
           "color": "hsl(197, 68%, 53%)",
-          "categoryId": "system"
+          "categoryId": "system",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 2,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 3,
+            "height": 4
+          }
         },
         {
           "id": "mid_2125",
           "name": "Weapons console",
           "size": [
-            1,
-            1
+            3,
+            2
           ],
           "color": "hsl(230, 65%, 38%)",
-          "categoryId": "system"
+          "categoryId": "system",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 2,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 3,
+            "height": 3
+          }
         },
         {
           "id": "mid_2123",
           "name": "X1 Hyperdrive",
           "size": [
-            8,
-            12
+            4,
+            6
           ],
           "color": "hsl(13, 54%, 54%)",
-          "categoryId": "system"
+          "categoryId": "system",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 1,
+                "y": 5,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 5,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 4,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 4,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 3,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 4,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 0,
+                "y": 5,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 3,
+                "y": 4,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 3,
+                "y": 5,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 4,
+            "height": 6
+          }
         },
         {
           "id": "mid_3510",
           "name": "X1 System Core",
           "size": [
-            1,
+            2,
             2
           ],
           "color": "hsl(295, 50%, 44%)",
-          "categoryId": "system"
+          "categoryId": "system",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 2,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 3,
+            "height": 2
+          }
         },
         {
           "id": "mid_43",
           "name": "X1 Wall",
           "size": [
-            2,
-            2
+            1,
+            1
           ],
           "color": "hsl(281, 44%, 46%)",
-          "categoryId": "system"
+          "categoryId": "system",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              }
+            ],
+            "width": 1,
+            "height": 1
+          }
         },
         {
           "id": "mid_3515",
           "name": "X2 System Core",
           "size": [
-            1,
+            2,
             3
           ],
           "color": "hsl(194, 64%, 47%)",
-          "categoryId": "system"
+          "categoryId": "system",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 2,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 3,
+            "height": 3
+          }
         },
         {
           "id": "mid_3516",
           "name": "X3 System Core",
           "size": [
-            1,
+            2,
             4
           ],
           "color": "hsl(189, 49%, 50%)",
-          "categoryId": "system"
+          "categoryId": "system",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 2,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 0,
+                "y": 3,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 3,
+            "height": 4
+          }
         }
       ]
     },
@@ -573,71 +3069,623 @@ export const BUILTIN_CATALOG: StructureCatalog = {
           "id": "mid_3561",
           "name": "Asteroid Cargo Port",
           "size": [
-            1,
-            4
+            7,
+            7
           ],
           "color": "hsl(150, 65%, 41%)",
-          "categoryId": "storage"
+          "categoryId": "storage",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 3,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 4,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 5,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 4,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 6,
+                "y": 5,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 5,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 6,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 6,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 6,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 6,
+                "y": 6,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 5,
+                "type": "construction",
+                "walkCost": 1
+              }
+            ],
+            "width": 7,
+            "height": 7
+          }
         },
         {
           "id": "mid_3062",
           "name": "Body Storage",
           "size": [
             2,
-            1
+            2
           ],
           "color": "hsl(117, 57%, 42%)",
-          "categoryId": "storage"
+          "categoryId": "storage",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 2,
+            "height": 3
+          }
         },
         {
           "id": "mid_3543",
           "name": "Cargo Port",
           "size": [
             8,
-            7
+            5
           ],
           "color": "hsl(179, 42%, 40%)",
-          "categoryId": "storage"
+          "categoryId": "storage",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 4,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 6,
+                "y": 4,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 6,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 6,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 6,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 6,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 7,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 7,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 7,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 7,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 7,
+                "y": 4,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 4,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 4,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 4,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 4,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 4,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 8,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 8,
+                "y": 1,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 8,
+                "y": 2,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 8,
+                "y": 3,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 8,
+                "y": 4,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 9,
+            "height": 5
+          }
         },
         {
           "id": "mid_632",
           "name": "Large Storage",
           "size": [
             3,
-            1
+            2
           ],
           "color": "hsl(134, 68%, 44%)",
-          "categoryId": "storage"
+          "categoryId": "storage",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 3,
+            "height": 3
+          }
         },
         {
           "id": "mid_3068",
           "name": "Robot Storage",
           "size": [
             2,
-            1
+            2
           ],
           "color": "hsl(333, 52%, 43%)",
-          "categoryId": "storage"
+          "categoryId": "storage",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 2,
+            "height": 3
+          }
         },
         {
           "id": "mid_82",
           "name": "Small Storage",
           "size": [
             1,
-            1
+            2
           ],
           "color": "hsl(226, 44%, 52%)",
-          "categoryId": "storage"
+          "categoryId": "storage",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              }
+            ],
+            "width": 1,
+            "height": 1
+          }
         },
         {
           "id": "mid_4068",
           "name": "Smuggler Storage",
           "size": [
             1,
-            1
+            2
           ],
           "color": "hsl(103, 47%, 37%)",
-          "categoryId": "storage"
+          "categoryId": "storage",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              }
+            ],
+            "width": 1,
+            "height": 1
+          }
         }
       ]
     },
@@ -655,7 +3703,37 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             1
           ],
           "color": "hsl(24, 46%, 36%)",
-          "categoryId": "food"
+          "categoryId": "food",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 2,
+            "height": 2
+          }
         },
         {
           "id": "mid_2646",
@@ -665,17 +3743,89 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             1
           ],
           "color": "hsl(259, 65%, 49%)",
-          "categoryId": "food"
+          "categoryId": "food",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 2,
+            "height": 2
+          }
         },
         {
           "id": "mid_982",
           "name": "Autopsy Table",
           "size": [
-            3,
+            1,
             2
           ],
           "color": "hsl(29, 64%, 43%)",
-          "categoryId": "food"
+          "categoryId": "food",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 1,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 3,
+            "height": 2
+          }
         },
         {
           "id": "mid_1871",
@@ -685,7 +3835,19 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             1
           ],
           "color": "hsl(148, 69%, 46%)",
-          "categoryId": "food"
+          "categoryId": "food",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 1,
+            "height": 1
+          }
         },
         {
           "id": "mid_185",
@@ -695,7 +3857,49 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             1
           ],
           "color": "hsl(96, 57%, 50%)",
-          "categoryId": "food"
+          "categoryId": "food",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 3,
+            "height": 2
+          }
         },
         {
           "id": "mid_184",
@@ -705,17 +3909,173 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             1
           ],
           "color": "hsl(96, 57%, 50%)",
-          "categoryId": "food"
+          "categoryId": "food",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 2,
+            "height": 2
+          }
         },
         {
           "id": "mid_921",
           "name": "Grow Bed with Light",
           "size": [
-            4,
-            1
+            3,
+            2
           ],
           "color": "hsl(96, 57%, 50%)",
-          "categoryId": "food"
+          "categoryId": "food",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 2,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 3,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 3,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 3,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 0,
+                "y": 3,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 3,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 2,
+                "y": 3,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 3,
+                "y": 3,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 4,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 4,
+                "y": 1,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 4,
+                "y": 2,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 4,
+                "y": 3,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 5,
+            "height": 4
+          }
         },
         {
           "id": "mid_623",
@@ -725,7 +4085,49 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             1
           ],
           "color": "hsl(4, 47%, 36%)",
-          "categoryId": "food"
+          "categoryId": "food",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 2,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 3,
+            "height": 2
+          }
         }
       ]
     },
@@ -740,50 +4142,368 @@ export const BUILTIN_CATALOG: StructureCatalog = {
           "name": "Advanced Assembler",
           "size": [
             3,
-            1
+            3
           ],
           "color": "hsl(34, 66%, 49%)",
-          "categoryId": "resource"
+          "categoryId": "resource",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 3,
+            "height": 4
+          }
         },
         {
           "id": "mid_1908",
           "name": "Assembler",
           "size": [
             3,
-            1
+            2
           ],
           "color": "hsl(24, 60%, 36%)",
-          "categoryId": "resource"
+          "categoryId": "resource",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 3,
+            "height": 3
+          }
         },
         {
           "id": "mid_938",
           "name": "Chemical Refinery",
           "size": [
             3,
-            1
+            2
           ],
           "color": "hsl(278, 49%, 35%)",
-          "categoryId": "resource"
+          "categoryId": "resource",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 3,
+            "height": 3
+          }
         },
         {
           "id": "mid_2458",
           "name": "Composter",
           "size": [
             2,
-            1
+            2
           ],
           "color": "hsl(274, 69%, 54%)",
-          "categoryId": "resource"
+          "categoryId": "resource",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 2,
+            "height": 3
+          }
         },
         {
           "id": "mid_979",
           "name": "Energy Refinery",
           "size": [
             3,
-            1
+            3
           ],
           "color": "hsl(156, 42%, 39%)",
-          "categoryId": "resource"
+          "categoryId": "resource",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 3,
+            "height": 4
+          }
         },
         {
           "id": "mid_125",
@@ -793,7 +4513,37 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             1
           ],
           "color": "hsl(64, 40%, 37%)",
-          "categoryId": "resource"
+          "categoryId": "resource",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 1,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 2,
+            "height": 2
+          }
         },
         {
           "id": "mid_3615",
@@ -803,17 +4553,125 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             1
           ],
           "color": "hsl(110, 64%, 38%)",
-          "categoryId": "resource"
+          "categoryId": "resource",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 1,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 2,
+            "height": 2
+          }
         },
         {
           "id": "mid_947",
           "name": "Metal Refinery",
           "size": [
             4,
-            1
+            2
           ],
           "color": "hsl(67, 56%, 49%)",
-          "categoryId": "resource"
+          "categoryId": "resource",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 3,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 3,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 3,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 4,
+            "height": 3
+          }
         },
         {
           "id": "mid_1964",
@@ -823,37 +4681,349 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             1
           ],
           "color": "hsl(87, 44%, 46%)",
-          "categoryId": "resource"
+          "categoryId": "resource",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 3,
+            "height": 2
+          }
         },
         {
           "id": "mid_1989",
           "name": "Optronics Fabricator",
           "size": [
             4,
-            1
+            2
           ],
           "color": "hsl(32, 47%, 40%)",
-          "categoryId": "resource"
+          "categoryId": "resource",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 3,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 3,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 3,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 4,
+            "height": 3
+          }
         },
         {
           "id": "mid_3520",
           "name": "Ore Processor",
           "size": [
             3,
-            1
+            5
           ],
           "color": "hsl(340, 44%, 47%)",
-          "categoryId": "resource"
+          "categoryId": "resource",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 1,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 4,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 4,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 4,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 5,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 5,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 5,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 3,
+            "height": 6
+          }
         },
         {
           "id": "mid_1880",
           "name": "Recycler",
           "size": [
             3,
-            1
+            3
           ],
           "color": "hsl(217, 52%, 50%)",
-          "categoryId": "resource"
+          "categoryId": "resource",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 1,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 3,
+            "height": 4
+          }
         },
         {
           "id": "mid_1447",
@@ -863,7 +5033,37 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             1
           ],
           "color": "hsl(32, 53%, 43%)",
-          "categoryId": "resource"
+          "categoryId": "resource",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 2,
+            "height": 2
+          }
         },
         {
           "id": "mid_2451",
@@ -873,7 +5073,25 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             1
           ],
           "color": "hsl(300, 52%, 44%)",
-          "categoryId": "resource"
+          "categoryId": "resource",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 1,
+            "height": 2
+          }
         },
         {
           "id": "mid_2010",
@@ -883,7 +5101,31 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             1
           ],
           "color": "hsl(165, 52%, 54%)",
-          "categoryId": "resource"
+          "categoryId": "resource",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 2,
+            "height": 2
+          }
         }
       ]
     },
@@ -897,11 +5139,41 @@ export const BUILTIN_CATALOG: StructureCatalog = {
           "id": "mid_4114",
           "name": "Advanced Learning System",
           "size": [
-            1,
-            1
+            2,
+            2
           ],
           "color": "hsl(147, 41%, 48%)",
-          "categoryId": "facility"
+          "categoryId": "facility",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 2,
+            "height": 2
+          }
         },
         {
           "id": "mid_3870",
@@ -911,7 +5183,31 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             2
           ],
           "color": "hsl(124, 49%, 45%)",
-          "categoryId": "facility"
+          "categoryId": "facility",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 2,
+            "height": 2
+          }
         },
         {
           "id": "mid_1606",
@@ -921,7 +5217,25 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             1
           ],
           "color": "hsl(247, 51%, 54%)",
-          "categoryId": "facility"
+          "categoryId": "facility",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 1,
+            "height": 2
+          }
         },
         {
           "id": "mid_2804",
@@ -931,17 +5245,77 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             2
           ],
           "color": "hsl(79, 61%, 37%)",
-          "categoryId": "facility"
+          "categoryId": "facility",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 2,
+            "height": 2
+          }
         },
         {
           "id": "mid_1647",
           "name": "Hypersleep Chamber",
           "size": [
-            1,
-            1
+            2,
+            2
           ],
           "color": "hsl(287, 54%, 53%)",
-          "categoryId": "facility"
+          "categoryId": "facility",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 2,
+            "height": 2
+          }
         },
         {
           "id": "mid_1526",
@@ -951,37 +5325,157 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             1
           ],
           "color": "hsl(142, 61%, 50%)",
-          "categoryId": "facility"
+          "categoryId": "facility",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 1,
+            "height": 2
+          }
         },
         {
           "id": "mid_3878",
           "name": "Learning Computer",
           "size": [
-            1,
-            1
+            2,
+            2
           ],
           "color": "hsl(53, 59%, 53%)",
-          "categoryId": "facility"
+          "categoryId": "facility",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 2,
+            "height": 2
+          }
         },
         {
           "id": "mid_76",
           "name": "Medical Bed",
           "size": [
-            1,
-            1
+            2,
+            2
           ],
           "color": "hsl(30, 60%, 37%)",
-          "categoryId": "facility"
+          "categoryId": "facility",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 2,
+            "height": 2
+          }
         },
         {
           "id": "mid_3923",
           "name": "Medical Cabinet",
           "size": [
-            1,
-            1
+            4,
+            7
           ],
           "color": "hsl(191, 53%, 49%)",
-          "categoryId": "facility"
+          "categoryId": "facility",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 3,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 4,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 3,
+                "y": 7,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 3,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 4,
+            "height": 8
+          }
         },
         {
           "id": "mid_3880",
@@ -991,17 +5485,95 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             1
           ],
           "color": "hsl(72, 49%, 47%)",
-          "categoryId": "facility"
+          "categoryId": "facility",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 1,
+            "height": 2
+          }
         },
         {
           "id": "mid_1542",
           "name": "Research Lab",
           "size": [
             3,
-            1
+            2
           ],
           "color": "hsl(312, 59%, 51%)",
-          "categoryId": "facility"
+          "categoryId": "facility",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 3,
+            "height": 3
+          }
         },
         {
           "id": "mid_3075",
@@ -1011,7 +5583,37 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             1
           ],
           "color": "hsl(70, 61%, 43%)",
-          "categoryId": "facility"
+          "categoryId": "facility",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 2,
+            "height": 2
+          }
         },
         {
           "id": "mid_3406",
@@ -1021,7 +5623,37 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             2
           ],
           "color": "hsl(123, 59%, 43%)",
-          "categoryId": "facility"
+          "categoryId": "facility",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 1,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 2,
+            "height": 2
+          }
         },
         {
           "id": "mid_123",
@@ -1031,7 +5663,25 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             1
           ],
           "color": "hsl(324, 69%, 38%)",
-          "categoryId": "facility"
+          "categoryId": "facility",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 2,
+            "height": 1
+          }
         },
         {
           "id": "mid_3719",
@@ -1041,7 +5691,25 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             1
           ],
           "color": "hsl(95, 46%, 54%)",
-          "categoryId": "facility"
+          "categoryId": "facility",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 1,
+            "height": 2
+          }
         }
       ]
     },
@@ -1059,7 +5727,37 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             2
           ],
           "color": "hsl(255, 53%, 51%)",
-          "categoryId": "robots"
+          "categoryId": "robots",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 1,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 2,
+            "height": 2
+          }
         },
         {
           "id": "mid_3055",
@@ -1069,7 +5767,37 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             1
           ],
           "color": "hsl(265, 51%, 37%)",
-          "categoryId": "robots"
+          "categoryId": "robots",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 1,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 2,
+            "height": 2
+          }
         },
         {
           "id": "mid_2891",
@@ -1079,7 +5807,37 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             2
           ],
           "color": "hsl(309, 44%, 35%)",
-          "categoryId": "robots"
+          "categoryId": "robots",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 1,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 2,
+            "height": 2
+          }
         }
       ]
     },
@@ -1094,70 +5852,172 @@ export const BUILTIN_CATALOG: StructureCatalog = {
           "name": "Bed",
           "size": [
             2,
-            2
+            1
           ],
           "color": "hsl(57, 60%, 36%)",
-          "categoryId": "furniture"
+          "categoryId": "furniture",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 1,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              }
+            ],
+            "width": 2,
+            "height": 1
+          }
         },
         {
           "id": "mid_3362",
           "name": "Bedside Table",
           "size": [
-            2,
-            2
+            1,
+            1
           ],
           "color": "hsl(2, 44%, 53%)",
-          "categoryId": "furniture"
+          "categoryId": "furniture",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              }
+            ],
+            "width": 1,
+            "height": 1
+          }
         },
         {
           "id": "mid_1864",
           "name": "Bunk Bed",
           "size": [
             2,
-            2
+            1
           ],
           "color": "hsl(177, 41%, 40%)",
-          "categoryId": "furniture"
+          "categoryId": "furniture",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 1,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              }
+            ],
+            "width": 2,
+            "height": 1
+          }
         },
         {
           "id": "mid_3179",
           "name": "Cover Object",
           "size": [
-            2,
-            2
+            1,
+            1
           ],
           "color": "hsl(176, 58%, 51%)",
-          "categoryId": "furniture"
+          "categoryId": "furniture",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              }
+            ],
+            "width": 1,
+            "height": 1
+          }
         },
         {
           "id": "mid_3953",
           "name": "Decorative Holy Cow",
           "size": [
-            2,
+            1,
             2
           ],
           "color": "hsl(241, 44%, 52%)",
-          "categoryId": "furniture"
+          "categoryId": "furniture",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              }
+            ],
+            "width": 1,
+            "height": 2
+          }
         },
         {
           "id": "mid_305",
           "name": "Decorative Object",
           "size": [
-            2,
-            2
+            1,
+            1
           ],
           "color": "hsl(89, 59%, 54%)",
-          "categoryId": "furniture"
+          "categoryId": "furniture",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              }
+            ],
+            "width": 1,
+            "height": 1
+          }
         },
         {
           "id": "mid_3356",
           "name": "Decorative Plant",
           "size": [
-            2,
-            2
+            1,
+            1
           ],
           "color": "hsl(123, 65%, 36%)",
-          "categoryId": "furniture"
+          "categoryId": "furniture",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              }
+            ],
+            "width": 1,
+            "height": 1
+          }
         },
         {
           "id": "mid_3373",
@@ -1167,7 +6027,19 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             1
           ],
           "color": "hsl(20, 69%, 39%)",
-          "categoryId": "furniture"
+          "categoryId": "furniture",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              }
+            ],
+            "width": 1,
+            "height": 1
+          }
         },
         {
           "id": "mid_3363",
@@ -1177,27 +6049,63 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             1
           ],
           "color": "hsl(241, 63%, 51%)",
-          "categoryId": "furniture"
+          "categoryId": "furniture",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              }
+            ],
+            "width": 1,
+            "height": 1
+          }
         },
         {
           "id": "mid_3131",
           "name": "In-floor Light",
           "size": [
-            2,
-            2
+            1,
+            1
           ],
           "color": "hsl(182, 41%, 35%)",
-          "categoryId": "furniture"
+          "categoryId": "furniture",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              }
+            ],
+            "width": 1,
+            "height": 1
+          }
         },
         {
           "id": "mid_906",
           "name": "Light",
           "size": [
-            2,
-            2
+            1,
+            1
           ],
           "color": "hsl(294, 58%, 35%)",
-          "categoryId": "furniture"
+          "categoryId": "furniture",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              }
+            ],
+            "width": 1,
+            "height": 1
+          }
         },
         {
           "id": "mid_295",
@@ -1207,7 +6115,19 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             1
           ],
           "color": "hsl(158, 69%, 44%)",
-          "categoryId": "furniture"
+          "categoryId": "furniture",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              }
+            ],
+            "width": 1,
+            "height": 1
+          }
         },
         {
           "id": "mid_164",
@@ -1217,27 +6137,171 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             1
           ],
           "color": "hsl(344, 43%, 37%)",
-          "categoryId": "furniture"
+          "categoryId": "furniture",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              }
+            ],
+            "width": 1,
+            "height": 1
+          }
         },
         {
           "id": "mid_90",
           "name": "X1 Chair",
           "size": [
-            2,
-            2
+            1,
+            1
           ],
           "color": "hsl(234, 54%, 39%)",
-          "categoryId": "furniture"
+          "categoryId": "furniture",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              }
+            ],
+            "width": 1,
+            "height": 1
+          }
         },
         {
           "id": "mid_307",
           "name": "X1 Couch",
           "size": [
             2,
+            1
+          ],
+          "color": "hsl(193, 43%, 43%)",
+          "categoryId": "furniture",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              }
+            ],
+            "width": 2,
+            "height": 1
+          }
+        },
+        {
+          "id": "mid_311",
+          "name": "X1 Couch",
+          "size": [
+            2,
+            3
+          ],
+          "color": "hsl(193, 43%, 43%)",
+          "categoryId": "furniture",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 1,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              }
+            ],
+            "width": 2,
+            "height": 3
+          }
+        },
+        {
+          "id": "mid_319",
+          "name": "X1 Couch",
+          "size": [
+            2,
             2
           ],
           "color": "hsl(193, 43%, 43%)",
-          "categoryId": "furniture"
+          "categoryId": "furniture",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 1,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              }
+            ],
+            "width": 2,
+            "height": 2
+          }
+        },
+        {
+          "id": "mid_3455",
+          "name": "X1 Couch",
+          "size": [
+            1,
+            1
+          ],
+          "color": "hsl(193, 43%, 43%)",
+          "categoryId": "furniture",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              }
+            ],
+            "width": 1,
+            "height": 1
+          }
         },
         {
           "id": "mid_322",
@@ -1247,7 +6311,81 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             1
           ],
           "color": "hsl(113, 61%, 36%)",
-          "categoryId": "furniture"
+          "categoryId": "furniture",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              }
+            ],
+            "width": 1,
+            "height": 1
+          }
+        },
+        {
+          "id": "mid_4048",
+          "name": "X1 Table",
+          "size": [
+            2,
+            1
+          ],
+          "color": "hsl(113, 61%, 36%)",
+          "categoryId": "furniture",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              }
+            ],
+            "width": 2,
+            "height": 1
+          }
+        },
+        {
+          "id": "mid_4050",
+          "name": "X1 Table",
+          "size": [
+            3,
+            1
+          ],
+          "color": "hsl(113, 61%, 36%)",
+          "categoryId": "furniture",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              }
+            ],
+            "width": 3,
+            "height": 1
+          }
         }
       ]
     },
@@ -1261,11 +6399,23 @@ export const BUILTIN_CATALOG: StructureCatalog = {
           "id": "mid_2720",
           "name": "Asteroid power node",
           "size": [
-            2,
-            2
+            1,
+            1
           ],
           "color": "hsl(134, 66%, 49%)",
-          "categoryId": "other"
+          "categoryId": "other",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              }
+            ],
+            "width": 1,
+            "height": 1
+          }
         },
         {
           "id": "mid_3374",
@@ -1275,47 +6425,239 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             1
           ],
           "color": "hsl(197, 45%, 48%)",
-          "categoryId": "other"
+          "categoryId": "other",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 2,
+            "height": 2
+          }
         },
         {
           "id": "mid_1968",
           "name": "Cell Fuser",
           "size": [
             3,
-            1
+            2
           ],
           "color": "hsl(299, 60%, 47%)",
-          "categoryId": "other"
+          "categoryId": "other",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 2,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 3,
+            "height": 3
+          }
         },
         {
           "id": "mid_3182",
           "name": "Cover Object",
           "size": [
-            2,
-            2
+            1,
+            1
           ],
           "color": "hsl(176, 58%, 51%)",
-          "categoryId": "other"
+          "categoryId": "other",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              }
+            ],
+            "width": 1,
+            "height": 1
+          }
         },
         {
           "id": "mid_1980",
           "name": "Electronic Fabricator",
           "size": [
             4,
-            1
+            2
           ],
           "color": "hsl(217, 41%, 53%)",
-          "categoryId": "other"
+          "categoryId": "other",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 3,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 3,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 3,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 4,
+            "height": 3
+          }
         },
         {
           "id": "mid_3689",
           "name": "Evolving Alien Core",
           "size": [
-            2,
-            2
+            1,
+            1
           ],
           "color": "hsl(358, 64%, 39%)",
-          "categoryId": "other"
+          "categoryId": "other",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 150
+              }
+            ],
+            "width": 1,
+            "height": 1
+          }
         },
         {
           "id": "mid_3847",
@@ -1325,17 +6667,65 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             1
           ],
           "color": "hsl(241, 63%, 51%)",
-          "categoryId": "other"
+          "categoryId": "other",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              }
+            ],
+            "width": 1,
+            "height": 1
+          }
         },
         {
           "id": "mid_3943",
           "name": "Holy Cow Monument",
           "size": [
-            2,
-            2
+            3,
+            7
           ],
           "color": "hsl(320, 54%, 48%)",
-          "categoryId": "other"
+          "categoryId": "other",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 2,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 6,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              }
+            ],
+            "width": 3,
+            "height": 7
+          }
         },
         {
           "id": "mid_2763",
@@ -1345,7 +6735,25 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             2
           ],
           "color": "hsl(83, 42%, 51%)",
-          "categoryId": "other"
+          "categoryId": "other",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              }
+            ],
+            "width": 1,
+            "height": 2
+          }
         },
         {
           "id": "mid_2762",
@@ -1355,7 +6763,31 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             3
           ],
           "color": "hsl(83, 42%, 51%)",
-          "categoryId": "other"
+          "categoryId": "other",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              }
+            ],
+            "width": 1,
+            "height": 3
+          }
         },
         {
           "id": "mid_3029",
@@ -1365,27 +6797,81 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             4
           ],
           "color": "hsl(83, 42%, 51%)",
-          "categoryId": "other"
+          "categoryId": "other",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              }
+            ],
+            "width": 1,
+            "height": 4
+          }
         },
         {
           "id": "mid_4377",
           "name": "In-floor Light",
           "size": [
-            2,
-            2
+            1,
+            1
           ],
           "color": "hsl(182, 41%, 35%)",
-          "categoryId": "other"
+          "categoryId": "other",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              }
+            ],
+            "width": 1,
+            "height": 1
+          }
         },
         {
           "id": "mid_3200",
           "name": "In-floor Power Node",
           "size": [
-            2,
-            2
+            1,
+            1
           ],
           "color": "hsl(217, 58%, 52%)",
-          "categoryId": "other"
+          "categoryId": "other",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              }
+            ],
+            "width": 1,
+            "height": 1
+          }
         },
         {
           "id": "mid_3622",
@@ -1395,147 +6881,837 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             1
           ],
           "color": "hsl(110, 64%, 38%)",
-          "categoryId": "other"
+          "categoryId": "other",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 2,
+            "height": 2
+          }
         },
         {
           "id": "mid_3201",
           "name": "Large Power Node",
           "size": [
-            2,
-            2
+            1,
+            1
           ],
           "color": "hsl(350, 56%, 45%)",
-          "categoryId": "other"
+          "categoryId": "other",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              }
+            ],
+            "width": 1,
+            "height": 1
+          }
         },
         {
           "id": "mid_4366",
           "name": "Large Storage",
           "size": [
             3,
-            1
+            2
           ],
           "color": "hsl(134, 68%, 44%)",
-          "categoryId": "other"
+          "categoryId": "other",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 3,
+            "height": 3
+          }
         },
         {
           "id": "mid_4373",
           "name": "Light",
           "size": [
-            2,
-            2
+            1,
+            1
           ],
           "color": "hsl(294, 58%, 35%)",
-          "categoryId": "other"
+          "categoryId": "other",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              }
+            ],
+            "width": 1,
+            "height": 1
+          }
         },
         {
           "id": "mid_2483",
           "name": "Micro Breach",
           "size": [
-            2,
-            2
+            1,
+            1
           ],
           "color": "hsl(299, 43%, 36%)",
-          "categoryId": "other"
+          "categoryId": "other",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              }
+            ],
+            "width": 1,
+            "height": 1
+          }
         },
         {
           "id": "mid_4322",
           "name": "Old Hyperdrive Remains",
           "size": [
-            5,
-            8
+            3,
+            6
           ],
           "color": "hsl(142, 44%, 43%)",
-          "categoryId": "other"
+          "categoryId": "other",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 4,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 4,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 5,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              }
+            ],
+            "width": 3,
+            "height": 6
+          }
         },
         {
           "id": "mid_929",
           "name": "Platform",
           "size": [
-            5,
-            7
+            1,
+            3
           ],
           "color": "hsl(29, 60%, 46%)",
-          "categoryId": "other"
+          "categoryId": "other",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              }
+            ],
+            "width": 1,
+            "height": 3
+          }
         },
         {
           "id": "mid_3724",
           "name": "Pod Hangar",
           "size": [
-            5,
-            5
+            3,
+            4
           ],
           "color": "hsl(186, 42%, 46%)",
-          "categoryId": "other"
+          "categoryId": "other",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 3,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 3,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 3,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 3,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 0,
+                "y": 3,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 0,
+                "y": 4,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 4,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 2,
+                "y": 4,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 3,
+                "y": 4,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 4,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 4,
+                "y": 1,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 4,
+                "y": 2,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 4,
+                "y": 3,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 4,
+                "y": 4,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 5,
+            "height": 5
+          }
         },
         {
           "id": "mid_4306",
           "name": "Point Defense Turret",
           "size": [
-            4,
-            1
+            2,
+            2
           ],
           "color": "hsl(272, 51%, 38%)",
-          "categoryId": "other"
+          "categoryId": "other",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              }
+            ],
+            "width": 2,
+            "height": 2
+          }
         },
         {
           "id": "mid_3203",
           "name": "Power Capacity Node",
           "size": [
-            2,
-            2
+            1,
+            1
           ],
           "color": "hsl(285, 61%, 43%)",
-          "categoryId": "other"
+          "categoryId": "other",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              }
+            ],
+            "width": 1,
+            "height": 1
+          }
         },
         {
           "id": "mid_3673",
           "name": "Preservation Tank",
           "size": [
-            2,
-            2
+            1,
+            1
           ],
           "color": "hsl(78, 69%, 42%)",
-          "categoryId": "other"
+          "categoryId": "other",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              }
+            ],
+            "width": 1,
+            "height": 1
+          }
         },
         {
           "id": "mid_3667",
           "name": "Rogue Bot Charging Structure",
           "size": [
-            2,
-            2
+            3,
+            3
           ],
           "color": "hsl(37, 64%, 54%)",
-          "categoryId": "other"
+          "categoryId": "other",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              }
+            ],
+            "width": 3,
+            "height": 3
+          }
         },
         {
           "id": "mid_3732",
           "name": "Rogue Bot Drone Bay",
           "size": [
             3,
-            1
+            5
           ],
           "color": "hsl(195, 55%, 38%)",
-          "categoryId": "other"
+          "categoryId": "other",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 1,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 5,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 4,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 4,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 4,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 5,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 5,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 3,
+            "height": 6
+          }
         },
         {
           "id": "mid_3723",
           "name": "Rogue Bot Fabricator",
           "size": [
-            1,
+            2,
             2
           ],
           "color": "hsl(242, 64%, 53%)",
-          "categoryId": "other"
+          "categoryId": "other",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 2,
+            "height": 2
+          }
         },
         {
           "id": "mid_4240",
           "name": "Scanner",
           "size": [
-            5,
-            1
+            3,
+            3
           ],
           "color": "hsl(262, 61%, 52%)",
-          "categoryId": "other"
+          "categoryId": "other",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              }
+            ],
+            "width": 3,
+            "height": 3
+          }
         },
         {
           "id": "mid_3199",
@@ -1545,27 +7721,117 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             1
           ],
           "color": "hsl(98, 67%, 39%)",
-          "categoryId": "other"
+          "categoryId": "other",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 1,
+            "height": 2
+          }
         },
         {
           "id": "mid_4365",
           "name": "Small Storage",
           "size": [
-            2,
+            1,
             2
           ],
           "color": "hsl(226, 44%, 52%)",
-          "categoryId": "other"
+          "categoryId": "other",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              }
+            ],
+            "width": 1,
+            "height": 1
+          }
         },
         {
           "id": "mid_4245",
           "name": "Solar Panel",
           "size": [
-            2,
-            2
+            3,
+            3
           ],
           "color": "hsl(109, 52%, 54%)",
-          "categoryId": "other"
+          "categoryId": "other",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              }
+            ],
+            "width": 3,
+            "height": 3
+          }
         },
         {
           "id": "mid_4375",
@@ -1575,17 +7841,119 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             1
           ],
           "color": "hsl(344, 43%, 37%)",
-          "categoryId": "other"
+          "categoryId": "other",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              }
+            ],
+            "width": 1,
+            "height": 1
+          }
         },
         {
           "id": "mid_851",
           "name": "X1 Hyperdrive",
           "size": [
-            8,
-            12
+            4,
+            6
           ],
           "color": "hsl(13, 54%, 54%)",
-          "categoryId": "other"
+          "categoryId": "other",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 1,
+                "y": 5,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 5,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 4,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 4,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 3,
+                "y": 4,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 3,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 4,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 0,
+                "y": 5,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 3,
+                "y": 5,
+                "type": "access",
+                "walkCost": 0
+              }
+            ],
+            "width": 4,
+            "height": 6
+          }
         },
         {
           "id": "mid_4354",
@@ -1595,7 +7963,37 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             1
           ],
           "color": "hsl(113, 61%, 36%)",
-          "categoryId": "other"
+          "categoryId": "other",
+          "tileLayout": {
+            "tiles": [
+              {
+                "x": 0,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 3,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "type": "construction",
+                "walkCost": 1
+              }
+            ],
+            "width": 4,
+            "height": 1
+          }
         }
       ]
     }
@@ -1610,7 +8008,7 @@ export const BUILTIN_GAME_VERSION: string | null = "0.20.0_steam_29"
 /**
  * Timestamp when the snapshot was generated
  */
-export const BUILTIN_GENERATED_AT: number = 1768012127387
+export const BUILTIN_GENERATED_AT: number = 1768017101228
 
 /**
  * Get the built-in catalog

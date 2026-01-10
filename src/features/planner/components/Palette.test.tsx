@@ -63,6 +63,7 @@ function createMockState(overrides: Partial<PlannerState> = {}): PlannerState {
     hoveredTile: null,
     isDragging: false,
     catalog: mockCatalog,
+    hullTiles: new Set(),
     catalogStatus: {
       source: 'jar_builtin_snapshot',
       isParsing: false,

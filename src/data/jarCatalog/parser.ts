@@ -6,7 +6,15 @@
  */
 
 import { unzipSync } from 'fflate'
-import type { ParsedJarData, RawJarStructure, RawJarCategory, TextEntry } from './types'
+import type {
+  ParsedJarData,
+  RawJarStructure,
+  RawJarCategory,
+  RawJarTile,
+  RawJarLinkedTile,
+  RawJarRestriction,
+  TextEntry,
+} from './types'
 
 /**
  * Entry paths within the JAR file
@@ -227,11 +235,20 @@ function parseStructureElement(el: Element): RawJarStructure | null {
   const subCatIdStr = subCatEl?.getAttribute('id')
   const subCatId = subCatIdStr ? parseInt(subCatIdStr, 10) : null
 
-  // Get size from restrictions
-  const size = parseStructureSize(objectInfo)
-
   // Get debug name if present
   const debugName = el.getAttribute('_name') || null
+
+  // Parse tile data from <data> section
+  const tiles = parseStructureTiles(el)
+
+  // Parse linked elements - these define the actual construction footprint
+  const linkedTiles = parseLinkedTiles(el)
+
+  // Parse restriction tiles from objectInfo/restrictions
+  const restrictions = parseStructureRestrictions(objectInfo)
+
+  // Calculate size from linked tiles (primary) or data tiles (fallback)
+  const size = calculateStructureSize(tiles, linkedTiles)
 
   return {
     mid,
@@ -239,89 +256,171 @@ function parseStructureElement(el: Element): RawJarStructure | null {
     subCatId: isNaN(subCatId ?? NaN) ? null : subCatId,
     size,
     debugName,
+    tiles,
+    linkedTiles,
+    restrictions,
   }
 }
 
 /**
- * Parse structure size from objectInfo/restrictions
- *
- * The restrictions element contains placement rules with sizeX and sizeY.
- * We look for the largest footprint to determine the structure size.
+ * Parse tile data from the <data> section of a structure
+ * Each <l> element with gridOffX/gridOffY represents a tile
  */
-function parseStructureSize(
-  objectInfo: Element
-): { width: number; height: number } | null {
-  const restrictions = objectInfo.querySelectorAll('restrictions l[sizeX][sizeY]')
+function parseStructureTiles(structureEl: Element): RawJarTile[] {
+  const tiles: RawJarTile[] = []
+  const dataEl = structureEl.querySelector('data')
+  if (!dataEl) return tiles
 
-  let maxWidth = 0
-  let maxHeight = 0
+  // Find all <l> elements with grid offsets
+  const tileElements = dataEl.querySelectorAll('l[gridOffX][gridOffY]')
 
-  for (const restriction of restrictions) {
-    const sizeXStr = restriction.getAttribute('sizeX')
-    const sizeYStr = restriction.getAttribute('sizeY')
+  for (const tileEl of tileElements) {
+    const gridOffXStr = tileEl.getAttribute('gridOffX')
+    const gridOffYStr = tileEl.getAttribute('gridOffY')
+    const elementType = tileEl.getAttribute('type') || 'Unknown'
 
-    if (sizeXStr && sizeYStr) {
-      const sizeX = parseInt(sizeXStr, 10)
-      const sizeY = parseInt(sizeYStr, 10)
+    if (!gridOffXStr || !gridOffYStr) continue
 
-      if (!isNaN(sizeX) && !isNaN(sizeY)) {
-        // Track the maximum dimensions
-        maxWidth = Math.max(maxWidth, sizeX)
-        maxHeight = Math.max(maxHeight, sizeY)
-      }
-    }
+    const gridOffX = parseInt(gridOffXStr, 10)
+    const gridOffY = parseInt(gridOffYStr, 10)
+
+    if (isNaN(gridOffX) || isNaN(gridOffY)) continue
+
+    // Get walkGridCost from the nested <element> if present
+    const elementEl = tileEl.querySelector('element[walkGridCost]')
+    const walkGridCostStr = elementEl?.getAttribute('walkGridCost')
+    const walkGridCost = walkGridCostStr ? parseInt(walkGridCostStr, 10) : 1 // Default to normal walkable
+
+    tiles.push({
+      gridOffX,
+      gridOffY,
+      elementType,
+      walkGridCost: isNaN(walkGridCost) ? 1 : walkGridCost,
+    })
   }
 
-  // Also check for direct size attributes on data elements
-  const dataElements = objectInfo.parentElement?.querySelectorAll('data l[sizeX][sizeY]')
-  if (dataElements) {
-    for (const dataEl of dataElements) {
-      const sizeXStr = dataEl.getAttribute('sizeX')
-      const sizeYStr = dataEl.getAttribute('sizeY')
-
-      if (sizeXStr && sizeYStr) {
-        const sizeX = parseInt(sizeXStr, 10)
-        const sizeY = parseInt(sizeYStr, 10)
-
-        if (!isNaN(sizeX) && !isNaN(sizeY)) {
-          maxWidth = Math.max(maxWidth, sizeX)
-          maxHeight = Math.max(maxHeight, sizeY)
-        }
-      }
-    }
-  }
-
-  if (maxWidth > 0 && maxHeight > 0) {
-    return { width: maxWidth, height: maxHeight }
-  }
-
-  // Fallback: check for grid-based size in the element hierarchy
-  const gridElements = objectInfo.parentElement?.querySelectorAll('[gridOffX][gridOffY]')
-  if (gridElements && gridElements.length > 0) {
-    let minX = 0,
-      maxX = 0,
-      minY = 0,
-      maxY = 0
-
-    for (const gridEl of gridElements) {
-      const x = parseInt(gridEl.getAttribute('gridOffX') || '0', 10)
-      const y = parseInt(gridEl.getAttribute('gridOffY') || '0', 10)
-      minX = Math.min(minX, x)
-      maxX = Math.max(maxX, x)
-      minY = Math.min(minY, y)
-      maxY = Math.max(maxY, y)
-    }
-
-    const width = maxX - minX + 1
-    const height = maxY - minY + 1
-
-    if (width > 0 && height > 0) {
-      return { width, height }
-    }
-  }
-
-  return null
+  return tiles
 }
+
+/**
+ * Parse linked elements from <linked> section
+ * These define the actual construction tiles that make up the structure
+ */
+function parseLinkedTiles(structureEl: Element): RawJarLinkedTile[] {
+  const linkedTiles: RawJarLinkedTile[] = []
+  const linkedEl = structureEl.querySelector('linked')
+  if (!linkedEl) return linkedTiles
+
+  // Find all <l> elements with grid offsets in linked section
+  const linkElements = linkedEl.querySelectorAll('l[gridOffX][gridOffY]')
+
+  for (const linkEl of linkElements) {
+    const idStr = linkEl.getAttribute('id')
+    const eidStr = linkEl.getAttribute('eid')
+    const gridOffXStr = linkEl.getAttribute('gridOffX')
+    const gridOffYStr = linkEl.getAttribute('gridOffY')
+    const rot = linkEl.getAttribute('rot') || 'R0'
+
+    if (!gridOffXStr || !gridOffYStr) continue
+
+    const id = idStr ? parseInt(idStr, 10) : 0
+    const eid = eidStr ? parseInt(eidStr, 10) : 0
+    const gridOffX = parseInt(gridOffXStr, 10)
+    const gridOffY = parseInt(gridOffYStr, 10)
+
+    if (isNaN(gridOffX) || isNaN(gridOffY)) continue
+
+    linkedTiles.push({
+      id: isNaN(id) ? 0 : id,
+      eid: isNaN(eid) ? 0 : eid,
+      gridOffX,
+      gridOffY,
+      rot,
+    })
+  }
+
+  return linkedTiles
+}
+
+/**
+ * Calculate structure size from tiles and linked elements
+ * Linked elements take priority as they define the actual construction footprint
+ */
+function calculateStructureSize(
+  tiles: RawJarTile[],
+  linkedTiles: RawJarLinkedTile[]
+): { width: number; height: number } | null {
+  // Combine all tile positions
+  const positions: { x: number; y: number }[] = []
+
+  // Add positions from linked tiles (primary source for construction footprint)
+  for (const linked of linkedTiles) {
+    positions.push({ x: linked.gridOffX, y: linked.gridOffY })
+  }
+
+  // Add positions from data tiles
+  for (const tile of tiles) {
+    positions.push({ x: tile.gridOffX, y: tile.gridOffY })
+  }
+
+  if (positions.length === 0) {
+    return null
+  }
+
+  // Calculate bounding box
+  let minX = Infinity,
+    maxX = -Infinity,
+    minY = Infinity,
+    maxY = -Infinity
+
+  for (const pos of positions) {
+    minX = Math.min(minX, pos.x)
+    maxX = Math.max(maxX, pos.x)
+    minY = Math.min(minY, pos.y)
+    maxY = Math.max(maxY, pos.y)
+  }
+
+  const width = maxX - minX + 1
+  const height = maxY - minY + 1
+
+  return { width, height }
+}
+
+/**
+ * Parse restriction tiles from objectInfo/restrictions
+ * These define required floor/space around the structure
+ */
+function parseStructureRestrictions(objectInfo: Element): RawJarRestriction[] {
+  const restrictions: RawJarRestriction[] = []
+  const restrictionsEl = objectInfo.querySelector('restrictions')
+  if (!restrictionsEl) return restrictions
+
+  const restrictionElements = restrictionsEl.querySelectorAll('l[type]')
+
+  for (const el of restrictionElements) {
+    const type = el.getAttribute('type') || 'Unknown'
+    const gridXStr = el.getAttribute('gridX')
+    const gridYStr = el.getAttribute('gridY')
+    const sizeXStr = el.getAttribute('sizeX')
+    const sizeYStr = el.getAttribute('sizeY')
+
+    const gridX = gridXStr ? parseInt(gridXStr, 10) : 0
+    const gridY = gridYStr ? parseInt(gridYStr, 10) : 0
+    const sizeX = sizeXStr ? parseInt(sizeXStr, 10) : 1
+    const sizeY = sizeYStr ? parseInt(sizeYStr, 10) : 1
+
+    restrictions.push({
+      type,
+      gridX: isNaN(gridX) ? 0 : gridX,
+      gridY: isNaN(gridY) ? 0 : gridY,
+      sizeX: isNaN(sizeX) ? 1 : sizeX,
+      sizeY: isNaN(sizeY) ? 1 : sizeY,
+    })
+  }
+
+  return restrictions
+}
+
 
 /**
  * Try to extract game version from JAR contents

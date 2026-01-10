@@ -76,6 +76,12 @@ export function Toolbar() {
       {/* Tools */}
       <div className={styles.group}>
         <ToolButton
+          id="hull"
+          label="🧱 Hull"
+          active={tool === 'hull'}
+          onClick={() => handleToolChange('hull')}
+        />
+        <ToolButton
           id="place"
           label="✏️ Place"
           active={tool === 'place'}

@@ -16,12 +16,38 @@ import * as path from 'node:path'
 import { unzipSync } from 'fflate'
 
 // Types (duplicated here to avoid import issues in Node context)
+interface RawJarTile {
+  gridOffX: number
+  gridOffY: number
+  elementType: string
+  walkGridCost: number
+}
+
+interface RawJarLinkedTile {
+  id: number
+  eid: number
+  gridOffX: number
+  gridOffY: number
+  rot: string
+}
+
+interface RawJarRestriction {
+  type: string
+  gridX: number
+  gridY: number
+  sizeX: number
+  sizeY: number
+}
+
 interface RawJarStructure {
   mid: number
   nameTid: number
   subCatId: number | null
   size: { width: number; height: number } | null
   debugName: string | null
+  tiles: RawJarTile[]
+  linkedTiles: RawJarLinkedTile[]
+  restrictions: RawJarRestriction[]
 }
 
 interface RawJarCategory {
@@ -35,6 +61,21 @@ interface ParsedJarData {
   texts: Map<number, string>
   categories: RawJarCategory[]
   gameVersion: string | null
+}
+
+type TileType = 'construction' | 'blocked' | 'access'
+
+interface StructureTile {
+  x: number
+  y: number
+  type: TileType
+  walkCost: number
+}
+
+interface TileLayout {
+  tiles: StructureTile[]
+  width: number
+  height: number
 }
 
 // Category mapping
@@ -173,21 +214,208 @@ function parseHavenXml(xml: string): { structures: RawJarStructure[]; categories
     const subCatMatch = meBlock.match(/<subCat[^>]+id="(\d+)"/)
     const subCatId = subCatMatch ? parseInt(subCatMatch[1], 10) : null
     
-    // Extract size from restrictions
-    let size: { width: number; height: number } | null = null
-    const sizeMatch = meBlock.match(/sizeX="(\d+)"[^>]*sizeY="(\d+)"/)
-    if (sizeMatch) {
-      size = { width: parseInt(sizeMatch[1], 10), height: parseInt(sizeMatch[2], 10) }
-    }
-    
     // Extract debug name
     const debugNameMatch = match[0].match(/_name="([^"]*)"/)
     const debugName = debugNameMatch ? debugNameMatch[1] : null
     
-    structures.push({ mid, nameTid, subCatId, size, debugName })
+    // Extract tile data from <data> section
+    const tiles = parseStructureTiles(meBlock)
+    
+    // Extract linked tiles from <linked> section
+    const linkedTiles = parseLinkedTiles(meBlock)
+    
+    // Extract restrictions
+    const restrictions = parseStructureRestrictions(meBlock)
+    
+    // Calculate size from linked tiles and data tiles (not restrictions)
+    const size = calculateStructureSize(tiles, linkedTiles)
+    
+    structures.push({ mid, nameTid, subCatId, size, debugName, tiles, linkedTiles, restrictions })
   }
   
   return { structures, categories }
+}
+
+/**
+ * Parse linked elements from <linked> section
+ * These define the actual construction tiles that make up the structure
+ */
+function parseLinkedTiles(meBlock: string): RawJarLinkedTile[] {
+  const linkedTiles: RawJarLinkedTile[] = []
+  
+  // Find <linked> section
+  const linkedMatch = meBlock.match(/<linked>([\s\S]*?)<\/linked>/)
+  if (!linkedMatch) return linkedTiles
+  
+  const linkedBlock = linkedMatch[1]
+  
+  // Find all <l> elements with gridOffX and gridOffY
+  // Pattern: <l id="..." eid="..." gridOffX="..." gridOffY="..." rot="..." .../>
+  const linkRegex = /<l[^>]+id="(\d+)"[^>]+eid="(\d+)"[^>]+gridOffX="(-?\d+)"[^>]+gridOffY="(-?\d+)"[^>]+rot="([^"]*)"[^>]*\/?>/g
+  let linkMatch
+  
+  while ((linkMatch = linkRegex.exec(linkedBlock)) !== null) {
+    linkedTiles.push({
+      id: parseInt(linkMatch[1], 10),
+      eid: parseInt(linkMatch[2], 10),
+      gridOffX: parseInt(linkMatch[3], 10),
+      gridOffY: parseInt(linkMatch[4], 10),
+      rot: linkMatch[5],
+    })
+  }
+  
+  // Also try alternate attribute orders
+  const linkRegex2 = /<l[^>]+gridOffX="(-?\d+)"[^>]+gridOffY="(-?\d+)"[^>]+id="(\d+)"[^>]+eid="(\d+)"[^>]+rot="([^"]*)"[^>]*\/?>/g
+  while ((linkMatch = linkRegex2.exec(linkedBlock)) !== null) {
+    const gridOffX = parseInt(linkMatch[1], 10)
+    const gridOffY = parseInt(linkMatch[2], 10)
+    // Check if we already have this position
+    const exists = linkedTiles.some(t => t.gridOffX === gridOffX && t.gridOffY === gridOffY)
+    if (exists) continue
+    
+    linkedTiles.push({
+      id: parseInt(linkMatch[3], 10),
+      eid: parseInt(linkMatch[4], 10),
+      gridOffX,
+      gridOffY,
+      rot: linkMatch[5],
+    })
+  }
+  
+  return linkedTiles
+}
+
+/**
+ * Calculate structure size from tiles and linked elements
+ * Linked elements take priority as they define the actual construction footprint
+ */
+function calculateStructureSize(
+  tiles: RawJarTile[],
+  linkedTiles: RawJarLinkedTile[]
+): { width: number; height: number } | null {
+  // Combine all tile positions
+  const positions: { x: number; y: number }[] = []
+
+  // Add positions from linked tiles (primary source for construction footprint)
+  for (const linked of linkedTiles) {
+    positions.push({ x: linked.gridOffX, y: linked.gridOffY })
+  }
+
+  // Add positions from data tiles
+  for (const tile of tiles) {
+    positions.push({ x: tile.gridOffX, y: tile.gridOffY })
+  }
+
+  if (positions.length === 0) {
+    return null
+  }
+
+  // Calculate bounding box
+  let minX = Infinity,
+    maxX = -Infinity,
+    minY = Infinity,
+    maxY = -Infinity
+
+  for (const pos of positions) {
+    minX = Math.min(minX, pos.x)
+    maxX = Math.max(maxX, pos.x)
+    minY = Math.min(minY, pos.y)
+    maxY = Math.max(maxY, pos.y)
+  }
+
+  const width = maxX - minX + 1
+  const height = maxY - minY + 1
+
+  return { width, height }
+}
+
+/**
+ * Parse tile data from the <data> section of a structure
+ */
+function parseStructureTiles(meBlock: string): RawJarTile[] {
+  const tiles: RawJarTile[] = []
+  
+  // Find <data> section
+  const dataMatch = meBlock.match(/<data>([\s\S]*?)<\/data>/)
+  if (!dataMatch) return tiles
+  
+  const dataBlock = dataMatch[1]
+  
+  // Find all <l> elements with gridOffX and gridOffY
+  const tileRegex = /<l[^>]+type="([^"]*)"[^>]+gridOffX="(-?\d+)"[^>]+gridOffY="(-?\d+)"[^>]*>([\s\S]*?)<\/l>/g
+  let tileMatch
+  
+  while ((tileMatch = tileRegex.exec(dataBlock)) !== null) {
+    const elementType = tileMatch[1]
+    const gridOffX = parseInt(tileMatch[2], 10)
+    const gridOffY = parseInt(tileMatch[3], 10)
+    const innerContent = tileMatch[4]
+    
+    // Extract walkGridCost from <element> if present
+    const walkCostMatch = innerContent.match(/walkGridCost="(\d+)"/)
+    const walkGridCost = walkCostMatch ? parseInt(walkCostMatch[1], 10) : 1
+    
+    tiles.push({
+      gridOffX,
+      gridOffY,
+      elementType,
+      walkGridCost,
+    })
+  }
+  
+  // Also try alternate attribute order
+  const tileRegex2 = /<l[^>]+gridOffX="(-?\d+)"[^>]+gridOffY="(-?\d+)"[^>]+type="([^"]*)"[^>]*>([\s\S]*?)<\/l>/g
+  while ((tileMatch = tileRegex2.exec(dataBlock)) !== null) {
+    const gridOffX = parseInt(tileMatch[1], 10)
+    const gridOffY = parseInt(tileMatch[2], 10)
+    const elementType = tileMatch[3]
+    const innerContent = tileMatch[4]
+    
+    // Check if we already have this tile
+    const exists = tiles.some(t => t.gridOffX === gridOffX && t.gridOffY === gridOffY)
+    if (exists) continue
+    
+    const walkCostMatch = innerContent.match(/walkGridCost="(\d+)"/)
+    const walkGridCost = walkCostMatch ? parseInt(walkCostMatch[1], 10) : 1
+    
+    tiles.push({
+      gridOffX,
+      gridOffY,
+      elementType,
+      walkGridCost,
+    })
+  }
+  
+  return tiles
+}
+
+/**
+ * Parse restriction tiles from objectInfo/restrictions
+ */
+function parseStructureRestrictions(meBlock: string): RawJarRestriction[] {
+  const restrictions: RawJarRestriction[] = []
+  
+  // Find <restrictions> section within <objectInfo>
+  const restrictionsMatch = meBlock.match(/<restrictions>([\s\S]*?)<\/restrictions>/)
+  if (!restrictionsMatch) return restrictions
+  
+  const restrictionsBlock = restrictionsMatch[1]
+  
+  // Find all <l> elements with type
+  const restrictionRegex = /<l[^>]+type="([^"]*)"[^>]+gridX="(-?\d+)"[^>]+gridY="(-?\d+)"[^>]+sizeX="(\d+)"[^>]+sizeY="(\d+)"[^>]*\/?>/g
+  let match
+  
+  while ((match = restrictionRegex.exec(restrictionsBlock)) !== null) {
+    restrictions.push({
+      type: match[1],
+      gridX: parseInt(match[2], 10),
+      gridY: parseInt(match[3], 10),
+      sizeX: parseInt(match[4], 10),
+      sizeY: parseInt(match[5], 10),
+    })
+  }
+  
+  return restrictions
 }
 
 function extractGameVersion(unzipped: Record<string, Uint8Array>): string | null {
@@ -299,6 +527,7 @@ interface StructureDef {
   size: [number, number]
   color: string
   categoryId: string
+  tileLayout?: TileLayout
 }
 
 interface StructureCategory {
@@ -357,12 +586,20 @@ function convertToStructureCatalog(jarData: ParsedJarData): StructureCatalog {
     
     const color = generateColor(name)
     
+    // Convert tile layout
+    const tileLayout = convertTileLayout(raw.tiles, raw.linkedTiles, raw.restrictions, size)
+    
     const structureDef: StructureDef = {
       id: `mid_${raw.mid}`,
       name,
       size,
       color,
       categoryId,
+    }
+    
+    // Only add tileLayout if we have meaningful tile data
+    if (tileLayout && tileLayout.tiles.length > 0) {
+      structureDef.tileLayout = tileLayout
     }
     
     const list = categoryStructures.get(categoryId)
@@ -400,6 +637,203 @@ function convertToStructureCatalog(jarData: ParsedJarData): StructureCatalog {
   }
   
   return { categories: resultCategories }
+}
+
+/**
+ * Determine tile type based on walkGridCost and element type
+ */
+function determineTileType(walkCost: number, elementType: string): TileType {
+  if (walkCost >= 255) {
+    return 'blocked'
+  }
+  if (walkCost === 0) {
+    return 'access'
+  }
+  if (elementType === 'Light' || elementType === 'FloorDeco') {
+    return 'access'
+  }
+  return 'construction'
+}
+
+/**
+ * Convert raw JAR tile data, linked elements, and restrictions to TileLayout
+ *
+ * Priority for construction tiles:
+ * 1. Linked tiles (<linked>) - define the actual structure footprint
+ * 2. Data tiles (<data>) - detailed tile info with walkGridCost
+ *
+ * Restrictions define access/blocked areas around the structure
+ */
+function convertTileLayout(
+  rawTiles: RawJarTile[],
+  linkedTiles: RawJarLinkedTile[],
+  restrictions: RawJarRestriction[],
+  fallbackSize: [number, number]
+): TileLayout | undefined {
+  const tileMap = new Map<string, StructureTile>()
+
+  // Step 1: Process linked tiles as construction tiles (primary source)
+  // These define the actual structure footprint
+  for (const linked of linkedTiles) {
+    const key = `${linked.gridOffX},${linked.gridOffY}`
+    // Linked tiles are always construction tiles (the structure itself)
+    tileMap.set(key, {
+      x: linked.gridOffX,
+      y: linked.gridOffY,
+      type: 'construction',
+      walkCost: 1, // Default walkable cost for construction
+    })
+  }
+
+  // Step 2: Process raw tiles from <data> section
+  // These may add detail (walkGridCost) or additional tiles
+  for (const rawTile of rawTiles) {
+    const key = `${rawTile.gridOffX},${rawTile.gridOffY}`
+    const tileType = determineTileType(rawTile.walkGridCost, rawTile.elementType)
+
+    const existing = tileMap.get(key)
+    if (existing) {
+      // Update existing tile with more specific info from data section
+      // Keep construction type but update walkCost if blocked
+      if (rawTile.walkGridCost >= 255) {
+        tileMap.set(key, {
+          x: rawTile.gridOffX,
+          y: rawTile.gridOffY,
+          type: 'blocked',
+          walkCost: rawTile.walkGridCost,
+        })
+      }
+    } else {
+      // Add new tile from data section
+      tileMap.set(key, {
+        x: rawTile.gridOffX,
+        y: rawTile.gridOffY,
+        type: tileType,
+        walkCost: rawTile.walkGridCost,
+      })
+    }
+  }
+
+  // Step 3: Process restrictions to add access/blocked tiles around the structure
+  for (const restriction of restrictions) {
+    if (restriction.type === 'Floor') {
+      for (let dx = 0; dx < restriction.sizeX; dx++) {
+        for (let dy = 0; dy < restriction.sizeY; dy++) {
+          const x = restriction.gridX + dx
+          const y = restriction.gridY + dy
+          const key = `${x},${y}`
+          // Only add if not already defined by construction tiles
+          if (!tileMap.has(key)) {
+            tileMap.set(key, { x, y, type: 'access', walkCost: 0 })
+          }
+        }
+      }
+    } else if (restriction.type === 'Space' || restriction.type === 'SpaceOneOnly') {
+      for (let dx = 0; dx < restriction.sizeX; dx++) {
+        for (let dy = 0; dy < restriction.sizeY; dy++) {
+          const x = restriction.gridX + dx
+          const y = restriction.gridY + dy
+          const key = `${x},${y}`
+          // Only add if not already defined by construction tiles
+          if (!tileMap.has(key)) {
+            tileMap.set(key, { x, y, type: 'blocked', walkCost: 255 })
+          }
+        }
+      }
+    }
+  }
+
+  if (tileMap.size === 0) {
+    return undefined
+  }
+
+  // First, calculate the bounding box of construction tiles only
+  // This defines the "core" structure footprint
+  let coreMinX = Infinity, coreMaxX = -Infinity, coreMinY = Infinity, coreMaxY = -Infinity
+  let hasCoreTiles = false
+
+  for (const tile of tileMap.values()) {
+    if (tile.type === 'construction') {
+      coreMinX = Math.min(coreMinX, tile.x)
+      coreMaxX = Math.max(coreMaxX, tile.x)
+      coreMinY = Math.min(coreMinY, tile.y)
+      coreMaxY = Math.max(coreMaxY, tile.y)
+      hasCoreTiles = true
+    }
+  }
+
+  // If no construction tiles, use fallback size centered at origin
+  if (!hasCoreTiles) {
+    coreMinX = 0
+    coreMaxX = fallbackSize[0] - 1
+    coreMinY = 0
+    coreMaxY = fallbackSize[1] - 1
+  }
+
+  // Filter tiles based on type and position:
+  // - Construction tiles: always included
+  // - Access tiles: included if within 1 tile of construction (for crew access)
+  // - Blocked tiles: ONLY included if inside the construction bounding box
+  //   (blocked tiles outside are "Space" requirements, not visual structure)
+  const ACCESS_MARGIN = 1
+  const filteredTiles: StructureTile[] = []
+
+  for (const tile of tileMap.values()) {
+    if (tile.type === 'construction') {
+      // Construction tiles are always included
+      filteredTiles.push(tile)
+    } else if (tile.type === 'access') {
+      // Access tiles: allow within 1 tile margin of construction
+      const isNearCore =
+        tile.x >= coreMinX - ACCESS_MARGIN &&
+        tile.x <= coreMaxX + ACCESS_MARGIN &&
+        tile.y >= coreMinY - ACCESS_MARGIN &&
+        tile.y <= coreMaxY + ACCESS_MARGIN
+
+      if (isNearCore) {
+        filteredTiles.push(tile)
+      }
+    } else if (tile.type === 'blocked') {
+      // Blocked tiles: ONLY include if strictly inside the construction bounding box
+      // Blocked tiles outside are "Space" requirements for clearance, not part of the structure
+      const isInsideCore =
+        tile.x >= coreMinX &&
+        tile.x <= coreMaxX &&
+        tile.y >= coreMinY &&
+        tile.y <= coreMaxY
+
+      if (isInsideCore) {
+        filteredTiles.push(tile)
+      }
+    }
+  }
+
+  if (filteredTiles.length === 0) {
+    return undefined
+  }
+
+  // Calculate final bounding box from filtered tiles
+  let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity
+
+  for (const tile of filteredTiles) {
+    minX = Math.min(minX, tile.x)
+    maxX = Math.max(maxX, tile.x)
+    minY = Math.min(minY, tile.y)
+    maxY = Math.max(maxY, tile.y)
+  }
+
+  const width = filteredTiles.length > 0 ? maxX - minX + 1 : fallbackSize[0]
+  const height = filteredTiles.length > 0 ? maxY - minY + 1 : fallbackSize[1]
+
+  // IMPORTANT: Normalize tile coordinates to start at (0,0)
+  // This is required for rotation to work correctly
+  const normalizedTiles: StructureTile[] = filteredTiles.map((tile) => ({
+    ...tile,
+    x: tile.x - minX,
+    y: tile.y - minY,
+  }))
+
+  return { tiles: normalizedTiles, width, height }
 }
 
 function generateSnapshotFile(
