@@ -141,6 +141,7 @@ The toolbar displays zoom as +/− buttons with an **editable percentage input**
 | `hull`  | Drag-select to fill 1×1 hull tiles on mouseup (Shift = erase hull tiles)                   | ✓ (selected on load)                    |
 | `place` | Click to place selected structure; drag-select highlights existing objects (no action yet) | Auto-selected when clicking a structure |
 | `erase` | Drag-select highlights; on mouseup deletes selection (confirm unless hull-only)            |                                         |
+| `grid`  | Toggle button to show/hide grid lines on the canvas                                        | ✓ (grid visible on load)                |
 
 ### Grid rendering
 
@@ -243,14 +244,16 @@ pnpm preview     # serve the built app locally
       Label text
     </label>
     ```
-    CSS uses `input:checked + .checkboxIndicator` to style the checked state. See `Toolbar.module.css` and `LayerPanel.module.css` for examples.
+    CSS uses `input:checked + .checkboxIndicator` to style the checked state. See `LayerPanel.module.css` for examples.
   - **Custom Select component**: Use `<Select>` from `@/components` instead of native `<select>` for full styling and keyboard navigation control. See `src/components/Select/` for implementation.
+  - **Toggle buttons**: For binary toggles in toolbars (like Grid visibility), use the `ToolButton` component pattern with `data-active` attribute instead of checkboxes. This provides consistent sizing and styling with other tool buttons.
 - **State management**: reducer + Context (`PlannerProvider` / `usePlanner*` hooks); update state only via `PlannerAction`.
   - **Catalog state**: `PlannerState` includes `catalog` and `catalogStatus` (source, isParsing, lastUpdatedAt, lastError, jarFileName).
   - **Catalog load hook**: `useCatalogRefresh` loads cached user-uploaded JAR catalog on mount (if present) and otherwise ensures the built-in snapshot is active.
   - **Local UI state**: Purely presentational state (e.g., search queries, transient UI modes) should use local `useState` in components rather than polluting global `PlannerState`. Examples: `Palette.tsx` keeps search query local; `CanvasViewport.tsx` keeps drag-selection + pending erase confirmation local.
 - **Form controls**:
-  - Checkboxes: Use the custom checkbox pattern (hidden native + styled span indicator)
+  - Checkboxes: Use the custom checkbox pattern (hidden native + styled span indicator) for settings panels
+  - Toggle buttons: For toolbar toggles (e.g., Grid visibility), use `ToolButton` with `data-active` attribute for consistent styling
   - Selects: Use the custom `<Select>` component from `@/components` (not native `<select>`) for full styling control and keyboard navigation
   - Inputs: Use CSS variables from `global.css` for consistent styling
 - **Dialogs**:

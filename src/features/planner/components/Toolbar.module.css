@@ -83,11 +83,13 @@
 }
 
 .toolButton {
-  padding: var(--spacing-xs) var(--spacing-md);
+  height: 28px;
+  padding: 0 var(--spacing-md);
   background-color: var(--color-bg-tertiary);
   border: 1px solid var(--color-border);
   border-radius: var(--border-radius-sm);
   font-size: var(--font-size-sm);
+  line-height: 1;
   color: var(--color-text-primary);
   cursor: pointer;
   transition: background-color var(--transition-fast);
@@ -102,67 +104,4 @@
   border-color: #238636;
 }
 
-.checkbox {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-sm);
-  font-size: var(--font-size-sm);
-  cursor: pointer;
-  user-select: none;
-}
-
-.checkbox input {
-  /* Hide default checkbox */
-  position: absolute;
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.checkboxIndicator {
-  position: relative;
-  width: 16px;
-  height: 16px;
-  background-color: var(--color-bg-tertiary);
-  border: 1px solid var(--color-border);
-  border-radius: 3px;
-  transition: all var(--transition-fast);
-  flex-shrink: 0;
-}
-
-/* Checkmark */
-.checkboxIndicator::after {
-  content: '';
-  position: absolute;
-  display: none;
-  left: 5px;
-  top: 2px;
-  width: 4px;
-  height: 8px;
-  border: solid var(--color-bg-primary);
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
-}
-
-/* Hover state */
-.checkbox:hover .checkboxIndicator {
-  border-color: var(--color-accent-blue);
-  background-color: var(--color-bg-secondary);
-}
-
-/* Checked state */
-.checkbox input:checked + .checkboxIndicator {
-  background-color: var(--color-accent-green);
-  border-color: var(--color-accent-green);
-}
-
-.checkbox input:checked + .checkboxIndicator::after {
-  display: block;
-}
-
-/* Focus state */
-.checkbox input:focus-visible + .checkboxIndicator {
-  outline: 2px solid var(--color-accent-blue);
-  outline-offset: 2px;
-}
 

@@ -12,7 +12,7 @@ const CANVAS_CONTAINER_PADDING = 24 * 2 // --spacing-xl on both sides
 const CANVAS_BORDER = 2 * 2 // 2px border on both sides
 
 interface ToolButtonProps {
-  id: ToolId
+  id: string
   label: string
   active: boolean
   onClick: () => void
@@ -219,14 +219,13 @@ export function Toolbar() {
           active={tool === 'erase'}
           onClick={() => handleToolChange('erase')}
         />
+        <ToolButton
+          id="grid"
+          label="🔲 Grid"
+          active={showGrid}
+          onClick={handleGridToggle}
+        />
       </div>
-
-      {/* Grid toggle */}
-      <label className={styles.checkbox}>
-        <input type="checkbox" checked={showGrid} onChange={handleGridToggle} />
-        <span className={styles.checkboxIndicator} />
-        Grid
-      </label>
     </div>
   )
 }
