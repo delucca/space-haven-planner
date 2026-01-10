@@ -63,11 +63,29 @@ Handled by `useKeyboardShortcuts` hook (`src/features/planner/hooks/useKeyboardS
 | `Ctrl/Cmd + +/-` | Zoom in/out (also works) |
 | `Q` | Rotate counter-clockwise |
 | `E` | Rotate clockwise |
-| `1` | Select Place tool |
-| `2` | Select Erase tool |
+| `1` | Select Hull tool |
+| `2` | Select Place tool |
+| `3` | Select Erase tool |
 | `Escape` | Clear selection |
 
 **Note**: Shortcuts are disabled when focus is in input/textarea/select elements.
+
+### Tools
+
+| Tool | Purpose | Default |
+|------|---------|---------|
+| `hull` | Paint/erase 1×1 hull tiles | ✓ (selected on load) |
+| `place` | Place structures from catalog | Auto-selected when clicking a structure |
+| `erase` | Remove placed structures and hull tiles | |
+
+### Hull system
+
+Hull tiles are separate from structures:
+- **Painted directly** on the grid (not from catalog)
+- **Stored as** `Set<string>` of "x,y" keys in `PlannerState.hullTiles`
+- **Auto-walls**: Walls automatically render on hull perimeter
+- **Merged perimeters**: Adjacent hull tiles share walls (only outer edges get walls)
+- **Erasable**: Erase tool removes hull tiles as well as structures
 
 ### "Source of truth" pointers
 - **Product/behavior spec**: `docs/USE_CASES.md`
@@ -75,10 +93,11 @@ Handled by `useKeyboardShortcuts` hook (`src/features/planner/hooks/useKeyboardS
 - **Configuration**: `package.json`, `vite.config.ts`, `tsconfig*.json`, `eslint.config.js`, `.prettierrc`
 - **Entry point(s)**: `index.html`, `src/main.tsx`, `src/App.tsx`, `src/features/planner/PlannerPage.tsx`
 - **Core domain logic**: `src/features/planner/state/reducer.ts`, `src/features/planner/canvas/renderer.ts`, `src/data/types.ts`
-- **Data catalog (static)**: `src/data/catalog/structures.ts` — offline-first fallback, always available
-- **Data catalog (wiki)**: `src/data/catalog/wiki.ts` — dynamic fetch, parse, and merge logic
-- **Catalog caching**: `src/data/catalog/cache.ts` — localStorage persistence with TTL
-- **External integrations**: Optional wiki refresh from [Space Haven Wiki](https://spacehaven.fandom.com/) via MediaWiki API (see "Wiki integration" section below)
+- **Data catalog (JAR-based)**: `src/data/jarCatalog/` — primary catalog source from game JAR files
+- **Data catalog (static fallback)**: `src/data/catalog/structures.ts` — offline-first fallback
+- **Data catalog (wiki metadata)**: `src/data/catalog/wiki.ts` — supplemental metadata (images, descriptions)
+- **Catalog caching**: `src/data/jarCatalog/cache.ts` and `src/data/catalog/cache.ts` — localStorage persistence
+- **JAR catalog generation**: `scripts/generate-jar-catalog.ts` — generates built-in snapshot from reference JAR
 
 ---
 
@@ -148,8 +167,11 @@ pnpm preview     # serve the built app locally
   - Current tests:
     - `src/data/catalog/cache.test.ts` — catalog caching logic
     - `src/data/catalog/wiki.test.ts` — wiki parsing and merge logic
+    - `src/data/jarCatalog/parser.test.ts` — JAR XML parsing
+    - `src/data/jarCatalog/converter.test.ts` — JAR to catalog conversion
     - `src/features/planner/hooks/useKeyboardShortcuts.test.ts` — keyboard shortcut handling
     - `src/features/planner/components/Palette.test.tsx` — palette UI (search, category expand/collapse)
+    - `src/features/planner/state/reducer.test.ts` — state reducer and collision detection
 
 ---
 
@@ -160,112 +182,153 @@ pnpm preview     # serve the built app locally
   - **Canvas presets**: preset labels/dimensions come from `src/data/presets.ts` (`GRID_PRESETS`), where **1 unit = 27 tiles**.
   - **Zoom constants**: `ZOOM_MIN`, `ZOOM_MAX`, `ZOOM_STEP`, `DEFAULT_ZOOM` are also in `src/data/presets.ts`.
   - **Rotation**: only `0 | 90 | 180 | 270`; footprint uses `getRotatedSize(...)` (`src/data/types.ts`).
-  - **Placement validity**: must be within bounds and **must not overlap** any existing structure (collision is global across layers).
-  - **Layer assignment**: placed structure `layer` is derived from the selected catalog category’s `defaultLayer`.
+  - **Tile rotation**: `rotateTilePosition()` in `renderer.ts` and `reducer.ts` handles rotating individual tiles within a structure's layout.
+  - **Placement validity**: must be within bounds; collision rules depend on tile types (see below).
+  - **Layer assignment**: placed structure `layer` is derived from the selected catalog category's `defaultLayer`.
+  - **Tile-aware collision**:
+    - New structure's **blocking tiles** (construction/blocked) cannot overlap **any** existing tile
+    - New structure's **access tiles** can only overlap existing **access tiles**
 - **Constraints**:
   - **No backend / no accounts**: persistence is local (`localStorage` + file exports).
   - **Offline-first**: must remain usable without network after first load.
   - **Node compatibility**: Vite 7 requires **Node.js ^20.19.0 || >=22.12.0**.
   - **Performance**: rendering is O(structure count) over a potentially large grid; avoid adding expensive work on every mouse move/state update.
+  - **Tile coordinate normalization**: `TileLayout` coordinates must start at (0,0) for rotation to work correctly. The converter normalizes by subtracting minX/minY.
 - **Gotchas**:
   - **Preset changes don't prune structures**: switching canvas size keeps existing placements; some may end up out of bounds (see UC-082).
   - **Autosave key**: `space-haven-planner-autosave` (see `src/features/planner/hooks/useAutosave.ts`).
-  - **Catalog cache key**: `space-haven-planner-catalog-cache` (see `src/data/catalog/cache.ts`).
+  - **JAR catalog cache key**: `space-haven-planner-jar-catalog` (see `src/data/jarCatalog/cache.ts`).
   - **Project JSON versioning**: current format is **v2**; loader migrates v1 (`category`/`item` → `categoryId`/`structureId`) (see `src/lib/serialization/project.ts`).
-  - **Unknown structure IDs in loaded projects**: they'll deserialize, but won't render (and won't collide / be erasable) because lookups fail; consider filtering or surfacing a warning if/when this becomes common.
+  - **Unknown structure IDs in loaded projects**: they'll deserialize, but won't render (and won't collide / be erasable) because lookups fail.
   - **DPR scaling**: canvas uses `window.devicePixelRatio` for crisp rendering on HiDPI displays; coordinate math must account for this in `renderer.ts`.
-  - **Wiki structure IDs vs static IDs**: Wiki-derived structures use IDs generated from page titles (e.g., `pod_hangar`), which may differ from static catalog IDs. The merge logic handles this via name matching, but edge cases may exist.
+  - **JAR structure IDs**: Use `mid_XXX` format (e.g., `mid_120` for X1 Airlock). These differ from old wiki-derived IDs.
+  - **Space restrictions for airlocks/cargo ports**: These structures have large "Space" restriction areas that define where space must be. All Space restriction tiles are included (not just adjacent ones) and rendered as red blocked areas.
+  - **Gap filling in structures**: The converter fills gaps within the core bounding box to ensure solid rectangles. Without this, structures like airlocks would appear as scattered tiles.
+  - **FloorDeco tiles**: Treated as `access` tiles (crew can walk on them), not `construction`. This affects collision and rendering.
 
 ---
 
-## Wiki integration
+## JAR-based catalog system
 
-### How it works
+The structure catalog is now primarily derived from the game's `spacehaven.jar` file, which contains authoritative structure definitions.
 
-The planner can optionally refresh its structure catalog from the [Space Haven community wiki](https://spacehaven.fandom.com/) via the MediaWiki Action API. The wiki integration **supplements** the static catalog—it never replaces it entirely.
+### Catalog source priority
 
-#### Discovery strategy (multi-source)
+1. **User-uploaded JAR**: Users can upload their own `spacehaven.jar` via the "Import JAR" dialog
+2. **Built-in JAR snapshot**: Pre-generated catalog in `src/data/jarCatalog/builtinSnapshot.ts`
+3. **Static fallback**: Hardcoded structures for guaranteed offline functionality
 
-1. **Category fetching**: Queries multiple wiki categories:
-   - `Category:Facilities`
-   - `Category:Power`
-   - `Category:System`
-   - `Category:Production Facilities`
-2. **AllPages fallback**: Also queries `Special:AllPages` API to catch structures not in any category
-3. **Page filtering**: Uses `SKIP_PAGES` set (~80+ entries) to exclude meta pages, resources, data logs, game mechanics pages, etc.
-4. **Deduplication**: Merges results from all sources into a unique set
+### JAR file structure
 
-#### Content fetching
+The JAR is a ZIP archive containing XML files without extensions:
+- `library/haven`: Structure definitions in `<me mid="...">` elements
+- `library/texts`: Localization strings `<t id="..." EN="..."/>`
 
-- Fetches page content in batches (50 pages per request via MediaWiki API)
-- Extracts revision IDs for cache validation
+### Structure data extraction
 
-#### Parsing
+Each structure (`<me>` element) contains:
 
-- **Footprint extraction**: Multiple regex patterns for wiki text (e.g., "needs a 3x2 tile area", "footprint of 2x3", infobox `|size = NxM`)
-- **Category inference**: From infobox `|category =` field, wiki `[[Category:...]]` links, or page name keywords
-- **ID generation**: Page titles → snake_case IDs (e.g., "Pod Hangar" → `pod_hangar`)
-- **Color generation**: Deterministic HSL color from structure name hash (for structures without static catalog match)
+| XML Element | Purpose |
+|-------------|---------|
+| `mid` attribute | Unique structure ID |
+| `<name tid="..."/>` | Reference to text entry for localized name |
+| `<subCat id="..."/>` | Category ID reference |
+| `<data><l type="..." gridOffX="..." gridOffY="..." walkGridCost="..."/></data>` | Individual tile data (Door, Hull, FloorDeco, etc.) |
+| `<linked><l gridOffX="..." gridOffY="..."/></linked>` | Linked structural elements (define construction footprint) |
+| `<restrictions><l type="Floor/Space" gridX="..." gridY="..." sizeX="..." sizeY="..."/></restrictions>` | Access/blocked areas |
 
-#### Merging with static catalog
+### Tile-level data model
 
-The `buildCatalogFromWikiData()` function implements a **merge strategy**:
+Structures now have detailed tile layouts with three tile types:
 
-1. Wiki structures are parsed and matched against static catalog by name similarity
-2. **Size priority**: Wiki footprint → static catalog size → default 2×2
-3. **Color priority**: Static catalog color → generated color
-4. **Category priority**: Parsed wiki category → static catalog category → "Other"
-5. **Static-only structures preserved**: Structures in static catalog without wiki pages (hull, walls, doors, windows) are automatically included in the final catalog
+| Tile Type | Description | Rendering | Collision |
+|-----------|-------------|-----------|-----------|
+| `construction` | Actual structure tiles | Solid color | Blocks all |
+| `blocked` | Impassable areas (hull, space) | Red overlay | Blocks all |
+| `access` | Walkable areas (crew access) | Semi-transparent | Can overlap other access |
 
-This ensures:
-- Wiki updates are reflected (new structures, updated sizes)
-- Static structures without dedicated wiki pages remain available
-- Existing saved projects with static structure IDs continue to work
+#### Tile type determination
 
-### Caching
+- **Linked tiles** (`<linked>`) → `construction`
+- **Data tiles with `walkGridCost >= 255`** → `blocked`
+- **Data tiles with `elementType === 'FloorDeco' | 'Light'`** → `access`
+- **Other data tiles** → `construction`
+- **Floor restrictions** → `access`
+- **Space/SpaceOneOnly restrictions** → `blocked`
 
-- Cached in `localStorage` with key `space-haven-planner-catalog-cache`
-- TTL: 7 days (refreshes automatically if stale and online)
-- Manual refresh via "Refresh Catalog" button in ActionBar
-- Cache includes `fetchedAt` timestamp and `revisionKey` (hash of wiki revision IDs)
+#### Gap filling
 
-### Fallback behavior
-
-- **Offline**: Uses built-in static catalog (`src/data/catalog/structures.ts`)
-- **Fetch failure**: Keeps current catalog, shows non-intrusive error in StatusBar
-- **Missing footprint**: Falls back to static catalog size or default 2×2
-- **Unknown structures in saved projects**: Still renderable if they exist in static catalog
-
-### Known limitations / gotchas
-
-- **Cloudflare/CAPTCHA**: Fandom wikis may occasionally return challenge pages instead of JSON. The app detects this (checks `content-type` header) and falls back gracefully.
-- **Wiki markup changes**: Footprint parsing relies on common patterns; unusual wiki formatting may not be recognized.
-- **Category inference**: Not all structures map cleanly to our categories; some may end up in "Other".
-- **No real-time sync**: Wiki changes are only picked up on refresh (manual or TTL expiry).
-- **Skip list maintenance**: New meta/resource pages on the wiki may need to be added to `SKIP_PAGES` in `wiki.ts`.
-- **Category coverage**: If the wiki reorganizes categories, `STRUCTURE_CATEGORIES` may need updating.
+The converter fills gaps within the core bounding box (data + linked tiles) to ensure solid rectangular structures. This is essential for structures like airlocks where the JAR defines scattered tiles but the game renders a solid floor area.
 
 ### Key files
 
-- `src/data/catalog/wiki.ts` — wiki fetch, parse, merge logic, and skip list
-- `src/data/catalog/cache.ts` — localStorage caching with TTL
-- `src/data/catalog/structures.ts` — static fallback catalog (source of truth for offline)
-- `src/features/planner/hooks/useCatalogRefresh.ts` — React hook for load/refresh lifecycle
-- `src/data/catalog/__fixtures__/wikitext.ts` — test fixtures for wiki parsing
+| File | Purpose |
+|------|---------|
+| `src/data/jarCatalog/types.ts` | Type definitions for JAR parsing |
+| `src/data/jarCatalog/parser.ts` | JAR extraction and XML parsing |
+| `src/data/jarCatalog/converter.ts` | Convert parsed JAR data to `StructureCatalog` |
+| `src/data/jarCatalog/builtinSnapshot.ts` | Pre-generated catalog (auto-generated, do not edit) |
+| `src/data/jarCatalog/cache.ts` | User-uploaded JAR caching |
+| `src/data/jarCatalog/hullStructures.ts` | Manual hull structures (walls, doors, windows) |
+| `scripts/generate-jar-catalog.ts` | Node script to regenerate built-in snapshot |
+
+### Generating the built-in snapshot
+
+```bash
+# Place spacehaven.jar in reference/ directory (gitignored)
+npx tsx scripts/generate-jar-catalog.ts reference/spacehaven.jar
+```
+
+This regenerates `src/data/jarCatalog/builtinSnapshot.ts` with the latest structure data.
+
+### Structure deduplication
+
+Structures with the same name AND same size are merged (deduplicated) within each category. This handles color variants and duplicate entries in the JAR.
+
+### Hull tool
+
+Hull blocks are not in the JAR's build menu (they're in "Edit mode" in-game). The planner provides:
+- **Hull Tool**: Paint/erase 1×1 hull tiles directly on the grid
+- **Auto-wall generation**: Walls automatically appear on hull perimeter
+- **Hull structures**: Doors, windows, walls remain in the catalog as placeable items
+
+---
+
+## Wiki integration (supplemental metadata)
+
+The wiki is **no longer the primary catalog source**. It now provides supplemental metadata only.
+
+### Current status
+
+- Wiki fetch/parse code exists in `src/data/catalog/wiki.ts`
+- Planned uses: structure images, extended descriptions, wiki page links
+- **Not used for**: structure sizes, categories, or core catalog data
+
+### Key files
+
+- `src/data/catalog/wiki.ts` — wiki fetch, parse logic (for future metadata use)
+- `src/data/catalog/wikiMetadata.ts` — metadata types and storage
+- `src/data/catalog/cache.ts` — metadata caching
 
 ---
 
 ## Glossary
 
 - **Tile**: the atomic grid cell; all sizes/positions are expressed in tiles.
-- **Unit**: Space Haven “grid unit” used by presets; **1 unit = 27×27 tiles**.
+- **Unit**: Space Haven "grid unit" used by presets; **1 unit = 27×27 tiles**.
 - **Preset**: labeled canvas size like `2x2` (see `GRID_PRESETS`).
-- **Structure (catalog)**: a placeable type with `id`, `name`, `size`, `color`, `categoryId`.
+- **Structure (catalog)**: a placeable type with `id`, `name`, `size`, `color`, `categoryId`, and optional `tileLayout`.
+- **TileLayout**: detailed tile-level data for a structure, including individual tile positions and types.
+- **StructureTile**: a single tile within a structure's layout with `x`, `y`, `type` (construction/blocked/access), and `walkCost`.
 - **Placed structure**: an instance on the grid with `x`, `y`, `rotation`, and derived `layer`.
 - **Layer**: visibility grouping (`Hull | Rooms | Systems | Furniture`); rendering + PNG export only include visible layers.
-- **Rotation**: `0/90/180/270` degrees; affects footprint via `getRotatedSize`.
+- **Rotation**: `0/90/180/270` degrees; affects footprint via `getRotatedSize` and tile positions via `rotateTilePosition`.
 - **Zoom**: pixels-per-tile scale factor; range `ZOOM_MIN` (6) to `ZOOM_MAX` (24), step `ZOOM_STEP` (2).
 - **Autosave**: debounced persistence of the current project JSON into `localStorage`.
+- **Hull tile**: a 1×1 painted hull cell (distinct from hull structures like walls/doors).
+- **JAR**: the game's `spacehaven.jar` file, a ZIP archive containing game data in XML format.
+- **mid**: structure ID in the JAR (`<me mid="...">`); used as `mid_XXX` in the catalog.
+- **Space restriction**: JAR element defining areas that must be open to space (for airlocks, cargo ports).
 
 ---
 
@@ -276,20 +339,22 @@ This ensures:
   - Canvas interaction/rendering: `src/features/planner/canvas/`
   - State/actions/invariants: `src/features/planner/state/`
   - Domain types/presets/catalog: `src/data/`
-  - Wiki integration/parsing: `src/data/catalog/wiki.ts`
+  - JAR parsing/conversion: `src/data/jarCatalog/`
+  - Wiki metadata: `src/data/catalog/wiki.ts`
   - Save/load/export formats: `src/lib/serialization/`
 - **What to avoid**:
   - Mixing pixel units and tile units (always convert at boundaries like renderers).
   - Mutating state in-place (keep reducer/state immutable; clone `Set`s when updating).
   - Breaking offline/local-first constraints (avoid introducing required network calls).
   - Silent data loss in migrations/import (if dropping unknown structures, surface it to the user).
-  - Removing structures from static catalog that may exist in saved projects.
-- **Wiki integration changes**:
-  - To add new wiki categories: update `STRUCTURE_CATEGORIES` array in `wiki.ts`
-  - To skip new meta pages: add to `SKIP_PAGES` set in `wiki.ts`
-  - To improve category mapping: update `WIKI_CATEGORY_MAP` in `wiki.ts`
-  - To improve footprint parsing: add patterns to `parseFootprintFromWikiText()` in `wiki.ts`
-  - Always ensure static catalog remains the offline fallback
+  - Editing `builtinSnapshot.ts` manually (it's auto-generated; run the script instead).
+  - Forgetting to normalize tile coordinates in `TileLayout` (must start at 0,0).
+- **JAR catalog changes**:
+  - To update the built-in catalog: place new JAR in `reference/`, run `npx tsx scripts/generate-jar-catalog.ts reference/spacehaven.jar`
+  - To change tile type logic: update `convertTileLayout()` in both `converter.ts` and `generate-jar-catalog.ts`
+  - To add manual structures (like hull items): update `src/data/jarCatalog/hullStructures.ts`
+  - To change category mapping: update `JAR_CATEGORY_MAP` in converter files
+  - Always regenerate `builtinSnapshot.ts` after changing converter logic
 - **Verification checklist**:
   - [ ] Update `docs/USE_CASES.md` if user-visible behavior changes; update `docs/CONSTITUTION.md` if project facts/decisions change
   - [ ] `pnpm lint`
@@ -297,6 +362,7 @@ This ensures:
   - [ ] `pnpm test:run` (add/adjust tests as needed)
   - [ ] `pnpm build`
   - [ ] If changing the project file format: bump/migrate `PROJECT_VERSION` and keep load backward-compatible
-  - [ ] If changing wiki parsing: add test cases to `src/data/catalog/__fixtures__/wikitext.ts` and `wiki.test.ts`
+  - [ ] If changing JAR parsing: update tests in `parser.test.ts` and `converter.test.ts`
+  - [ ] If changing tile layout logic: regenerate `builtinSnapshot.ts` and verify structures render correctly
 
 
