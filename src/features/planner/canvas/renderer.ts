@@ -11,6 +11,7 @@ import { findStructureById, getRotatedSize } from '@/data'
 const COLORS = {
   background: '#1a1e24',
   gridLine: '#2a3040',
+  centerLine: '#1a5a5a', // Teal/cyan color for center crosshair lines
   previewValid: 'rgba(136, 255, 136, 0.5)',
   previewInvalid: 'rgba(255, 68, 68, 0.4)',
   previewBorderValid: '#88ff88',
@@ -147,6 +148,33 @@ export function renderGrid(rc: RenderContext): void {
     ctx.lineTo(gridSize.width * zoom, y * zoom + 0.5)
     ctx.stroke()
   }
+}
+
+/**
+ * Render center crosshair lines (thick lines marking the center of the grid)
+ * These appear below hull tiles and structures, similar to the game's grid
+ */
+export function renderCenterLines(rc: RenderContext): void {
+  const { ctx, gridSize, zoom } = rc
+
+  ctx.strokeStyle = COLORS.centerLine
+  ctx.lineWidth = 3 // Thicker than regular grid lines
+
+  // Calculate center positions (at the edge between two center tiles)
+  const centerX = Math.floor(gridSize.width / 2) * zoom
+  const centerY = Math.floor(gridSize.height / 2) * zoom
+
+  // Vertical center line
+  ctx.beginPath()
+  ctx.moveTo(centerX + 0.5, 0)
+  ctx.lineTo(centerX + 0.5, gridSize.height * zoom)
+  ctx.stroke()
+
+  // Horizontal center line
+  ctx.beginPath()
+  ctx.moveTo(0, centerY + 0.5)
+  ctx.lineTo(gridSize.width * zoom, centerY + 0.5)
+  ctx.stroke()
 }
 
 /**
@@ -714,6 +742,7 @@ export function renderScene(
 
   if (showGrid) {
     renderGrid(rc)
+    renderCenterLines(rc)
   }
 
   // Render hull tiles first (below structures)
@@ -760,6 +789,7 @@ export function exportToPNG(
 
   clearCanvas(rc)
   renderGrid(rc)
+  renderCenterLines(rc)
   renderHullTiles(rc, hullTiles, visibleLayers)
   renderStructures(rc, structures, catalog, visibleLayers)
 

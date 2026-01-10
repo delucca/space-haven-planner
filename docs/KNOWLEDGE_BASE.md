@@ -142,6 +142,19 @@ The toolbar displays zoom as +/− buttons with an **editable percentage input**
 | `place` | Click to place selected structure; drag-select highlights existing objects (no action yet) | Auto-selected when clicking a structure |
 | `erase` | Drag-select highlights; on mouseup deletes selection (confirm unless hull-only)            |                                         |
 
+### Grid rendering
+
+The canvas grid is rendered in layers (back to front):
+
+1. **Background**: Solid dark color (`#1a1e24`)
+2. **Grid lines**: Thin lines (`#2a3040`) every tile
+3. **Center crosshair**: Thick teal lines (`#1a5a5a`, 3px) marking grid center — matches the game's visual style
+4. **Hull tiles**: Painted hull cells with auto-walls
+5. **Structures**: Placed catalog items
+6. **Previews/overlays**: Placement preview, selection rectangles
+
+The center crosshair is dynamically positioned at `floor(gridSize.width / 2)` and `floor(gridSize.height / 2)`, so it adjusts automatically when the canvas preset changes.
+
 ### Hull system
 
 Hull tiles are separate from structures:
@@ -159,7 +172,7 @@ Hull tiles are separate from structures:
 - **Configuration**: `package.json`, `vite.config.ts`, `tsconfig*.json`, `eslint.config.js`, `.prettierrc`
 - **Entry point(s)**: `index.html`, `src/main.tsx`, `src/App.tsx`, `src/features/planner/PlannerPage.tsx`
 - **Shared UI components**: `src/components/` (barrel export at `src/components/index.ts`)
-- **Core domain logic**: `src/features/planner/state/reducer.ts`, `src/features/planner/canvas/renderer.ts`, `src/data/types.ts`
+- **Core domain logic**: `src/features/planner/state/reducer.ts`, `src/features/planner/canvas/renderer.ts` (includes `COLORS` constant, grid/center lines, hull/structure rendering), `src/data/types.ts`
 - **Data catalog (JAR-based)**: `src/data/jarCatalog/` — primary catalog source from game JAR files
 - **Data catalog (static fallback)**: `src/data/catalog/structures.ts` — offline-first fallback
 - **Data catalog (wiki metadata)**: `src/data/catalog/wiki.ts` — supplemental metadata (images, descriptions)
@@ -286,6 +299,7 @@ pnpm preview     # serve the built app locally
   - **Performance**: rendering is O(structure count) over a potentially large grid; avoid adding expensive work on every mouse move/state update.
   - **Tile coordinate normalization**: `TileLayout` coordinates must start at (0,0) for rotation to work correctly. The converter normalizes by subtracting minX/minY.
 - **Gotchas**:
+  - **Rendering order matters**: `renderScene()` draws in strict order: background → grid → center lines → hull → structures → previews. Adding new visual elements requires placing them in the correct z-order.
   - **Preset changes don't prune structures**: switching canvas size keeps existing placements; some may end up out of bounds (see UC-082).
   - **Autosave key**: `space-haven-planner-autosave` (see `src/features/planner/hooks/useAutosave.ts`).
   - **JAR catalog cache key**: `space-haven-planner-jar-catalog` (see `src/data/jarCatalog/cache.ts`).
