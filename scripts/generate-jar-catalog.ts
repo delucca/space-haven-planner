@@ -799,6 +799,20 @@ function convertTileLayout(
     coreMaxY = fallbackSize[1] - 1
   }
 
+  // Step 4: Fill in gaps in the core structure area
+  // This ensures structures like airlocks have a solid rectangular floor area
+  // instead of scattered individual tiles
+  for (let x = coreMinX; x <= coreMaxX; x++) {
+    for (let y = coreMinY; y <= coreMaxY; y++) {
+      const key = `${x},${y}`
+      if (!tileMap.has(key)) {
+        // Fill gap with construction tile (part of the structure)
+        tileMap.set(key, { x, y, type: 'construction', walkCost: 1 })
+        dataTileKeys.add(key) // Mark as part of the structure
+      }
+    }
+  }
+
   // Filter tiles:
   // - All tiles from data/linked sections are included (they ARE the structure)
   // - Access tiles from Floor restrictions: included if within 1 tile of core
