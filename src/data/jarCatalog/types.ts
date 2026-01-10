@@ -126,4 +126,3 @@ export type JarCatalogSource =
   | 'jar_builtin_snapshot' // Built-in catalog shipped with the app
   | 'jar_user' // Freshly parsed from user-uploaded JAR
   | 'jar_user_cache' // Loaded from localStorage (user's previous JAR)
-

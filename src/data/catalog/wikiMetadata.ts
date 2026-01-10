@@ -154,9 +154,7 @@ interface WikiQueryResponse {
 /**
  * Fetch metadata for a batch of structure names from the wiki
  */
-async function fetchMetadataBatch(
-  names: string[]
-): Promise<Map<string, WikiStructureMetadata>> {
+async function fetchMetadataBatch(names: string[]): Promise<Map<string, WikiStructureMetadata>> {
   const results = new Map<string, WikiStructureMetadata>()
 
   try {
@@ -267,4 +265,3 @@ export async function getWikiMetadata(
 
   return fresh
 }
-

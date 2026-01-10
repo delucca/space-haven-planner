@@ -67,19 +67,15 @@ export function JarImportDialog({
       <div className={styles.content}>
         <header className={styles.header}>
           <h2 className={styles.title}>📦 Import Game Data</h2>
-          <button
-            className={styles.closeButton}
-            onClick={onClose}
-            aria-label="Close dialog"
-          >
+          <button className={styles.closeButton} onClick={onClose} aria-label="Close dialog">
             ✕
           </button>
         </header>
 
         <div className={styles.body}>
           <p className={styles.intro}>
-            Upload your <code>spacehaven.jar</code> file to get the latest
-            structures from your game version.
+            Upload your <code>spacehaven.jar</code> file to get the latest structures from your game
+            version.
           </p>
 
           <section className={styles.section}>
@@ -110,8 +106,8 @@ export function JarImportDialog({
             </div>
 
             <p className={styles.tip}>
-              💡 <strong>Tip:</strong> In Steam, right-click Space Haven →
-              Properties → Installed Files → Browse to open the folder directly.
+              💡 <strong>Tip:</strong> In Steam, right-click Space Haven → Properties → Installed
+              Files → Browse to open the folder directly.
             </p>
           </section>
 
@@ -130,11 +126,7 @@ export function JarImportDialog({
           <button className={styles.cancelButton} onClick={onClose}>
             Cancel
           </button>
-          <button
-            className={styles.uploadButton}
-            onClick={handleUploadClick}
-            disabled={isParsing}
-          >
+          <button className={styles.uploadButton} onClick={handleUploadClick} disabled={isParsing}>
             {isParsing ? '⏳ Parsing...' : '📂 Select spacehaven.jar'}
           </button>
         </footer>
@@ -142,4 +134,3 @@ export function JarImportDialog({
     </dialog>
   )
 }
-

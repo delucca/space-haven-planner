@@ -78,22 +78,40 @@ interface TileLayout {
   height: number
 }
 
-// Category mapping
+// Category mapping based on JAR SubCat IDs (under MainCat 1512 = OBJECTS)
+// Order values from JAR determine UI display order
 const JAR_CATEGORY_MAP: Record<
   number,
-  { id: string; name: string; color: string; defaultLayer: string }
+  { id: string; name: string; color: string; defaultLayer: string; order: number }
 > = {
-  1520: { id: 'hull', name: 'Hull & Walls', color: '#3a4a5c', defaultLayer: 'Hull' },
-  1521: { id: 'power', name: 'Power', color: '#cc8844', defaultLayer: 'Systems' },
-  1522: { id: 'life_support', name: 'Life Support', color: '#44aa88', defaultLayer: 'Systems' },
-  1523: { id: 'system', name: 'Systems & Combat', color: '#cc4444', defaultLayer: 'Systems' },
-  1524: { id: 'airlock', name: 'Airlock & Hangar', color: '#8866aa', defaultLayer: 'Rooms' },
-  1525: { id: 'storage', name: 'Storage', color: '#888866', defaultLayer: 'Rooms' },
-  1526: { id: 'food', name: 'Food & Agriculture', color: '#66aa44', defaultLayer: 'Rooms' },
-  1527: { id: 'resource', name: 'Resource & Industry', color: '#aa8844', defaultLayer: 'Rooms' },
-  1528: { id: 'facility', name: 'Crew Facilities', color: '#6688aa', defaultLayer: 'Rooms' },
-  1529: { id: 'robots', name: 'Robots', color: '#55aaaa', defaultLayer: 'Systems' },
-  1530: { id: 'furniture', name: 'Furniture & Decoration', color: '#aa8877', defaultLayer: 'Furniture' },
+  // order=1: WALL (doors, windows, walls)
+  1522: { id: 'wall', name: 'Wall', color: '#3a4a5c', defaultLayer: 'Hull', order: 1 },
+  // order=2: FURNITURE
+  1506: { id: 'furniture', name: 'Furniture', color: '#aa8877', defaultLayer: 'Furniture', order: 2 },
+  // order=2: DECORATIONS
+  3359: { id: 'decorations', name: 'Decorations', color: '#aa7788', defaultLayer: 'Furniture', order: 2 },
+  // order=3: FACILITY
+  1507: { id: 'facility', name: 'Facility', color: '#6688aa', defaultLayer: 'Rooms', order: 3 },
+  // order=4: LIFE SUPPORT
+  1508: { id: 'life_support', name: 'Life Support', color: '#44aa88', defaultLayer: 'Systems', order: 4 },
+  // order=5: POWER
+  1516: { id: 'power', name: 'Power', color: '#cc8844', defaultLayer: 'Systems', order: 5 },
+  // order=6: RESOURCE
+  1510: { id: 'resource', name: 'Resource', color: '#aa8844', defaultLayer: 'Rooms', order: 6 },
+  // order=7: FOOD
+  1515: { id: 'food', name: 'Food', color: '#66aa44', defaultLayer: 'Rooms', order: 7 },
+  // order=8: STORAGE
+  1517: { id: 'storage', name: 'Storage', color: '#888866', defaultLayer: 'Rooms', order: 8 },
+  // order=9: AIRLOCK
+  1521: { id: 'airlock', name: 'Airlock', color: '#8866aa', defaultLayer: 'Rooms', order: 9 },
+  // order=10: SYSTEM
+  1519: { id: 'system', name: 'System', color: '#cc4444', defaultLayer: 'Systems', order: 10 },
+  // order=10: ROBOTS
+  2880: { id: 'robots', name: 'Robots', color: '#55aaaa', defaultLayer: 'Systems', order: 10 },
+  // order=13: WEAPON (not typically used for ship building)
+  1520: { id: 'weapon', name: 'Weapon', color: '#cc4466', defaultLayer: 'Systems', order: 13 },
+  // order=20: MISSION (mission-specific items)
+  4243: { id: 'mission', name: 'Mission', color: '#aa66cc', defaultLayer: 'Systems', order: 20 },
 }
 
 const DEFAULT_CATEGORY = {
@@ -167,12 +185,18 @@ function parseHavenXml(xml: string): { structures: RawJarStructure[]; categories
   while ((match = catRegex.exec(xml)) !== null) {
     const id = parseInt(match[1], 10)
     if (!isNaN(id)) {
-      // Extract name tid
+      // Extract category block
       const catBlock = xml.slice(match.index, xml.indexOf('</cat>', match.index) + 6)
+      
+      // Extract name tid
       const nameTidMatch = catBlock.match(/<name[^>]+tid="(\d+)"/)
       const nameTid = nameTidMatch ? parseInt(nameTidMatch[1], 10) : 0
       
-      categories.push({ id, nameTid, parentId: null })
+      // Extract mainCat parent id
+      const mainCatMatch = catBlock.match(/<mainCat[^>]+id="(\d+)"/)
+      const parentId = mainCatMatch ? parseInt(mainCatMatch[1], 10) : null
+      
+      categories.push({ id, nameTid, parentId })
     }
   }
   
@@ -483,36 +507,42 @@ function buildCategoryLookup(
   const lookup = new Map<number, string>()
   
   for (const jarCat of jarCategories) {
+    // First, try direct mapping from known JAR category IDs
     const directMapping = JAR_CATEGORY_MAP[jarCat.id]
     if (directMapping) {
       lookup.set(jarCat.id, directMapping.id)
       continue
     }
     
+    // Fallback: try to infer from category name (for unknown categories)
     const catName = texts.get(jarCat.nameTid)?.toLowerCase() || ''
     
-    if (catName.includes('hull') || catName.includes('wall') || catName.includes('door')) {
-      lookup.set(jarCat.id, 'hull')
-    } else if (catName.includes('power') || catName.includes('generator') || catName.includes('energy')) {
-      lookup.set(jarCat.id, 'power')
+    if (catName.includes('wall') || catName.includes('door') || catName.includes('window')) {
+      lookup.set(jarCat.id, 'wall')
+    } else if (catName.includes('decoration')) {
+      lookup.set(jarCat.id, 'decorations')
+    } else if (catName.includes('furniture')) {
+      lookup.set(jarCat.id, 'furniture')
+    } else if (catName.includes('facility') || catName.includes('crew') || catName.includes('bed') || catName.includes('medical')) {
+      lookup.set(jarCat.id, 'facility')
     } else if (catName.includes('life support') || catName.includes('oxygen') || catName.includes('thermal')) {
       lookup.set(jarCat.id, 'life_support')
-    } else if (catName.includes('weapon') || catName.includes('shield') || catName.includes('combat') || catName.includes('system')) {
-      lookup.set(jarCat.id, 'system')
-    } else if (catName.includes('airlock') || catName.includes('hangar')) {
-      lookup.set(jarCat.id, 'airlock')
-    } else if (catName.includes('storage') || catName.includes('cargo')) {
-      lookup.set(jarCat.id, 'storage')
-    } else if (catName.includes('food') || catName.includes('kitchen') || catName.includes('grow') || catName.includes('agriculture')) {
-      lookup.set(jarCat.id, 'food')
+    } else if (catName.includes('power') || catName.includes('generator') || catName.includes('energy')) {
+      lookup.set(jarCat.id, 'power')
     } else if (catName.includes('resource') || catName.includes('refinery') || catName.includes('assembler') || catName.includes('industry')) {
       lookup.set(jarCat.id, 'resource')
-    } else if (catName.includes('crew') || catName.includes('bed') || catName.includes('medical') || catName.includes('facility')) {
-      lookup.set(jarCat.id, 'facility')
+    } else if (catName.includes('food') || catName.includes('kitchen') || catName.includes('grow') || catName.includes('agriculture')) {
+      lookup.set(jarCat.id, 'food')
+    } else if (catName.includes('storage') || catName.includes('cargo')) {
+      lookup.set(jarCat.id, 'storage')
+    } else if (catName.includes('airlock') || catName.includes('hangar')) {
+      lookup.set(jarCat.id, 'airlock')
+    } else if (catName.includes('system')) {
+      lookup.set(jarCat.id, 'system')
     } else if (catName.includes('robot')) {
       lookup.set(jarCat.id, 'robots')
-    } else if (catName.includes('furniture') || catName.includes('decoration') || catName.includes('light')) {
-      lookup.set(jarCat.id, 'furniture')
+    } else if (catName.includes('weapon') || catName.includes('shield') || catName.includes('combat')) {
+      lookup.set(jarCat.id, 'weapon')
     } else {
       lookup.set(jarCat.id, 'other')
     }
@@ -550,8 +580,22 @@ function getDedupeKey(name: string, size: [number, number]): string {
   return `${name}|${size[0]}x${size[1]}`
 }
 
+/**
+ * MainCat ID for OBJECTS (normal build menu)
+ * Only structures from this MainCat should appear in the planner
+ */
+const OBJECTS_MAINCAT_ID = 1512
+
 function convertToStructureCatalog(jarData: ParsedJarData): StructureCatalog {
   const { structures, texts, categories: jarCategories } = jarData
+  
+  // Build set of SubCat IDs that belong to OBJECTS MainCat (1512)
+  const objectsSubCatIds = new Set<number>()
+  for (const cat of jarCategories) {
+    if (cat.parentId === OBJECTS_MAINCAT_ID) {
+      objectsSubCatIds.add(cat.id)
+    }
+  }
   
   const categoryLookup = buildCategoryLookup(jarCategories, texts)
   const categoryStructures = new Map<string, StructureDef[]>()
@@ -565,6 +609,11 @@ function convertToStructureCatalog(jarData: ParsedJarData): StructureCatalog {
   seenInCategory.set(DEFAULT_CATEGORY.id, new Set())
   
   for (const raw of structures) {
+    // Skip structures not in the OBJECTS build menu (MainCat 1512)
+    if (raw.subCatId === null || !objectsSubCatIds.has(raw.subCatId)) {
+      continue
+    }
+    
     const name = texts.get(raw.nameTid)
     if (!name) continue
     
@@ -612,9 +661,24 @@ function convertToStructureCatalog(jarData: ParsedJarData): StructureCatalog {
   }
   
   const resultCategories: StructureCategory[] = []
+  // Category order based on JAR order attribute (game displays in DESCENDING order)
+  // Screenshot shows: SYSTEM, AIRLOCK, STORAGE, FOOD, RESOURCE, POWER, LIFE SUPPORT, FACILITY, DECORATIONS, FURNITURE, WALL
   const categoryOrder = [
-    'hull', 'power', 'life_support', 'system', 'airlock',
-    'storage', 'food', 'resource', 'facility', 'robots', 'furniture', 'other',
+    'mission',     // order=20
+    'weapon',      // order=13
+    'system',      // order=10
+    'robots',      // order=10
+    'airlock',     // order=9
+    'storage',     // order=8
+    'food',        // order=7
+    'resource',    // order=6
+    'power',       // order=5
+    'life_support',// order=4
+    'facility',    // order=3
+    'decorations', // order=2
+    'furniture',   // order=2
+    'wall',        // order=1
+    'other',       // fallback (should be empty if all categories are mapped)
   ]
   
   for (const catId of categoryOrder) {
@@ -637,22 +701,6 @@ function convertToStructureCatalog(jarData: ParsedJarData): StructureCatalog {
   }
   
   return { categories: resultCategories }
-}
-
-/**
- * Determine tile type based on walkGridCost and element type
- */
-function determineTileType(walkCost: number, elementType: string): TileType {
-  if (walkCost >= 255) {
-    return 'blocked'
-  }
-  if (walkCost === 0) {
-    return 'access'
-  }
-  if (elementType === 'Light' || elementType === 'FloorDeco') {
-    return 'access'
-  }
-  return 'construction'
 }
 
 /**

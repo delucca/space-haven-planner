@@ -90,10 +90,7 @@ export function parseJarBytes(bytes: Uint8Array): ParsedJarData {
 /**
  * Extract a file entry from unzipped data
  */
-function extractEntry(
-  unzipped: Record<string, Uint8Array>,
-  path: string
-): string | null {
+function extractEntry(unzipped: Record<string, Uint8Array>, path: string): string | null {
   const data = unzipped[path]
   if (!data) return null
   return new TextDecoder('utf-8').decode(data)
@@ -198,9 +195,10 @@ function parseCategoryElement(el: Element): RawJarCategory | null {
   const nameTidStr = nameEl?.getAttribute('tid')
   const nameTid = nameTidStr ? parseInt(nameTidStr, 10) : 0
 
-  // Get parent category if any
-  const parentIdStr = el.getAttribute('parent')
-  const parentId = parentIdStr ? parseInt(parentIdStr, 10) : null
+  // Get parent MainCat from <mainCat id="..."/>
+  const mainCatEl = el.querySelector('mainCat[id]')
+  const mainCatIdStr = mainCatEl?.getAttribute('id')
+  const parentId = mainCatIdStr ? parseInt(mainCatIdStr, 10) : null
 
   return {
     id,
@@ -421,13 +419,10 @@ function parseStructureRestrictions(objectInfo: Element): RawJarRestriction[] {
   return restrictions
 }
 
-
 /**
  * Try to extract game version from JAR contents
  */
-function extractGameVersion(
-  unzipped: Record<string, Uint8Array>
-): string | null {
+function extractGameVersion(unzipped: Record<string, Uint8Array>): string | null {
   // Try library/Version____PC____ first (contains version string)
   const versionFile = unzipped['library/Version____PC____'] || unzipped['library/version']
   if (versionFile) {
@@ -466,4 +461,3 @@ function extractGameVersion(
 export function extractTextEntries(texts: ReadonlyMap<number, string>): TextEntry[] {
   return Array.from(texts.entries()).map(([id, en]) => ({ id, en }))
 }
-

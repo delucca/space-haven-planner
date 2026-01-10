@@ -54,9 +54,7 @@ export function StatusBar() {
             ⚠️ JAR parse failed
           </span>
         )}
-        {catalogStatus.isParsing && (
-          <span className={styles.refreshing}>Parsing JAR file...</span>
-        )}
+        {catalogStatus.isParsing && <span className={styles.refreshing}>Parsing JAR file...</span>}
       </span>
       <span className={styles.right}>
         <span

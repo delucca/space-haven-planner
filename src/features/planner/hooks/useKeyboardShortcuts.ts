@@ -6,7 +6,10 @@ import { ZOOM_STEP } from '@/data/presets'
 /**
  * Hook to handle keyboard shortcuts for the planner
  */
-export function useKeyboardShortcuts(dispatch: Dispatch<PlannerAction>, zoom: PlannerState['zoom']) {
+export function useKeyboardShortcuts(
+  dispatch: Dispatch<PlannerAction>,
+  zoom: PlannerState['zoom']
+) {
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
       // Ignore if typing in an input field
@@ -19,7 +22,10 @@ export function useKeyboardShortcuts(dispatch: Dispatch<PlannerAction>, zoom: Pl
       }
 
       // Zoom with Ctrl/Cmd modifier
-      if ((e.ctrlKey || e.metaKey) && (e.key === '+' || e.key === '=' || e.key === '-' || e.key === '_')) {
+      if (
+        (e.ctrlKey || e.metaKey) &&
+        (e.key === '+' || e.key === '=' || e.key === '-' || e.key === '_')
+      ) {
         e.preventDefault()
         if (e.key === '+' || e.key === '=') {
           dispatch({ type: 'SET_ZOOM', zoom: zoom + ZOOM_STEP })

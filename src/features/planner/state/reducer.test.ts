@@ -253,4 +253,3 @@ describe('Collision Detection', () => {
     expect(canPlaceAt(state, 'test-grow-bed', 5, 2, 0)).toBe(true)
   })
 })
-

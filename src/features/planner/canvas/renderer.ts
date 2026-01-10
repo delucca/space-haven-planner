@@ -1,4 +1,10 @@
-import type { GridSize, PlacedStructure, StructureCatalog, StructureTile, Rotation } from '@/data/types'
+import type {
+  GridSize,
+  PlacedStructure,
+  StructureCatalog,
+  StructureTile,
+  Rotation,
+} from '@/data/types'
 import { findStructureById, getRotatedSize } from '@/data'
 
 /** Colors for rendering */
@@ -18,6 +24,12 @@ const COLORS = {
   hullWall: '#5a6a7c',
   hullPreview: 'rgba(74, 90, 108, 0.6)',
   hullPreviewBorder: '#6a8a9c',
+  selectionFill: 'rgba(130, 200, 255, 0.12)',
+  selectionBorder: 'rgba(130, 200, 255, 0.85)',
+  selectionEraseFill: 'rgba(255, 68, 68, 0.12)',
+  selectionEraseBorder: 'rgba(255, 68, 68, 0.85)',
+  selectionHullPlaceFill: 'rgba(74, 90, 108, 0.35)',
+  selectionHullEraseFill: 'rgba(180, 60, 60, 0.25)',
   // Tile type colors (for detailed structure rendering)
   // Construction tiles: use full structure color (solid object)
   // Access tiles: semi-transparent, can overlap (crew access area)
@@ -52,6 +64,24 @@ export interface PreviewInfo {
 export interface HullPreviewInfo {
   x: number
   y: number
+}
+
+export type SelectionOverlayMode = 'hull_place' | 'hull_erase' | 'select' | 'erase'
+
+export interface SelectionOverlayRect {
+  x1: number
+  y1: number
+  x2: number
+  y2: number
+}
+
+export interface SelectionOverlay {
+  mode: SelectionOverlayMode
+  rect: SelectionOverlayRect
+  /** Optional: used by erase/select modes to highlight only existing hull tiles */
+  hullTiles?: ReadonlySet<string>
+  /** Optional: size-based bounds to highlight selected structures */
+  structureBounds?: readonly { x: number; y: number; width: number; height: number }[]
 }
 
 /**
@@ -178,12 +208,12 @@ function hslToHsla(color: string, alpha: number): string {
 
 /**
  * Render a single placed structure
- * 
+ *
  * Tile types are rendered differently:
  * - Construction: Solid color (the actual structure)
  * - Access: Semi-transparent (crew can walk here, can overlap with other access)
  * - Blocked: Red overlay (impassable)
- * 
+ *
  * @param renderedAccessTiles - Set of already rendered access tile keys to prevent double-rendering
  */
 export function renderStructure(
@@ -363,7 +393,7 @@ export function renderStructures(
 
 /**
  * Render all hull tiles with auto-generated walls (1 tile thick) on outer edges
- * 
+ *
  * Hull tiles are rendered as floor, and wall tiles are automatically placed
  * in adjacent empty grid spaces on the perimeter.
  */
@@ -387,10 +417,10 @@ export function renderHullTiles(
 
     // Check all 8 directions (including diagonals for corners)
     const neighbors = [
-      [tileX, tileY - 1],     // top
-      [tileX, tileY + 1],     // bottom
-      [tileX - 1, tileY],     // left
-      [tileX + 1, tileY],     // right
+      [tileX, tileY - 1], // top
+      [tileX, tileY + 1], // bottom
+      [tileX - 1, tileY], // left
+      [tileX + 1, tileY], // right
       [tileX - 1, tileY - 1], // top-left
       [tileX + 1, tileY - 1], // top-right
       [tileX - 1, tileY + 1], // bottom-left
@@ -466,8 +496,99 @@ export function renderHullPreview(rc: RenderContext, preview: HullPreviewInfo): 
 }
 
 /**
+ * Render a drag-selection overlay on top of the scene.
+ */
+export function renderSelectionOverlay(rc: RenderContext, overlay: SelectionOverlay): void {
+  const { ctx, zoom } = rc
+
+  const minX = Math.min(overlay.rect.x1, overlay.rect.x2)
+  const maxX = Math.max(overlay.rect.x1, overlay.rect.x2)
+  const minY = Math.min(overlay.rect.y1, overlay.rect.y2)
+  const maxY = Math.max(overlay.rect.y1, overlay.rect.y2)
+
+  const px = minX * zoom
+  const py = minY * zoom
+  const pw = (maxX - minX + 1) * zoom
+  const ph = (maxY - minY + 1) * zoom
+
+  // Base selection fill
+  if (overlay.mode === 'hull_place') {
+    // Highlight tiles individually for hull placement
+    ctx.fillStyle = COLORS.selectionHullPlaceFill
+    for (let x = minX; x <= maxX; x++) {
+      for (let y = minY; y <= maxY; y++) {
+        ctx.fillRect(x * zoom, y * zoom, zoom, zoom)
+      }
+    }
+  } else if (overlay.mode === 'hull_erase') {
+    // Highlight only existing hull tiles (if provided)
+    ctx.fillStyle = COLORS.selectionHullEraseFill
+    if (overlay.hullTiles) {
+      for (let x = minX; x <= maxX; x++) {
+        for (let y = minY; y <= maxY; y++) {
+          const key = `${x},${y}`
+          if (overlay.hullTiles.has(key)) {
+            ctx.fillRect(x * zoom, y * zoom, zoom, zoom)
+          }
+        }
+      }
+    } else {
+      ctx.fillRect(px, py, pw, ph)
+    }
+  } else {
+    // Selection of existing objects (place/erase tools)
+    ctx.fillStyle = overlay.mode === 'erase' ? COLORS.selectionEraseFill : COLORS.selectionFill
+    ctx.fillRect(px, py, pw, ph)
+
+    // Highlight existing hull tiles inside rect
+    if (overlay.hullTiles) {
+      ctx.fillStyle =
+        overlay.mode === 'erase' ? COLORS.selectionHullEraseFill : COLORS.selectionFill
+      for (let x = minX; x <= maxX; x++) {
+        for (let y = minY; y <= maxY; y++) {
+          const key = `${x},${y}`
+          if (overlay.hullTiles.has(key)) {
+            ctx.fillRect(x * zoom, y * zoom, zoom, zoom)
+          }
+        }
+      }
+    }
+
+    // Highlight selected structures by bounds (size-based)
+    if (overlay.structureBounds && overlay.structureBounds.length > 0) {
+      ctx.fillStyle = overlay.mode === 'erase' ? COLORS.selectionEraseFill : COLORS.selectionFill
+      ctx.strokeStyle =
+        overlay.mode === 'erase' ? COLORS.selectionEraseBorder : COLORS.selectionBorder
+      ctx.lineWidth = 2
+      ctx.setLineDash([4, 2])
+      for (const b of overlay.structureBounds) {
+        const x = b.x * zoom
+        const y = b.y * zoom
+        const w = b.width * zoom
+        const h = b.height * zoom
+        ctx.fillRect(x, y, w, h)
+        ctx.strokeRect(x + 1, y + 1, w - 2, h - 2)
+      }
+      ctx.setLineDash([])
+    }
+  }
+
+  // Selection border
+  ctx.setLineDash([4, 4])
+  ctx.strokeStyle =
+    overlay.mode === 'hull_place'
+      ? COLORS.hullPreviewBorder
+      : overlay.mode === 'hull_erase' || overlay.mode === 'erase'
+        ? COLORS.selectionEraseBorder
+        : COLORS.selectionBorder
+  ctx.lineWidth = 2
+  ctx.strokeRect(px + 1, py + 1, pw - 2, ph - 2)
+  ctx.setLineDash([])
+}
+
+/**
  * Render placement preview ghost with tile-level detail
- * 
+ *
  * Shows:
  * - Construction tiles: structure color (what you're placing)
  * - Blocked tiles: red (areas that will be blocked)
@@ -481,7 +602,10 @@ export function renderPreview(rc: RenderContext, preview: PreviewInfo): void {
     const { tiles, width: layoutWidth, height: layoutHeight } = preview.tileLayout
 
     // Track bounding box of rotated tiles for the outer border
-    let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity
+    let minX = Infinity,
+      maxX = -Infinity,
+      minY = Infinity,
+      maxY = -Infinity
 
     for (const tile of tiles) {
       // Rotate tile position based on preview rotation
@@ -499,9 +623,7 @@ export function renderPreview(rc: RenderContext, preview: PreviewInfo): void {
       // Choose color based on tile type
       if (tile.type === 'construction') {
         // Construction: structure color with preview transparency
-        ctx.fillStyle = preview.isValid
-          ? hslToHsla(preview.color, 0.6)
-          : COLORS.previewInvalid
+        ctx.fillStyle = preview.isValid ? hslToHsla(preview.color, 0.6) : COLORS.previewInvalid
         ctx.fillRect(tileX, tileY, zoom, zoom)
 
         // Solid border for construction tiles
@@ -519,16 +641,12 @@ export function renderPreview(rc: RenderContext, preview: PreviewInfo): void {
         ctx.strokeRect(tileX + 0.5, tileY + 0.5, zoom - 1, zoom - 1)
       } else {
         // Access: lighter transparent (areas that remain accessible)
-        ctx.fillStyle = preview.isValid
-          ? hslToHsla(preview.color, 0.2)
-          : 'rgba(255, 68, 68, 0.2)'
+        ctx.fillStyle = preview.isValid ? hslToHsla(preview.color, 0.2) : 'rgba(255, 68, 68, 0.2)'
         ctx.fillRect(tileX, tileY, zoom, zoom)
 
         // Dashed border for access tiles
         ctx.setLineDash([2, 2])
-        ctx.strokeStyle = preview.isValid
-          ? 'rgba(255, 255, 255, 0.3)'
-          : 'rgba(255, 68, 68, 0.3)'
+        ctx.strokeStyle = preview.isValid ? 'rgba(255, 255, 255, 0.3)' : 'rgba(255, 68, 68, 0.3)'
         ctx.lineWidth = 1
         ctx.strokeRect(tileX + 0.5, tileY + 0.5, zoom - 1, zoom - 1)
         ctx.setLineDash([])

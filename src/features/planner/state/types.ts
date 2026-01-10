@@ -31,10 +31,7 @@ export interface HoverState {
  * - jar_user: Freshly parsed from user-uploaded JAR
  * - jar_user_cache: Loaded from localStorage (user's previous JAR)
  */
-export type CatalogSource =
-  | 'jar_builtin_snapshot'
-  | 'jar_user'
-  | 'jar_user_cache'
+export type CatalogSource = 'jar_builtin_snapshot' | 'jar_user' | 'jar_user_cache'
 
 /**
  * Catalog refresh status
@@ -103,12 +100,15 @@ export type PlannerAction =
   // Structure placement actions
   | { type: 'PLACE_STRUCTURE'; structure: PlacedStructure }
   | { type: 'ERASE_AT'; x: number; y: number }
+  | { type: 'ERASE_IN_RECT'; x1: number; y1: number; x2: number; y2: number }
   | { type: 'CLEAR_ALL_STRUCTURES' }
   | { type: 'LOAD_STRUCTURES'; structures: PlacedStructure[] }
 
   // Hull tile actions
   | { type: 'PLACE_HULL_TILE'; x: number; y: number }
+  | { type: 'PLACE_HULL_RECT'; x1: number; y1: number; x2: number; y2: number }
   | { type: 'ERASE_HULL_TILE'; x: number; y: number }
+  | { type: 'ERASE_HULL_RECT'; x1: number; y1: number; x2: number; y2: number }
   | { type: 'LOAD_HULL_TILES'; tiles: HullTile[] }
 
   // Interaction actions

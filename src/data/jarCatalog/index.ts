@@ -17,11 +17,7 @@ export type {
 export { parseJarFile, parseJarBytes, extractTextEntries } from './parser'
 
 // Converter
-export {
-  convertToStructureCatalog,
-  mergeCatalogs,
-  generateStructureId,
-} from './converter'
+export { convertToStructureCatalog, mergeCatalogs, generateStructureId } from './converter'
 
 // Manual hull structures
 export { MANUAL_HULL_STRUCTURES, HULL_CATEGORY } from './hullStructures'
@@ -44,4 +40,3 @@ export {
   getBuiltinCatalog,
   hasRealJarSnapshot,
 } from './builtinSnapshot'
-

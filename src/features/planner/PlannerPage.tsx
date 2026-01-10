@@ -1,11 +1,14 @@
 import { PlannerProvider, usePlanner } from './state'
 import { CanvasViewport } from './canvas'
 import { Palette, Toolbar, LayerPanel, StatusBar, ActionBar } from './components'
-import { useKeyboardShortcuts, useAutosave, useCatalogRefresh } from './hooks'
+import { useKeyboardShortcuts, useAutosave, useCatalogRefresh, useInitialZoom } from './hooks'
 import styles from './PlannerPage.module.css'
 
 function PlannerContent() {
   const { state, dispatch } = usePlanner()
+
+  // Set initial zoom to fit grid width within viewport
+  useInitialZoom(dispatch, state.gridSize.width)
 
   // Enable keyboard shortcuts
   useKeyboardShortcuts(dispatch, state.zoom)

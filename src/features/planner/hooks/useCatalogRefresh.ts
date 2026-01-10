@@ -1,10 +1,7 @@
 import { useEffect, useRef } from 'react'
 import type { Dispatch } from 'react'
 import type { PlannerState, PlannerAction, CatalogStatus } from '../state/types'
-import {
-  loadCachedJarCatalog,
-  getBuiltinCatalog,
-} from '@/data/jarCatalog'
+import { loadCachedJarCatalog, getBuiltinCatalog } from '@/data/jarCatalog'
 
 /**
  * Hook to handle catalog loading from cache on mount

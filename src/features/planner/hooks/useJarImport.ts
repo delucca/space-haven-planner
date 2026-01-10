@@ -92,8 +92,7 @@ export function useJarImport(dispatch: Dispatch<PlannerAction>): JarImportResult
           } as Partial<CatalogStatus>,
         })
       } catch (error) {
-        const message =
-          error instanceof Error ? error.message : 'Unknown error parsing JAR file'
+        const message = error instanceof Error ? error.message : 'Unknown error parsing JAR file'
 
         dispatch({
           type: 'SET_CATALOG_STATUS',
@@ -136,4 +135,3 @@ export function useJarImport(dispatch: Dispatch<PlannerAction>): JarImportResult
     onFileInputChange,
   }
 }
-

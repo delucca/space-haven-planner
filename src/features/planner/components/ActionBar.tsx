@@ -13,16 +13,29 @@ import {
 } from '@/lib/serialization'
 import { clearJarCatalogCache } from '@/data/jarCatalog'
 import { JarImportDialog } from './JarImportDialog'
+import { ConfirmDialog } from './ConfirmDialog'
 import styles from './ActionBar.module.css'
 
 export function ActionBar() {
   const { state, dispatch } = usePlanner()
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const { selectJarFile, fileInputRef: jarInputRef, onFileInputChange: onJarInputChange } = useJarImport(dispatch)
+  const {
+    selectJarFile,
+    fileInputRef: jarInputRef,
+    onFileInputChange: onJarInputChange,
+  } = useJarImport(dispatch)
   const [isJarDialogOpen, setIsJarDialogOpen] = useState(false)
+  const [confirmKind, setConfirmKind] = useState<
+    null | 'clear_all' | 'new_project' | 'reset_catalog'
+  >(null)
 
   const handleSave = useCallback(() => {
-    const project = createProjectFile(state.gridSize, state.presetLabel, state.structures, state.hullTiles)
+    const project = createProjectFile(
+      state.gridSize,
+      state.presetLabel,
+      state.structures,
+      state.hullTiles
+    )
     downloadProjectJSON(project)
   }, [state.gridSize, state.presetLabel, state.structures, state.hullTiles])
 
@@ -80,45 +93,79 @@ export function ActionBar() {
   }, [state.gridSize, state.structures, state.hullTiles, state.catalog, state.visibleLayers])
 
   const handleClear = useCallback(() => {
-    if (state.structures.length === 0) return
+    const hasAnything = state.structures.length > 0 || state.hullTiles.size > 0
+    if (!hasAnything) return
 
-    const confirmed = window.confirm(
-      'Are you sure you want to clear all structures? This cannot be undone.'
-    )
-    if (confirmed) {
-      dispatch({ type: 'CLEAR_ALL_STRUCTURES' })
-    }
-  }, [state.structures.length, dispatch])
+    setConfirmKind('clear_all')
+  }, [state.structures.length, state.hullTiles.size, dispatch])
 
   const handleNewProject = useCallback(() => {
-    if (state.structures.length === 0) {
+    const hasAnything = state.structures.length > 0 || state.hullTiles.size > 0
+    if (!hasAnything) {
       dispatch({ type: 'NEW_PROJECT' })
       clearAutosave()
       return
     }
 
-    const confirmed = window.confirm(
-      'Are you sure you want to start a new project? All unsaved changes will be lost.'
-    )
-    if (confirmed) {
-      dispatch({ type: 'NEW_PROJECT' })
-      clearAutosave()
-    }
-  }, [state.structures.length, dispatch])
+    setConfirmKind('new_project')
+  }, [state.structures.length, state.hullTiles.size, dispatch])
 
   const handleResetCatalog = useCallback(() => {
-    const confirmed = window.confirm(
-      'Reset to built-in catalog? This will clear your uploaded JAR data.'
-    )
-    if (confirmed) {
+    setConfirmKind('reset_catalog')
+  }, [dispatch])
+
+  const handleCloseConfirm = useCallback(() => {
+    setConfirmKind(null)
+  }, [])
+
+  const handleConfirm = useCallback(() => {
+    if (confirmKind === 'clear_all') {
+      dispatch({ type: 'CLEAR_ALL_STRUCTURES' })
+      return
+    }
+
+    if (confirmKind === 'new_project') {
+      dispatch({ type: 'NEW_PROJECT' })
+      clearAutosave()
+      return
+    }
+
+    if (confirmKind === 'reset_catalog') {
       clearJarCatalogCache()
       dispatch({ type: 'RESET_TO_BUILTIN_CATALOG' })
     }
-  }, [dispatch])
+  }, [confirmKind, dispatch])
+
+  const confirmTitle =
+    confirmKind === 'clear_all'
+      ? '🗑️ Clear All'
+      : confirmKind === 'new_project'
+        ? '📄 New Project'
+        : confirmKind === 'reset_catalog'
+          ? '↩️ Reset Catalog'
+          : ''
+
+  const confirmMessage =
+    confirmKind === 'clear_all'
+      ? 'Are you sure you want to clear everything (structures + hull tiles)? This cannot be undone.'
+      : confirmKind === 'new_project'
+        ? 'Are you sure you want to start a new project? This will remove all structures and hull tiles, and any unsaved changes will be lost.'
+        : confirmKind === 'reset_catalog'
+          ? 'Reset to built-in catalog? This will clear your uploaded JAR data.'
+          : ''
+
+  const confirmLabel =
+    confirmKind === 'clear_all'
+      ? 'Clear All'
+      : confirmKind === 'new_project'
+        ? 'Start New'
+        : confirmKind === 'reset_catalog'
+          ? 'Reset'
+          : 'Confirm'
 
   // Check if user has uploaded a JAR
-  const hasUserJar = state.catalogStatus.source === 'jar_user' ||
-    state.catalogStatus.source === 'jar_user_cache'
+  const hasUserJar =
+    state.catalogStatus.source === 'jar_user' || state.catalogStatus.source === 'jar_user_cache'
 
   const handleOpenJarDialog = useCallback(() => {
     setIsJarDialogOpen(true)
@@ -189,6 +236,15 @@ export function ActionBar() {
         isParsing={state.catalogStatus.isParsing}
         onClose={handleCloseJarDialog}
         onSelectFile={selectJarFile}
+      />
+      <ConfirmDialog
+        isOpen={confirmKind !== null}
+        title={confirmTitle}
+        message={confirmMessage}
+        confirmLabel={confirmLabel}
+        variant="danger"
+        onClose={handleCloseConfirm}
+        onConfirm={handleConfirm}
       />
 
       <div className={styles.group}>

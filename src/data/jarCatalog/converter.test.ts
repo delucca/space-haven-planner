@@ -20,18 +20,21 @@ describe('generateStructureId', () => {
 })
 
 describe('convertToStructureCatalog', () => {
+  // MainCat 1512 = OBJECTS (normal build menu)
+  const OBJECTS_MAINCAT = 1512
+
   const createMockParsedData = (): ParsedJarData => {
     const texts = new Map<number, string>([
       [5001, 'Power Generator X1'],
       [5002, 'Oxygen Generator'],
-      [5003, 'Hull Block'],
+      [5003, 'X1 Door'],
     ])
 
     const structures: RawJarStructure[] = [
       {
         mid: 1001,
         nameTid: 5001,
-        subCatId: 1521, // Power category
+        subCatId: 1516, // Power category (JAR subCat 1516)
         size: { width: 2, height: 2 },
         debugName: 'PowerGenerator',
         tiles: [],
@@ -41,7 +44,7 @@ describe('convertToStructureCatalog', () => {
       {
         mid: 1002,
         nameTid: 5002,
-        subCatId: 1522, // Life Support category
+        subCatId: 1508, // Life Support category (JAR subCat 1508)
         size: { width: 3, height: 2 },
         debugName: 'OxygenGenerator',
         tiles: [],
@@ -51,19 +54,26 @@ describe('convertToStructureCatalog', () => {
       {
         mid: 1003,
         nameTid: 5003,
-        subCatId: 1520, // Hull category
+        subCatId: 1522, // Wall category (JAR subCat 1522)
         size: { width: 1, height: 1 },
-        debugName: 'HullBlock',
+        debugName: 'X1Door',
         tiles: [],
         linkedTiles: [],
         restrictions: [],
       },
     ]
 
+    // Categories must include parentId: 1512 (OBJECTS MainCat) for structures to be included
+    const categories = [
+      { id: 1516, nameTid: 878, parentId: OBJECTS_MAINCAT }, // Power
+      { id: 1508, nameTid: 869, parentId: OBJECTS_MAINCAT }, // Life Support
+      { id: 1522, nameTid: 885, parentId: OBJECTS_MAINCAT }, // Wall
+    ]
+
     return {
       structures,
       texts,
-      categories: [],
+      categories,
       gameVersion: '0.18.0',
     }
   }
@@ -86,11 +96,11 @@ describe('convertToStructureCatalog', () => {
     const parsed = createMockParsedData()
     const catalog = convertToStructureCatalog(parsed)
 
-    // Check Hull category
-    const hullCat = catalog.categories.find((c) => c.id === 'hull')
-    expect(hullCat?.items.some((s) => s.name === 'Hull Block')).toBe(true)
+    // Check Wall category (JAR subCat 1522)
+    const wallCat = catalog.categories.find((c) => c.id === 'wall')
+    expect(wallCat?.items.some((s) => s.name === 'X1 Door')).toBe(true)
 
-    // Check Life Support category
+    // Check Life Support category (JAR subCat 1508)
     const lifeSupportCat = catalog.categories.find((c) => c.id === 'life_support')
     expect(lifeSupportCat?.items.some((s) => s.name === 'Oxygen Generator')).toBe(true)
   })
@@ -101,7 +111,7 @@ describe('convertToStructureCatalog', () => {
       {
         mid: 1001,
         nameTid: 5001,
-        subCatId: 9999, // Unknown category
+        subCatId: 9999, // Unknown category but in OBJECTS MainCat
         size: { width: 2, height: 2 },
         debugName: null,
         tiles: [],
@@ -110,10 +120,13 @@ describe('convertToStructureCatalog', () => {
       },
     ]
 
+    // Must include the unknown category with parentId: 1512 for structure to be processed
+    const categories = [{ id: 9999, nameTid: 0, parentId: OBJECTS_MAINCAT }]
+
     const catalog = convertToStructureCatalog({
       structures,
       texts,
-      categories: [],
+      categories,
       gameVersion: null,
     })
 
@@ -128,7 +141,7 @@ describe('convertToStructureCatalog', () => {
       {
         mid: 1001,
         nameTid: 5001,
-        subCatId: 1521,
+        subCatId: 1516, // Power category (JAR subCat 1516)
         size: null, // No size - defaults to 2x2
         debugName: null,
         tiles: [],
@@ -137,10 +150,13 @@ describe('convertToStructureCatalog', () => {
       },
     ]
 
+    // Must include the category with parentId: 1512 for structure to be processed
+    const categories = [{ id: 1516, nameTid: 878, parentId: OBJECTS_MAINCAT }]
+
     const catalog = convertToStructureCatalog({
       structures,
       texts,
-      categories: [],
+      categories,
       gameVersion: null,
     })
 
@@ -154,7 +170,7 @@ describe('convertToStructureCatalog', () => {
       {
         mid: 1001,
         nameTid: 5001, // No matching text
-        subCatId: 1521,
+        subCatId: 1516, // Power category (JAR subCat 1516)
         size: { width: 2, height: 2 },
         debugName: null,
         tiles: [],
@@ -163,22 +179,20 @@ describe('convertToStructureCatalog', () => {
       },
     ]
 
+    // Must include the category with parentId: 1512 for structure to be processed
+    const categories = [{ id: 1516, nameTid: 878, parentId: OBJECTS_MAINCAT }]
+
     const catalog = convertToStructureCatalog({
       structures,
       texts,
-      categories: [],
+      categories,
       gameVersion: null,
     })
 
-    // Should only have manual hull structures (no JAR structures since name couldn't be resolved)
-    // Manual hull structures are always added: 7 items (1 wall, 3 doors, 3 windows)
-    const hullCategory = catalog.categories.find((c) => c.id === 'hull')
-    const nonHullStructures = catalog.categories
-      .filter((c) => c.id !== 'hull')
-      .reduce((sum, cat) => sum + cat.items.length, 0)
-    
-    expect(nonHullStructures).toBe(0) // No JAR structures
-    expect(hullCategory?.items.length).toBe(7) // Only manual hull items
+    // Should have no structures since name couldn't be resolved
+    // (Manual wall structures are now empty as they come from JAR)
+    const totalStructures = catalog.categories.reduce((sum, cat) => sum + cat.items.length, 0)
+    expect(totalStructures).toBe(0)
   })
 })
 
@@ -192,7 +206,13 @@ describe('mergeCatalogs', () => {
           color: '#cc8844',
           defaultLayer: 'Systems',
           items: [
-            { id: 'gen1', name: 'Generator 1', size: [2, 2], color: '#aa0000', categoryId: 'power' },
+            {
+              id: 'gen1',
+              name: 'Generator 1',
+              size: [2, 2],
+              color: '#aa0000',
+              categoryId: 'power',
+            },
           ],
         },
       ],
@@ -206,7 +226,13 @@ describe('mergeCatalogs', () => {
           color: '#cc8844',
           defaultLayer: 'Systems',
           items: [
-            { id: 'gen2', name: 'Generator 2', size: [3, 3], color: '#bb0000', categoryId: 'power' },
+            {
+              id: 'gen2',
+              name: 'Generator 2',
+              size: [3, 3],
+              color: '#bb0000',
+              categoryId: 'power',
+            },
           ],
         },
         {
@@ -244,7 +270,13 @@ describe('mergeCatalogs', () => {
           color: '#cc8844',
           defaultLayer: 'Systems',
           items: [
-            { id: 'gen1', name: 'Generator (Updated)', size: [3, 3], color: '#aa0000', categoryId: 'power' },
+            {
+              id: 'gen1',
+              name: 'Generator (Updated)',
+              size: [3, 3],
+              color: '#aa0000',
+              categoryId: 'power',
+            },
           ],
         },
       ],
@@ -258,7 +290,13 @@ describe('mergeCatalogs', () => {
           color: '#cc8844',
           defaultLayer: 'Systems',
           items: [
-            { id: 'gen1', name: 'Generator (Old)', size: [2, 2], color: '#bb0000', categoryId: 'power' },
+            {
+              id: 'gen1',
+              name: 'Generator (Old)',
+              size: [2, 2],
+              color: '#bb0000',
+              categoryId: 'power',
+            },
           ],
         },
       ],
@@ -272,4 +310,3 @@ describe('mergeCatalogs', () => {
     expect(powerCat?.items[0].size).toEqual([3, 3])
   })
 })
-

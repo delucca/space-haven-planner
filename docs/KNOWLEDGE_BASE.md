@@ -23,12 +23,15 @@
 ## Repository overview
 
 ### Purpose
-Space Haven Planner is an **unofficial**, **free**, **web-only** ship layout planner for the game *Space Haven*.
+
+Space Haven Planner is an **unofficial**, **free**, **web-only** ship layout planner for the game _Space Haven_.
 It’s a **client-only** React + TypeScript SPA that lets users choose a canvas preset, place/erase/rotate Space Haven structures on a tile grid (with bounds + collision validation), **autosaves locally**, and exports layouts as **JSON** and **PNG**.
 There are **no accounts** and **no server-side state**; it should keep working offline after first load.
 
 ### Who uses it
+
 Space Haven players:
+
 - **New players**: learn structure sizes and rough in a first ship quickly.
 - **Min-maxers**: iterate fast with keyboard shortcuts, export/share drafts, avoid rebuild churn in-game.
 
@@ -37,6 +40,7 @@ Space Haven players:
 ## Architecture (high-level)
 
 ### Key components
+
 - **`src/features/planner/`**: main planner UI (page + panels + canvas viewport).
 - **`src/features/planner/state/`**: reducer-driven app state, placement rules (bounds/collision), React context + hooks.
 - **`src/features/planner/canvas/`**: `<canvas>` rendering + PNG export.
@@ -45,6 +49,7 @@ Space Haven players:
 - **`docs/`**: product specs (`USE_CASES.md`), project facts/decisions (`CONSTITUTION.md`).
 
 ### Data / control flow
+
 ```
 Mouse/keyboard input → dispatch(PlannerAction) → plannerReducer → PlannerState
   → CanvasViewport effect → renderer → <canvas> pixels
@@ -56,38 +61,50 @@ Mouse/keyboard input → dispatch(PlannerAction) → plannerReducer → PlannerS
 
 Handled by `useKeyboardShortcuts` hook (`src/features/planner/hooks/useKeyboardShortcuts.ts`):
 
-| Shortcut | Action |
-|----------|--------|
-| `+` / `=` | Zoom in |
-| `-` / `_` | Zoom out |
+| Shortcut         | Action                   |
+| ---------------- | ------------------------ |
+| `+` / `=`        | Zoom in                  |
+| `-` / `_`        | Zoom out                 |
 | `Ctrl/Cmd + +/-` | Zoom in/out (also works) |
-| `Q` | Rotate counter-clockwise |
-| `E` | Rotate clockwise |
-| `1` | Select Hull tool |
-| `2` | Select Place tool |
-| `3` | Select Erase tool |
-| `Escape` | Clear selection |
+| `Q`              | Rotate counter-clockwise |
+| `E`              | Rotate clockwise         |
+| `1`              | Select Place tool        |
+| `2`              | Select Erase tool        |
+| `Escape`         | Clear selection          |
 
 **Note**: Shortcuts are disabled when focus is in input/textarea/select elements.
+**Note**: There is currently no keyboard shortcut for the Hull tool; use the toolbar button.
+
+### Initial zoom (fit-to-width)
+
+On app load, the zoom level is dynamically calculated to fit the grid width within the viewport:
+
+- Handled by `useInitialZoom` hook (`src/features/planner/hooks/useInitialZoom.ts`)
+- Accounts for: left panel (280px), right panel (200px), canvas container padding (48px), canvas border (4px)
+- Formula: `optimalZoom = floor((viewportWidth - sidePanels - padding - border) / gridWidth)`
+- Result is clamped to `ZOOM_MIN`–`ZOOM_MAX` and snapped to `ZOOM_STEP`
+- Only runs once on mount (uses a ref flag to prevent re-calculation)
 
 ### Tools
 
-| Tool | Purpose | Default |
-|------|---------|---------|
-| `hull` | Paint/erase 1×1 hull tiles | ✓ (selected on load) |
-| `place` | Place structures from catalog | Auto-selected when clicking a structure |
-| `erase` | Remove placed structures and hull tiles | |
+| Tool    | Purpose                                                                                    | Default                                 |
+| ------- | ------------------------------------------------------------------------------------------ | --------------------------------------- |
+| `hull`  | Drag-select to fill 1×1 hull tiles on mouseup (Shift = erase hull tiles)                   | ✓ (selected on load)                    |
+| `place` | Click to place selected structure; drag-select highlights existing objects (no action yet) | Auto-selected when clicking a structure |
+| `erase` | Drag-select highlights; on mouseup deletes selection (confirm unless hull-only)            |                                         |
 
 ### Hull system
 
 Hull tiles are separate from structures:
+
 - **Painted directly** on the grid (not from catalog)
 - **Stored as** `Set<string>` of "x,y" keys in `PlannerState.hullTiles`
 - **Auto-walls**: Walls automatically render on hull perimeter
 - **Merged perimeters**: Adjacent hull tiles share walls (only outer edges get walls)
-- **Erasable**: Erase tool removes hull tiles as well as structures
+- **Erasable**: Erase tool removes hull tiles as well as structures (confirmation is required unless the selection contains only hull tiles)
 
 ### "Source of truth" pointers
+
 - **Product/behavior spec**: `docs/USE_CASES.md`
 - **Project facts & decisions**: `docs/CONSTITUTION.md`
 - **Configuration**: `package.json`, `vite.config.ts`, `tsconfig*.json`, `eslint.config.js`, `.prettierrc`
@@ -104,17 +121,20 @@ Hull tiles are separate from structures:
 ## Key workflows
 
 ### Setup
+
 ```bash
 # Prereq: Node.js ^20.19.0 || >=22.12.0 (Vite 7 requirement)
 pnpm install
 ```
 
 ### Run (dev)
+
 ```bash
 pnpm dev         # default: http://localhost:5173
 ```
 
 ### Test
+
 ```bash
 pnpm test           # watch mode
 pnpm test:run       # CI-style run
@@ -122,6 +142,7 @@ pnpm test:coverage  # coverage report
 ```
 
 ### Lint & Format
+
 ```bash
 pnpm lint           # ESLint check
 pnpm lint:fix       # ESLint auto-fix
@@ -130,6 +151,7 @@ pnpm format:check   # Prettier check (CI)
 ```
 
 ### Build / Release / Deploy
+
 ```bash
 pnpm build       # outputs ./dist
 pnpm preview     # serve the built app locally
@@ -150,9 +172,12 @@ pnpm preview     # serve the built app locally
 - **Imports**: use the `@/` alias for `src/` (configured in `vite.config.ts` + `tsconfig.app.json`).
 - **Styling**: CSS Modules for components (`*.module.css`), plus `src/styles/global.css`.
 - **State management**: reducer + Context (`PlannerProvider` / `usePlanner*` hooks); update state only via `PlannerAction`.
-  - **Catalog state**: `PlannerState` includes `catalog`, `catalogStatus` (source, isRefreshing, lastUpdatedAt, lastError), and `catalogRefreshRequestId` for triggering refreshes.
-  - **Catalog refresh hook**: `useCatalogRefresh` handles the async load/refresh lifecycle outside the reducer.
-  - **Local UI state**: Purely presentational state (e.g., search queries, transient UI modes) should use local `useState` in components rather than polluting global `PlannerState`. Example: `Palette.tsx` keeps search query local.
+  - **Catalog state**: `PlannerState` includes `catalog` and `catalogStatus` (source, isParsing, lastUpdatedAt, lastError, jarFileName).
+  - **Catalog load hook**: `useCatalogRefresh` loads cached user-uploaded JAR catalog on mount (if present) and otherwise ensures the built-in snapshot is active.
+  - **Local UI state**: Purely presentational state (e.g., search queries, transient UI modes) should use local `useState` in components rather than polluting global `PlannerState`. Examples: `Palette.tsx` keeps search query local; `CanvasViewport.tsx` keeps drag-selection + pending erase confirmation local.
+- **Dialogs**:
+  - Use the native `<dialog>` element via `dialog.showModal()` + CSS Modules for a consistent look and better accessibility.
+  - Reuse existing patterns: `JarImportDialog.tsx` and `ConfirmDialog.tsx` (avoid `window.confirm`).
 - **Error handling**:
   - User-triggered file errors show `alert(...)` (load/export).
   - Autosave failures warn and keep the app usable (`console.warn` + best-effort).
@@ -181,6 +206,7 @@ pnpm preview     # serve the built app locally
   - **Tile grid math**: coordinates are integer tile indices, origin at **(0,0)** top-left; x→right, y→down (see `docs/CONSTITUTION.md`).
   - **Canvas presets**: preset labels/dimensions come from `src/data/presets.ts` (`GRID_PRESETS`), where **1 unit = 27 tiles**.
   - **Zoom constants**: `ZOOM_MIN`, `ZOOM_MAX`, `ZOOM_STEP`, `DEFAULT_ZOOM` are also in `src/data/presets.ts`.
+  - **Initial zoom**: Dynamically calculated on mount to fit grid width in viewport (see `useInitialZoom` hook).
   - **Rotation**: only `0 | 90 | 180 | 270`; footprint uses `getRotatedSize(...)` (`src/data/types.ts`).
   - **Tile rotation**: `rotateTilePosition()` in `renderer.ts` and `reducer.ts` handles rotating individual tiles within a structure's layout.
   - **Placement validity**: must be within bounds; collision rules depend on tile types (see below).
@@ -200,11 +226,17 @@ pnpm preview     # serve the built app locally
   - **JAR catalog cache key**: `space-haven-planner-jar-catalog` (see `src/data/jarCatalog/cache.ts`).
   - **Project JSON versioning**: current format is **v2**; loader migrates v1 (`category`/`item` → `categoryId`/`structureId`) (see `src/lib/serialization/project.ts`).
   - **Unknown structure IDs in loaded projects**: they'll deserialize, but won't render (and won't collide / be erasable) because lookups fail.
+  - **Interaction hit-testing**: for selection/erase, prefer tile-level footprints (includes `construction` + `blocked` + `access`) via `getStructureTiles(...).all` in `src/features/planner/state/reducer.ts`. Size-only bounding boxes can miss tiles when a `tileLayout` is present.
   - **DPR scaling**: canvas uses `window.devicePixelRatio` for crisp rendering on HiDPI displays; coordinate math must account for this in `renderer.ts`.
   - **JAR structure IDs**: Use `mid_XXX` format (e.g., `mid_120` for X1 Airlock). These differ from old wiki-derived IDs.
   - **Space restrictions for airlocks/cargo ports**: These structures have large "Space" restriction areas that define where space must be. All Space restriction tiles are included (not just adjacent ones) and rendered as red blocked areas.
   - **Gap filling in structures**: The converter fills gaps within the core bounding box to ensure solid rectangles. Without this, structures like airlocks would appear as scattered tiles.
   - **FloorDeco tiles**: Treated as `access` tiles (crew can walk on them), not `construction`. This affects collision and rendering.
+  - **Layout constants in useInitialZoom**: The hook hardcodes panel widths (280px left, 200px right) and padding (24px × 2). If PlannerPage.module.css changes, update the hook constants.
+  - **JAR category IDs are not sequential**: The JAR uses non-sequential category IDs (e.g., 1506, 1507, 1508, 1516, 1519, 1522, 2880, 3359, 4243). Do NOT assume sequential IDs when mapping categories.
+  - **Category display order is descending**: The game displays categories with higher `order` values first (leftmost). This is counterintuitive but matches the game UI.
+  - **MainCat filtering is essential**: Only include structures from MainCat 1512 (OBJECTS). Structures from MainCat 1525 (SANDBOX) are debug/internal items that shouldn't appear in the planner. The parser extracts `parentId` from `<mainCat id="..."/>` child element.
+  - **Duplicate structure names across MainCats**: The same structure name (e.g., "X1 Wall") can exist in multiple MainCats with different `mid` values. Always filter by MainCat to avoid duplicates.
 
 ---
 
@@ -221,6 +253,7 @@ The structure catalog is now primarily derived from the game's `spacehaven.jar` 
 ### JAR file structure
 
 The JAR is a ZIP archive containing XML files without extensions:
+
 - `library/haven`: Structure definitions in `<me mid="...">` elements
 - `library/texts`: Localization strings `<t id="..." EN="..."/>`
 
@@ -228,24 +261,24 @@ The JAR is a ZIP archive containing XML files without extensions:
 
 Each structure (`<me>` element) contains:
 
-| XML Element | Purpose |
-|-------------|---------|
-| `mid` attribute | Unique structure ID |
-| `<name tid="..."/>` | Reference to text entry for localized name |
-| `<subCat id="..."/>` | Category ID reference |
-| `<data><l type="..." gridOffX="..." gridOffY="..." walkGridCost="..."/></data>` | Individual tile data (Door, Hull, FloorDeco, etc.) |
-| `<linked><l gridOffX="..." gridOffY="..."/></linked>` | Linked structural elements (define construction footprint) |
-| `<restrictions><l type="Floor/Space" gridX="..." gridY="..." sizeX="..." sizeY="..."/></restrictions>` | Access/blocked areas |
+| XML Element                                                                                            | Purpose                                                    |
+| ------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------- |
+| `mid` attribute                                                                                        | Unique structure ID                                        |
+| `<name tid="..."/>`                                                                                    | Reference to text entry for localized name                 |
+| `<subCat id="..."/>`                                                                                   | Category ID reference                                      |
+| `<data><l type="..." gridOffX="..." gridOffY="..." walkGridCost="..."/></data>`                        | Individual tile data (Door, Hull, FloorDeco, etc.)         |
+| `<linked><l gridOffX="..." gridOffY="..."/></linked>`                                                  | Linked structural elements (define construction footprint) |
+| `<restrictions><l type="Floor/Space" gridX="..." gridY="..." sizeX="..." sizeY="..."/></restrictions>` | Access/blocked areas                                       |
 
 ### Tile-level data model
 
 Structures now have detailed tile layouts with three tile types:
 
-| Tile Type | Description | Rendering | Collision |
-|-----------|-------------|-----------|-----------|
-| `construction` | Actual structure tiles | Solid color | Blocks all |
-| `blocked` | Impassable areas (hull, space) | Red overlay | Blocks all |
-| `access` | Walkable areas (crew access) | Semi-transparent | Can overlap other access |
+| Tile Type      | Description                    | Rendering        | Collision                |
+| -------------- | ------------------------------ | ---------------- | ------------------------ |
+| `construction` | Actual structure tiles         | Solid color      | Blocks all               |
+| `blocked`      | Impassable areas (hull, space) | Red overlay      | Blocks all               |
+| `access`       | Walkable areas (crew access)   | Semi-transparent | Can overlap other access |
 
 #### Tile type determination
 
@@ -260,17 +293,102 @@ Structures now have detailed tile layouts with three tile types:
 
 The converter fills gaps within the core bounding box (data + linked tiles) to ensure solid rectangular structures. This is essential for structures like airlocks where the JAR defines scattered tiles but the game renders a solid floor area.
 
+### Category system
+
+#### JAR category structure
+
+Categories in the JAR are organized hierarchically:
+
+- **MainCat** (top-level): `<MainCat>` section contains main category tabs (OBJECTS, EDIT, SANDBOX, etc.)
+- **SubCat** (sub-categories): `<SubCat>` section contains the actual build menu categories
+
+Each SubCat entry has:
+
+```xml
+<cat id="1522" disabled="false" order="1">
+  <mainCat id="1512"/>           <!-- Parent main category -->
+  <button instance="..."/>
+  <name tid="885"/>              <!-- Text ID for localized name -->
+</cat>
+```
+
+Key attributes:
+
+- `id`: Unique category ID (used in structure's `<subCat id="..."/>`)
+- `order`: Display order within the main category
+- `disabled`: Whether the category is hidden
+- `mainCat id`: Parent category (1512 = OBJECTS for build menu)
+
+#### MainCat filtering
+
+**Critical**: Only structures from **MainCat 1512 (OBJECTS)** should appear in the planner. Other MainCats contain internal/debug items:
+
+| MainCat ID | Name    | Purpose                                |
+| ---------- | ------- | -------------------------------------- |
+| 1512       | OBJECTS | Normal build menu (✅ include these)   |
+| 1513       | EDIT    | Edit mode items (hull painting, etc.)  |
+| 1525       | SANDBOX | Sandbox/debug items (❌ exclude these) |
+
+The converter filters structures by checking if their `subCatId` belongs to a SubCat with `parentId === 1512`.
+
+#### Category ID mapping
+
+The converter maps JAR SubCat IDs (under MainCat 1512 = OBJECTS) to internal category IDs:
+
+| JAR SubCat ID | Name TID | Game Name    | Internal ID    | JAR Order |
+| ------------- | -------- | ------------ | -------------- | --------- |
+| 4243          | 8018     | MISSION      | `mission`      | 20        |
+| 1520          | 883      | WEAPON       | `weapon`       | 13        |
+| 1519          | 882      | SYSTEM       | `system`       | 10        |
+| 2880          | 4345     | ROBOTS       | `robots`       | 10        |
+| 1521          | 884      | AIRLOCK      | `airlock`      | 9         |
+| 1517          | 877      | STORAGE      | `storage`      | 8         |
+| 1515          | 879      | FOOD         | `food`         | 7         |
+| 1510          | 870      | RESOURCE     | `resource`     | 6         |
+| 1516          | 878      | POWER        | `power`        | 5         |
+| 1508          | 869      | LIFE SUPPORT | `life_support` | 4         |
+| 1507          | 868      | FACILITY     | `facility`     | 3         |
+| 3359          | 5127     | DECORATIONS  | `decorations`  | 2         |
+| 1506          | 867      | FURNITURE    | `furniture`    | 2         |
+| 1522          | 885      | WALL         | `wall`         | 1         |
+
+The "Other" category exists as a fallback but should remain empty if all OBJECTS SubCats are mapped.
+
+#### Display order
+
+**Critical**: The game displays categories in **descending** order by JAR `order` attribute (highest order first, leftmost in UI). The table above reflects this display order.
+
+To verify category order from JAR:
+
+```bash
+unzip -p reference/spacehaven.jar library/haven | grep -B 1 -A 6 'mainCat id="1512"'
+```
+
+#### Text localization
+
+Category names are stored in `library/texts` with format:
+
+```xml
+<t id="885" pid="874">
+  <EN>WALL</EN>
+  <ES>PAREDES</ES>
+  ...
+</t>
+```
+
+The `tid` attribute in `<name tid="..."/>` references these text entries.
+
 ### Key files
 
-| File | Purpose |
-|------|---------|
-| `src/data/jarCatalog/types.ts` | Type definitions for JAR parsing |
-| `src/data/jarCatalog/parser.ts` | JAR extraction and XML parsing |
-| `src/data/jarCatalog/converter.ts` | Convert parsed JAR data to `StructureCatalog` |
-| `src/data/jarCatalog/builtinSnapshot.ts` | Pre-generated catalog (auto-generated, do not edit) |
-| `src/data/jarCatalog/cache.ts` | User-uploaded JAR caching |
-| `src/data/jarCatalog/hullStructures.ts` | Manual hull structures (walls, doors, windows) |
-| `scripts/generate-jar-catalog.ts` | Node script to regenerate built-in snapshot |
+| File                                     | Purpose                                               |
+| ---------------------------------------- | ----------------------------------------------------- |
+| `src/data/jarCatalog/types.ts`           | Type definitions for JAR parsing                      |
+| `src/data/jarCatalog/parser.ts`          | JAR extraction and XML parsing                        |
+| `src/data/jarCatalog/converter.ts`       | Convert parsed JAR data to `StructureCatalog`         |
+| `src/data/jarCatalog/builtinSnapshot.ts` | Pre-generated catalog (auto-generated, do not edit)   |
+| `src/data/jarCatalog/cache.ts`           | User-uploaded JAR caching                             |
+| `src/data/jarCatalog/hullStructures.ts`  | Wall category metadata (structures now come from JAR) |
+| `scripts/generate-jar-catalog.ts`        | Node script to regenerate built-in snapshot           |
 
 ### Generating the built-in snapshot
 
@@ -288,9 +406,10 @@ Structures with the same name AND same size are merged (deduplicated) within eac
 ### Hull tool
 
 Hull blocks are not in the JAR's build menu (they're in "Edit mode" in-game). The planner provides:
-- **Hull Tool**: Paint/erase 1×1 hull tiles directly on the grid
+
+- **Hull Tool**: Drag-select a rectangle and fill hull tiles on mouseup (Shift = erase hull tiles)
 - **Auto-wall generation**: Walls automatically appear on hull perimeter
-- **Hull structures**: Doors, windows, walls remain in the catalog as placeable items
+- **Wall category**: Doors, windows, and walls come from JAR SubCat 1522 (WALL)
 
 ---
 
@@ -329,6 +448,9 @@ The wiki is **no longer the primary catalog source**. It now provides supplement
 - **JAR**: the game's `spacehaven.jar` file, a ZIP archive containing game data in XML format.
 - **mid**: structure ID in the JAR (`<me mid="...">`); used as `mid_XXX` in the catalog.
 - **Space restriction**: JAR element defining areas that must be open to space (for airlocks, cargo ports).
+- **SubCat**: Sub-category in the JAR's build menu hierarchy; contains the `order` attribute for display sorting.
+- **MainCat**: Main category tab in the JAR (OBJECTS = 1512, EDIT = 1513, SANDBOX = 1525). Only structures from MainCat 1512 appear in the planner.
+- **tid**: Text ID reference in the JAR; points to localized strings in `library/texts`.
 
 ---
 
@@ -364,5 +486,3 @@ The wiki is **no longer the primary catalog source**. It now provides supplement
   - [ ] If changing the project file format: bump/migrate `PROJECT_VERSION` and keep load backward-compatible
   - [ ] If changing JAR parsing: update tests in `parser.test.ts` and `converter.test.ts`
   - [ ] If changing tile layout logic: regenerate `builtinSnapshot.ts` and verify structures render correctly
-
-

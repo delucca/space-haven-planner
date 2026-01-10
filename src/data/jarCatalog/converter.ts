@@ -11,49 +11,71 @@ import type {
   TileLayout,
   StructureTile,
 } from '@/data/types'
-import type { ParsedJarData, RawJarStructure, RawJarCategory, RawJarTile, RawJarLinkedTile, RawJarRestriction } from './types'
+import type {
+  ParsedJarData,
+  RawJarStructure,
+  RawJarCategory,
+  RawJarTile,
+  RawJarLinkedTile,
+  RawJarRestriction,
+} from './types'
 import { MANUAL_HULL_STRUCTURES, HULL_CATEGORY } from './hullStructures'
 
 /**
  * Mapping of JAR category IDs to our internal category metadata
- * This maps known Space Haven category IDs to our UI categories
+ * Based on JAR SubCat IDs (under MainCat 1512 = OBJECTS)
+ * Order values from JAR determine UI display order
  */
 const JAR_CATEGORY_MAP: Record<
   number,
-  { id: string; name: string; color: string; defaultLayer: LayerId }
+  { id: string; name: string; color: string; defaultLayer: LayerId; order: number }
 > = {
-  // Hull & Structure
-  1520: { id: 'hull', name: 'Hull & Walls', color: '#3a4a5c', defaultLayer: 'Hull' },
-
-  // Power
-  1521: { id: 'power', name: 'Power', color: '#cc8844', defaultLayer: 'Systems' },
-
-  // Life Support
-  1522: { id: 'life_support', name: 'Life Support', color: '#44aa88', defaultLayer: 'Systems' },
-
-  // Systems & Combat
-  1523: { id: 'system', name: 'Systems & Combat', color: '#cc4444', defaultLayer: 'Systems' },
-
-  // Airlock & Hangar
-  1524: { id: 'airlock', name: 'Airlock & Hangar', color: '#8866aa', defaultLayer: 'Rooms' },
-
-  // Storage
-  1525: { id: 'storage', name: 'Storage', color: '#888866', defaultLayer: 'Rooms' },
-
-  // Food & Agriculture
-  1526: { id: 'food', name: 'Food & Agriculture', color: '#66aa44', defaultLayer: 'Rooms' },
-
-  // Resource & Industry
-  1527: { id: 'resource', name: 'Resource & Industry', color: '#aa8844', defaultLayer: 'Rooms' },
-
-  // Crew Facilities
-  1528: { id: 'facility', name: 'Crew Facilities', color: '#6688aa', defaultLayer: 'Rooms' },
-
-  // Robots
-  1529: { id: 'robots', name: 'Robots', color: '#55aaaa', defaultLayer: 'Systems' },
-
-  // Furniture & Decoration
-  1530: { id: 'furniture', name: 'Furniture & Decoration', color: '#aa8877', defaultLayer: 'Furniture' },
+  // order=1: WALL (doors, windows, walls)
+  1522: { id: 'wall', name: 'Wall', color: '#3a4a5c', defaultLayer: 'Hull', order: 1 },
+  // order=2: FURNITURE
+  1506: {
+    id: 'furniture',
+    name: 'Furniture',
+    color: '#aa8877',
+    defaultLayer: 'Furniture',
+    order: 2,
+  },
+  // order=2: DECORATIONS
+  3359: {
+    id: 'decorations',
+    name: 'Decorations',
+    color: '#aa7788',
+    defaultLayer: 'Furniture',
+    order: 2,
+  },
+  // order=3: FACILITY
+  1507: { id: 'facility', name: 'Facility', color: '#6688aa', defaultLayer: 'Rooms', order: 3 },
+  // order=4: LIFE SUPPORT
+  1508: {
+    id: 'life_support',
+    name: 'Life Support',
+    color: '#44aa88',
+    defaultLayer: 'Systems',
+    order: 4,
+  },
+  // order=5: POWER
+  1516: { id: 'power', name: 'Power', color: '#cc8844', defaultLayer: 'Systems', order: 5 },
+  // order=6: RESOURCE
+  1510: { id: 'resource', name: 'Resource', color: '#aa8844', defaultLayer: 'Rooms', order: 6 },
+  // order=7: FOOD
+  1515: { id: 'food', name: 'Food', color: '#66aa44', defaultLayer: 'Rooms', order: 7 },
+  // order=8: STORAGE
+  1517: { id: 'storage', name: 'Storage', color: '#888866', defaultLayer: 'Rooms', order: 8 },
+  // order=9: AIRLOCK
+  1521: { id: 'airlock', name: 'Airlock', color: '#8866aa', defaultLayer: 'Rooms', order: 9 },
+  // order=10: SYSTEM
+  1519: { id: 'system', name: 'System', color: '#cc4444', defaultLayer: 'Systems', order: 10 },
+  // order=10: ROBOTS
+  2880: { id: 'robots', name: 'Robots', color: '#55aaaa', defaultLayer: 'Systems', order: 10 },
+  // order=13: WEAPON (not typically used for ship building)
+  1520: { id: 'weapon', name: 'Weapon', color: '#cc4466', defaultLayer: 'Systems', order: 13 },
+  // order=20: MISSION (mission-specific items)
+  4243: { id: 'mission', name: 'Mission', color: '#aa66cc', defaultLayer: 'Systems', order: 20 },
 }
 
 /**
@@ -104,10 +126,24 @@ function getDedupeKey(name: string, size: Size): string {
 }
 
 /**
+ * MainCat ID for OBJECTS (normal build menu)
+ * Only structures from this MainCat should appear in the planner
+ */
+const OBJECTS_MAINCAT_ID = 1512
+
+/**
  * Convert parsed JAR data to StructureCatalog
  */
 export function convertToStructureCatalog(jarData: ParsedJarData): StructureCatalog {
   const { structures, texts, categories: jarCategories } = jarData
+
+  // Build set of SubCat IDs that belong to OBJECTS MainCat (1512)
+  const objectsSubCatIds = new Set<number>()
+  for (const cat of jarCategories) {
+    if (cat.parentId === OBJECTS_MAINCAT_ID) {
+      objectsSubCatIds.add(cat.id)
+    }
+  }
 
   // Build category lookup from JAR data
   const categoryLookup = buildCategoryLookup(jarCategories, texts)
@@ -124,20 +160,25 @@ export function convertToStructureCatalog(jarData: ParsedJarData): StructureCata
   categoryStructures.set(DEFAULT_CATEGORY.id, [])
   seenInCategory.set(DEFAULT_CATEGORY.id, new Set())
 
-  // Process each structure
+  // Process each structure - only include those from OBJECTS MainCat (1512)
   for (const rawStruct of structures) {
+    // Skip structures not in the OBJECTS build menu
+    if (rawStruct.subCatId === null || !objectsSubCatIds.has(rawStruct.subCatId)) {
+      continue
+    }
+
     const structureDef = convertStructure(rawStruct, texts, categoryLookup)
     if (structureDef) {
       const categoryId = structureDef.categoryId
       const dedupeKey = getDedupeKey(structureDef.name, structureDef.size)
-      
+
       // Check if we've already seen this name+size in this category
       const seen = seenInCategory.get(categoryId) || seenInCategory.get(DEFAULT_CATEGORY.id)!
       if (seen.has(dedupeKey)) {
         // Skip duplicate
         continue
       }
-      
+
       seen.add(dedupeKey)
       const list = categoryStructures.get(categoryId)
       if (list) {
@@ -149,41 +190,45 @@ export function convertToStructureCatalog(jarData: ParsedJarData): StructureCata
     }
   }
 
-  // Add manual hull structures (walls, doors, windows)
-  // These aren't in the JAR build menu but are needed for ship building
-  const hullSeen = seenInCategory.get('hull') || new Set()
-  const hullList = categoryStructures.get('hull') || []
-  
-  for (const hullStruct of MANUAL_HULL_STRUCTURES) {
-    const dedupeKey = getDedupeKey(hullStruct.name, hullStruct.size)
-    if (!hullSeen.has(dedupeKey)) {
-      hullSeen.add(dedupeKey)
-      hullList.push(hullStruct)
+  // Add manual wall structures if any (for backwards compatibility)
+  // Most wall structures are now extracted from JAR subCat 1522
+  const wallSeen = seenInCategory.get('wall') || new Set()
+  const wallList = categoryStructures.get('wall') || []
+
+  for (const wallStruct of MANUAL_HULL_STRUCTURES) {
+    const dedupeKey = getDedupeKey(wallStruct.name, wallStruct.size)
+    if (!wallSeen.has(dedupeKey)) {
+      wallSeen.add(dedupeKey)
+      wallList.push(wallStruct)
     }
   }
-  
-  // Ensure hull category exists
-  if (!categoryStructures.has('hull')) {
-    categoryStructures.set('hull', hullList)
+
+  // Ensure wall category exists
+  if (!categoryStructures.has('wall')) {
+    categoryStructures.set('wall', wallList)
   }
 
   // Build final categories array
   const resultCategories: StructureCategory[] = []
 
-  // Add categories in a defined order
+  // Category order based on JAR order attribute (game displays in DESCENDING order)
+  // Screenshot shows: SYSTEM, AIRLOCK, STORAGE, FOOD, RESOURCE, POWER, LIFE SUPPORT, FACILITY, DECORATIONS, FURNITURE, WALL
   const categoryOrder = [
-    'hull',
-    'power',
-    'life_support',
-    'system',
-    'airlock',
-    'storage',
-    'food',
-    'resource',
-    'facility',
-    'robots',
-    'furniture',
-    'other',
+    'mission', // order=20
+    'weapon', // order=13
+    'system', // order=10
+    'robots', // order=10
+    'airlock', // order=9
+    'storage', // order=8
+    'food', // order=7
+    'resource', // order=6
+    'power', // order=5
+    'life_support', // order=4
+    'facility', // order=3
+    'decorations', // order=2
+    'furniture', // order=2
+    'wall', // order=1
+    'other', // fallback (should be empty if all categories are mapped)
   ]
 
   for (const catId of categoryOrder) {
@@ -192,7 +237,7 @@ export function convertToStructureCatalog(jarData: ParsedJarData): StructureCata
 
     // Find category metadata - use HULL_CATEGORY for hull
     let catMeta
-    if (catId === 'hull') {
+    if (catId === 'wall') {
       catMeta = HULL_CATEGORY
     } else {
       catMeta =
@@ -224,38 +269,69 @@ function buildCategoryLookup(
   const lookup = new Map<number, string>()
 
   for (const jarCat of jarCategories) {
-    // First, try direct mapping
+    // First, try direct mapping from known JAR category IDs
     const directMapping = JAR_CATEGORY_MAP[jarCat.id]
     if (directMapping) {
       lookup.set(jarCat.id, directMapping.id)
       continue
     }
 
-    // Try to infer from category name
+    // Fallback: try to infer from category name (for unknown categories)
     const catName = texts.get(jarCat.nameTid)?.toLowerCase() || ''
 
-    if (catName.includes('hull') || catName.includes('wall') || catName.includes('door')) {
-      lookup.set(jarCat.id, 'hull')
-    } else if (catName.includes('power') || catName.includes('generator') || catName.includes('energy')) {
-      lookup.set(jarCat.id, 'power')
-    } else if (catName.includes('life support') || catName.includes('oxygen') || catName.includes('thermal')) {
+    if (catName.includes('wall') || catName.includes('door') || catName.includes('window')) {
+      lookup.set(jarCat.id, 'wall')
+    } else if (catName.includes('decoration')) {
+      lookup.set(jarCat.id, 'decorations')
+    } else if (catName.includes('furniture')) {
+      lookup.set(jarCat.id, 'furniture')
+    } else if (
+      catName.includes('facility') ||
+      catName.includes('crew') ||
+      catName.includes('bed') ||
+      catName.includes('medical')
+    ) {
+      lookup.set(jarCat.id, 'facility')
+    } else if (
+      catName.includes('life support') ||
+      catName.includes('oxygen') ||
+      catName.includes('thermal')
+    ) {
       lookup.set(jarCat.id, 'life_support')
-    } else if (catName.includes('weapon') || catName.includes('shield') || catName.includes('combat') || catName.includes('system')) {
-      lookup.set(jarCat.id, 'system')
-    } else if (catName.includes('airlock') || catName.includes('hangar')) {
-      lookup.set(jarCat.id, 'airlock')
+    } else if (
+      catName.includes('power') ||
+      catName.includes('generator') ||
+      catName.includes('energy')
+    ) {
+      lookup.set(jarCat.id, 'power')
+    } else if (
+      catName.includes('resource') ||
+      catName.includes('refinery') ||
+      catName.includes('assembler') ||
+      catName.includes('industry')
+    ) {
+      lookup.set(jarCat.id, 'resource')
+    } else if (
+      catName.includes('food') ||
+      catName.includes('kitchen') ||
+      catName.includes('grow') ||
+      catName.includes('agriculture')
+    ) {
+      lookup.set(jarCat.id, 'food')
     } else if (catName.includes('storage') || catName.includes('cargo')) {
       lookup.set(jarCat.id, 'storage')
-    } else if (catName.includes('food') || catName.includes('kitchen') || catName.includes('grow') || catName.includes('agriculture')) {
-      lookup.set(jarCat.id, 'food')
-    } else if (catName.includes('resource') || catName.includes('refinery') || catName.includes('assembler') || catName.includes('industry')) {
-      lookup.set(jarCat.id, 'resource')
-    } else if (catName.includes('crew') || catName.includes('bed') || catName.includes('medical') || catName.includes('facility')) {
-      lookup.set(jarCat.id, 'facility')
+    } else if (catName.includes('airlock') || catName.includes('hangar')) {
+      lookup.set(jarCat.id, 'airlock')
+    } else if (catName.includes('system')) {
+      lookup.set(jarCat.id, 'system')
     } else if (catName.includes('robot')) {
       lookup.set(jarCat.id, 'robots')
-    } else if (catName.includes('furniture') || catName.includes('decoration') || catName.includes('light')) {
-      lookup.set(jarCat.id, 'furniture')
+    } else if (
+      catName.includes('weapon') ||
+      catName.includes('shield') ||
+      catName.includes('combat')
+    ) {
+      lookup.set(jarCat.id, 'weapon')
     } else {
       lookup.set(jarCat.id, 'other')
     }
@@ -293,9 +369,7 @@ function convertStructure(
   }
 
   // Determine size
-  const size: Size = raw.size
-    ? [raw.size.width, raw.size.height]
-    : DEFAULT_SIZE
+  const size: Size = raw.size ? [raw.size.width, raw.size.height] : DEFAULT_SIZE
 
   // Generate color from name
   const color = generateColor(name)
@@ -630,4 +704,3 @@ export function mergeCatalogs(
 
   return { categories: resultCategories }
 }
-

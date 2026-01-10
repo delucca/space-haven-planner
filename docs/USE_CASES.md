@@ -86,7 +86,8 @@ A tile-based ship design tool for planning Space Haven spacecraft layouts before
 
 ### UC-022: Drag to Place Multiple
 - **Action:** User holds mouse button and drags across grid (Place mode)
-- **Expected:** Structures place continuously where valid (useful for hull tiles)
+- **Expected:** A selection rectangle appears while dragging; objects inside are highlighted
+- **Expected (Release):** No changes are applied yet (future: multi-select actions)
 
 ### UC-023: Collision Detection
 - **Action:** User attempts to place structure overlapping an existing one
@@ -120,11 +121,15 @@ A tile-based ship design tool for planning Space Haven spacecraft layouts before
 
 ### UC-031: Erase Single Structure
 - **Action:** User clicks on a placed structure (Erase mode)
-- **Expected:** Structure is removed from grid
+- **Expected:** Confirmation dialog appears
+- **Expected (Confirm):** Structure is removed from grid
+- **Expected (Cancel):** No changes made
 
 ### UC-032: Drag to Erase Multiple
 - **Action:** User holds mouse button and drags across grid (Erase mode)
-- **Expected:** All structures under cursor path are removed
+- **Expected:** A selection rectangle appears while dragging; selected objects are highlighted
+- **Expected (Release):** Confirmation dialog appears if the selection includes any structures
+- **Expected (Release, Hull-only):** If the selection includes only hull tiles, deletion happens without confirmation
 
 ---
 
@@ -179,9 +184,9 @@ A tile-based ship design tool for planning Space Haven spacecraft layouts before
 - **Expected:** Image uses fixed scale (20px per tile) regardless of current zoom
 
 ### UC-054: Clear All Structures
-- **Action:** User clicks "🗑️ Clear" button
+- **Action:** User clicks "🗑️ Clear All" button
 - **Expected:** Confirmation dialog appears
-- **Expected (Confirm):** All structures removed from grid
+- **Expected (Confirm):** All structures and hull tiles removed from grid
 - **Expected (Cancel):** No changes made
 
 ### UC-055: Autosave to Local Storage
@@ -196,7 +201,7 @@ A tile-based ship design tool for planning Space Haven spacecraft layouts before
 
 ### UC-057: Clear Local Autosave
 - **Action:** User clicks "📄 New" button
-- **Expected:** Confirmation dialog appears if structures exist
+- **Expected:** Confirmation dialog appears if any structures or hull tiles exist
 - **Expected (Confirm):** Local autosave state is cleared, planner returns to empty canvas
 - **Expected (Cancel):** No changes made
 

@@ -7,7 +7,7 @@
  * Source: spacehaven.jar
  * Size: 186209507 bytes
  * Game Version: 0.20.0_steam_29
- * Generated: 2026-01-10T04:24:00.833Z
+ * Generated: 2026-01-10T14:16:38.590Z
  */
 
 import type { StructureCatalog } from '@/data/types'
@@ -17,11076 +17,8043 @@ import type { JarSourceInfo } from './types'
  * Metadata about the source JAR used to generate this snapshot
  */
 export const BUILTIN_SOURCE_INFO: JarSourceInfo = {
-  fileName: "spacehaven.jar",
+  fileName: 'spacehaven.jar',
   fileSize: 186209507,
-  lastModified: 1768019040833,
-  extractedAt: 1768019040833,
-  gameVersion: "0.20.0_steam_29",
+  lastModified: 1768054598590,
+  extractedAt: 1768054598590,
+  gameVersion: '0.20.0_steam_29',
 }
 
 /**
  * The built-in catalog snapshot
  */
 export const BUILTIN_CATALOG: StructureCatalog = {
-  "categories": [
+  categories: [
     {
-      "id": "power",
-      "name": "Power",
-      "color": "#cc8844",
-      "defaultLayer": "Systems",
-      "items": [
+      id: 'mission',
+      name: 'Mission',
+      color: '#aa66cc',
+      defaultLayer: 'Systems',
+      items: [
         {
-          "id": "mid_3489",
-          "name": "Backup Power Node",
-          "size": [
-            1,
-            2
-          ],
-          "color": "hsl(229, 47%, 36%)",
-          "categoryId": "power",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_4306',
+          name: 'Point Defense Turret',
+          size: [2, 2],
+          color: 'hsl(272, 51%, 38%)',
+          categoryId: 'mission',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
+                x: 0,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              }
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
+              },
             ],
-            "width": 1,
-            "height": 2
-          }
+            width: 2,
+            height: 2,
+          },
         },
         {
-          "id": "mid_2684",
-          "name": "Energium Power Generator",
-          "size": [
-            2,
-            3
-          ],
-          "color": "hsl(240, 40%, 45%)",
-          "categoryId": "power",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_4240',
+          name: 'Scanner',
+          size: [3, 3],
+          color: 'hsl(262, 61%, 52%)',
+          categoryId: 'mission',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
+                x: 2,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
+                x: 0,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
+                x: 2,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
+              },
             ],
-            "width": 2,
-            "height": 4
-          }
+            width: 3,
+            height: 3,
+          },
         },
         {
-          "id": "mid_3202",
-          "name": "Large Power Node",
-          "size": [
-            1,
-            2
-          ],
-          "color": "hsl(350, 56%, 45%)",
-          "categoryId": "power",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_4245',
+          name: 'Solar Panel',
+          size: [3, 3],
+          color: 'hsl(109, 52%, 54%)',
+          categoryId: 'mission',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
+                x: 0,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              }
+                x: 0,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
             ],
-            "width": 1,
-            "height": 2
-          }
+            width: 3,
+            height: 3,
+          },
         },
-        {
-          "id": "mid_3985",
-          "name": "Platform",
-          "size": [
-            5,
-            4
-          ],
-          "color": "hsl(29, 60%, 46%)",
-          "categoryId": "power",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 4,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 4,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 4,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 4,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              }
-            ],
-            "width": 5,
-            "height": 4
-          }
-        },
-        {
-          "id": "mid_782",
-          "name": "Pod Hangar",
-          "size": [
-            3,
-            3
-          ],
-          "color": "hsl(186, 42%, 46%)",
-          "categoryId": "power",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 2,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
-            ],
-            "width": 3,
-            "height": 4
-          }
-        },
-        {
-          "id": "mid_3204",
-          "name": "Power Capacity Node",
-          "size": [
-            1,
-            2
-          ],
-          "color": "hsl(285, 61%, 43%)",
-          "categoryId": "power",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              }
-            ],
-            "width": 1,
-            "height": 2
-          }
-        },
-        {
-          "id": "mid_3501",
-          "name": "Power Conduit",
-          "size": [
-            1,
-            1
-          ],
-          "color": "hsl(59, 41%, 36%)",
-          "categoryId": "power",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 0,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 0
-              }
-            ],
-            "width": 1,
-            "height": 1
-          }
-        },
-        {
-          "id": "mid_761",
-          "name": "Shuttle Hangar",
-          "size": [
-            5,
-            4
-          ],
-          "color": "hsl(30, 67%, 47%)",
-          "categoryId": "power",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 2,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 4,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 5,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 5,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 5,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 4,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 5,
-                "y": 4,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 4,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 4,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 4,
-                "y": 4,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 4,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 4,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 0,
-                "y": 2,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 0,
-                "y": 3,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 0,
-                "y": 4,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 0,
-                "y": 5,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 1,
-                "y": 5,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 2,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 2,
-                "y": 5,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 3,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 3,
-                "y": 5,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 4,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 4,
-                "y": 5,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 5,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 5,
-                "y": 5,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 6,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 6,
-                "y": 1,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 6,
-                "y": 2,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 6,
-                "y": 3,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 6,
-                "y": 4,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 6,
-                "y": 5,
-                "type": "access",
-                "walkCost": 0
-              }
-            ],
-            "width": 7,
-            "height": 6
-          }
-        },
-        {
-          "id": "mid_3269",
-          "name": "Small Power Node",
-          "size": [
-            1,
-            1
-          ],
-          "color": "hsl(98, 67%, 39%)",
-          "categoryId": "power",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              }
-            ],
-            "width": 1,
-            "height": 1
-          }
-        },
-        {
-          "id": "mid_2101",
-          "name": "Solar Panel",
-          "size": [
-            3,
-            3
-          ],
-          "color": "hsl(109, 52%, 54%)",
-          "categoryId": "power",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              }
-            ],
-            "width": 3,
-            "height": 3
-          }
-        },
-        {
-          "id": "mid_200",
-          "name": "Space Suit Locker",
-          "size": [
-            1,
-            2
-          ],
-          "color": "hsl(145, 59%, 36%)",
-          "categoryId": "power",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 0,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
-            ],
-            "width": 1,
-            "height": 3
-          }
-        },
-        {
-          "id": "mid_120",
-          "name": "X1 Airlock",
-          "size": [
-            4,
-            3
-          ],
-          "color": "hsl(266, 61%, 43%)",
-          "categoryId": "power",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 10,
-                "y": 4,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 10,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 8,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 8,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 7,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 9,
-                "y": 3,
-                "type": "access",
-                "walkCost": 1
-              },
-              {
-                "x": 10,
-                "y": 3,
-                "type": "access",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 6,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 6,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 6,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 4,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 5,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 6,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 4,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 5,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 6,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 4,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 5,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 6,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 4,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 5,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 6,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 4,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 5,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 6,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 4,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 5,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 6,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 6,
-                "y": 4,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 6,
-                "y": 5,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 6,
-                "y": 6,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 6,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 7,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 7,
-                "y": 4,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 8,
-                "y": 4,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 9,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 9,
-                "y": 4,
-                "type": "construction",
-                "walkCost": 1
-              }
-            ],
-            "width": 11,
-            "height": 7
-          }
-        },
-        {
-          "id": "mid_708",
-          "name": "X1 Power Generator",
-          "size": [
-            2,
-            3
-          ],
-          "color": "hsl(223, 53%, 54%)",
-          "categoryId": "power",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 1,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
-            ],
-            "width": 2,
-            "height": 4
-          }
-        },
-        {
-          "id": "mid_1530",
-          "name": "X2 Power Generator",
-          "size": [
-            3,
-            3
-          ],
-          "color": "hsl(110, 47%, 44%)",
-          "categoryId": "power",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 0,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 2,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
-            ],
-            "width": 3,
-            "height": 4
-          }
-        },
-        {
-          "id": "mid_344",
-          "name": "X3 Power Generator",
-          "size": [
-            4,
-            3
-          ],
-          "color": "hsl(301, 69%, 36%)",
-          "categoryId": "power",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 0,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 2,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 3,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
-            ],
-            "width": 4,
-            "height": 4
-          }
-        }
-      ]
+      ],
     },
     {
-      "id": "life_support",
-      "name": "Life Support",
-      "color": "#44aa88",
-      "defaultLayer": "Systems",
-      "items": [
+      id: 'system',
+      name: 'System',
+      color: '#cc4444',
+      defaultLayer: 'Systems',
+      items: [
         {
-          "id": "mid_72",
-          "name": "Air Vent",
-          "size": [
-            1,
-            1
-          ],
-          "color": "hsl(51, 46%, 37%)",
-          "categoryId": "life_support",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_2783',
+          name: 'Autoturret',
+          size: [2, 2],
+          color: 'hsl(55, 53%, 43%)',
+          categoryId: 'system',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
+                x: 0,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
+              },
             ],
-            "width": 1,
-            "height": 2
-          }
+            width: 2,
+            height: 2,
+          },
         },
         {
-          "id": "mid_922",
-          "name": "Gas scrubber",
-          "size": [
-            1,
-            1
-          ],
-          "color": "hsl(25, 65%, 48%)",
-          "categoryId": "life_support",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_2242',
+          name: 'Energy Turret',
+          size: [3, 3],
+          color: 'hsl(144, 47%, 43%)',
+          categoryId: 'system',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
+                x: 1,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
             ],
-            "width": 1,
-            "height": 2
-          }
+            width: 3,
+            height: 4,
+          },
         },
         {
-          "id": "mid_47",
-          "name": "Hull Window",
-          "size": [
-            1,
-            3
-          ],
-          "color": "hsl(83, 42%, 51%)",
-          "categoryId": "life_support",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_2257',
+          name: 'Hull Stabilizer',
+          size: [2, 1],
+          color: 'hsl(270, 58%, 47%)',
+          categoryId: 'system',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              }
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
             ],
-            "width": 1,
-            "height": 3
-          }
+            width: 2,
+            height: 2,
+          },
         },
         {
-          "id": "mid_2758",
-          "name": "Hull Window",
-          "size": [
-            1,
-            2
-          ],
-          "color": "hsl(83, 42%, 51%)",
-          "categoryId": "life_support",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_2655',
+          name: 'Hyperium Hyperdrive',
+          size: [3, 5],
+          color: 'hsl(281, 58%, 41%)',
+          categoryId: 'system',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
+                x: 2,
+                y: 16,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              }
+                x: 3,
+                y: 16,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 15,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 3,
+                y: 15,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 12,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 13,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 14,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 2,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 3,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 4,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 5,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 6,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 7,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 8,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 9,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 10,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 11,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 1,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 1,
+                y: 2,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 1,
+                y: 3,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 1,
+                y: 4,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 1,
+                y: 5,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 1,
+                y: 6,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 1,
+                y: 7,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 1,
+                y: 8,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 1,
+                y: 9,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 1,
+                y: 10,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 1,
+                y: 11,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 2,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 2,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 2,
+                y: 2,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 2,
+                y: 3,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 2,
+                y: 4,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 2,
+                y: 5,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 2,
+                y: 6,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 2,
+                y: 7,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 2,
+                y: 8,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 2,
+                y: 9,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 2,
+                y: 10,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 2,
+                y: 11,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 3,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 3,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 3,
+                y: 2,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 3,
+                y: 3,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 3,
+                y: 4,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 3,
+                y: 5,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 3,
+                y: 6,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 3,
+                y: 7,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 3,
+                y: 8,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 3,
+                y: 9,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 3,
+                y: 10,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 3,
+                y: 11,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 4,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 4,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 4,
+                y: 2,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 4,
+                y: 3,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 4,
+                y: 4,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 4,
+                y: 5,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 4,
+                y: 6,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 4,
+                y: 7,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 4,
+                y: 8,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 4,
+                y: 9,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 4,
+                y: 10,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 4,
+                y: 11,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 5,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 5,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 5,
+                y: 2,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 5,
+                y: 3,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 5,
+                y: 4,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 5,
+                y: 5,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 5,
+                y: 6,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 5,
+                y: 7,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 5,
+                y: 8,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 5,
+                y: 9,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 5,
+                y: 10,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 5,
+                y: 11,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 1,
+                y: 14,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 1,
+                y: 15,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 1,
+                y: 16,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 4,
+                y: 13,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 4,
+                y: 14,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 4,
+                y: 15,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 4,
+                y: 16,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 1,
+                y: 12,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 13,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 3,
+                y: 12,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 3,
+                y: 13,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 3,
+                y: 14,
+                type: 'construction',
+                walkCost: 1,
+              },
             ],
-            "width": 1,
-            "height": 2
-          }
+            width: 6,
+            height: 17,
+          },
         },
         {
-          "id": "mid_206",
-          "name": "Hull Window",
-          "size": [
-            1,
-            4
-          ],
-          "color": "hsl(83, 42%, 51%)",
-          "categoryId": "life_support",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_263',
+          name: 'Navigation console',
+          size: [3, 2],
+          color: 'hsl(21, 47%, 35%)',
+          categoryId: 'system',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
+                x: 2,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
+                x: 2,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              }
+                x: 0,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
             ],
-            "width": 1,
-            "height": 4
-          }
+            width: 3,
+            height: 3,
+          },
         },
         {
-          "id": "mid_927",
-          "name": "Oxygen Generator",
-          "size": [
-            2,
-            1
-          ],
-          "color": "hsl(197, 50%, 48%)",
-          "categoryId": "life_support",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_2131',
+          name: 'Operations console',
+          size: [3, 2],
+          color: 'hsl(83, 55%, 50%)',
+          categoryId: 'system',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 2,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
+                x: 1,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
             ],
-            "width": 2,
-            "height": 2
-          }
+            width: 3,
+            height: 3,
+          },
         },
         {
-          "id": "mid_993",
-          "name": "Spacesuit door",
-          "size": [
-            1,
-            2
-          ],
-          "color": "hsl(11, 44%, 46%)",
-          "categoryId": "life_support",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_3638',
+          name: 'Point Defense Turret',
+          size: [2, 2],
+          color: 'hsl(272, 51%, 38%)',
+          categoryId: 'system',
+          tileLayout: {
+            tiles: [
               {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 1,
-                "type": "access",
-                "walkCost": 0
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 2,
-                "y": 1,
-                "type": "access",
-                "walkCost": 0
+                x: 1,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
               },
-              {
-                "x": 1,
-                "y": 3,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
             ],
-            "width": 3,
-            "height": 4
-          }
+            width: 2,
+            height: 2,
+          },
         },
         {
-          "id": "mid_1798",
-          "name": "Station Hull Door",
-          "size": [
-            1,
-            2
-          ],
-          "color": "hsl(195, 54%, 53%)",
-          "categoryId": "life_support",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_2708',
+          name: 'Rocket Turret',
+          size: [3, 3],
+          color: 'hsl(316, 63%, 50%)',
+          categoryId: 'system',
+          tileLayout: {
+            tiles: [
               {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 1,
-                "type": "access",
-                "walkCost": 0
+                x: 1,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 2,
-                "y": 1,
-                "type": "access",
-                "walkCost": 0
+                x: 0,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
+                x: 2,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
             ],
-            "width": 3,
-            "height": 3
-          }
+            width: 3,
+            height: 4,
+          },
         },
         {
-          "id": "mid_918",
-          "name": "Thermal Regulator",
-          "size": [
-            1,
-            1
-          ],
-          "color": "hsl(88, 52%, 38%)",
-          "categoryId": "life_support",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_2239',
+          name: 'Scanner',
+          size: [3, 3],
+          color: 'hsl(262, 61%, 52%)',
+          categoryId: 'system',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              }
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
+              },
             ],
-            "width": 1,
-            "height": 1
-          }
+            width: 3,
+            height: 3,
+          },
         },
         {
-          "id": "mid_987",
-          "name": "Wall Thermal Regulator",
-          "size": [
-            1,
-            1
-          ],
-          "color": "hsl(218, 49%, 39%)",
-          "categoryId": "life_support",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_470',
+          name: 'Shield Generator',
+          size: [3, 3],
+          color: 'hsl(332, 52%, 42%)',
+          categoryId: 'system',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              }
+                x: 1,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
             ],
-            "width": 1,
-            "height": 1
-          }
+            width: 3,
+            height: 4,
+          },
         },
         {
-          "id": "mid_2757",
-          "name": "Wall Window",
-          "size": [
-            1,
-            2
-          ],
-          "color": "hsl(158, 69%, 37%)",
-          "categoryId": "life_support",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_2127',
+          name: 'Shields console',
+          size: [3, 2],
+          color: 'hsl(55, 55%, 36%)',
+          categoryId: 'system',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
+                x: 2,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              }
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
             ],
-            "width": 1,
-            "height": 2
-          }
+            width: 3,
+            height: 3,
+          },
         },
         {
-          "id": "mid_115",
-          "name": "Wall Window",
-          "size": [
-            1,
-            3
-          ],
-          "color": "hsl(158, 69%, 37%)",
-          "categoryId": "life_support",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_3264',
+          name: 'Small Shield Generator',
+          size: [2, 2],
+          color: 'hsl(245, 40%, 35%)',
+          categoryId: 'system',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
+                x: 0,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              }
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
+              },
             ],
-            "width": 1,
-            "height": 3
-          }
+            width: 2,
+            height: 2,
+          },
         },
         {
-          "id": "mid_2861",
-          "name": "Wall Window",
-          "size": [
-            1,
-            4
-          ],
-          "color": "hsl(158, 69%, 37%)",
-          "categoryId": "life_support",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_2724',
+          name: 'Targeting Jammer',
+          size: [3, 3],
+          color: 'hsl(197, 68%, 53%)',
+          categoryId: 'system',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
+                x: 2,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
+                x: 1,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              }
+                x: 0,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 0,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
             ],
-            "width": 1,
-            "height": 4
-          }
+            width: 3,
+            height: 4,
+          },
         },
         {
-          "id": "mid_25",
-          "name": "X1 Door",
-          "size": [
-            1,
-            1
-          ],
-          "color": "hsl(45, 42%, 54%)",
-          "categoryId": "life_support",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_2125',
+          name: 'Weapons console',
+          size: [3, 2],
+          color: 'hsl(230, 65%, 38%)',
+          categoryId: 'system',
+          tileLayout: {
+            tiles: [
               {
-                "x": 1,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
+                x: 2,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
+                x: 0,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 2,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
             ],
-            "width": 3,
-            "height": 1
-          }
+            width: 3,
+            height: 3,
+          },
         },
         {
-          "id": "mid_44",
-          "name": "X1 Wall",
-          "size": [
-            1,
-            1
-          ],
-          "color": "hsl(281, 44%, 46%)",
-          "categoryId": "life_support",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_2123',
+          name: 'X1 Hyperdrive',
+          size: [4, 6],
+          color: 'hsl(13, 54%, 54%)',
+          categoryId: 'system',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              }
+                x: 3,
+                y: 17,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 4,
+                y: 17,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 3,
+                y: 16,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 4,
+                y: 16,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 3,
+                y: 15,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 4,
+                y: 15,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 15,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 5,
+                y: 15,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 12,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 4,
+                y: 12,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 13,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 2,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 3,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 4,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 5,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 6,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 7,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 8,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 9,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 10,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 11,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 1,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 1,
+                y: 2,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 1,
+                y: 3,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 1,
+                y: 4,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 1,
+                y: 5,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 1,
+                y: 6,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 1,
+                y: 7,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 1,
+                y: 8,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 1,
+                y: 9,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 1,
+                y: 10,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 1,
+                y: 11,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 2,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 2,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 2,
+                y: 2,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 2,
+                y: 3,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 2,
+                y: 4,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 2,
+                y: 5,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 2,
+                y: 6,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 2,
+                y: 7,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 2,
+                y: 8,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 2,
+                y: 9,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 2,
+                y: 10,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 2,
+                y: 11,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 3,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 3,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 3,
+                y: 2,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 3,
+                y: 3,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 3,
+                y: 4,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 3,
+                y: 5,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 3,
+                y: 6,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 3,
+                y: 7,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 3,
+                y: 8,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 3,
+                y: 9,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 3,
+                y: 10,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 3,
+                y: 11,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 4,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 4,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 4,
+                y: 2,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 4,
+                y: 3,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 4,
+                y: 4,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 4,
+                y: 5,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 4,
+                y: 6,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 4,
+                y: 7,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 4,
+                y: 8,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 4,
+                y: 9,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 4,
+                y: 10,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 4,
+                y: 11,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 5,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 5,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 5,
+                y: 2,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 5,
+                y: 3,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 5,
+                y: 4,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 5,
+                y: 5,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 5,
+                y: 6,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 5,
+                y: 7,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 5,
+                y: 8,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 5,
+                y: 9,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 5,
+                y: 10,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 5,
+                y: 11,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 6,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 6,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 6,
+                y: 2,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 6,
+                y: 3,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 6,
+                y: 4,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 6,
+                y: 5,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 6,
+                y: 6,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 6,
+                y: 7,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 6,
+                y: 8,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 6,
+                y: 9,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 6,
+                y: 10,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 6,
+                y: 11,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 7,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 7,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 7,
+                y: 2,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 7,
+                y: 3,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 7,
+                y: 4,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 7,
+                y: 5,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 7,
+                y: 6,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 7,
+                y: 7,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 7,
+                y: 8,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 7,
+                y: 9,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 7,
+                y: 10,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 7,
+                y: 11,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 2,
+                y: 16,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 2,
+                y: 17,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 5,
+                y: 16,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 5,
+                y: 17,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 2,
+                y: 14,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 3,
+                y: 12,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 3,
+                y: 13,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 3,
+                y: 14,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 4,
+                y: 13,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 4,
+                y: 14,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 5,
+                y: 12,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 5,
+                y: 13,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 5,
+                y: 14,
+                type: 'construction',
+                walkCost: 1,
+              },
             ],
-            "width": 1,
-            "height": 1
-          }
+            width: 8,
+            height: 18,
+          },
         },
         {
-          "id": "mid_2755",
-          "name": "X2 Door",
-          "size": [
-            1,
-            2
-          ],
-          "color": "hsl(196, 49%, 37%)",
-          "categoryId": "life_support",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_3510',
+          name: 'X1 System Core',
+          size: [2, 2],
+          color: 'hsl(295, 50%, 44%)',
+          categoryId: 'system',
+          tileLayout: {
+            tiles: [
               {
-                "x": 1,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
+                x: 2,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
+                x: 1,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 1,
-                "type": "access",
-                "walkCost": 0
+                x: 2,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 2,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
               },
               {
-                "x": 2,
-                "y": 1,
-                "type": "access",
-                "walkCost": 0
-              }
+                x: 0,
+                y: 1,
+                type: 'access',
+                walkCost: 0,
+              },
             ],
-            "width": 3,
-            "height": 2
-          }
-        }
-      ]
+            width: 3,
+            height: 2,
+          },
+        },
+        {
+          id: 'mid_3515',
+          name: 'X2 System Core',
+          size: [2, 3],
+          color: 'hsl(194, 64%, 47%)',
+          categoryId: 'system',
+          tileLayout: {
+            tiles: [
+              {
+                x: 2,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 0,
+                y: 1,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 0,
+                y: 2,
+                type: 'access',
+                walkCost: 0,
+              },
+            ],
+            width: 3,
+            height: 3,
+          },
+        },
+        {
+          id: 'mid_3516',
+          name: 'X3 System Core',
+          size: [2, 4],
+          color: 'hsl(189, 49%, 50%)',
+          categoryId: 'system',
+          tileLayout: {
+            tiles: [
+              {
+                x: 2,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 0,
+                y: 1,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 0,
+                y: 2,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 0,
+                y: 3,
+                type: 'access',
+                walkCost: 0,
+              },
+            ],
+            width: 3,
+            height: 4,
+          },
+        },
+      ],
     },
     {
-      "id": "system",
-      "name": "Systems & Combat",
-      "color": "#cc4444",
-      "defaultLayer": "Systems",
-      "items": [
+      id: 'robots',
+      name: 'Robots',
+      color: '#55aaaa',
+      defaultLayer: 'Systems',
+      items: [
         {
-          "id": "mid_2783",
-          "name": "Autoturret",
-          "size": [
-            2,
-            2
-          ],
-          "color": "hsl(55, 53%, 43%)",
-          "categoryId": "system",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_2882',
+          name: 'Logistics Robot Station',
+          size: [1, 2],
+          color: 'hsl(255, 53%, 51%)',
+          categoryId: 'robots',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
               },
               {
-                "x": 1,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              }
+                x: 0,
+                y: 1,
+                type: 'access',
+                walkCost: 0,
+              },
             ],
-            "width": 2,
-            "height": 2
-          }
+            width: 2,
+            height: 2,
+          },
         },
         {
-          "id": "mid_4262",
-          "name": "Cover Object",
-          "size": [
-            1,
-            1
-          ],
-          "color": "hsl(176, 58%, 51%)",
-          "categoryId": "system",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_3055',
+          name: 'Robot Workbench',
+          size: [2, 1],
+          color: 'hsl(265, 51%, 37%)',
+          categoryId: 'robots',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              }
+                x: 1,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
             ],
-            "width": 1,
-            "height": 1
-          }
+            width: 2,
+            height: 2,
+          },
         },
         {
-          "id": "mid_2242",
-          "name": "Energy Turret",
-          "size": [
-            3,
-            3
-          ],
-          "color": "hsl(144, 47%, 43%)",
-          "categoryId": "system",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_2891',
+          name: 'Salvage Robot Station',
+          size: [1, 2],
+          color: 'hsl(309, 44%, 35%)',
+          categoryId: 'robots',
+          tileLayout: {
+            tiles: [
               {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
               },
               {
-                "x": 0,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 1,
+                type: 'access',
+                walkCost: 0,
               },
-              {
-                "x": 2,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
             ],
-            "width": 3,
-            "height": 4
-          }
+            width: 2,
+            height: 2,
+          },
         },
-        {
-          "id": "mid_2257",
-          "name": "Hull Stabilizer",
-          "size": [
-            2,
-            1
-          ],
-          "color": "hsl(270, 58%, 47%)",
-          "categoryId": "system",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
-            ],
-            "width": 2,
-            "height": 2
-          }
-        },
-        {
-          "id": "mid_2655",
-          "name": "Hyperium Hyperdrive",
-          "size": [
-            3,
-            5
-          ],
-          "color": "hsl(281, 58%, 41%)",
-          "categoryId": "system",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 2,
-                "y": 16,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 16,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 15,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 15,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 12,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 13,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 14,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 4,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 5,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 6,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 7,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 8,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 9,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 10,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 11,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 4,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 5,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 6,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 7,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 8,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 9,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 10,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 11,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 4,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 5,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 6,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 7,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 8,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 9,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 10,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 11,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 4,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 5,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 6,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 7,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 8,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 9,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 10,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 11,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 4,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 5,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 6,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 7,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 8,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 9,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 10,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 11,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 4,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 5,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 6,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 7,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 8,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 9,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 10,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 11,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 14,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 1,
-                "y": 15,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 1,
-                "y": 16,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 4,
-                "y": 13,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 4,
-                "y": 14,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 4,
-                "y": 15,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 4,
-                "y": 16,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 1,
-                "y": 12,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 13,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 12,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 13,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 14,
-                "type": "construction",
-                "walkCost": 1
-              }
-            ],
-            "width": 6,
-            "height": 17
-          }
-        },
-        {
-          "id": "mid_3521",
-          "name": "Hypersleep Chamber",
-          "size": [
-            5,
-            2
-          ],
-          "color": "hsl(287, 54%, 53%)",
-          "categoryId": "system",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 1,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 4,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 4,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              }
-            ],
-            "width": 5,
-            "height": 2
-          }
-        },
-        {
-          "id": "mid_263",
-          "name": "Navigation console",
-          "size": [
-            3,
-            2
-          ],
-          "color": "hsl(21, 47%, 35%)",
-          "categoryId": "system",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 2,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
-            ],
-            "width": 3,
-            "height": 3
-          }
-        },
-        {
-          "id": "mid_2131",
-          "name": "Operations console",
-          "size": [
-            3,
-            2
-          ],
-          "color": "hsl(83, 55%, 50%)",
-          "categoryId": "system",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 2,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
-            ],
-            "width": 3,
-            "height": 3
-          }
-        },
-        {
-          "id": "mid_3638",
-          "name": "Point Defense Turret",
-          "size": [
-            2,
-            2
-          ],
-          "color": "hsl(272, 51%, 38%)",
-          "categoryId": "system",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 0,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              }
-            ],
-            "width": 2,
-            "height": 2
-          }
-        },
-        {
-          "id": "mid_2708",
-          "name": "Rocket Turret",
-          "size": [
-            3,
-            3
-          ],
-          "color": "hsl(316, 63%, 50%)",
-          "categoryId": "system",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
-            ],
-            "width": 3,
-            "height": 4
-          }
-        },
-        {
-          "id": "mid_4215",
-          "name": "Scanner",
-          "size": [
-            3,
-            3
-          ],
-          "color": "hsl(262, 61%, 52%)",
-          "categoryId": "system",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              }
-            ],
-            "width": 3,
-            "height": 3
-          }
-        },
-        {
-          "id": "mid_470",
-          "name": "Shield Generator",
-          "size": [
-            3,
-            3
-          ],
-          "color": "hsl(332, 52%, 42%)",
-          "categoryId": "system",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
-            ],
-            "width": 3,
-            "height": 4
-          }
-        },
-        {
-          "id": "mid_2127",
-          "name": "Shields console",
-          "size": [
-            3,
-            2
-          ],
-          "color": "hsl(55, 55%, 36%)",
-          "categoryId": "system",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 2,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
-            ],
-            "width": 3,
-            "height": 3
-          }
-        },
-        {
-          "id": "mid_3264",
-          "name": "Small Shield Generator",
-          "size": [
-            2,
-            2
-          ],
-          "color": "hsl(245, 40%, 35%)",
-          "categoryId": "system",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 0,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              }
-            ],
-            "width": 2,
-            "height": 2
-          }
-        },
-        {
-          "id": "mid_4231",
-          "name": "Solar Panel",
-          "size": [
-            3,
-            3
-          ],
-          "color": "hsl(109, 52%, 54%)",
-          "categoryId": "system",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 0,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              }
-            ],
-            "width": 3,
-            "height": 3
-          }
-        },
-        {
-          "id": "mid_4232",
-          "name": "Solar Panel",
-          "size": [
-            5,
-            3
-          ],
-          "color": "hsl(109, 52%, 54%)",
-          "categoryId": "system",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 0,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 4,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 4,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 4,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              }
-            ],
-            "width": 5,
-            "height": 3
-          }
-        },
-        {
-          "id": "mid_2724",
-          "name": "Targeting Jammer",
-          "size": [
-            3,
-            3
-          ],
-          "color": "hsl(197, 68%, 53%)",
-          "categoryId": "system",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 2,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 0,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              }
-            ],
-            "width": 3,
-            "height": 4
-          }
-        },
-        {
-          "id": "mid_2125",
-          "name": "Weapons console",
-          "size": [
-            3,
-            2
-          ],
-          "color": "hsl(230, 65%, 38%)",
-          "categoryId": "system",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 2,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
-            ],
-            "width": 3,
-            "height": 3
-          }
-        },
-        {
-          "id": "mid_2123",
-          "name": "X1 Hyperdrive",
-          "size": [
-            4,
-            6
-          ],
-          "color": "hsl(13, 54%, 54%)",
-          "categoryId": "system",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 3,
-                "y": 17,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 4,
-                "y": 17,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 16,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 4,
-                "y": 16,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 15,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 4,
-                "y": 15,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 15,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 5,
-                "y": 15,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 12,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 4,
-                "y": 12,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 13,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 4,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 5,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 6,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 7,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 8,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 9,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 10,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 11,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 4,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 5,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 6,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 7,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 8,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 9,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 10,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 11,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 4,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 5,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 6,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 7,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 8,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 9,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 10,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 11,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 4,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 5,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 6,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 7,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 8,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 9,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 10,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 11,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 4,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 5,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 6,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 7,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 8,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 9,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 10,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 11,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 4,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 5,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 6,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 7,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 8,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 9,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 10,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 11,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 6,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 6,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 6,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 6,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 6,
-                "y": 4,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 6,
-                "y": 5,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 6,
-                "y": 6,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 6,
-                "y": 7,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 6,
-                "y": 8,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 6,
-                "y": 9,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 6,
-                "y": 10,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 6,
-                "y": 11,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 7,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 7,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 7,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 7,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 7,
-                "y": 4,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 7,
-                "y": 5,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 7,
-                "y": 6,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 7,
-                "y": 7,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 7,
-                "y": 8,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 7,
-                "y": 9,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 7,
-                "y": 10,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 7,
-                "y": 11,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 16,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 2,
-                "y": 17,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 5,
-                "y": 16,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 5,
-                "y": 17,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 2,
-                "y": 14,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 12,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 13,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 14,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 4,
-                "y": 13,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 4,
-                "y": 14,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 5,
-                "y": 12,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 5,
-                "y": 13,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 5,
-                "y": 14,
-                "type": "construction",
-                "walkCost": 1
-              }
-            ],
-            "width": 8,
-            "height": 18
-          }
-        },
-        {
-          "id": "mid_3510",
-          "name": "X1 System Core",
-          "size": [
-            2,
-            2
-          ],
-          "color": "hsl(295, 50%, 44%)",
-          "categoryId": "system",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 2,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "access",
-                "walkCost": 0
-              }
-            ],
-            "width": 3,
-            "height": 2
-          }
-        },
-        {
-          "id": "mid_43",
-          "name": "X1 Wall",
-          "size": [
-            1,
-            1
-          ],
-          "color": "hsl(281, 44%, 46%)",
-          "categoryId": "system",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              }
-            ],
-            "width": 1,
-            "height": 1
-          }
-        },
-        {
-          "id": "mid_3515",
-          "name": "X2 System Core",
-          "size": [
-            2,
-            3
-          ],
-          "color": "hsl(194, 64%, 47%)",
-          "categoryId": "system",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 2,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 0,
-                "y": 2,
-                "type": "access",
-                "walkCost": 0
-              }
-            ],
-            "width": 3,
-            "height": 3
-          }
-        },
-        {
-          "id": "mid_3516",
-          "name": "X3 System Core",
-          "size": [
-            2,
-            4
-          ],
-          "color": "hsl(189, 49%, 50%)",
-          "categoryId": "system",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 2,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 0,
-                "y": 2,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 0,
-                "y": 3,
-                "type": "access",
-                "walkCost": 0
-              }
-            ],
-            "width": 3,
-            "height": 4
-          }
-        }
-      ]
+      ],
     },
     {
-      "id": "storage",
-      "name": "Storage",
-      "color": "#888866",
-      "defaultLayer": "Rooms",
-      "items": [
+      id: 'airlock',
+      name: 'Airlock',
+      color: '#8866aa',
+      defaultLayer: 'Rooms',
+      items: [
         {
-          "id": "mid_3561",
-          "name": "Asteroid Cargo Port",
-          "size": [
-            7,
-            7
-          ],
-          "color": "hsl(150, 65%, 41%)",
-          "categoryId": "storage",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_3985',
+          name: 'Platform',
+          size: [5, 4],
+          color: 'hsl(29, 60%, 46%)',
+          categoryId: 'airlock',
+          tileLayout: {
+            tiles: [
               {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 2,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 4,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 3,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 4,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 3,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 5,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
+                x: 4,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 4,
-                "type": "construction",
-                "walkCost": 1
+                x: 4,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 3,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 6,
-                "y": 5,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 5,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 6,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 6,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 6,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
+                x: 2,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 6,
-                "y": 6,
-                "type": "construction",
-                "walkCost": 1
+                x: 2,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
+                x: 2,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 5,
-                "type": "construction",
-                "walkCost": 1
+                x: 2,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
+                x: 3,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
+                x: 3,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
+                x: 4,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
-              {
-                "x": 1,
-                "y": 4,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 5,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 4,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 5,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 6,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 4,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 5,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 6,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 4,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 4,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 4,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 4,
-                "y": 4,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 4,
-                "y": 5,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 4,
-                "y": 6,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 5,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 5,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 5,
-                "y": 4,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 5,
-                "y": 5,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 5,
-                "y": 6,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 6,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 6,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 6,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 6,
-                "y": 4,
-                "type": "construction",
-                "walkCost": 1
-              }
             ],
-            "width": 7,
-            "height": 7
-          }
+            width: 5,
+            height: 4,
+          },
         },
         {
-          "id": "mid_3062",
-          "name": "Body Storage",
-          "size": [
-            2,
-            2
-          ],
-          "color": "hsl(117, 57%, 42%)",
-          "categoryId": "storage",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_782',
+          name: 'Pod Hangar',
+          size: [3, 3],
+          color: 'hsl(186, 42%, 46%)',
+          categoryId: 'airlock',
+          tileLayout: {
+            tiles: [
               {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
+                x: 2,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 2,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
+                x: 0,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
+                x: 0,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 2,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
             ],
-            "width": 2,
-            "height": 3
-          }
+            width: 3,
+            height: 4,
+          },
         },
         {
-          "id": "mid_3543",
-          "name": "Cargo Port",
-          "size": [
-            8,
-            5
-          ],
-          "color": "hsl(179, 42%, 40%)",
-          "categoryId": "storage",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_761',
+          name: 'Shuttle Hangar',
+          size: [5, 4],
+          color: 'hsl(30, 67%, 47%)',
+          categoryId: 'airlock',
+          tileLayout: {
+            tiles: [
               {
-                "x": 2,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 2,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 2,
-                "y": 5,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 8,
-                "y": 5,
-                "type": "construction",
-                "walkCost": 1
+                x: 3,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 8,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 4,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 8,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
+                x: 5,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 8,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
+                x: 5,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 8,
-                "y": 4,
-                "type": "construction",
-                "walkCost": 1
+                x: 5,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 9,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 9,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 4,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 9,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
+                x: 5,
+                y: 4,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 9,
-                "y": 4,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 9,
-                "y": 5,
-                "type": "construction",
-                "walkCost": 1
+                x: 2,
+                y: 4,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
+                x: 3,
+                y: 4,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
+                x: 4,
+                y: 4,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
+                x: 2,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
+                x: 3,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 4,
-                "type": "blocked",
-                "walkCost": 255
+                x: 4,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 5,
-                "type": "blocked",
-                "walkCost": 255
+                x: 2,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 6,
-                "type": "blocked",
-                "walkCost": 255
+                x: 3,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
+                x: 4,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
               },
               {
-                "x": 1,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
+                x: 0,
+                y: 1,
+                type: 'access',
+                walkCost: 0,
               },
               {
-                "x": 1,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
+                x: 0,
+                y: 2,
+                type: 'access',
+                walkCost: 0,
               },
               {
-                "x": 1,
-                "y": 4,
-                "type": "blocked",
-                "walkCost": 255
+                x: 0,
+                y: 3,
+                type: 'access',
+                walkCost: 0,
               },
               {
-                "x": 1,
-                "y": 5,
-                "type": "blocked",
-                "walkCost": 255
+                x: 0,
+                y: 4,
+                type: 'access',
+                walkCost: 0,
               },
               {
-                "x": 1,
-                "y": 6,
-                "type": "blocked",
-                "walkCost": 255
+                x: 0,
+                y: 5,
+                type: 'access',
+                walkCost: 0,
               },
               {
-                "x": 2,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
+                x: 1,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
               },
               {
-                "x": 2,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
+                x: 1,
+                y: 5,
+                type: 'access',
+                walkCost: 0,
               },
               {
-                "x": 2,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
+                x: 2,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
               },
               {
-                "x": 2,
-                "y": 4,
-                "type": "blocked",
-                "walkCost": 255
+                x: 2,
+                y: 5,
+                type: 'access',
+                walkCost: 0,
               },
               {
-                "x": 2,
-                "y": 6,
-                "type": "blocked",
-                "walkCost": 255
+                x: 3,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
               },
               {
-                "x": 3,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
+                x: 3,
+                y: 5,
+                type: 'access',
+                walkCost: 0,
               },
               {
-                "x": 3,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
+                x: 4,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
               },
               {
-                "x": 3,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
+                x: 4,
+                y: 5,
+                type: 'access',
+                walkCost: 0,
               },
               {
-                "x": 3,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
+                x: 5,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
               },
               {
-                "x": 3,
-                "y": 4,
-                "type": "blocked",
-                "walkCost": 255
+                x: 5,
+                y: 5,
+                type: 'access',
+                walkCost: 0,
               },
               {
-                "x": 3,
-                "y": 5,
-                "type": "blocked",
-                "walkCost": 255
+                x: 6,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
               },
               {
-                "x": 3,
-                "y": 6,
-                "type": "blocked",
-                "walkCost": 255
+                x: 6,
+                y: 1,
+                type: 'access',
+                walkCost: 0,
               },
               {
-                "x": 4,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
+                x: 6,
+                y: 2,
+                type: 'access',
+                walkCost: 0,
               },
               {
-                "x": 4,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
+                x: 6,
+                y: 3,
+                type: 'access',
+                walkCost: 0,
               },
               {
-                "x": 4,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
+                x: 6,
+                y: 4,
+                type: 'access',
+                walkCost: 0,
               },
               {
-                "x": 4,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
+                x: 6,
+                y: 5,
+                type: 'access',
+                walkCost: 0,
               },
-              {
-                "x": 4,
-                "y": 4,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 5,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 6,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 4,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 5,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 6,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 6,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 6,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 6,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 6,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 6,
-                "y": 4,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 6,
-                "y": 5,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 6,
-                "y": 6,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 7,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 7,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 7,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 7,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 7,
-                "y": 4,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 7,
-                "y": 5,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 7,
-                "y": 6,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 10,
-                "y": 1,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 10,
-                "y": 2,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 10,
-                "y": 3,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 10,
-                "y": 4,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 10,
-                "y": 5,
-                "type": "access",
-                "walkCost": 0
-              }
             ],
-            "width": 11,
-            "height": 7
-          }
+            width: 7,
+            height: 6,
+          },
         },
         {
-          "id": "mid_632",
-          "name": "Large Storage",
-          "size": [
-            3,
-            2
-          ],
-          "color": "hsl(134, 68%, 44%)",
-          "categoryId": "storage",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_200',
+          name: 'Space Suit Locker',
+          size: [1, 2],
+          color: 'hsl(145, 59%, 36%)',
+          categoryId: 'airlock',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 2,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
               },
-              {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 2,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
             ],
-            "width": 3,
-            "height": 3
-          }
+            width: 1,
+            height: 3,
+          },
         },
         {
-          "id": "mid_3068",
-          "name": "Robot Storage",
-          "size": [
-            2,
-            2
-          ],
-          "color": "hsl(333, 52%, 43%)",
-          "categoryId": "storage",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_120',
+          name: 'X1 Airlock',
+          size: [4, 3],
+          color: 'hsl(266, 61%, 43%)',
+          categoryId: 'airlock',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 10,
+                y: 4,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 10,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
+                x: 8,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
+                x: 8,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
+                x: 7,
+                y: 3,
+                type: 'blocked',
+                walkCost: 255,
               },
               {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
+                x: 9,
+                y: 3,
+                type: 'access',
+                walkCost: 1,
+              },
+              {
+                x: 10,
+                y: 3,
+                type: 'access',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 2,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 1,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 1,
+                y: 2,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 2,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 2,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 2,
+                y: 2,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 3,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 3,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 3,
+                y: 2,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 4,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 4,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 4,
+                y: 2,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 5,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 5,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 5,
+                y: 2,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 6,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 6,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 6,
+                y: 2,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 4,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 5,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 6,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 1,
+                y: 4,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 1,
+                y: 5,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 1,
+                y: 6,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 2,
+                y: 4,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 2,
+                y: 5,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 2,
+                y: 6,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 3,
+                y: 4,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 3,
+                y: 5,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 3,
+                y: 6,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 4,
+                y: 4,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 4,
+                y: 5,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 4,
+                y: 6,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 5,
+                y: 4,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 5,
+                y: 5,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 5,
+                y: 6,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 6,
+                y: 4,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 6,
+                y: 5,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 6,
+                y: 6,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 3,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 1,
+                y: 3,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 2,
+                y: 3,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 3,
+                y: 3,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 4,
+                y: 3,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 5,
+                y: 3,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 6,
+                y: 3,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 7,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 7,
+                y: 4,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 8,
+                y: 4,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 9,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 9,
+                y: 4,
+                type: 'construction',
+                walkCost: 1,
+              },
             ],
-            "width": 2,
-            "height": 3
-          }
+            width: 11,
+            height: 7,
+          },
         },
-        {
-          "id": "mid_82",
-          "name": "Small Storage",
-          "size": [
-            1,
-            2
-          ],
-          "color": "hsl(226, 44%, 52%)",
-          "categoryId": "storage",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 0,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
-            ],
-            "width": 1,
-            "height": 3
-          }
-        },
-        {
-          "id": "mid_4068",
-          "name": "Smuggler Storage",
-          "size": [
-            1,
-            2
-          ],
-          "color": "hsl(103, 47%, 37%)",
-          "categoryId": "storage",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 0,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
-            ],
-            "width": 1,
-            "height": 3
-          }
-        }
-      ]
+      ],
     },
     {
-      "id": "food",
-      "name": "Food & Agriculture",
-      "color": "#66aa44",
-      "defaultLayer": "Rooms",
-      "items": [
+      id: 'storage',
+      name: 'Storage',
+      color: '#888866',
+      defaultLayer: 'Rooms',
+      items: [
         {
-          "id": "mid_2704",
-          "name": "Alcohol Beverage Machine",
-          "size": [
-            2,
-            1
-          ],
-          "color": "hsl(24, 46%, 36%)",
-          "categoryId": "food",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_3561',
+          name: 'Asteroid Cargo Port',
+          size: [7, 7],
+          color: 'hsl(150, 65%, 41%)',
+          categoryId: 'storage',
+          tileLayout: {
+            tiles: [
               {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 2,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
+                x: 3,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
+                x: 4,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 5,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 4,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 6,
+                y: 5,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 5,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 6,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 6,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 6,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 6,
+                y: 6,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 5,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 4,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 5,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 4,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 5,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 6,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 3,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 3,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 3,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 3,
+                y: 4,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 3,
+                y: 5,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 3,
+                y: 6,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 4,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 4,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 4,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 4,
+                y: 4,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 4,
+                y: 5,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 4,
+                y: 6,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 5,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 5,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 5,
+                y: 4,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 5,
+                y: 5,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 5,
+                y: 6,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 6,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 6,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 6,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 6,
+                y: 4,
+                type: 'construction',
+                walkCost: 1,
+              },
             ],
-            "width": 2,
-            "height": 2
-          }
+            width: 7,
+            height: 7,
+          },
         },
         {
-          "id": "mid_2646",
-          "name": "Algae Dispenser",
-          "size": [
-            2,
-            1
-          ],
-          "color": "hsl(259, 65%, 49%)",
-          "categoryId": "food",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_3062',
+          name: 'Body Storage',
+          size: [2, 2],
+          color: 'hsl(117, 57%, 42%)',
+          categoryId: 'storage',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
+                x: 0,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
             ],
-            "width": 2,
-            "height": 2
-          }
+            width: 2,
+            height: 3,
+          },
         },
         {
-          "id": "mid_982",
-          "name": "Autopsy Table",
-          "size": [
-            1,
-            2
-          ],
-          "color": "hsl(29, 64%, 43%)",
-          "categoryId": "food",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_3543',
+          name: 'Cargo Port',
+          size: [8, 5],
+          color: 'hsl(179, 42%, 40%)',
+          categoryId: 'storage',
+          tileLayout: {
+            tiles: [
               {
-                "x": 1,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
+                x: 2,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
+                x: 2,
+                y: 5,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
+                x: 8,
+                y: 5,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 1,
-                "type": "access",
-                "walkCost": 0
+                x: 8,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 2,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
+                x: 8,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 2,
-                "y": 1,
-                "type": "access",
-                "walkCost": 0
-              }
+                x: 8,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 8,
+                y: 4,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 9,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 9,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 9,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 9,
+                y: 4,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 9,
+                y: 5,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 2,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 3,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 4,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 5,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 6,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 1,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 1,
+                y: 2,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 1,
+                y: 3,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 1,
+                y: 4,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 1,
+                y: 5,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 1,
+                y: 6,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 2,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 2,
+                y: 2,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 2,
+                y: 3,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 2,
+                y: 4,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 2,
+                y: 6,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 3,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 3,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 3,
+                y: 2,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 3,
+                y: 3,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 3,
+                y: 4,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 3,
+                y: 5,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 3,
+                y: 6,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 4,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 4,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 4,
+                y: 2,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 4,
+                y: 3,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 4,
+                y: 4,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 4,
+                y: 5,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 4,
+                y: 6,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 5,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 5,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 5,
+                y: 2,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 5,
+                y: 3,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 5,
+                y: 4,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 5,
+                y: 5,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 5,
+                y: 6,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 6,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 6,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 6,
+                y: 2,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 6,
+                y: 3,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 6,
+                y: 4,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 6,
+                y: 5,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 6,
+                y: 6,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 7,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 7,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 7,
+                y: 2,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 7,
+                y: 3,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 7,
+                y: 4,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 7,
+                y: 5,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 7,
+                y: 6,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 10,
+                y: 1,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 10,
+                y: 2,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 10,
+                y: 3,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 10,
+                y: 4,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 10,
+                y: 5,
+                type: 'access',
+                walkCost: 0,
+              },
             ],
-            "width": 3,
-            "height": 2
-          }
+            width: 11,
+            height: 7,
+          },
         },
         {
-          "id": "mid_1871",
-          "name": "CO2 Producer",
-          "size": [
-            1,
-            1
-          ],
-          "color": "hsl(148, 69%, 46%)",
-          "categoryId": "food",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_632',
+          name: 'Large Storage',
+          size: [3, 2],
+          color: 'hsl(134, 68%, 44%)',
+          categoryId: 'storage',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
+                x: 0,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
+                x: 1,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 2,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
             ],
-            "width": 1,
-            "height": 2
-          }
+            width: 3,
+            height: 3,
+          },
         },
         {
-          "id": "mid_185",
-          "name": "Grow Bed with Light",
-          "size": [
-            3,
-            1
-          ],
-          "color": "hsl(96, 57%, 50%)",
-          "categoryId": "food",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_3068',
+          name: 'Robot Storage',
+          size: [2, 2],
+          color: 'hsl(333, 52%, 43%)',
+          categoryId: 'storage',
+          tileLayout: {
+            tiles: [
               {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 2,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
+                x: 0,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
               },
               {
-                "x": 2,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
+                x: 1,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
             ],
-            "width": 3,
-            "height": 2
-          }
+            width: 2,
+            height: 3,
+          },
         },
         {
-          "id": "mid_184",
-          "name": "Grow Bed with Light",
-          "size": [
-            2,
-            1
-          ],
-          "color": "hsl(96, 57%, 50%)",
-          "categoryId": "food",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_82',
+          name: 'Small Storage',
+          size: [1, 2],
+          color: 'hsl(226, 44%, 52%)',
+          categoryId: 'storage',
+          tileLayout: {
+            tiles: [
               {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
               },
               {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
               },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
             ],
-            "width": 2,
-            "height": 2
-          }
+            width: 1,
+            height: 3,
+          },
         },
         {
-          "id": "mid_921",
-          "name": "Grow Bed with Light",
-          "size": [
-            3,
-            2
-          ],
-          "color": "hsl(96, 57%, 50%)",
-          "categoryId": "food",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_4068',
+          name: 'Smuggler Storage',
+          size: [1, 2],
+          color: 'hsl(103, 47%, 37%)',
+          categoryId: 'storage',
+          tileLayout: {
+            tiles: [
               {
-                "x": 2,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
               },
               {
-                "x": 3,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
               },
-              {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 2,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 3,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 0,
-                "y": 2,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 0,
-                "y": 3,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 1,
-                "y": 3,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 2,
-                "y": 3,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 3,
-                "y": 3,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 4,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 4,
-                "y": 1,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 4,
-                "y": 2,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 4,
-                "y": 3,
-                "type": "access",
-                "walkCost": 0
-              }
             ],
-            "width": 5,
-            "height": 4
-          }
+            width: 1,
+            height: 3,
+          },
         },
-        {
-          "id": "mid_623",
-          "name": "Kitchen",
-          "size": [
-            3,
-            1
-          ],
-          "color": "hsl(4, 47%, 36%)",
-          "categoryId": "food",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 2,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 2,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
-            ],
-            "width": 3,
-            "height": 2
-          }
-        }
-      ]
+      ],
     },
     {
-      "id": "resource",
-      "name": "Resource & Industry",
-      "color": "#aa8844",
-      "defaultLayer": "Rooms",
-      "items": [
+      id: 'food',
+      name: 'Food',
+      color: '#66aa44',
+      defaultLayer: 'Rooms',
+      items: [
         {
-          "id": "mid_2002",
-          "name": "Advanced Assembler",
-          "size": [
-            3,
-            3
-          ],
-          "color": "hsl(34, 66%, 49%)",
-          "categoryId": "resource",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_2704',
+          name: 'Alcohol Beverage Machine',
+          size: [2, 1],
+          color: 'hsl(24, 46%, 36%)',
+          categoryId: 'food',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 2,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
               },
               {
-                "x": 2,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
               },
-              {
-                "x": 0,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 2,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
             ],
-            "width": 3,
-            "height": 4
-          }
+            width: 2,
+            height: 2,
+          },
         },
         {
-          "id": "mid_1908",
-          "name": "Assembler",
-          "size": [
-            3,
-            2
-          ],
-          "color": "hsl(24, 60%, 36%)",
-          "categoryId": "resource",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_2646',
+          name: 'Algae Dispenser',
+          size: [2, 1],
+          color: 'hsl(259, 65%, 49%)',
+          categoryId: 'food',
+          tileLayout: {
+            tiles: [
               {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 2,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
               },
               {
-                "x": 0,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
               },
-              {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 2,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
             ],
-            "width": 3,
-            "height": 3
-          }
+            width: 2,
+            height: 2,
+          },
         },
         {
-          "id": "mid_938",
-          "name": "Chemical Refinery",
-          "size": [
-            3,
-            2
-          ],
-          "color": "hsl(278, 49%, 35%)",
-          "categoryId": "resource",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_982',
+          name: 'Autopsy Table',
+          size: [1, 2],
+          color: 'hsl(29, 64%, 43%)',
+          categoryId: 'food',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
               },
               {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
               },
               {
-                "x": 2,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
               },
               {
-                "x": 0,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 1,
+                type: 'access',
+                walkCost: 0,
               },
               {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
+                x: 2,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
               },
               {
-                "x": 2,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
+                x: 2,
+                y: 1,
+                type: 'access',
+                walkCost: 0,
               },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 2,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
             ],
-            "width": 3,
-            "height": 3
-          }
+            width: 3,
+            height: 2,
+          },
         },
         {
-          "id": "mid_2458",
-          "name": "Composter",
-          "size": [
-            2,
-            2
-          ],
-          "color": "hsl(274, 69%, 54%)",
-          "categoryId": "resource",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_1871',
+          name: 'CO2 Producer',
+          size: [1, 1],
+          color: 'hsl(148, 69%, 46%)',
+          categoryId: 'food',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
               },
               {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
               },
-              {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
             ],
-            "width": 2,
-            "height": 3
-          }
+            width: 1,
+            height: 2,
+          },
         },
         {
-          "id": "mid_979",
-          "name": "Energy Refinery",
-          "size": [
-            3,
-            3
-          ],
-          "color": "hsl(156, 42%, 39%)",
-          "categoryId": "resource",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_185',
+          name: 'Grow Bed with Light',
+          size: [3, 1],
+          color: 'hsl(96, 57%, 50%)',
+          categoryId: 'food',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 2,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 2,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
               },
               {
-                "x": 1,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
               },
               {
-                "x": 2,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
+                x: 2,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
               },
-              {
-                "x": 0,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 2,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
             ],
-            "width": 3,
-            "height": 4
-          }
+            width: 3,
+            height: 2,
+          },
         },
         {
-          "id": "mid_125",
-          "name": "Item Fabricator",
-          "size": [
-            2,
-            1
-          ],
-          "color": "hsl(64, 40%, 37%)",
-          "categoryId": "resource",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_184',
+          name: 'Grow Bed with Light',
+          size: [2, 1],
+          color: 'hsl(96, 57%, 50%)',
+          categoryId: 'food',
+          tileLayout: {
+            tiles: [
               {
-                "x": 1,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
               },
               {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
+                x: 1,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
             ],
-            "width": 2,
-            "height": 2
-          }
+            width: 2,
+            height: 2,
+          },
         },
         {
-          "id": "mid_3615",
-          "name": "Item Workbench",
-          "size": [
-            2,
-            1
-          ],
-          "color": "hsl(110, 64%, 38%)",
-          "categoryId": "resource",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_921',
+          name: 'Grow Bed with Light',
+          size: [3, 2],
+          color: 'hsl(96, 57%, 50%)',
+          categoryId: 'food',
+          tileLayout: {
+            tiles: [
               {
-                "x": 1,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
+                x: 2,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
+                x: 3,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
+                x: 1,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 3,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 2,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 3,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 0,
+                y: 1,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 0,
+                y: 2,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 0,
+                y: 3,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 1,
+                y: 3,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 2,
+                y: 3,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 3,
+                y: 3,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 4,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 4,
+                y: 1,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 4,
+                y: 2,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 4,
+                y: 3,
+                type: 'access',
+                walkCost: 0,
+              },
             ],
-            "width": 2,
-            "height": 2
-          }
+            width: 5,
+            height: 4,
+          },
         },
         {
-          "id": "mid_947",
-          "name": "Metal Refinery",
-          "size": [
-            4,
-            2
-          ],
-          "color": "hsl(67, 56%, 49%)",
-          "categoryId": "resource",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_623',
+          name: 'Kitchen',
+          size: [3, 1],
+          color: 'hsl(4, 47%, 36%)',
+          categoryId: 'food',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 2,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
               },
               {
-                "x": 2,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
               },
               {
-                "x": 3,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
+                x: 2,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
               },
-              {
-                "x": 2,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 2,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 3,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
             ],
-            "width": 4,
-            "height": 3
-          }
+            width: 3,
+            height: 2,
+          },
         },
-        {
-          "id": "mid_1964",
-          "name": "Micro-Weaver",
-          "size": [
-            3,
-            1
-          ],
-          "color": "hsl(87, 44%, 46%)",
-          "categoryId": "resource",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 2,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
-            ],
-            "width": 3,
-            "height": 2
-          }
-        },
-        {
-          "id": "mid_1989",
-          "name": "Optronics Fabricator",
-          "size": [
-            4,
-            2
-          ],
-          "color": "hsl(32, 47%, 40%)",
-          "categoryId": "resource",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 3,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 2,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 3,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "access",
-                "walkCost": 0
-              }
-            ],
-            "width": 4,
-            "height": 3
-          }
-        },
-        {
-          "id": "mid_3520",
-          "name": "Ore Processor",
-          "size": [
-            3,
-            5
-          ],
-          "color": "hsl(340, 44%, 47%)",
-          "categoryId": "resource",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 4,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 4,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 4,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 5,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 5,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 5,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 2,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
-            ],
-            "width": 3,
-            "height": 6
-          }
-        },
-        {
-          "id": "mid_1880",
-          "name": "Recycler",
-          "size": [
-            3,
-            3
-          ],
-          "color": "hsl(217, 52%, 50%)",
-          "categoryId": "resource",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 2,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 2,
-                "y": 1,
-                "type": "access",
-                "walkCost": 0
-              }
-            ],
-            "width": 3,
-            "height": 4
-          }
-        },
-        {
-          "id": "mid_1447",
-          "name": "Tools Facility",
-          "size": [
-            2,
-            1
-          ],
-          "color": "hsl(32, 53%, 43%)",
-          "categoryId": "resource",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
-            ],
-            "width": 2,
-            "height": 2
-          }
-        },
-        {
-          "id": "mid_2451",
-          "name": "Water Collector",
-          "size": [
-            1,
-            1
-          ],
-          "color": "hsl(300, 52%, 44%)",
-          "categoryId": "resource",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 0,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
-            ],
-            "width": 1,
-            "height": 2
-          }
-        },
-        {
-          "id": "mid_2010",
-          "name": "Water Purifier",
-          "size": [
-            2,
-            1
-          ],
-          "color": "hsl(165, 52%, 54%)",
-          "categoryId": "resource",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
-            ],
-            "width": 2,
-            "height": 2
-          }
-        }
-      ]
+      ],
     },
     {
-      "id": "facility",
-      "name": "Crew Facilities",
-      "color": "#6688aa",
-      "defaultLayer": "Rooms",
-      "items": [
+      id: 'resource',
+      name: 'Resource',
+      color: '#aa8844',
+      defaultLayer: 'Rooms',
+      items: [
         {
-          "id": "mid_4114",
-          "name": "Advanced Learning System",
-          "size": [
-            2,
-            2
-          ],
-          "color": "hsl(147, 41%, 48%)",
-          "categoryId": "facility",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_2002',
+          name: 'Advanced Assembler',
+          size: [3, 3],
+          color: 'hsl(34, 66%, 49%)',
+          categoryId: 'resource',
+          tileLayout: {
+            tiles: [
               {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 2,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
+                x: 2,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 2,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
             ],
-            "width": 2,
-            "height": 2
-          }
+            width: 3,
+            height: 4,
+          },
         },
         {
-          "id": "mid_3870",
-          "name": "Advanced Medical Bed",
-          "size": [
-            1,
-            2
-          ],
-          "color": "hsl(124, 49%, 45%)",
-          "categoryId": "facility",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_1908',
+          name: 'Assembler',
+          size: [3, 2],
+          color: 'hsl(24, 60%, 36%)',
+          categoryId: 'resource',
+          tileLayout: {
+            tiles: [
               {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
+                x: 2,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 1,
-                "type": "access",
-                "walkCost": 0
-              }
+                x: 0,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 2,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
             ],
-            "width": 2,
-            "height": 2
-          }
+            width: 3,
+            height: 3,
+          },
         },
         {
-          "id": "mid_1606",
-          "name": "Arcade Machine",
-          "size": [
-            1,
-            1
-          ],
-          "color": "hsl(247, 51%, 54%)",
-          "categoryId": "facility",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_938',
+          name: 'Chemical Refinery',
+          size: [3, 2],
+          color: 'hsl(278, 49%, 35%)',
+          categoryId: 'resource',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 2,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
             ],
-            "width": 1,
-            "height": 2
-          }
+            width: 3,
+            height: 3,
+          },
         },
         {
-          "id": "mid_2804",
-          "name": "Enslavement Facility",
-          "size": [
-            1,
-            2
-          ],
-          "color": "hsl(79, 61%, 37%)",
-          "categoryId": "facility",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_2458',
+          name: 'Composter',
+          size: [2, 2],
+          color: 'hsl(274, 69%, 54%)',
+          categoryId: 'resource',
+          tileLayout: {
+            tiles: [
               {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
+                x: 1,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 1,
-                "type": "access",
-                "walkCost": 0
-              }
+                x: 0,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
             ],
-            "width": 2,
-            "height": 2
-          }
+            width: 2,
+            height: 3,
+          },
         },
         {
-          "id": "mid_1647",
-          "name": "Hypersleep Chamber",
-          "size": [
-            2,
-            2
-          ],
-          "color": "hsl(287, 54%, 53%)",
-          "categoryId": "facility",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_979',
+          name: 'Energy Refinery',
+          size: [3, 3],
+          color: 'hsl(156, 42%, 39%)',
+          categoryId: 'resource',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 2,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
+                x: 0,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 2,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
             ],
-            "width": 2,
-            "height": 2
-          }
+            width: 3,
+            height: 4,
+          },
         },
         {
-          "id": "mid_1526",
-          "name": "Jukebox",
-          "size": [
-            1,
-            1
-          ],
-          "color": "hsl(142, 61%, 50%)",
-          "categoryId": "facility",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_125',
+          name: 'Item Fabricator',
+          size: [2, 1],
+          color: 'hsl(64, 40%, 37%)',
+          categoryId: 'resource',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
+                x: 1,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
               },
               {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
+                x: 0,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
             ],
-            "width": 1,
-            "height": 2
-          }
+            width: 2,
+            height: 2,
+          },
         },
         {
-          "id": "mid_3878",
-          "name": "Learning Computer",
-          "size": [
-            2,
-            2
-          ],
-          "color": "hsl(53, 59%, 53%)",
-          "categoryId": "facility",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_3615',
+          name: 'Item Workbench',
+          size: [2, 1],
+          color: 'hsl(110, 64%, 38%)',
+          categoryId: 'resource',
+          tileLayout: {
+            tiles: [
               {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
               },
               {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
               },
               {
-                "x": 1,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
               },
               {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
+                x: 1,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
             ],
-            "width": 2,
-            "height": 2
-          }
+            width: 2,
+            height: 2,
+          },
         },
         {
-          "id": "mid_76",
-          "name": "Medical Bed",
-          "size": [
-            2,
-            2
-          ],
-          "color": "hsl(30, 60%, 37%)",
-          "categoryId": "facility",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_947',
+          name: 'Metal Refinery',
+          size: [4, 2],
+          color: 'hsl(67, 56%, 49%)',
+          categoryId: 'resource',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
+                x: 0,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
+                x: 1,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 3,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 3,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 2,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 3,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
             ],
-            "width": 2,
-            "height": 2
-          }
+            width: 4,
+            height: 3,
+          },
         },
         {
-          "id": "mid_3923",
-          "name": "Medical Cabinet",
-          "size": [
-            4,
-            7
-          ],
-          "color": "hsl(191, 53%, 49%)",
-          "categoryId": "facility",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_1964',
+          name: 'Micro-Weaver',
+          size: [3, 1],
+          color: 'hsl(87, 44%, 46%)',
+          categoryId: 'resource',
+          tileLayout: {
+            tiles: [
               {
-                "x": 3,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 2,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 4,
-                "type": "construction",
-                "walkCost": 1
+                x: 2,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 3,
-                "y": 7,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
               },
               {
-                "x": 3,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
               },
               {
-                "x": 0,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
+                x: 2,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
               },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 0,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 4,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 5,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 6,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 7,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 5,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 6,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 7,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 4,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 5,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 6,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 7,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 4,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 5,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 6,
-                "type": "construction",
-                "walkCost": 1
-              }
             ],
-            "width": 4,
-            "height": 8
-          }
+            width: 3,
+            height: 2,
+          },
         },
         {
-          "id": "mid_3880",
-          "name": "Personal Entertainment",
-          "size": [
-            1,
-            1
-          ],
-          "color": "hsl(72, 49%, 47%)",
-          "categoryId": "facility",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_1989',
+          name: 'Optronics Fabricator',
+          size: [4, 2],
+          color: 'hsl(32, 47%, 40%)',
+          categoryId: 'resource',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
+                x: 3,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
+                x: 3,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 2,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 3,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 0,
+                y: 1,
+                type: 'access',
+                walkCost: 0,
+              },
             ],
-            "width": 1,
-            "height": 2
-          }
+            width: 4,
+            height: 3,
+          },
         },
         {
-          "id": "mid_1542",
-          "name": "Research Lab",
-          "size": [
-            3,
-            2
-          ],
-          "color": "hsl(312, 59%, 51%)",
-          "categoryId": "facility",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_3520',
+          name: 'Ore Processor',
+          size: [3, 5],
+          color: 'hsl(340, 44%, 47%)',
+          categoryId: 'resource',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 2,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 2,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 4,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
+                x: 0,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
+                x: 0,
+                y: 4,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 2,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
+                x: 2,
+                y: 4,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 5,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 5,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 5,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 2,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
             ],
-            "width": 3,
-            "height": 3
-          }
+            width: 3,
+            height: 6,
+          },
         },
         {
-          "id": "mid_3075",
-          "name": "Research Workbench",
-          "size": [
-            2,
-            1
-          ],
-          "color": "hsl(70, 61%, 43%)",
-          "categoryId": "facility",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_1880',
+          name: 'Recycler',
+          size: [3, 3],
+          color: 'hsl(217, 52%, 50%)',
+          categoryId: 'resource',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
+                x: 1,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
+                x: 2,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
+                x: 0,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 2,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 2,
+                y: 1,
+                type: 'access',
+                walkCost: 0,
+              },
             ],
-            "width": 2,
-            "height": 2
-          }
+            width: 3,
+            height: 4,
+          },
         },
         {
-          "id": "mid_3406",
-          "name": "Surgical Enhancement Facility",
-          "size": [
-            1,
-            2
-          ],
-          "color": "hsl(123, 59%, 43%)",
-          "categoryId": "facility",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_1447',
+          name: 'Tools Facility',
+          size: [2, 1],
+          color: 'hsl(32, 53%, 43%)',
+          categoryId: 'resource',
+          tileLayout: {
+            tiles: [
               {
-                "x": 1,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
               },
               {
-                "x": 0,
-                "y": 1,
-                "type": "access",
-                "walkCost": 0
-              }
+                x: 1,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
             ],
-            "width": 2,
-            "height": 2
-          }
+            width: 2,
+            height: 2,
+          },
         },
         {
-          "id": "mid_123",
-          "name": "X1 Toilet",
-          "size": [
-            2,
-            1
-          ],
-          "color": "hsl(324, 69%, 38%)",
-          "categoryId": "facility",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_2451',
+          name: 'Water Collector',
+          size: [1, 1],
+          color: 'hsl(300, 52%, 44%)',
+          categoryId: 'resource',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
+                x: 0,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
               },
               {
-                "x": 1,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
               },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
             ],
-            "width": 2,
-            "height": 2
-          }
+            width: 1,
+            height: 2,
+          },
         },
         {
-          "id": "mid_3719",
-          "name": "X2 Hypersleep Tank",
-          "size": [
-            1,
-            1
-          ],
-          "color": "hsl(95, 46%, 54%)",
-          "categoryId": "facility",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_2010',
+          name: 'Water Purifier',
+          size: [2, 1],
+          color: 'hsl(165, 52%, 54%)',
+          categoryId: 'resource',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
+                x: 0,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
             ],
-            "width": 1,
-            "height": 2
-          }
-        }
-      ]
+            width: 2,
+            height: 2,
+          },
+        },
+      ],
     },
     {
-      "id": "robots",
-      "name": "Robots",
-      "color": "#55aaaa",
-      "defaultLayer": "Systems",
-      "items": [
+      id: 'power',
+      name: 'Power',
+      color: '#cc8844',
+      defaultLayer: 'Systems',
+      items: [
         {
-          "id": "mid_2882",
-          "name": "Logistics Robot Station",
-          "size": [
-            1,
-            2
-          ],
-          "color": "hsl(255, 53%, 51%)",
-          "categoryId": "robots",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_3489',
+          name: 'Backup Power Node',
+          size: [1, 2],
+          color: 'hsl(229, 47%, 36%)',
+          categoryId: 'power',
+          tileLayout: {
+            tiles: [
               {
-                "x": 1,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
               },
               {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "access",
-                "walkCost": 0
-              }
             ],
-            "width": 2,
-            "height": 2
-          }
+            width: 1,
+            height: 2,
+          },
         },
         {
-          "id": "mid_3055",
-          "name": "Robot Workbench",
-          "size": [
-            2,
-            1
-          ],
-          "color": "hsl(265, 51%, 37%)",
-          "categoryId": "robots",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_2684',
+          name: 'Energium Power Generator',
+          size: [2, 3],
+          color: 'hsl(240, 40%, 45%)',
+          categoryId: 'power',
+          tileLayout: {
+            tiles: [
               {
-                "x": 1,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
+                x: 0,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
+                x: 1,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
+                x: 0,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
             ],
-            "width": 2,
-            "height": 2
-          }
+            width: 2,
+            height: 4,
+          },
         },
         {
-          "id": "mid_2891",
-          "name": "Salvage Robot Station",
-          "size": [
-            1,
-            2
-          ],
-          "color": "hsl(309, 44%, 35%)",
-          "categoryId": "robots",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_3202',
+          name: 'Large Power Node',
+          size: [1, 2],
+          color: 'hsl(350, 56%, 45%)',
+          categoryId: 'power',
+          tileLayout: {
+            tiles: [
               {
-                "x": 1,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
               },
               {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "access",
-                "walkCost": 0
-              }
             ],
-            "width": 2,
-            "height": 2
-          }
-        }
-      ]
+            width: 1,
+            height: 2,
+          },
+        },
+        {
+          id: 'mid_3204',
+          name: 'Power Capacity Node',
+          size: [1, 2],
+          color: 'hsl(285, 61%, 43%)',
+          categoryId: 'power',
+          tileLayout: {
+            tiles: [
+              {
+                x: 0,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+            ],
+            width: 1,
+            height: 2,
+          },
+        },
+        {
+          id: 'mid_3501',
+          name: 'Power Conduit',
+          size: [1, 1],
+          color: 'hsl(59, 41%, 36%)',
+          categoryId: 'power',
+          tileLayout: {
+            tiles: [
+              {
+                x: 0,
+                y: 0,
+                type: 'construction',
+                walkCost: 0,
+              },
+            ],
+            width: 1,
+            height: 1,
+          },
+        },
+        {
+          id: 'mid_3269',
+          name: 'Small Power Node',
+          size: [1, 1],
+          color: 'hsl(98, 67%, 39%)',
+          categoryId: 'power',
+          tileLayout: {
+            tiles: [
+              {
+                x: 0,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
+              },
+            ],
+            width: 1,
+            height: 1,
+          },
+        },
+        {
+          id: 'mid_2101',
+          name: 'Solar Panel',
+          size: [3, 3],
+          color: 'hsl(109, 52%, 54%)',
+          categoryId: 'power',
+          tileLayout: {
+            tiles: [
+              {
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
+              },
+            ],
+            width: 3,
+            height: 3,
+          },
+        },
+        {
+          id: 'mid_708',
+          name: 'X1 Power Generator',
+          size: [2, 3],
+          color: 'hsl(223, 53%, 54%)',
+          categoryId: 'power',
+          tileLayout: {
+            tiles: [
+              {
+                x: 1,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+            ],
+            width: 2,
+            height: 4,
+          },
+        },
+        {
+          id: 'mid_1530',
+          name: 'X2 Power Generator',
+          size: [3, 3],
+          color: 'hsl(110, 47%, 44%)',
+          categoryId: 'power',
+          tileLayout: {
+            tiles: [
+              {
+                x: 0,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 2,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+            ],
+            width: 3,
+            height: 4,
+          },
+        },
+        {
+          id: 'mid_344',
+          name: 'X3 Power Generator',
+          size: [4, 3],
+          color: 'hsl(301, 69%, 36%)',
+          categoryId: 'power',
+          tileLayout: {
+            tiles: [
+              {
+                x: 0,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 3,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 3,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 3,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 2,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 3,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+            ],
+            width: 4,
+            height: 4,
+          },
+        },
+      ],
     },
     {
-      "id": "furniture",
-      "name": "Furniture & Decoration",
-      "color": "#aa8877",
-      "defaultLayer": "Furniture",
-      "items": [
+      id: 'life_support',
+      name: 'Life Support',
+      color: '#44aa88',
+      defaultLayer: 'Systems',
+      items: [
         {
-          "id": "mid_51",
-          "name": "Bed",
-          "size": [
-            2,
-            1
-          ],
-          "color": "hsl(57, 60%, 36%)",
-          "categoryId": "furniture",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_72',
+          name: 'Air Vent',
+          size: [1, 1],
+          color: 'hsl(51, 46%, 37%)',
+          categoryId: 'life_support',
+          tileLayout: {
+            tiles: [
               {
-                "x": 1,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
+                x: 0,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
               },
               {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              }
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
             ],
-            "width": 2,
-            "height": 1
-          }
+            width: 1,
+            height: 2,
+          },
         },
         {
-          "id": "mid_3362",
-          "name": "Bedside Table",
-          "size": [
-            1,
-            1
-          ],
-          "color": "hsl(2, 44%, 53%)",
-          "categoryId": "furniture",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_922',
+          name: 'Gas scrubber',
+          size: [1, 1],
+          color: 'hsl(25, 65%, 48%)',
+          categoryId: 'life_support',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              }
-            ],
-            "width": 1,
-            "height": 1
-          }
-        },
-        {
-          "id": "mid_1864",
-          "name": "Bunk Bed",
-          "size": [
-            2,
-            1
-          ],
-          "color": "hsl(177, 41%, 40%)",
-          "categoryId": "furniture",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 1,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
+                x: 0,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
               },
               {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              }
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
             ],
-            "width": 2,
-            "height": 1
-          }
+            width: 1,
+            height: 2,
+          },
         },
         {
-          "id": "mid_3179",
-          "name": "Cover Object",
-          "size": [
-            1,
-            1
-          ],
-          "color": "hsl(176, 58%, 51%)",
-          "categoryId": "furniture",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_927',
+          name: 'Oxygen Generator',
+          size: [2, 1],
+          color: 'hsl(197, 50%, 48%)',
+          categoryId: 'life_support',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              }
-            ],
-            "width": 1,
-            "height": 1
-          }
-        },
-        {
-          "id": "mid_3953",
-          "name": "Decorative Holy Cow",
-          "size": [
-            1,
-            2
-          ],
-          "color": "hsl(241, 44%, 52%)",
-          "categoryId": "furniture",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              }
-            ],
-            "width": 1,
-            "height": 2
-          }
-        },
-        {
-          "id": "mid_305",
-          "name": "Decorative Object",
-          "size": [
-            1,
-            1
-          ],
-          "color": "hsl(89, 59%, 54%)",
-          "categoryId": "furniture",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              }
-            ],
-            "width": 1,
-            "height": 1
-          }
-        },
-        {
-          "id": "mid_3356",
-          "name": "Decorative Plant",
-          "size": [
-            1,
-            1
-          ],
-          "color": "hsl(123, 65%, 36%)",
-          "categoryId": "furniture",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              }
-            ],
-            "width": 1,
-            "height": 1
-          }
-        },
-        {
-          "id": "mid_3373",
-          "name": "Decorative Screen",
-          "size": [
-            1,
-            1
-          ],
-          "color": "hsl(20, 69%, 39%)",
-          "categoryId": "furniture",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              }
-            ],
-            "width": 1,
-            "height": 1
-          }
-        },
-        {
-          "id": "mid_3363",
-          "name": "Green Wall",
-          "size": [
-            1,
-            1
-          ],
-          "color": "hsl(241, 63%, 51%)",
-          "categoryId": "furniture",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              }
-            ],
-            "width": 1,
-            "height": 1
-          }
-        },
-        {
-          "id": "mid_3131",
-          "name": "In-floor Light",
-          "size": [
-            1,
-            1
-          ],
-          "color": "hsl(182, 41%, 35%)",
-          "categoryId": "furniture",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 0,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              }
-            ],
-            "width": 1,
-            "height": 1
-          }
-        },
-        {
-          "id": "mid_906",
-          "name": "Light",
-          "size": [
-            1,
-            1
-          ],
-          "color": "hsl(294, 58%, 35%)",
-          "categoryId": "furniture",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              }
-            ],
-            "width": 1,
-            "height": 1
-          }
-        },
-        {
-          "id": "mid_295",
-          "name": "Table",
-          "size": [
-            1,
-            1
-          ],
-          "color": "hsl(158, 69%, 44%)",
-          "categoryId": "furniture",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              }
-            ],
-            "width": 1,
-            "height": 1
-          }
-        },
-        {
-          "id": "mid_164",
-          "name": "Wall Light",
-          "size": [
-            1,
-            1
-          ],
-          "color": "hsl(344, 43%, 37%)",
-          "categoryId": "furniture",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              }
-            ],
-            "width": 1,
-            "height": 1
-          }
-        },
-        {
-          "id": "mid_90",
-          "name": "X1 Chair",
-          "size": [
-            1,
-            1
-          ],
-          "color": "hsl(234, 54%, 39%)",
-          "categoryId": "furniture",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              }
-            ],
-            "width": 1,
-            "height": 1
-          }
-        },
-        {
-          "id": "mid_307",
-          "name": "X1 Couch",
-          "size": [
-            2,
-            1
-          ],
-          "color": "hsl(193, 43%, 43%)",
-          "categoryId": "furniture",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              }
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
             ],
-            "width": 2,
-            "height": 1
-          }
+            width: 2,
+            height: 2,
+          },
         },
         {
-          "id": "mid_311",
-          "name": "X1 Couch",
-          "size": [
-            2,
-            3
-          ],
-          "color": "hsl(193, 43%, 43%)",
-          "categoryId": "furniture",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_918',
+          name: 'Thermal Regulator',
+          size: [1, 1],
+          color: 'hsl(88, 52%, 38%)',
+          categoryId: 'life_support',
+          tileLayout: {
+            tiles: [
               {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
               },
-              {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              }
             ],
-            "width": 2,
-            "height": 3
-          }
+            width: 1,
+            height: 1,
+          },
         },
         {
-          "id": "mid_319",
-          "name": "X1 Couch",
-          "size": [
-            2,
-            2
-          ],
-          "color": "hsl(193, 43%, 43%)",
-          "categoryId": "furniture",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_987',
+          name: 'Wall Thermal Regulator',
+          size: [1, 1],
+          color: 'hsl(218, 49%, 39%)',
+          categoryId: 'life_support',
+          tileLayout: {
+            tiles: [
               {
-                "x": 1,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
               },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              }
             ],
-            "width": 2,
-            "height": 2
-          }
+            width: 1,
+            height: 1,
+          },
         },
-        {
-          "id": "mid_3455",
-          "name": "X1 Couch",
-          "size": [
-            1,
-            1
-          ],
-          "color": "hsl(193, 43%, 43%)",
-          "categoryId": "furniture",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 0,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              }
-            ],
-            "width": 1,
-            "height": 1
-          }
-        },
-        {
-          "id": "mid_322",
-          "name": "X1 Table",
-          "size": [
-            1,
-            1
-          ],
-          "color": "hsl(113, 61%, 36%)",
-          "categoryId": "furniture",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              }
-            ],
-            "width": 1,
-            "height": 1
-          }
-        },
-        {
-          "id": "mid_4048",
-          "name": "X1 Table",
-          "size": [
-            2,
-            1
-          ],
-          "color": "hsl(113, 61%, 36%)",
-          "categoryId": "furniture",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 0,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              }
-            ],
-            "width": 2,
-            "height": 1
-          }
-        },
-        {
-          "id": "mid_4050",
-          "name": "X1 Table",
-          "size": [
-            3,
-            1
-          ],
-          "color": "hsl(113, 61%, 36%)",
-          "categoryId": "furniture",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 0,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              }
-            ],
-            "width": 3,
-            "height": 1
-          }
-        }
-      ]
+      ],
     },
     {
-      "id": "other",
-      "name": "Other",
-      "color": "#888888",
-      "defaultLayer": "Rooms",
-      "items": [
+      id: 'facility',
+      name: 'Facility',
+      color: '#6688aa',
+      defaultLayer: 'Rooms',
+      items: [
         {
-          "id": "mid_2720",
-          "name": "Asteroid power node",
-          "size": [
-            1,
-            1
-          ],
-          "color": "hsl(134, 66%, 49%)",
-          "categoryId": "other",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_4114',
+          name: 'Advanced Learning System',
+          size: [2, 2],
+          color: 'hsl(147, 41%, 48%)',
+          categoryId: 'facility',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              }
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
             ],
-            "width": 1,
-            "height": 1
-          }
+            width: 2,
+            height: 2,
+          },
         },
         {
-          "id": "mid_3374",
-          "name": "Backer Beer Machine",
-          "size": [
-            2,
-            1
-          ],
-          "color": "hsl(197, 45%, 48%)",
-          "categoryId": "other",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_3870',
+          name: 'Advanced Medical Bed',
+          size: [1, 2],
+          color: 'hsl(124, 49%, 45%)',
+          categoryId: 'facility',
+          tileLayout: {
+            tiles: [
               {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
               },
               {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
               },
               {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
+                x: 0,
+                y: 1,
+                type: 'access',
+                walkCost: 0,
+              },
             ],
-            "width": 2,
-            "height": 2
-          }
+            width: 2,
+            height: 2,
+          },
         },
         {
-          "id": "mid_1968",
-          "name": "Cell Fuser",
-          "size": [
-            3,
-            2
-          ],
-          "color": "hsl(299, 60%, 47%)",
-          "categoryId": "other",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_1606',
+          name: 'Arcade Machine',
+          size: [1, 1],
+          color: 'hsl(247, 51%, 54%)',
+          categoryId: 'facility',
+          tileLayout: {
+            tiles: [
               {
-                "x": 2,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
               },
               {
-                "x": 2,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
               },
-              {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 2,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 1,
-                "y": 1,
-                "type": "access",
-                "walkCost": 0
-              }
             ],
-            "width": 3,
-            "height": 3
-          }
+            width: 1,
+            height: 2,
+          },
         },
         {
-          "id": "mid_3182",
-          "name": "Cover Object",
-          "size": [
-            1,
-            1
-          ],
-          "color": "hsl(176, 58%, 51%)",
-          "categoryId": "other",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_2804',
+          name: 'Enslavement Facility',
+          size: [1, 2],
+          color: 'hsl(79, 61%, 37%)',
+          categoryId: 'facility',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              }
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 0,
+                y: 1,
+                type: 'access',
+                walkCost: 0,
+              },
             ],
-            "width": 1,
-            "height": 1
-          }
+            width: 2,
+            height: 2,
+          },
         },
         {
-          "id": "mid_1980",
-          "name": "Electronic Fabricator",
-          "size": [
-            4,
-            2
-          ],
-          "color": "hsl(217, 41%, 53%)",
-          "categoryId": "other",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_1647',
+          name: 'Hypersleep Chamber',
+          size: [2, 2],
+          color: 'hsl(287, 54%, 53%)',
+          categoryId: 'facility',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 2,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
               },
-              {
-                "x": 3,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 2,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 3,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 1,
-                "y": 1,
-                "type": "access",
-                "walkCost": 0
-              }
             ],
-            "width": 4,
-            "height": 3
-          }
+            width: 2,
+            height: 2,
+          },
         },
         {
-          "id": "mid_3689",
-          "name": "Evolving Alien Core",
-          "size": [
-            1,
-            1
-          ],
-          "color": "hsl(358, 64%, 39%)",
-          "categoryId": "other",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_1526',
+          name: 'Jukebox',
+          size: [1, 1],
+          color: 'hsl(142, 61%, 50%)',
+          categoryId: 'facility',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 150
-              }
+                x: 0,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
             ],
-            "width": 1,
-            "height": 1
-          }
+            width: 1,
+            height: 2,
+          },
         },
         {
-          "id": "mid_3847",
-          "name": "Green Wall",
-          "size": [
-            1,
-            1
-          ],
-          "color": "hsl(241, 63%, 51%)",
-          "categoryId": "other",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_3878',
+          name: 'Learning Computer',
+          size: [2, 2],
+          color: 'hsl(53, 59%, 53%)',
+          categoryId: 'facility',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              }
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
             ],
-            "width": 1,
-            "height": 1
-          }
+            width: 2,
+            height: 2,
+          },
         },
         {
-          "id": "mid_3943",
-          "name": "Holy Cow Monument",
-          "size": [
-            3,
-            7
-          ],
-          "color": "hsl(320, 54%, 48%)",
-          "categoryId": "other",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_76',
+          name: 'Medical Bed',
+          size: [2, 2],
+          color: 'hsl(30, 60%, 37%)',
+          categoryId: 'facility',
+          tileLayout: {
+            tiles: [
               {
-                "x": 2,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
               },
               {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
               },
               {
-                "x": 0,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
               },
               {
-                "x": 2,
-                "y": 6,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
               },
-              {
-                "x": 2,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 4,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 5,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 6,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 4,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 5,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 6,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 4,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 5,
-                "type": "construction",
-                "walkCost": 1
-              }
             ],
-            "width": 3,
-            "height": 7
-          }
+            width: 2,
+            height: 2,
+          },
         },
         {
-          "id": "mid_2763",
-          "name": "Hull Window",
-          "size": [
-            1,
-            2
-          ],
-          "color": "hsl(83, 42%, 51%)",
-          "categoryId": "other",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_3923',
+          name: 'Medical Cabinet',
+          size: [4, 7],
+          color: 'hsl(191, 53%, 49%)',
+          categoryId: 'facility',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
+                x: 3,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              }
+                x: 2,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 4,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 3,
+                y: 7,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 3,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 0,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 4,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 5,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 6,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 7,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 5,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 6,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 7,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 3,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 4,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 5,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 6,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 2,
+                y: 7,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 3,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 3,
+                y: 4,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 3,
+                y: 5,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 3,
+                y: 6,
+                type: 'construction',
+                walkCost: 1,
+              },
             ],
-            "width": 1,
-            "height": 2
-          }
+            width: 4,
+            height: 8,
+          },
         },
         {
-          "id": "mid_2762",
-          "name": "Hull Window",
-          "size": [
-            1,
-            3
-          ],
-          "color": "hsl(83, 42%, 51%)",
-          "categoryId": "other",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_3880',
+          name: 'Personal Entertainment',
+          size: [1, 1],
+          color: 'hsl(72, 49%, 47%)',
+          categoryId: 'facility',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
+                x: 0,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
               },
               {
-                "x": 0,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
               },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              }
             ],
-            "width": 1,
-            "height": 3
-          }
+            width: 1,
+            height: 2,
+          },
         },
         {
-          "id": "mid_3029",
-          "name": "Hull Window",
-          "size": [
-            1,
-            4
-          ],
-          "color": "hsl(83, 42%, 51%)",
-          "categoryId": "other",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_1542',
+          name: 'Research Lab',
+          size: [3, 2],
+          color: 'hsl(312, 59%, 51%)',
+          categoryId: 'facility',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
+                x: 0,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
+                x: 1,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
+                x: 2,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              }
+                x: 2,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 2,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
             ],
-            "width": 1,
-            "height": 4
-          }
+            width: 3,
+            height: 3,
+          },
         },
         {
-          "id": "mid_4377",
-          "name": "In-floor Light",
-          "size": [
-            1,
-            1
-          ],
-          "color": "hsl(182, 41%, 35%)",
-          "categoryId": "other",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_3075',
+          name: 'Research Workbench',
+          size: [2, 1],
+          color: 'hsl(70, 61%, 43%)',
+          categoryId: 'facility',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              }
+                x: 0,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 1,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
             ],
-            "width": 1,
-            "height": 1
-          }
+            width: 2,
+            height: 2,
+          },
         },
         {
-          "id": "mid_3200",
-          "name": "In-floor Power Node",
-          "size": [
-            1,
-            1
-          ],
-          "color": "hsl(217, 58%, 52%)",
-          "categoryId": "other",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_3406',
+          name: 'Surgical Enhancement Facility',
+          size: [1, 2],
+          color: 'hsl(123, 59%, 43%)',
+          categoryId: 'facility',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              }
+                x: 1,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 0,
+                y: 1,
+                type: 'access',
+                walkCost: 0,
+              },
             ],
-            "width": 1,
-            "height": 1
-          }
+            width: 2,
+            height: 2,
+          },
         },
         {
-          "id": "mid_3622",
-          "name": "Item Workbench",
-          "size": [
-            2,
-            1
-          ],
-          "color": "hsl(110, 64%, 38%)",
-          "categoryId": "other",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_123',
+          name: 'X1 Toilet',
+          size: [2, 1],
+          color: 'hsl(324, 69%, 38%)',
+          categoryId: 'facility',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
+                x: 0,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
               },
               {
-                "x": 1,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
+                x: 1,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
               },
               {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
               },
               {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
+                x: 1,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
             ],
-            "width": 2,
-            "height": 2
-          }
+            width: 2,
+            height: 2,
+          },
         },
         {
-          "id": "mid_3201",
-          "name": "Large Power Node",
-          "size": [
-            1,
-            1
-          ],
-          "color": "hsl(350, 56%, 45%)",
-          "categoryId": "other",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_3719',
+          name: 'X2 Hypersleep Tank',
+          size: [1, 1],
+          color: 'hsl(95, 46%, 54%)',
+          categoryId: 'facility',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              }
+                x: 0,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
             ],
-            "width": 1,
-            "height": 1
-          }
+            width: 1,
+            height: 2,
+          },
+        },
+      ],
+    },
+    {
+      id: 'decorations',
+      name: 'Decorations',
+      color: '#aa7788',
+      defaultLayer: 'Furniture',
+      items: [
+        {
+          id: 'mid_3953',
+          name: 'Decorative Holy Cow',
+          size: [1, 2],
+          color: 'hsl(241, 44%, 52%)',
+          categoryId: 'decorations',
+          tileLayout: {
+            tiles: [
+              {
+                x: 0,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
+              },
+            ],
+            width: 1,
+            height: 2,
+          },
         },
         {
-          "id": "mid_4366",
-          "name": "Large Storage",
-          "size": [
-            3,
-            2
-          ],
-          "color": "hsl(134, 68%, 44%)",
-          "categoryId": "other",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_305',
+          name: 'Decorative Object',
+          size: [1, 1],
+          color: 'hsl(89, 59%, 54%)',
+          categoryId: 'decorations',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
               },
-              {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 2,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
             ],
-            "width": 3,
-            "height": 3
-          }
+            width: 1,
+            height: 1,
+          },
         },
         {
-          "id": "mid_4373",
-          "name": "Light",
-          "size": [
-            1,
-            1
-          ],
-          "color": "hsl(294, 58%, 35%)",
-          "categoryId": "other",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_3356',
+          name: 'Decorative Plant',
+          size: [1, 1],
+          color: 'hsl(123, 65%, 36%)',
+          categoryId: 'decorations',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              }
+                x: 0,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
+              },
             ],
-            "width": 1,
-            "height": 1
-          }
+            width: 1,
+            height: 1,
+          },
         },
         {
-          "id": "mid_2483",
-          "name": "Micro Breach",
-          "size": [
-            1,
-            1
-          ],
-          "color": "hsl(299, 43%, 36%)",
-          "categoryId": "other",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_3373',
+          name: 'Decorative Screen',
+          size: [1, 1],
+          color: 'hsl(20, 69%, 39%)',
+          categoryId: 'decorations',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              }
+                x: 0,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
+              },
             ],
-            "width": 1,
-            "height": 1
-          }
+            width: 1,
+            height: 1,
+          },
         },
         {
-          "id": "mid_4322",
-          "name": "Old Hyperdrive Remains",
-          "size": [
-            3,
-            6
-          ],
-          "color": "hsl(142, 44%, 43%)",
-          "categoryId": "other",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_3363',
+          name: 'Green Wall',
+          size: [1, 1],
+          color: 'hsl(241, 63%, 51%)',
+          categoryId: 'decorations',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
               },
-              {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 4,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 4,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 5,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 5,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 4,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 5,
-                "type": "construction",
-                "walkCost": 1
-              }
             ],
-            "width": 3,
-            "height": 6
-          }
+            width: 1,
+            height: 1,
+          },
+        },
+      ],
+    },
+    {
+      id: 'furniture',
+      name: 'Furniture',
+      color: '#aa8877',
+      defaultLayer: 'Furniture',
+      items: [
+        {
+          id: 'mid_51',
+          name: 'Bed',
+          size: [2, 1],
+          color: 'hsl(57, 60%, 36%)',
+          categoryId: 'furniture',
+          tileLayout: {
+            tiles: [
+              {
+                x: 1,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
+              },
+            ],
+            width: 2,
+            height: 1,
+          },
         },
         {
-          "id": "mid_929",
-          "name": "Platform",
-          "size": [
-            1,
-            3
-          ],
-          "color": "hsl(29, 60%, 46%)",
-          "categoryId": "other",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_3362',
+          name: 'Bedside Table',
+          size: [1, 1],
+          color: 'hsl(2, 44%, 53%)',
+          categoryId: 'furniture',
+          tileLayout: {
+            tiles: [
               {
-                "x": 4,
-                "y": 4,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
               },
-              {
-                "x": 4,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 4,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 4,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 5,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 6,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 4,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 5,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 6,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 4,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 5,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 6,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 4,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 5,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 6,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 5,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 6,
-                "type": "blocked",
-                "walkCost": 255
-              }
             ],
-            "width": 5,
-            "height": 7
-          }
+            width: 1,
+            height: 1,
+          },
         },
         {
-          "id": "mid_3724",
-          "name": "Pod Hangar",
-          "size": [
-            3,
-            4
-          ],
-          "color": "hsl(186, 42%, 46%)",
-          "categoryId": "other",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_1864',
+          name: 'Bunk Bed',
+          size: [2, 1],
+          color: 'hsl(177, 41%, 40%)',
+          categoryId: 'furniture',
+          tileLayout: {
+            tiles: [
               {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
               },
               {
-                "x": 2,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
               },
-              {
-                "x": 3,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 0,
-                "y": 2,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 0,
-                "y": 3,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 0,
-                "y": 4,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 1,
-                "y": 4,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 2,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 2,
-                "y": 4,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 3,
-                "y": 4,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 4,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 4,
-                "y": 1,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 4,
-                "y": 2,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 4,
-                "y": 3,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 4,
-                "y": 4,
-                "type": "access",
-                "walkCost": 0
-              }
             ],
-            "width": 5,
-            "height": 5
-          }
+            width: 2,
+            height: 1,
+          },
         },
         {
-          "id": "mid_4306",
-          "name": "Point Defense Turret",
-          "size": [
-            2,
-            2
-          ],
-          "color": "hsl(272, 51%, 38%)",
-          "categoryId": "other",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_3179',
+          name: 'Cover Object',
+          size: [1, 1],
+          color: 'hsl(176, 58%, 51%)',
+          categoryId: 'furniture',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
               },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              }
             ],
-            "width": 2,
-            "height": 2
-          }
+            width: 1,
+            height: 1,
+          },
         },
         {
-          "id": "mid_3203",
-          "name": "Power Capacity Node",
-          "size": [
-            1,
-            1
-          ],
-          "color": "hsl(285, 61%, 43%)",
-          "categoryId": "other",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_3131',
+          name: 'In-floor Light',
+          size: [1, 1],
+          color: 'hsl(182, 41%, 35%)',
+          categoryId: 'furniture',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              }
+                x: 0,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
+              },
             ],
-            "width": 1,
-            "height": 1
-          }
+            width: 1,
+            height: 1,
+          },
         },
         {
-          "id": "mid_3673",
-          "name": "Preservation Tank",
-          "size": [
-            1,
-            1
-          ],
-          "color": "hsl(78, 69%, 42%)",
-          "categoryId": "other",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_906',
+          name: 'Light',
+          size: [1, 1],
+          color: 'hsl(294, 58%, 35%)',
+          categoryId: 'furniture',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              }
+                x: 0,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
+              },
             ],
-            "width": 1,
-            "height": 1
-          }
+            width: 1,
+            height: 1,
+          },
         },
         {
-          "id": "mid_3667",
-          "name": "Rogue Bot Charging Structure",
-          "size": [
-            3,
-            3
-          ],
-          "color": "hsl(37, 64%, 54%)",
-          "categoryId": "other",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_295',
+          name: 'Table',
+          size: [1, 1],
+          color: 'hsl(158, 69%, 44%)',
+          categoryId: 'furniture',
+          tileLayout: {
+            tiles: [
               {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
               },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              }
             ],
-            "width": 3,
-            "height": 3
-          }
+            width: 1,
+            height: 1,
+          },
         },
         {
-          "id": "mid_3732",
-          "name": "Rogue Bot Drone Bay",
-          "size": [
-            3,
-            5
-          ],
-          "color": "hsl(195, 55%, 38%)",
-          "categoryId": "other",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_164',
+          name: 'Wall Light',
+          size: [1, 1],
+          color: 'hsl(344, 43%, 37%)',
+          categoryId: 'furniture',
+          tileLayout: {
+            tiles: [
               {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
               },
-              {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 5,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 4,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 4,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 4,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 5,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 5,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 2,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
             ],
-            "width": 3,
-            "height": 6
-          }
+            width: 1,
+            height: 1,
+          },
         },
         {
-          "id": "mid_3723",
-          "name": "Rogue Bot Fabricator",
-          "size": [
-            2,
-            2
-          ],
-          "color": "hsl(242, 64%, 53%)",
-          "categoryId": "other",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_90',
+          name: 'X1 Chair',
+          size: [1, 1],
+          color: 'hsl(234, 54%, 39%)',
+          categoryId: 'furniture',
+          tileLayout: {
+            tiles: [
               {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
               },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
             ],
-            "width": 2,
-            "height": 2
-          }
+            width: 1,
+            height: 1,
+          },
         },
         {
-          "id": "mid_4240",
-          "name": "Scanner",
-          "size": [
-            3,
-            3
-          ],
-          "color": "hsl(262, 61%, 52%)",
-          "categoryId": "other",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_307',
+          name: 'X1 Couch',
+          size: [2, 1],
+          color: 'hsl(193, 43%, 43%)',
+          categoryId: 'furniture',
+          tileLayout: {
+            tiles: [
               {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
               },
               {
-                "x": 1,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
               },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              }
             ],
-            "width": 3,
-            "height": 3
-          }
+            width: 2,
+            height: 1,
+          },
         },
         {
-          "id": "mid_3199",
-          "name": "Small Power Node",
-          "size": [
-            1,
-            1
-          ],
-          "color": "hsl(98, 67%, 39%)",
-          "categoryId": "other",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_311',
+          name: 'X1 Couch',
+          size: [2, 3],
+          color: 'hsl(193, 43%, 43%)',
+          categoryId: 'furniture',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
+                x: 1,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 0,
-                "type": "access",
-                "walkCost": 0
-              }
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
             ],
-            "width": 1,
-            "height": 2
-          }
+            width: 2,
+            height: 3,
+          },
         },
         {
-          "id": "mid_4365",
-          "name": "Small Storage",
-          "size": [
-            1,
-            2
-          ],
-          "color": "hsl(226, 44%, 52%)",
-          "categoryId": "other",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_319',
+          name: 'X1 Couch',
+          size: [2, 2],
+          color: 'hsl(193, 43%, 43%)',
+          categoryId: 'furniture',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              }
+                x: 0,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
+              },
             ],
-            "width": 1,
-            "height": 2
-          }
+            width: 2,
+            height: 2,
+          },
         },
         {
-          "id": "mid_4245",
-          "name": "Solar Panel",
-          "size": [
-            3,
-            3
-          ],
-          "color": "hsl(109, 52%, 54%)",
-          "categoryId": "other",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_3455',
+          name: 'X1 Couch',
+          size: [1, 1],
+          color: 'hsl(193, 43%, 43%)',
+          categoryId: 'furniture',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
               },
-              {
-                "x": 0,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              }
             ],
-            "width": 3,
-            "height": 3
-          }
+            width: 1,
+            height: 1,
+          },
         },
         {
-          "id": "mid_4375",
-          "name": "Wall Light",
-          "size": [
-            1,
-            1
-          ],
-          "color": "hsl(344, 43%, 37%)",
-          "categoryId": "other",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_322',
+          name: 'X1 Table',
+          size: [1, 1],
+          color: 'hsl(113, 61%, 36%)',
+          categoryId: 'furniture',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              }
+                x: 0,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
+              },
             ],
-            "width": 1,
-            "height": 1
-          }
+            width: 1,
+            height: 1,
+          },
         },
         {
-          "id": "mid_851",
-          "name": "X1 Hyperdrive",
-          "size": [
-            4,
-            6
-          ],
-          "color": "hsl(13, 54%, 54%)",
-          "categoryId": "other",
-          "tileLayout": {
-            "tiles": [
-              {
-                "x": 3,
-                "y": 17,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 4,
-                "y": 17,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 16,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 4,
-                "y": 16,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 15,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 4,
-                "y": 15,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 5,
-                "y": 16,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 15,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 5,
-                "y": 15,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 12,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 4,
-                "y": 12,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 4,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 5,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 6,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 7,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 8,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 9,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 10,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 11,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 4,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 5,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 6,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 7,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 8,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 9,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 10,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 11,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 4,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 5,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 6,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 7,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 8,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 9,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 10,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 11,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 4,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 5,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 6,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 7,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 8,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 9,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 10,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 11,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
+          id: 'mid_4048',
+          name: 'X1 Table',
+          size: [2, 1],
+          color: 'hsl(113, 61%, 36%)',
+          categoryId: 'furniture',
+          tileLayout: {
+            tiles: [
+              {
+                x: 0,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
               },
-              {
-                "x": 4,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 4,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 5,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 6,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 7,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 8,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 9,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 10,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 11,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 4,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 5,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 6,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 7,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 8,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 9,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 10,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 11,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 6,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 6,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 6,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 6,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 6,
-                "y": 4,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 6,
-                "y": 5,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 6,
-                "y": 6,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 6,
-                "y": 7,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 6,
-                "y": 8,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 6,
-                "y": 9,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 6,
-                "y": 10,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 6,
-                "y": 11,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 7,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 7,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 7,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 7,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 7,
-                "y": 4,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 7,
-                "y": 5,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 7,
-                "y": 6,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 7,
-                "y": 7,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 7,
-                "y": 8,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 7,
-                "y": 9,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 7,
-                "y": 10,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 7,
-                "y": 11,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 16,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 2,
-                "y": 17,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 5,
-                "y": 17,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 2,
-                "y": 13,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 14,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 12,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 13,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 3,
-                "y": 14,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 4,
-                "y": 13,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 4,
-                "y": 14,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 5,
-                "y": 12,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 5,
-                "y": 13,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 5,
-                "y": 14,
-                "type": "construction",
-                "walkCost": 1
-              }
             ],
-            "width": 8,
-            "height": 18
-          }
+            width: 2,
+            height: 1,
+          },
         },
         {
-          "id": "mid_4354",
-          "name": "X1 Table",
-          "size": [
-            4,
-            1
-          ],
-          "color": "hsl(113, 61%, 36%)",
-          "categoryId": "other",
-          "tileLayout": {
-            "tiles": [
+          id: 'mid_4050',
+          name: 'X1 Table',
+          size: [3, 1],
+          color: 'hsl(113, 61%, 36%)',
+          categoryId: 'furniture',
+          tileLayout: {
+            tiles: [
               {
-                "x": 0,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
+                x: 0,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 3,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
+                x: 2,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
               },
               {
-                "x": 1,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
+                x: 1,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
               },
-              {
-                "x": 2,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              }
             ],
-            "width": 4,
-            "height": 1
-          }
-        }
-      ]
-    }
-  ]
+            width: 3,
+            height: 1,
+          },
+        },
+      ],
+    },
+    {
+      id: 'wall',
+      name: 'Wall',
+      color: '#3a4a5c',
+      defaultLayer: 'Hull',
+      items: [
+        {
+          id: 'mid_47',
+          name: 'Hull Window',
+          size: [1, 3],
+          color: 'hsl(83, 42%, 51%)',
+          categoryId: 'wall',
+          tileLayout: {
+            tiles: [
+              {
+                x: 0,
+                y: 2,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
+              },
+            ],
+            width: 1,
+            height: 3,
+          },
+        },
+        {
+          id: 'mid_2758',
+          name: 'Hull Window',
+          size: [1, 2],
+          color: 'hsl(83, 42%, 51%)',
+          categoryId: 'wall',
+          tileLayout: {
+            tiles: [
+              {
+                x: 0,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
+              },
+            ],
+            width: 1,
+            height: 2,
+          },
+        },
+        {
+          id: 'mid_206',
+          name: 'Hull Window',
+          size: [1, 4],
+          color: 'hsl(83, 42%, 51%)',
+          categoryId: 'wall',
+          tileLayout: {
+            tiles: [
+              {
+                x: 0,
+                y: 3,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 2,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
+              },
+            ],
+            width: 1,
+            height: 4,
+          },
+        },
+        {
+          id: 'mid_993',
+          name: 'Spacesuit door',
+          size: [1, 2],
+          color: 'hsl(11, 44%, 46%)',
+          categoryId: 'wall',
+          tileLayout: {
+            tiles: [
+              {
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 1,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 2,
+                y: 1,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 1,
+                y: 3,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+            ],
+            width: 3,
+            height: 4,
+          },
+        },
+        {
+          id: 'mid_1798',
+          name: 'Station Hull Door',
+          size: [1, 2],
+          color: 'hsl(195, 54%, 53%)',
+          categoryId: 'wall',
+          tileLayout: {
+            tiles: [
+              {
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 2,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 1,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 2,
+                y: 1,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 1,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+            ],
+            width: 3,
+            height: 3,
+          },
+        },
+        {
+          id: 'mid_2757',
+          name: 'Wall Window',
+          size: [1, 2],
+          color: 'hsl(158, 69%, 37%)',
+          categoryId: 'wall',
+          tileLayout: {
+            tiles: [
+              {
+                x: 0,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
+              },
+            ],
+            width: 1,
+            height: 2,
+          },
+        },
+        {
+          id: 'mid_115',
+          name: 'Wall Window',
+          size: [1, 3],
+          color: 'hsl(158, 69%, 37%)',
+          categoryId: 'wall',
+          tileLayout: {
+            tiles: [
+              {
+                x: 0,
+                y: 2,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
+              },
+            ],
+            width: 1,
+            height: 3,
+          },
+        },
+        {
+          id: 'mid_2861',
+          name: 'Wall Window',
+          size: [1, 4],
+          color: 'hsl(158, 69%, 37%)',
+          categoryId: 'wall',
+          tileLayout: {
+            tiles: [
+              {
+                x: 0,
+                y: 3,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 2,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 1,
+                type: 'blocked',
+                walkCost: 255,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
+              },
+            ],
+            width: 1,
+            height: 4,
+          },
+        },
+        {
+          id: 'mid_25',
+          name: 'X1 Door',
+          size: [1, 1],
+          color: 'hsl(45, 42%, 54%)',
+          categoryId: 'wall',
+          tileLayout: {
+            tiles: [
+              {
+                x: 1,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 2,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+            ],
+            width: 3,
+            height: 1,
+          },
+        },
+        {
+          id: 'mid_44',
+          name: 'X1 Wall',
+          size: [1, 1],
+          color: 'hsl(281, 44%, 46%)',
+          categoryId: 'wall',
+          tileLayout: {
+            tiles: [
+              {
+                x: 0,
+                y: 0,
+                type: 'blocked',
+                walkCost: 255,
+              },
+            ],
+            width: 1,
+            height: 1,
+          },
+        },
+        {
+          id: 'mid_2755',
+          name: 'X2 Door',
+          size: [1, 2],
+          color: 'hsl(196, 49%, 37%)',
+          categoryId: 'wall',
+          tileLayout: {
+            tiles: [
+              {
+                x: 1,
+                y: 0,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 1,
+                y: 1,
+                type: 'construction',
+                walkCost: 1,
+              },
+              {
+                x: 0,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 0,
+                y: 1,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 2,
+                y: 0,
+                type: 'access',
+                walkCost: 0,
+              },
+              {
+                x: 2,
+                y: 1,
+                type: 'access',
+                walkCost: 0,
+              },
+            ],
+            width: 3,
+            height: 2,
+          },
+        },
+      ],
+    },
+  ],
 }
 
 /**
  * Game version of the reference JAR
  */
-export const BUILTIN_GAME_VERSION: string | null = "0.20.0_steam_29"
+export const BUILTIN_GAME_VERSION: string | null = '0.20.0_steam_29'
 
 /**
  * Timestamp when the snapshot was generated
  */
-export const BUILTIN_GENERATED_AT: number = 1768019040833
+export const BUILTIN_GENERATED_AT: number = 1768054598590
 
 /**
  * Get the built-in catalog

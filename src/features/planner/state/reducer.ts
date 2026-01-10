@@ -142,7 +142,7 @@ function getStructureTiles(
 
 /**
  * Check if a structure at given position overlaps with existing structures
- * 
+ *
  * Collision rules:
  * - Blocking tiles (construction/blocked) CANNOT overlap with ANY tile of existing structures
  * - Access tiles CAN overlap with other access tiles only
@@ -171,12 +171,7 @@ function hasCollision(
     if (!found) continue
 
     // Get tiles for the existing structure
-    const existingTiles = getStructureTiles(
-      found.structure,
-      struct.x,
-      struct.y,
-      struct.rotation
-    )
+    const existingTiles = getStructureTiles(found.structure, struct.x, struct.y, struct.rotation)
 
     // Rule 1: New blocking tiles cannot overlap with ANY existing tile
     for (const tileKey of newTiles.blocking) {
@@ -201,17 +196,35 @@ function hasCollision(
  * Find structure at given tile position
  */
 function findStructureAt(state: PlannerState, x: number, y: number): string | null {
+  const targetKey = hullTileKey(x, y)
   for (const struct of state.structures) {
     const found = findStructureById(state.catalog, struct.structureId)
     if (!found) continue
-
-    const [sw, sh] = getRotatedSize(found.structure.size, struct.rotation)
-
-    if (x >= struct.x && x < struct.x + sw && y >= struct.y && y < struct.y + sh) {
-      return struct.id
-    }
+    const tiles = getStructureTiles(found.structure, struct.x, struct.y, struct.rotation)
+    if (tiles.all.has(targetKey)) return struct.id
   }
   return null
+}
+
+/**
+ * Check if a structure intersects a selection rectangle (inclusive).
+ * Uses tile-level hit testing (construction/blocked/access) when available.
+ */
+function structureIntersectsRect(
+  state: PlannerState,
+  struct: PlannerState['structures'][number],
+  rect: { x1: number; y1: number; x2: number; y2: number }
+): boolean {
+  const found = findStructureById(state.catalog, struct.structureId)
+  if (!found) return false
+  const tiles = getStructureTiles(found.structure, struct.x, struct.y, struct.rotation)
+  for (const key of tiles.all) {
+    const { x, y } = parseHullTileKey(key)
+    if (x >= rect.x1 && x <= rect.x2 && y >= rect.y1 && y <= rect.y2) {
+      return true
+    }
+  }
+  return false
 }
 
 /**
@@ -355,6 +368,57 @@ export function plannerReducer(state: PlannerState, action: PlannerAction): Plan
       }
     }
 
+    case 'ERASE_IN_RECT': {
+      const minX = Math.min(action.x1, action.x2)
+      const maxX = Math.max(action.x1, action.x2)
+      const minY = Math.min(action.y1, action.y2)
+      const maxY = Math.max(action.y1, action.y2)
+
+      const x1 = Math.max(0, minX)
+      const y1 = Math.max(0, minY)
+      const x2 = Math.min(state.gridSize.width - 1, maxX)
+      const y2 = Math.min(state.gridSize.height - 1, maxY)
+
+      // If rect is completely out of bounds, nothing to erase
+      if (x1 > x2 || y1 > y2) return state
+
+      // Remove any structures whose bounds intersects the rect
+      let structuresChanged = false
+      const remainingStructures: PlannerState['structures'][number][] = []
+      for (const struct of state.structures) {
+        const intersects = structureIntersectsRect(state, struct, { x1, y1, x2, y2 })
+        if (intersects) {
+          structuresChanged = true
+        } else {
+          remainingStructures.push(struct)
+        }
+      }
+
+      // Remove hull tiles inside the rect
+      let newHullTiles: ReadonlySet<string> = state.hullTiles
+      if (state.hullTiles.size > 0) {
+        let mutable: Set<string> | null = null
+        for (let x = x1; x <= x2; x++) {
+          for (let y = y1; y <= y2; y++) {
+            const key = hullTileKey(x, y)
+            if (state.hullTiles.has(key)) {
+              if (!mutable) mutable = new Set(state.hullTiles)
+              mutable.delete(key)
+            }
+          }
+        }
+        if (mutable) newHullTiles = mutable
+      }
+
+      if (!structuresChanged && newHullTiles === state.hullTiles) return state
+
+      return {
+        ...state,
+        structures: structuresChanged ? remainingStructures : state.structures,
+        hullTiles: newHullTiles,
+      }
+    }
+
     case 'CLEAR_ALL_STRUCTURES':
       return {
         ...state,
@@ -393,6 +457,39 @@ export function plannerReducer(state: PlannerState, action: PlannerAction): Plan
       }
     }
 
+    case 'PLACE_HULL_RECT': {
+      const minX = Math.min(action.x1, action.x2)
+      const maxX = Math.max(action.x1, action.x2)
+      const minY = Math.min(action.y1, action.y2)
+      const maxY = Math.max(action.y1, action.y2)
+
+      const x1 = Math.max(0, minX)
+      const y1 = Math.max(0, minY)
+      const x2 = Math.min(state.gridSize.width - 1, maxX)
+      const y2 = Math.min(state.gridSize.height - 1, maxY)
+
+      // If rect is completely out of bounds, nothing to place
+      if (x1 > x2 || y1 > y2) return state
+
+      let mutable: Set<string> | null = null
+      for (let x = x1; x <= x2; x++) {
+        for (let y = y1; y <= y2; y++) {
+          const key = hullTileKey(x, y)
+          if (!state.hullTiles.has(key)) {
+            if (!mutable) mutable = new Set(state.hullTiles)
+            mutable.add(key)
+          }
+        }
+      }
+
+      if (!mutable) return state
+
+      return {
+        ...state,
+        hullTiles: mutable,
+      }
+    }
+
     case 'ERASE_HULL_TILE': {
       const key = hullTileKey(action.x, action.y)
       if (!state.hullTiles.has(key)) {
@@ -404,6 +501,39 @@ export function plannerReducer(state: PlannerState, action: PlannerAction): Plan
       return {
         ...state,
         hullTiles: newHullTiles,
+      }
+    }
+
+    case 'ERASE_HULL_RECT': {
+      const minX = Math.min(action.x1, action.x2)
+      const maxX = Math.max(action.x1, action.x2)
+      const minY = Math.min(action.y1, action.y2)
+      const maxY = Math.max(action.y1, action.y2)
+
+      const x1 = Math.max(0, minX)
+      const y1 = Math.max(0, minY)
+      const x2 = Math.min(state.gridSize.width - 1, maxX)
+      const y2 = Math.min(state.gridSize.height - 1, maxY)
+
+      if (x1 > x2 || y1 > y2) return state
+      if (state.hullTiles.size === 0) return state
+
+      let mutable: Set<string> | null = null
+      for (let x = x1; x <= x2; x++) {
+        for (let y = y1; y <= y2; y++) {
+          const key = hullTileKey(x, y)
+          if (state.hullTiles.has(key)) {
+            if (!mutable) mutable = new Set(state.hullTiles)
+            mutable.delete(key)
+          }
+        }
+      }
+
+      if (!mutable) return state
+
+      return {
+        ...state,
+        hullTiles: mutable,
       }
     }
 

@@ -97,10 +97,7 @@ export function loadCachedJarCatalog(): JarCatalogData | null {
 /**
  * Save JAR catalog to localStorage cache
  */
-export function saveJarCatalogCache(
-  catalog: StructureCatalog,
-  sourceInfo: JarSourceInfo
-): void {
+export function saveJarCatalogCache(catalog: StructureCatalog, sourceInfo: JarSourceInfo): void {
   try {
     const data: StoredJarCache = {
       catalog,
@@ -156,4 +153,3 @@ export function getCachedJarSourceInfo(): JarSourceInfo | null {
     return null
   }
 }
-
