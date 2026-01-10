@@ -240,16 +240,12 @@ export function renderStructure(
         ctx.strokeRect(tileX + 0.5, tileY + 0.5, zoom - 1, zoom - 1)
         ctx.setLineDash([])
       } else if (tile.type === 'blocked') {
-        // Blocked tiles: structure color with red overlay
-        ctx.fillStyle = structureDef.color
+        // Blocked tiles: solid red color (space/impassable areas)
+        ctx.fillStyle = 'rgba(140, 50, 50, 0.9)'
         ctx.fillRect(tileX, tileY, zoom, zoom)
 
-        // Red overlay for blocked
-        ctx.fillStyle = COLORS.blockedTileOverlay
-        ctx.fillRect(tileX, tileY, zoom, zoom)
-
-        // Solid border
-        ctx.strokeStyle = COLORS.structureBorder
+        // Red border for blocked
+        ctx.strokeStyle = 'rgba(180, 60, 60, 1)'
         ctx.lineWidth = 1
         ctx.strokeRect(tileX + 0.5, tileY + 0.5, zoom - 1, zoom - 1)
       } else {

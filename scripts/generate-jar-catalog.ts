@@ -671,6 +671,8 @@ function convertTileLayout(
   fallbackSize: [number, number]
 ): TileLayout | undefined {
   const tileMap = new Map<string, StructureTile>()
+  // Track which tiles came from data section (actual structure) vs restrictions (space requirements)
+  const dataTileKeys = new Set<string>()
 
   // Step 1: Process linked tiles as construction tiles (primary source)
   // These define the actual structure footprint
@@ -683,18 +685,20 @@ function convertTileLayout(
       type: 'construction',
       walkCost: 1, // Default walkable cost for construction
     })
+    dataTileKeys.add(key)
   }
 
   // Step 2: Process raw tiles from <data> section
-  // These may add detail (walkGridCost) or additional tiles
+  // These are actual structure elements (Door, Hull, FloorDeco, etc.)
+  // Even blocked tiles from data section are part of the structure (e.g., Hull walls)
   for (const rawTile of rawTiles) {
     const key = `${rawTile.gridOffX},${rawTile.gridOffY}`
-    const tileType = determineTileType(rawTile.walkGridCost, rawTile.elementType)
+    dataTileKeys.add(key)
 
     const existing = tileMap.get(key)
     if (existing) {
       // Update existing tile with more specific info from data section
-      // Keep construction type but update walkCost if blocked
+      // Keep construction type but mark as blocked if walkCost is high
       if (rawTile.walkGridCost >= 255) {
         tileMap.set(key, {
           x: rawTile.gridOffX,
@@ -705,6 +709,18 @@ function convertTileLayout(
       }
     } else {
       // Add new tile from data section
+      // Determine tile type based on walkGridCost and element type:
+      // - walkGridCost >= 255: blocked (can't walk)
+      // - FloorDeco, Light: access (decorative floor, crew can walk)
+      // - Others with walkGridCost < 255: construction (actual structure)
+      let tileType: 'construction' | 'blocked' | 'access'
+      if (rawTile.walkGridCost >= 255) {
+        tileType = 'blocked'
+      } else if (rawTile.elementType === 'FloorDeco' || rawTile.elementType === 'Light') {
+        tileType = 'access'
+      } else {
+        tileType = 'construction'
+      }
       tileMap.set(key, {
         x: rawTile.gridOffX,
         y: rawTile.gridOffY,
@@ -712,6 +728,16 @@ function convertTileLayout(
         walkCost: rawTile.walkGridCost,
       })
     }
+  }
+
+  // Calculate bounding box of data tiles first (needed for Space restriction filtering)
+  let dataMinX = Infinity, dataMaxX = -Infinity, dataMinY = Infinity, dataMaxY = -Infinity
+  for (const key of dataTileKeys) {
+    const [x, y] = key.split(',').map(Number)
+    dataMinX = Math.min(dataMinX, x)
+    dataMaxX = Math.max(dataMaxX, x)
+    dataMinY = Math.min(dataMinY, y)
+    dataMaxY = Math.max(dataMaxY, y)
   }
 
   // Step 3: Process restrictions to add access/blocked tiles around the structure
@@ -722,19 +748,21 @@ function convertTileLayout(
           const x = restriction.gridX + dx
           const y = restriction.gridY + dy
           const key = `${x},${y}`
-          // Only add if not already defined by construction tiles
+          // Only add if not already defined by structure tiles
           if (!tileMap.has(key)) {
             tileMap.set(key, { x, y, type: 'access', walkCost: 0 })
           }
         }
       }
     } else if (restriction.type === 'Space' || restriction.type === 'SpaceOneOnly') {
+      // Space restrictions define where space must be (outside airlocks, cargo ports, etc.)
+      // Include ALL space tiles - they represent the blocked area extending into space
       for (let dx = 0; dx < restriction.sizeX; dx++) {
         for (let dy = 0; dy < restriction.sizeY; dy++) {
           const x = restriction.gridX + dx
           const y = restriction.gridY + dy
           const key = `${x},${y}`
-          // Only add if not already defined by construction tiles
+          
           if (!tileMap.has(key)) {
             tileMap.set(key, { x, y, type: 'blocked', walkCost: 255 })
           }
@@ -747,13 +775,14 @@ function convertTileLayout(
     return undefined
   }
 
-  // First, calculate the bounding box of construction tiles only
-  // This defines the "core" structure footprint
+  // Calculate the bounding box of actual structure tiles (from data + linked, not restrictions)
   let coreMinX = Infinity, coreMaxX = -Infinity, coreMinY = Infinity, coreMaxY = -Infinity
   let hasCoreTiles = false
 
   for (const tile of tileMap.values()) {
-    if (tile.type === 'construction') {
+    const key = `${tile.x},${tile.y}`
+    // Only consider tiles that came from data/linked sections as "core"
+    if (dataTileKeys.has(key)) {
       coreMinX = Math.min(coreMinX, tile.x)
       coreMaxX = Math.max(coreMaxX, tile.x)
       coreMinY = Math.min(coreMinY, tile.y)
@@ -762,7 +791,7 @@ function convertTileLayout(
     }
   }
 
-  // If no construction tiles, use fallback size centered at origin
+  // If no core tiles, use fallback size centered at origin
   if (!hasCoreTiles) {
     coreMinX = 0
     coreMaxX = fallbackSize[0] - 1
@@ -770,20 +799,25 @@ function convertTileLayout(
     coreMaxY = fallbackSize[1] - 1
   }
 
-  // Filter tiles based on type and position:
-  // - Construction tiles: always included
-  // - Access tiles: included if within 1 tile of construction (for crew access)
-  // - Blocked tiles: ONLY included if inside the construction bounding box
-  //   (blocked tiles outside are "Space" requirements, not visual structure)
+  // Filter tiles:
+  // - All tiles from data/linked sections are included (they ARE the structure)
+  // - Access tiles from Floor restrictions: included if within 1 tile of core
+  // - Blocked tiles from Space restrictions: ALL included (they define space area for airlocks/cargo ports)
   const ACCESS_MARGIN = 1
   const filteredTiles: StructureTile[] = []
 
   for (const tile of tileMap.values()) {
-    if (tile.type === 'construction') {
-      // Construction tiles are always included
+    const key = `${tile.x},${tile.y}`
+    
+    if (dataTileKeys.has(key)) {
+      // Tiles from data/linked sections are always included
+      filteredTiles.push(tile)
+    } else if (tile.type === 'blocked') {
+      // Blocked tiles from Space restrictions are always included
+      // They define the space area for airlocks/cargo ports
       filteredTiles.push(tile)
     } else if (tile.type === 'access') {
-      // Access tiles: allow within 1 tile margin of construction
+      // Access tiles from Floor restrictions: allow within 1 tile margin of core
       const isNearCore =
         tile.x >= coreMinX - ACCESS_MARGIN &&
         tile.x <= coreMaxX + ACCESS_MARGIN &&
@@ -791,18 +825,6 @@ function convertTileLayout(
         tile.y <= coreMaxY + ACCESS_MARGIN
 
       if (isNearCore) {
-        filteredTiles.push(tile)
-      }
-    } else if (tile.type === 'blocked') {
-      // Blocked tiles: ONLY include if strictly inside the construction bounding box
-      // Blocked tiles outside are "Space" requirements for clearance, not part of the structure
-      const isInsideCore =
-        tile.x >= coreMinX &&
-        tile.x <= coreMaxX &&
-        tile.y >= coreMinY &&
-        tile.y <= coreMaxY
-
-      if (isInsideCore) {
         filteredTiles.push(tile)
       }
     }

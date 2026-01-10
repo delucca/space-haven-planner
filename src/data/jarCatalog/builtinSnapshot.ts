@@ -7,7 +7,7 @@
  * Source: spacehaven.jar
  * Size: 186209507 bytes
  * Game Version: 0.20.0_steam_29
- * Generated: 2026-01-10T03:51:41.228Z
+ * Generated: 2026-01-10T04:18:06.957Z
  */
 
 import type { StructureCatalog } from '@/data/types'
@@ -19,8 +19,8 @@ import type { JarSourceInfo } from './types'
 export const BUILTIN_SOURCE_INFO: JarSourceInfo = {
   fileName: "spacehaven.jar",
   fileSize: 186209507,
-  lastModified: 1768017101228,
-  extractedAt: 1768017101228,
+  lastModified: 1768018686957,
+  extractedAt: 1768018686957,
   gameVersion: "0.20.0_steam_29",
 }
 
@@ -49,12 +49,18 @@ export const BUILTIN_CATALOG: StructureCatalog = {
               {
                 "x": 0,
                 "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 1,
                 "type": "construction",
                 "walkCost": 1
               }
             ],
             "width": 1,
-            "height": 1
+            "height": 2
           }
         },
         {
@@ -135,12 +141,18 @@ export const BUILTIN_CATALOG: StructureCatalog = {
               {
                 "x": 0,
                 "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 1,
                 "type": "construction",
                 "walkCost": 1
               }
             ],
             "width": 1,
-            "height": 1
+            "height": 2
           }
         },
         {
@@ -321,12 +333,18 @@ export const BUILTIN_CATALOG: StructureCatalog = {
               {
                 "x": 0,
                 "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 1,
                 "type": "construction",
                 "walkCost": 1
               }
             ],
             "width": 1,
-            "height": 1
+            "height": 2
           }
         },
         {
@@ -343,7 +361,7 @@ export const BUILTIN_CATALOG: StructureCatalog = {
               {
                 "x": 0,
                 "y": 0,
-                "type": "access",
+                "type": "construction",
                 "walkCost": 0
               }
             ],
@@ -757,44 +775,344 @@ export const BUILTIN_CATALOG: StructureCatalog = {
           "tileLayout": {
             "tiles": [
               {
-                "x": 2,
+                "x": 10,
+                "y": 4,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 10,
                 "y": 2,
                 "type": "construction",
                 "walkCost": 1
               },
               {
-                "x": 2,
-                "y": 0,
+                "x": 8,
+                "y": 2,
                 "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 8,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 7,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 9,
+                "y": 3,
+                "type": "access",
+                "walkCost": 1
+              },
+              {
+                "x": 10,
+                "y": 3,
+                "type": "access",
                 "walkCost": 1
               },
               {
                 "x": 0,
                 "y": 0,
-                "type": "construction",
-                "walkCost": 1
+                "type": "blocked",
+                "walkCost": 255
               },
               {
                 "x": 0,
                 "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
               },
               {
                 "x": 1,
                 "y": 1,
-                "type": "access",
-                "walkCost": 1
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
               },
               {
                 "x": 2,
                 "y": 1,
-                "type": "access",
-                "walkCost": 1
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 6,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 6,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 6,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 4,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 5,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 6,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 4,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 5,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 6,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 4,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 5,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 6,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 4,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 5,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 6,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 4,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 5,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 6,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 4,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 5,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 6,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 6,
+                "y": 4,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 6,
+                "y": 5,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 6,
+                "y": 6,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 6,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
               }
             ],
-            "width": 3,
-            "height": 3
+            "width": 11,
+            "height": 7
           }
         },
         {
@@ -1110,13 +1428,19 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             "tiles": [
               {
                 "x": 0,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
                 "y": 0,
                 "type": "access",
                 "walkCost": 0
               }
             ],
             "width": 1,
-            "height": 1
+            "height": 2
           }
         },
         {
@@ -1811,92 +2135,524 @@ export const BUILTIN_CATALOG: StructureCatalog = {
           "tileLayout": {
             "tiles": [
               {
-                "x": 1,
-                "y": 4,
+                "x": 2,
+                "y": 16,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 3,
+                "y": 16,
                 "type": "construction",
                 "walkCost": 1
               },
               {
                 "x": 2,
-                "y": 4,
+                "y": 15,
                 "type": "construction",
                 "walkCost": 1
               },
               {
-                "x": 1,
-                "y": 3,
+                "x": 3,
+                "y": 15,
                 "type": "construction",
                 "walkCost": 1
               },
               {
                 "x": 2,
-                "y": 3,
+                "y": 12,
                 "type": "construction",
                 "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 13,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 14,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 4,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 5,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 6,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 7,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 8,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 9,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 10,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 11,
+                "type": "blocked",
+                "walkCost": 255
               },
               {
                 "x": 1,
                 "y": 0,
-                "type": "construction",
-                "walkCost": 1
+                "type": "blocked",
+                "walkCost": 255
               },
               {
-                "x": 0,
+                "x": 1,
                 "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                "type": "blocked",
+                "walkCost": 255
               },
               {
                 "x": 1,
                 "y": 2,
-                "type": "construction",
-                "walkCost": 1
+                "type": "blocked",
+                "walkCost": 255
               },
               {
-                "x": 0,
-                "y": 2,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 0,
+                "x": 1,
                 "y": 3,
-                "type": "access",
-                "walkCost": 0
+                "type": "blocked",
+                "walkCost": 255
               },
               {
-                "x": 0,
+                "x": 1,
                 "y": 4,
-                "type": "access",
-                "walkCost": 0
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 5,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 6,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 7,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 8,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 9,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 10,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 11,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 4,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 5,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 6,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 7,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 8,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 9,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 10,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 11,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
               },
               {
                 "x": 3,
                 "y": 1,
-                "type": "access",
-                "walkCost": 0
+                "type": "blocked",
+                "walkCost": 255
               },
               {
                 "x": 3,
                 "y": 2,
-                "type": "access",
-                "walkCost": 0
+                "type": "blocked",
+                "walkCost": 255
               },
               {
                 "x": 3,
                 "y": 3,
-                "type": "access",
-                "walkCost": 0
+                "type": "blocked",
+                "walkCost": 255
               },
               {
                 "x": 3,
                 "y": 4,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 5,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 6,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 7,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 8,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 9,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 10,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 11,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 4,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 5,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 6,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 7,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 8,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 9,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 10,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 11,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 4,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 5,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 6,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 7,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 8,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 9,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 10,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 11,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 14,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 15,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 1,
+                "y": 16,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 4,
+                "y": 13,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 4,
+                "y": 14,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 4,
+                "y": 15,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 4,
+                "y": 16,
                 "type": "access",
                 "walkCost": 0
               }
             ],
-            "width": 4,
-            "height": 5
+            "width": 6,
+            "height": 17
           }
         },
         {
@@ -2731,98 +3487,674 @@ export const BUILTIN_CATALOG: StructureCatalog = {
           "tileLayout": {
             "tiles": [
               {
-                "x": 1,
-                "y": 5,
+                "x": 3,
+                "y": 17,
                 "type": "construction",
                 "walkCost": 1
               },
               {
-                "x": 2,
-                "y": 5,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 4,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 4,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 3,
+                "x": 4,
+                "y": 17,
                 "type": "construction",
                 "walkCost": 1
               },
               {
                 "x": 3,
-                "y": 3,
+                "y": 16,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 4,
+                "y": 16,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 3,
+                "y": 15,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 4,
+                "y": 15,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 15,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 5,
+                "y": 15,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 12,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 4,
+                "y": 12,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 13,
                 "type": "construction",
                 "walkCost": 1
               },
               {
                 "x": 0,
                 "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
+                "type": "blocked",
+                "walkCost": 255
               },
               {
                 "x": 0,
                 "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
               },
               {
                 "x": 0,
                 "y": 4,
-                "type": "access",
-                "walkCost": 0
+                "type": "blocked",
+                "walkCost": 255
               },
               {
                 "x": 0,
                 "y": 5,
-                "type": "access",
-                "walkCost": 0
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 6,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 7,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 8,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 9,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 10,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 11,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 4,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 5,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 6,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 7,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 8,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 9,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 10,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 11,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 4,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 5,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 6,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 7,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 8,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 9,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 10,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 11,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
               },
               {
                 "x": 3,
                 "y": 4,
-                "type": "access",
-                "walkCost": 0
+                "type": "blocked",
+                "walkCost": 255
               },
               {
                 "x": 3,
                 "y": 5,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 6,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 7,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 8,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 9,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 10,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 11,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 4,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 5,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 6,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 7,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 8,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 9,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 10,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 11,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 4,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 5,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 6,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 7,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 8,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 9,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 10,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 11,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 6,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 6,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 6,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 6,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 6,
+                "y": 4,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 6,
+                "y": 5,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 6,
+                "y": 6,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 6,
+                "y": 7,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 6,
+                "y": 8,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 6,
+                "y": 9,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 6,
+                "y": 10,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 6,
+                "y": 11,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 7,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 7,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 7,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 7,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 7,
+                "y": 4,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 7,
+                "y": 5,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 7,
+                "y": 6,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 7,
+                "y": 7,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 7,
+                "y": 8,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 7,
+                "y": 9,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 7,
+                "y": 10,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 7,
+                "y": 11,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 16,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 2,
+                "y": 17,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 5,
+                "y": 16,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 5,
+                "y": 17,
                 "type": "access",
                 "walkCost": 0
               }
             ],
-            "width": 4,
-            "height": 6
+            "width": 8,
+            "height": 18
           }
         },
         {
@@ -3247,278 +4579,434 @@ export const BUILTIN_CATALOG: StructureCatalog = {
           "tileLayout": {
             "tiles": [
               {
-                "x": 0,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 4,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 6,
-                "y": 4,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 6,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 6,
+                "x": 2,
                 "y": 1,
                 "type": "construction",
                 "walkCost": 1
-              },
-              {
-                "x": 6,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 6,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 7,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 7,
-                "y": 1,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 7,
-                "y": 2,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 7,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 7,
-                "y": 4,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 0,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 0,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 1,
-                "y": 4,
-                "type": "blocked",
-                "walkCost": 255
               },
               {
                 "x": 2,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 2,
-                "y": 4,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 3,
-                "y": 4,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 4,
-                "y": 4,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 0,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 1,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 2,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 3,
-                "type": "blocked",
-                "walkCost": 255
-              },
-              {
-                "x": 5,
-                "y": 4,
-                "type": "blocked",
-                "walkCost": 255
+                "y": 5,
+                "type": "construction",
+                "walkCost": 1
               },
               {
                 "x": 8,
+                "y": 5,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 8,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 8,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 8,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 8,
+                "y": 4,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 9,
+                "y": 1,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 9,
+                "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 9,
+                "y": 3,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 9,
+                "y": 4,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 9,
+                "y": 5,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 0,
                 "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 4,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 5,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 6,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 4,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 5,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 6,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 4,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 6,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 4,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 5,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 6,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 4,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 5,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 6,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 4,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 5,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 6,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 6,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 6,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 6,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 6,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 6,
+                "y": 4,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 6,
+                "y": 5,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 6,
+                "y": 6,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 7,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 7,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 7,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 7,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 7,
+                "y": 4,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 7,
+                "y": 5,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 7,
+                "y": 6,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 10,
+                "y": 1,
                 "type": "access",
                 "walkCost": 0
               },
               {
-                "x": 8,
-                "y": 1,
-                "type": "access",
-                "walkCost": 0
-              },
-              {
-                "x": 8,
+                "x": 10,
                 "y": 2,
                 "type": "access",
                 "walkCost": 0
               },
               {
-                "x": 8,
+                "x": 10,
                 "y": 3,
                 "type": "access",
                 "walkCost": 0
               },
               {
-                "x": 8,
+                "x": 10,
                 "y": 4,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 10,
+                "y": 5,
                 "type": "access",
                 "walkCost": 0
               }
             ],
-            "width": 9,
-            "height": 5
+            "width": 11,
+            "height": 7
           }
         },
         {
@@ -3656,13 +5144,25 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             "tiles": [
               {
                 "x": 0,
-                "y": 0,
+                "y": 2,
                 "type": "construction",
                 "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
               }
             ],
             "width": 1,
-            "height": 1
+            "height": 3
           }
         },
         {
@@ -3678,13 +5178,25 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             "tiles": [
               {
                 "x": 0,
-                "y": 0,
+                "y": 2,
                 "type": "construction",
                 "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "access",
+                "walkCost": 0
               }
             ],
             "width": 1,
-            "height": 1
+            "height": 3
           }
         }
       ]
@@ -3840,13 +5352,19 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             "tiles": [
               {
                 "x": 0,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
                 "y": 0,
                 "type": "access",
                 "walkCost": 0
               }
             ],
             "width": 1,
-            "height": 1
+            "height": 2
           }
         },
         {
@@ -5112,6 +6630,12 @@ export const BUILTIN_CATALOG: StructureCatalog = {
               },
               {
                 "x": 0,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
                 "y": 0,
                 "type": "access",
                 "walkCost": 0
@@ -5191,6 +6715,12 @@ export const BUILTIN_CATALOG: StructureCatalog = {
                 "y": 1,
                 "type": "construction",
                 "walkCost": 1
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
               },
               {
                 "x": 0,
@@ -5468,6 +6998,12 @@ export const BUILTIN_CATALOG: StructureCatalog = {
               },
               {
                 "x": 0,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
                 "y": 0,
                 "type": "access",
                 "walkCost": 0
@@ -5668,6 +7204,18 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             "tiles": [
               {
                 "x": 0,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
                 "y": 0,
                 "type": "access",
                 "walkCost": 0
@@ -5680,7 +7228,7 @@ export const BUILTIN_CATALOG: StructureCatalog = {
               }
             ],
             "width": 2,
-            "height": 1
+            "height": 2
           }
         },
         {
@@ -7161,26 +8709,218 @@ export const BUILTIN_CATALOG: StructureCatalog = {
           "tileLayout": {
             "tiles": [
               {
-                "x": 0,
+                "x": 4,
+                "y": 4,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 4,
                 "y": 2,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 4,
+                "y": 3,
                 "type": "construction",
                 "walkCost": 1
               },
               {
                 "x": 0,
                 "y": 0,
-                "type": "construction",
-                "walkCost": 1
+                "type": "blocked",
+                "walkCost": 255
               },
               {
                 "x": 0,
                 "y": 1,
-                "type": "construction",
-                "walkCost": 1
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 4,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 5,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 6,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 4,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 5,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 6,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 4,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 5,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 6,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 4,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 5,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 6,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 5,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 6,
+                "type": "blocked",
+                "walkCost": 255
               }
             ],
-            "width": 1,
-            "height": 3
+            "width": 5,
+            "height": 7
           }
         },
         {
@@ -7754,13 +9494,19 @@ export const BUILTIN_CATALOG: StructureCatalog = {
             "tiles": [
               {
                 "x": 0,
-                "y": 0,
+                "y": 1,
                 "type": "construction",
                 "walkCost": 1
+              },
+              {
+                "x": 0,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
               }
             ],
             "width": 1,
-            "height": 1
+            "height": 2
           }
         },
         {
@@ -7867,92 +9613,668 @@ export const BUILTIN_CATALOG: StructureCatalog = {
           "tileLayout": {
             "tiles": [
               {
-                "x": 1,
-                "y": 5,
+                "x": 3,
+                "y": 17,
                 "type": "construction",
                 "walkCost": 1
               },
               {
-                "x": 2,
-                "y": 5,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 4,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 4,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 1,
-                "y": 3,
-                "type": "construction",
-                "walkCost": 1
-              },
-              {
-                "x": 2,
-                "y": 3,
+                "x": 4,
+                "y": 17,
                 "type": "construction",
                 "walkCost": 1
               },
               {
                 "x": 3,
-                "y": 4,
+                "y": 16,
                 "type": "construction",
                 "walkCost": 1
               },
               {
-                "x": 0,
-                "y": 3,
+                "x": 4,
+                "y": 16,
                 "type": "construction",
                 "walkCost": 1
               },
               {
                 "x": 3,
-                "y": 3,
+                "y": 15,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 4,
+                "y": 15,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 5,
+                "y": 16,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 15,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 5,
+                "y": 15,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 2,
+                "y": 12,
+                "type": "construction",
+                "walkCost": 1
+              },
+              {
+                "x": 4,
+                "y": 12,
                 "type": "construction",
                 "walkCost": 1
               },
               {
                 "x": 0,
                 "y": 0,
-                "type": "construction",
-                "walkCost": 1
+                "type": "blocked",
+                "walkCost": 255
               },
               {
-                "x": 2,
-                "y": 0,
-                "type": "construction",
-                "walkCost": 1
+                "x": 0,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
               },
               {
                 "x": 0,
                 "y": 4,
-                "type": "access",
-                "walkCost": 0
+                "type": "blocked",
+                "walkCost": 255
               },
               {
                 "x": 0,
                 "y": 5,
-                "type": "access",
-                "walkCost": 0
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 6,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 7,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 8,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 9,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 10,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 0,
+                "y": 11,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 4,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 5,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 6,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 7,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 8,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 9,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 10,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 1,
+                "y": 11,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 4,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 5,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 6,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 7,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 8,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 9,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 10,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 11,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 4,
+                "type": "blocked",
+                "walkCost": 255
               },
               {
                 "x": 3,
                 "y": 5,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 6,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 7,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 8,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 9,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 10,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 3,
+                "y": 11,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 4,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 5,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 6,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 7,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 8,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 9,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 10,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 4,
+                "y": 11,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 4,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 5,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 6,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 7,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 8,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 9,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 10,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 5,
+                "y": 11,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 6,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 6,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 6,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 6,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 6,
+                "y": 4,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 6,
+                "y": 5,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 6,
+                "y": 6,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 6,
+                "y": 7,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 6,
+                "y": 8,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 6,
+                "y": 9,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 6,
+                "y": 10,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 6,
+                "y": 11,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 7,
+                "y": 0,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 7,
+                "y": 1,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 7,
+                "y": 2,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 7,
+                "y": 3,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 7,
+                "y": 4,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 7,
+                "y": 5,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 7,
+                "y": 6,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 7,
+                "y": 7,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 7,
+                "y": 8,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 7,
+                "y": 9,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 7,
+                "y": 10,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 7,
+                "y": 11,
+                "type": "blocked",
+                "walkCost": 255
+              },
+              {
+                "x": 2,
+                "y": 16,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 2,
+                "y": 17,
+                "type": "access",
+                "walkCost": 0
+              },
+              {
+                "x": 5,
+                "y": 17,
                 "type": "access",
                 "walkCost": 0
               }
             ],
-            "width": 4,
-            "height": 6
+            "width": 8,
+            "height": 18
           }
         },
         {
@@ -8008,7 +10330,7 @@ export const BUILTIN_GAME_VERSION: string | null = "0.20.0_steam_29"
 /**
  * Timestamp when the snapshot was generated
  */
-export const BUILTIN_GENERATED_AT: number = 1768017101228
+export const BUILTIN_GENERATED_AT: number = 1768018686957
 
 /**
  * Get the built-in catalog
