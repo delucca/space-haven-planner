@@ -16,10 +16,6 @@
   color: var(--color-text-secondary);
 }
 
-.select {
-  min-width: 120px;
-}
-
 .zoomControl {
   display: flex;
   align-items: center;

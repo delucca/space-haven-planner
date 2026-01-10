@@ -2,6 +2,7 @@ import { useMemo, useState, useSyncExternalStore, useEffect } from 'react'
 import { usePlanner } from '../state'
 import { GRID_PRESETS, ZOOM_MIN, ZOOM_MAX, ZOOM_STEP } from '@/data/presets'
 import type { ToolId } from '@/data/types'
+import { Select, type SelectOption } from '@/components'
 import styles from './Toolbar.module.css'
 
 // Layout constants (must match PlannerPage.module.css and useInitialZoom.ts)
@@ -73,8 +74,18 @@ export function Toolbar() {
     }
   }, [zoomPercent, isEditingZoom])
 
-  const handlePresetChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const preset = GRID_PRESETS.find((p) => p.label === e.target.value)
+  // Build select options from presets
+  const presetOptions: SelectOption[] = useMemo(
+    () =>
+      GRID_PRESETS.map((preset) => ({
+        value: preset.label,
+        label: `${preset.label} (${preset.width}×${preset.height})`,
+      })),
+    []
+  )
+
+  const handlePresetChange = (value: string) => {
+    const preset = GRID_PRESETS.find((p) => p.label === value)
     if (preset) {
       dispatch({
         type: 'SET_PRESET',
@@ -144,14 +155,13 @@ export function Toolbar() {
     <div className={styles.toolbar}>
       {/* Canvas preset */}
       <div className={styles.group}>
-        <label className={styles.label}>Canvas:</label>
-        <select className={styles.select} value={presetLabel} onChange={handlePresetChange}>
-          {GRID_PRESETS.map((preset) => (
-            <option key={preset.label} value={preset.label}>
-              {preset.label} ({preset.width}×{preset.height})
-            </option>
-          ))}
-        </select>
+        <span className={styles.label}>Canvas:</span>
+        <Select
+          options={presetOptions}
+          value={presetLabel}
+          onChange={handlePresetChange}
+          aria-label="Canvas size"
+        />
       </div>
 
       {/* Zoom */}

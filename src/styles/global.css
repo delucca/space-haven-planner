@@ -103,8 +103,7 @@ button {
 }
 
 /* Input reset */
-input,
-select {
+input {
   font-family: inherit;
   font-size: inherit;
   color: inherit;
@@ -114,8 +113,58 @@ select {
   padding: var(--spacing-xs) var(--spacing-sm);
 }
 
-input:focus,
+input:focus {
+  border-color: var(--color-accent-blue);
+}
+
+/* Custom select styling */
+select {
+  font-family: inherit;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  padding: var(--spacing-xs) var(--spacing-xl) var(--spacing-xs) var(--spacing-sm);
+  cursor: pointer;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast);
+  
+  /* Remove default arrow */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  
+  /* Custom arrow using SVG */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238b949e' d='M2.5 4.5L6 8l3.5-3.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--spacing-sm) center;
+  background-size: 12px;
+}
+
+select:hover {
+  background-color: var(--color-border);
+}
+
 select:focus {
   border-color: var(--color-accent-blue);
+  outline: none;
+}
+
+select:focus-visible {
+  outline: 2px solid var(--color-accent-blue);
+  outline-offset: 2px;
+}
+
+/* Style select options (limited browser support but improves where possible) */
+select option {
+  background-color: var(--color-bg-secondary);
+  color: var(--color-text-primary);
+  padding: var(--spacing-xs) var(--spacing-sm);
+}
+
+select option:hover,
+select option:focus,
+select option:checked {
+  background-color: var(--color-bg-tertiary);
 }
 

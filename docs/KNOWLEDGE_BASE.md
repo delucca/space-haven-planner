@@ -57,6 +57,40 @@ Mouse/keyboard input → dispatch(PlannerAction) → plannerReducer → PlannerS
   → ActionBar → download JSON / load JSON / export PNG
 ```
 
+### Shared UI components
+
+Reusable components live in `src/components/` and are exported via `@/components`.
+
+#### Select component (`src/components/Select/`)
+
+Custom dropdown replacement for native `<select>` with full styling and keyboard navigation:
+
+| Keyboard       | Action                                      |
+| -------------- | ------------------------------------------- |
+| `Space/Enter`  | Open dropdown (when closed) / Select option |
+| `Arrow Up/Down`| Navigate options                            |
+| `Home/End`     | Jump to first/last option                   |
+| `Escape`       | Close without selecting                     |
+| `Tab`          | Close and move focus                        |
+| Type character | Jump to option starting with that character |
+
+Usage:
+```tsx
+import { Select, type SelectOption } from '@/components'
+
+const options: SelectOption[] = [
+  { value: 'a', label: 'Option A' },
+  { value: 'b', label: 'Option B' },
+]
+
+<Select
+  options={options}
+  value={selectedValue}
+  onChange={setValue}
+  aria-label="My select"
+/>
+```
+
 ### Keyboard shortcuts
 
 Handled by `useKeyboardShortcuts` hook (`src/features/planner/hooks/useKeyboardShortcuts.ts`):
@@ -124,6 +158,7 @@ Hull tiles are separate from structures:
 - **Project facts & decisions**: `docs/CONSTITUTION.md`
 - **Configuration**: `package.json`, `vite.config.ts`, `tsconfig*.json`, `eslint.config.js`, `.prettierrc`
 - **Entry point(s)**: `index.html`, `src/main.tsx`, `src/App.tsx`, `src/features/planner/PlannerPage.tsx`
+- **Shared UI components**: `src/components/` (barrel export at `src/components/index.ts`)
 - **Core domain logic**: `src/features/planner/state/reducer.ts`, `src/features/planner/canvas/renderer.ts`, `src/data/types.ts`
 - **Data catalog (JAR-based)**: `src/data/jarCatalog/` — primary catalog source from game JAR files
 - **Data catalog (static fallback)**: `src/data/catalog/structures.ts` — offline-first fallback
@@ -182,7 +217,8 @@ pnpm preview     # serve the built app locally
 
 - **Project structure**:
   - Feature code lives under `src/features/` (planner is `src/features/planner/`).
-  - Shared “domain” data/types live under `src/data/`.
+  - Shared UI components live under `src/components/` (e.g., `Select`).
+  - Shared "domain" data/types live under `src/data/`.
   - Cross-cutting utilities live under `src/lib/`.
 - **Imports**: use the `@/` alias for `src/` (configured in `vite.config.ts` + `tsconfig.app.json`).
 - **Styling**: CSS Modules for components (`*.module.css`), plus `src/styles/global.css`.
@@ -195,13 +231,15 @@ pnpm preview     # serve the built app locally
     </label>
     ```
     CSS uses `input:checked + .checkboxIndicator` to style the checked state. See `Toolbar.module.css` and `LayerPanel.module.css` for examples.
+  - **Custom Select component**: Use `<Select>` from `@/components` instead of native `<select>` for full styling and keyboard navigation control. See `src/components/Select/` for implementation.
 - **State management**: reducer + Context (`PlannerProvider` / `usePlanner*` hooks); update state only via `PlannerAction`.
   - **Catalog state**: `PlannerState` includes `catalog` and `catalogStatus` (source, isParsing, lastUpdatedAt, lastError, jarFileName).
   - **Catalog load hook**: `useCatalogRefresh` loads cached user-uploaded JAR catalog on mount (if present) and otherwise ensures the built-in snapshot is active.
   - **Local UI state**: Purely presentational state (e.g., search queries, transient UI modes) should use local `useState` in components rather than polluting global `PlannerState`. Examples: `Palette.tsx` keeps search query local; `CanvasViewport.tsx` keeps drag-selection + pending erase confirmation local.
 - **Form controls**:
   - Checkboxes: Use the custom checkbox pattern (hidden native + styled span indicator)
-  - Selects/inputs: Use CSS variables from `global.css` for consistent styling
+  - Selects: Use the custom `<Select>` component from `@/components` (not native `<select>`) for full styling control and keyboard navigation
+  - Inputs: Use CSS variables from `global.css` for consistent styling
 - **Dialogs**:
   - Use the native `<dialog>` element via `dialog.showModal()` + CSS Modules for a consistent look and better accessibility.
   - Reuse existing patterns: `JarImportDialog.tsx` and `ConfirmDialog.tsx` (avoid `window.confirm`).
@@ -484,6 +522,7 @@ The wiki is **no longer the primary catalog source**. It now provides supplement
 ## How to extend safely
 
 - **Where to add new code**:
+  - Shared UI components (reusable across features): `src/components/`
   - UI behavior/panels: `src/features/planner/components/`
   - Canvas interaction/rendering: `src/features/planner/canvas/`
   - State/actions/invariants: `src/features/planner/state/`
