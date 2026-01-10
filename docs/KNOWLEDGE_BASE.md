@@ -133,6 +133,7 @@ pnpm preview     # serve the built app locally
 - **State management**: reducer + Context (`PlannerProvider` / `usePlanner*` hooks); update state only via `PlannerAction`.
   - **Catalog state**: `PlannerState` includes `catalog`, `catalogStatus` (source, isRefreshing, lastUpdatedAt, lastError), and `catalogRefreshRequestId` for triggering refreshes.
   - **Catalog refresh hook**: `useCatalogRefresh` handles the async load/refresh lifecycle outside the reducer.
+  - **Local UI state**: Purely presentational state (e.g., search queries, transient UI modes) should use local `useState` in components rather than polluting global `PlannerState`. Example: `Palette.tsx` keeps search query local.
 - **Error handling**:
   - User-triggered file errors show `alert(...)` (load/export).
   - Autosave failures warn and keep the app usable (`console.warn` + best-effort).
@@ -143,6 +144,7 @@ pnpm preview     # serve the built app locally
   - Tests should be added as `src/**/*.{test,spec}.{ts,tsx}`.
   - Global test APIs (`describe`, `it`, `expect`) are available without imports (see `tsconfig.app.json` types).
   - `@testing-library/user-event` is available for simulating user interactions in component tests.
+  - **Testing components that use `usePlanner`**: Wrap with `<PlannerContext.Provider value={{ state, dispatch }}>` using a mock state object and `vi.fn()` dispatch. See `Palette.test.tsx` for the pattern.
   - Current tests:
     - `src/data/catalog/cache.test.ts` — catalog caching logic
     - `src/data/catalog/wiki.test.ts` — wiki parsing and merge logic
