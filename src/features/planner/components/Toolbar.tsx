@@ -3,13 +3,8 @@ import { usePlanner } from '../state'
 import { GRID_PRESETS, ZOOM_MIN, ZOOM_MAX, ZOOM_STEP } from '@/data/presets'
 import type { ToolId } from '@/data/types'
 import { Select, type SelectOption } from '@/components'
+import { calculateFitZoomForViewport } from '../zoom'
 import styles from './Toolbar.module.css'
-
-// Layout constants (must match PlannerPage.module.css and useInitialZoom.ts)
-const LEFT_PANEL_WIDTH = 280
-const RIGHT_PANEL_WIDTH = 320 // Updated to match larger right panel
-const CANVAS_CONTAINER_PADDING = 24 * 2 // --spacing-xl on both sides
-const CANVAS_BORDER = 2 * 2 // 2px border on both sides
 
 interface ToolButtonProps {
   id: string
@@ -37,16 +32,6 @@ function getViewportWidth() {
   return window.innerWidth
 }
 
-/**
- * Calculate the zoom value that would make the grid fit 100% of available width.
- * This is the "100%" baseline for percentage display.
- */
-function calculateFitZoom(gridWidth: number, viewportWidth: number): number {
-  const availableWidth =
-    viewportWidth - LEFT_PANEL_WIDTH - RIGHT_PANEL_WIDTH - CANVAS_CONTAINER_PADDING - CANVAS_BORDER
-  return Math.max(1, Math.floor(availableWidth / gridWidth))
-}
-
 export function Toolbar() {
   const { state, dispatch } = usePlanner()
   const { presetLabel, zoom, showGrid, tool, gridSize } = state
@@ -56,7 +41,7 @@ export function Toolbar() {
 
   // Calculate the zoom that represents 100% (fit-to-width)
   const fitZoom = useMemo(
-    () => calculateFitZoom(gridSize.width, viewportWidth),
+    () => calculateFitZoomForViewport(gridSize.width, viewportWidth),
     [gridSize.width, viewportWidth]
   )
 
@@ -141,10 +126,9 @@ export function Toolbar() {
     if (!isNaN(parsedPercent) && parsedPercent > 0) {
       // Convert percentage back to zoom (pixels per tile)
       const newZoom = Math.round((parsedPercent / 100) * fitZoom)
-      // Clamp to valid range and snap to step
+      // Clamp to valid range
       const clampedZoom = Math.max(ZOOM_MIN, Math.min(ZOOM_MAX, newZoom))
-      const snappedZoom = Math.round(clampedZoom / ZOOM_STEP) * ZOOM_STEP
-      dispatch({ type: 'SET_ZOOM', zoom: snappedZoom })
+      dispatch({ type: 'SET_ZOOM', zoom: clampedZoom })
     }
   }
 

@@ -115,14 +115,15 @@ The zoom level is expressed internally as **pixels per tile** but displayed to u
 
 #### Initial zoom (fit-to-width)
 
-On app load (and after NEW_PROJECT), the zoom level is dynamically calculated to fit the grid width within the viewport:
+On app load (and when the grid width changes, e.g. switching canvas preset), the zoom level is dynamically calculated to fit the grid width within the viewport:
 
 - Handled by `useInitialZoom` hook (`src/features/planner/hooks/useInitialZoom.ts`)
+- Uses shared helper `calculateFitZoomForViewport(...)` (`src/features/planner/zoom.ts`)
 - Accounts for: left panel (280px), right panel (320px), canvas container padding (48px), canvas border (4px)
 - Formula: `optimalZoom = floor((viewportWidth - sidePanels - padding - border) / gridWidth)`
-- Result is clamped to `ZOOM_MIN`–`ZOOM_MAX` and snapped to `ZOOM_STEP`
-- Recalculates when `gridWidth` changes (handles NEW_PROJECT reset)
-- Exports `calculateFitZoom()` for use in other components (e.g., Toolbar percentage display)
+- Result is clamped by the reducer to `ZOOM_MIN`–`ZOOM_MAX` (not snapped to `ZOOM_STEP`)
+- Recalculates when `gridWidth` changes
+- **NEW_PROJECT preserves** the current `zoom` (and canvas preset) to avoid jarring zoom jumps
 
 #### Zoom control UI
 
@@ -131,9 +132,9 @@ The toolbar displays zoom as +/− buttons with an **editable percentage input**
 - **100%** = the zoom level at which the grid exactly fits the available canvas width
 - Percentage is **dynamic**: recalculates on viewport resize and preset change
 - **Editable input**: Click the percentage to type a custom value (Enter to apply, Escape to cancel)
-- Input values are converted back to pixels-per-tile, clamped to `ZOOM_MIN`–`ZOOM_MAX`, and snapped to `ZOOM_STEP`
+- Input values are converted back to pixels-per-tile and clamped to `ZOOM_MIN`–`ZOOM_MAX` (not snapped to `ZOOM_STEP`)
 - Uses `useSyncExternalStore` to subscribe to window resize events
-- Calculation logic in `Toolbar.tsx` mirrors `useInitialZoom.ts` (same layout constants)
+- Calculation uses `calculateFitZoomForViewport(...)` (`src/features/planner/zoom.ts`) so the 100% baseline matches `useInitialZoom`
 
 ### Tools
 
@@ -386,7 +387,7 @@ pnpm preview     # serve the built app locally
   - **Space restrictions for airlocks/cargo ports**: These structures have large "Space" restriction areas that define where space must be. All Space restriction tiles are included (not just adjacent ones) and rendered as red blocked areas.
   - **Gap filling in structures**: The converter fills gaps within the core bounding box to ensure solid rectangles. Without this, structures like airlocks would appear as scattered tiles.
   - **FloorDeco tiles**: Treated as `access` tiles (crew can walk on them), not `construction`. This affects collision and rendering.
-  - **Layout constants duplication**: Both `useInitialZoom.ts` and `Toolbar.tsx` hardcode panel widths (280px left, 320px right) and padding (24px × 2). If `PlannerPage.module.css` changes, update **both** files' constants.
+- **Layout constants alignment**: The fit-to-width zoom math uses layout constants in `src/features/planner/zoom.ts`. If `PlannerPage.module.css` or `CanvasViewport.module.css` changes, update these constants to match.
   - **JAR category IDs are not sequential**: The JAR uses non-sequential category IDs (e.g., 1506, 1507, 1508, 1516, 1519, 1522, 2880, 3359, 4243). Do NOT assume sequential IDs when mapping categories.
   - **Category display order is descending**: The game displays categories with higher `order` values first (leftmost). This is counterintuitive but matches the game UI.
   - **MainCat filtering is essential**: Only include structures from MainCat 1512 (OBJECTS). Structures from MainCat 1525 (SANDBOX) are debug/internal items that shouldn't appear in the planner. The parser extracts `parentId` from `<mainCat id="..."/>` child element.

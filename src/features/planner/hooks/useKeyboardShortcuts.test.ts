@@ -174,10 +174,21 @@ describe('useKeyboardShortcuts', () => {
   })
 
   describe('tool shortcuts', () => {
-    it('switches to place tool with 1', () => {
+    it('switches to hull tool with 1', () => {
       renderHook(() => useKeyboardShortcuts(mockDispatch, baseZoom))
 
       fireKeyDown('1')
+
+      expect(mockDispatch).toHaveBeenCalledWith({
+        type: 'SET_TOOL',
+        tool: 'hull',
+      })
+    })
+
+    it('switches to place tool with 2', () => {
+      renderHook(() => useKeyboardShortcuts(mockDispatch, baseZoom))
+
+      fireKeyDown('2')
 
       expect(mockDispatch).toHaveBeenCalledWith({
         type: 'SET_TOOL',
@@ -185,10 +196,10 @@ describe('useKeyboardShortcuts', () => {
       })
     })
 
-    it('switches to erase tool with 2', () => {
+    it('switches to erase tool with 3', () => {
       renderHook(() => useKeyboardShortcuts(mockDispatch, baseZoom))
 
-      fireKeyDown('2')
+      fireKeyDown('3')
 
       expect(mockDispatch).toHaveBeenCalledWith({
         type: 'SET_TOOL',

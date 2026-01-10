@@ -7,7 +7,7 @@ import type {
   PlacedStructure,
   LayerId,
 } from '@/data/types'
-import { DEFAULT_PRESET, LAYERS, ZOOM_MAX, ZOOM_MIN } from '@/data/presets'
+import { DEFAULT_PRESET, DEFAULT_ZOOM, LAYERS, ZOOM_MAX, ZOOM_MIN } from '@/data/presets'
 import { findStructureById, findCategoryById } from '@/data/catalog'
 import { getRotatedSize } from '@/data/types'
 import { getBuiltinCatalog } from '@/data/jarCatalog'
@@ -73,7 +73,7 @@ export function createInitialState(): PlannerState {
   return {
     gridSize: { width: DEFAULT_PRESET.width, height: DEFAULT_PRESET.height },
     presetLabel: DEFAULT_PRESET.label,
-    zoom: 100, // Start at 100% zoom (full width)
+    zoom: DEFAULT_ZOOM,
     showGrid: true,
     tool: 'hull',
     selection: null,
@@ -1000,11 +1000,17 @@ export function plannerReducer(state: PlannerState, action: PlannerAction): Plan
       }
 
     case 'NEW_PROJECT':
+      // "New project" should clear the design, but keep the current "view" (canvas + zoom)
+      // so users don't get a jarring zoom jump.
       return {
         ...createInitialState(),
+        gridSize: state.gridSize,
+        presetLabel: state.presetLabel,
+        zoom: state.zoom,
+        showGrid: state.showGrid,
         catalog: state.catalog, // Keep current catalog
         catalogStatus: state.catalogStatus,
-        // Reset to default layer (zoom will be set by useInitialZoom hook)
+        // Reset to default layer organization
         userLayers: DEFAULT_USER_LAYERS,
         userGroups: [],
         activeLayerId: 'layer-default',
