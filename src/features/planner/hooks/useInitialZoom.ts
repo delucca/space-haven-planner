@@ -39,3 +39,4 @@ export function useInitialZoom(dispatch: Dispatch<PlannerAction>, gridWidth: num
     dispatch({ type: 'SET_ZOOM', zoom: snappedZoom })
   }, [dispatch, gridWidth])
 }
+

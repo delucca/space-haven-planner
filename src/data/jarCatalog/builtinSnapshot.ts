@@ -8068,3 +8068,4 @@ export function getBuiltinCatalog(): StructureCatalog {
 export function hasRealJarSnapshot(): boolean {
   return true
 }
+

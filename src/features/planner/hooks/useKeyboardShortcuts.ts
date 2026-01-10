@@ -63,9 +63,13 @@ export function useKeyboardShortcuts(
         // Tools
         case '1':
           e.preventDefault()
-          dispatch({ type: 'SET_TOOL', tool: 'place' })
+          dispatch({ type: 'SET_TOOL', tool: 'hull' })
           break
         case '2':
+          e.preventDefault()
+          dispatch({ type: 'SET_TOOL', tool: 'place' })
+          break
+        case '3':
           e.preventDefault()
           dispatch({ type: 'SET_TOOL', tool: 'erase' })
           break
