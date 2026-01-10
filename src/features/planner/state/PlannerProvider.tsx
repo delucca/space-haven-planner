@@ -11,3 +11,4 @@ export function PlannerProvider({ children }: PlannerProviderProps) {
 
   return <PlannerContext.Provider value={{ state, dispatch }}>{children}</PlannerContext.Provider>
 }
+

@@ -97,3 +97,4 @@ export function useCatalogRefresh(state: PlannerState, dispatch: Dispatch<Planne
     }
   }, [catalogStatus.isRefreshing, catalogRefreshRequestId, dispatch])
 }
+

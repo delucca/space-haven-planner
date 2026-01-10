@@ -145,3 +145,4 @@ export const UNICODE_MULTIPLY_WIKITEXT = `
 === Footprint ===
 The building needs a 2×3 tile area.
 `
+
