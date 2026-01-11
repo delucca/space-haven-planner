@@ -31,6 +31,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--spacing-sm);
+  position: relative;
 }
 
 /* Extended variant (placement panel) */
@@ -69,6 +70,32 @@
   color: var(--color-text-muted);
   font-style: italic;
   pointer-events: none;
+}
+
+/* Wiki fetch progress bar (bottom border) */
+.wikiProgressBar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  opacity: 0;
+  transition: opacity 180ms ease;
+  pointer-events: none;
+  border-bottom-left-radius: var(--border-radius-md);
+  border-bottom-right-radius: var(--border-radius-md);
+  overflow: hidden;
+}
+
+.wikiProgressBar[data-visible] {
+  opacity: 1;
+}
+
+.wikiProgressFill {
+  height: 100%;
+  width: var(--wiki-progress, 0%);
+  background: var(--color-accent-blue);
+  transition: width 180ms ease;
 }
 
 /* Header with color swatch and name */

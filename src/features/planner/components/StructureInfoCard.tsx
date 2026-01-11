@@ -1,7 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { StructureDef, StructureCategory, TileLayout } from '@/data/types'
 import type { WikiStructureMetadata, WikiStructureLookupStatus } from '@/data/catalog/wikiMetadata'
 import styles from './StructureInfoPopover.module.css'
+
+const WIKI_PROGRESS_PRE_COMPLETE_MAX = 90
+const WIKI_PROGRESS_TICK_MS = 90
+const WIKI_PROGRESS_DONE_HOLD_MS = 450
 
 /**
  * WikiImage component that loads images from Fandom's CDN.
@@ -14,16 +18,28 @@ function WikiImage({
   alt,
   className,
   containerClassName,
+  onStatusChange,
 }: {
   src: string
   alt: string
   className?: string
   containerClassName?: string
+  onStatusChange?: (status: 'loading' | 'loaded' | 'error') => void
 }) {
   const [hasError, setHasError] = useState(false)
+  const imgRef = useRef<HTMLImageElement | null>(null)
 
   useEffect(() => {
     setHasError(false)
+    onStatusChange?.('loading')
+  }, [src])
+
+  // If the image is already cached, onLoad can be skipped in some edge cases.
+  useEffect(() => {
+    const img = imgRef.current
+    if (!img) return
+    if (!img.complete) return
+    onStatusChange?.(img.naturalWidth > 0 ? 'loaded' : 'error')
   }, [src])
 
   return (
@@ -32,11 +48,16 @@ function WikiImage({
         <div className={styles.imageLoading}>Image unavailable.</div>
       ) : (
         <img
+          ref={imgRef}
           src={src}
           alt={alt}
           className={className}
           referrerPolicy="no-referrer"
-          onError={() => setHasError(true)}
+          onLoad={() => onStatusChange?.('loaded')}
+          onError={() => {
+            setHasError(true)
+            onStatusChange?.('error')
+          }}
         />
       )}
     </div>
@@ -91,10 +112,92 @@ export function StructureInfoCard({
   extended = false,
 }: StructureInfoCardProps) {
   const hasWiki = wikiStatus === 'found' && wikiMetadata !== null
-  const isLoading = wikiStatus === 'loading'
+  const [imageStatus, setImageStatus] = useState<'idle' | 'loading' | 'loaded' | 'error'>('idle')
+
+  const needsImage = useMemo(
+    () => wikiStatus === 'found' && (wikiMetadata?.imageUrl ?? null) !== null,
+    [wikiStatus, wikiMetadata?.imageUrl]
+  )
+
+  useEffect(() => {
+    if (!needsImage) {
+      setImageStatus('idle')
+    }
+  }, [needsImage])
 
   // Calculate tile stats if available
   const tileStats = structure.tileLayout ? countTilesByType(structure.tileLayout) : null
+
+  // Progress bar state for wiki fetch (and image load, if applicable)
+  const [progress, setProgress] = useState(0)
+  const [barVisible, setBarVisible] = useState(false)
+  const tickTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const doneTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  const clearTimers = useCallback(() => {
+    if (tickTimerRef.current) {
+      clearTimeout(tickTimerRef.current)
+      tickTimerRef.current = null
+    }
+    if (doneTimerRef.current) {
+      clearTimeout(doneTimerRef.current)
+      doneTimerRef.current = null
+    }
+  }, [])
+
+  const isWikiLoading = wikiStatus === 'loading'
+  const isImageLoading = needsImage && imageStatus === 'loading'
+  const isFullyLoaded = !isWikiLoading && (!needsImage || imageStatus !== 'loading')
+
+  // Start / advance fake progress while loading
+  useEffect(() => {
+    if (!isWikiLoading && !isImageLoading) {
+      return
+    }
+
+    clearTimers()
+    setBarVisible(true)
+    setProgress(0)
+
+    const tick = () => {
+      setProgress((prev) => {
+        if (prev >= WIKI_PROGRESS_PRE_COMPLETE_MAX) return prev
+        const remaining = WIKI_PROGRESS_PRE_COMPLETE_MAX - prev
+        // Ease-out towards the cap
+        const next = prev + Math.max(1, Math.round(remaining * 0.12))
+        return Math.min(WIKI_PROGRESS_PRE_COMPLETE_MAX, next)
+      })
+      tickTimerRef.current = setTimeout(tick, WIKI_PROGRESS_TICK_MS)
+    }
+
+    tickTimerRef.current = setTimeout(tick, WIKI_PROGRESS_TICK_MS)
+
+    return () => {
+      clearTimers()
+    }
+  }, [clearTimers, isWikiLoading, isImageLoading])
+
+  // Complete and fade out once fully loaded (wiki + image if present)
+  useEffect(() => {
+    if (!barVisible) return
+    if (!isFullyLoaded) return
+
+    // Stop ticking and fill to 100%
+    if (tickTimerRef.current) {
+      clearTimeout(tickTimerRef.current)
+      tickTimerRef.current = null
+    }
+    setProgress(100)
+
+    // Keep visible briefly, then hide without layout shift (opacity transition)
+    if (doneTimerRef.current) {
+      clearTimeout(doneTimerRef.current)
+    }
+    doneTimerRef.current = setTimeout(() => {
+      setBarVisible(false)
+      doneTimerRef.current = null
+    }, WIKI_PROGRESS_DONE_HOLD_MS)
+  }, [barVisible, isFullyLoaded])
 
   return (
     <div className={styles.card} data-extended={extended || undefined}>
@@ -105,6 +208,11 @@ export function StructureInfoCard({
           alt={structure.name}
           className={styles.image}
           containerClassName={styles.imageContainer}
+          onStatusChange={(s) => {
+            if (s === 'loading') setImageStatus('loading')
+            else if (s === 'loaded') setImageStatus('loaded')
+            else setImageStatus('error')
+          }}
         />
       )}
 
@@ -155,9 +263,6 @@ export function StructureInfoCard({
         <p className={styles.description}>{wikiMetadata.description}</p>
       )}
 
-      {/* Loading indicator */}
-      {isLoading && <div className={styles.loading}>Loading wiki info...</div>}
-
       {/* Wiki link button (only if wiki page exists) */}
       {hasWiki && (
         <a
@@ -169,6 +274,15 @@ export function StructureInfoCard({
           Open on Wiki ↗
         </a>
       )}
+
+      {/* Wiki fetch progress bar (bottom border, overlay) */}
+      <div
+        className={styles.wikiProgressBar}
+        data-visible={barVisible || undefined}
+        style={{ ['--wiki-progress' as string]: `${progress}%` }}
+      >
+        <div className={styles.wikiProgressFill} />
+      </div>
     </div>
   )
 }
