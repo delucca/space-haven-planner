@@ -490,8 +490,8 @@ export function CanvasViewport() {
       const canvas = canvasRef.current
       if (!canvas) return
 
-      // Space+drag = panning (in Select tool)
-      if (isSpaceHeld && tool === 'select') {
+      // Space+drag = panning (works in all tools)
+      if (isSpaceHeld) {
         const scrollContainer = containerRef.current?.parentElement
         if (scrollContainer) {
           setIsPanning(true)
@@ -735,7 +735,8 @@ export function CanvasViewport() {
 
   // Determine cursor based on tool and state
   const getCursor = () => {
-    if (isSpaceHeld && tool === 'select') return isPanning ? 'grabbing' : 'grab'
+    // Space held = pan mode (works in all tools)
+    if (isSpaceHeld) return isPanning ? 'grabbing' : 'grab'
     if (isMovingSelection) return 'move'
     if (tool === 'erase') return 'crosshair'
     if (tool === 'hull') return 'cell'

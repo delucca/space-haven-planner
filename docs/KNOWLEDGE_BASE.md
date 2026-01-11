@@ -106,7 +106,7 @@ Handled by `useKeyboardShortcuts` hook (`src/features/planner/hooks/useKeyboardS
 | `2`                   | Hull tool                                    |
 | `3`                   | Place tool                                   |
 | `4`                   | Erase tool                                   |
-| `Space` + drag        | Pan canvas (in Select mode)                  |
+| `Space` + drag        | Pan canvas (works in all tools)              |
 | `Delete` / `Backspace`| Delete selected structures (in Select mode)  |
 | `Escape`              | Clear selection (palette + grid selection)   |
 
@@ -219,7 +219,7 @@ The Select tool (`1`) is the default tool on app load. It provides:
 - **Move any structure**: Click and drag on any structure to move it (auto-selects if not selected)
 - **Move multiple**: If clicking on an already-selected structure, moves all selected structures together
 - **Move validation**: Moves are validated against bounds and collisions; invalid moves show red preview and snap back
-- **Pan mode**: Hold `Space` and drag to pan/scroll the canvas
+- **Pan mode**: Hold `Space` and drag to pan/scroll the canvas (works in all tools)
 - **Delete selected**: Press `Delete` or `Backspace` to delete selected structures (with confirmation)
 - **Selection display**: Selected structures appear in the right sidebar "Selected" section
 - **Clear selection**: Press `Escape` or click "Clear Selection" button
