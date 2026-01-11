@@ -696,16 +696,37 @@ The wiki is **no longer the primary catalog source**. It now provides supplement
 
 ### Current status
 
-- Wiki fetch/parse code exists in `src/data/catalog/wiki.ts`
-- Planned uses: structure images, extended descriptions, wiki page links
-- **Not used for**: structure sizes, categories, or core catalog data
-- **Fandom image hotlinking**: `static.wikia.nocookie.net` returns a **404 placeholder image** when the request includes a `Referer` like `http://localhost:5174/`. To reliably show images in-app, render them with `referrerPolicy="no-referrer"` so the browser omits the Referer header.
+- **Used for**: structure images, short descriptions, and wiki page links in the planner UI (hover popovers + placement panel).
+- **Not used for**: structure sizes, categories, or any “source of truth” catalog data (JAR remains authoritative).
+- **Fandom domain**: `spacehaven.fandom.com` (MediaWiki API endpoint: `https://spacehaven.fandom.com/api.php`).
+- **Fandom image hotlinking**: `static.wikia.nocookie.net` can return a **404 placeholder image** when the request includes a `Referer` like `http://localhost:5174/`. To reliably show images in-app, render them with `referrerPolicy="no-referrer"` so the browser omits the Referer header.
+
+### How it works (high-level)
+
+- **Metadata service**: `src/data/catalog/wikiMetadata.ts`
+  - On-demand per-structure lookup via `getWikiMetadataForStructure(name, signal?)`
+  - **Caching**: per-structure entries in `localStorage` with a 24h TTL
+    - Positive cache for found pages
+    - Negative cache for missing pages (so we don’t keep re-querying)
+  - “Batch” helpers (`getWikiMetadata`, `fetchWikiMetadata`) still exist but are not currently used by the planner UI.
+- **React hook**: `src/features/planner/hooks/useWikiStructureMetadata.ts`
+  - Cancels in-flight requests via `AbortController`
+  - Supports delayed hover by accepting `enabled` (set `false` until hover delay elapses)
+- **UI components**:
+  - `StructureInfoPopover` (`src/features/planner/components/StructureInfoPopover.tsx`): portal-based popover anchored to a hovered element, with viewport clamping
+  - `StructureInfoCard` (`src/features/planner/components/StructureInfoCard.tsx`): shared rendering for popover + “Placement” panel
+- **Where it’s used**:
+  - `Palette.tsx`: hover popovers **only for the palette list** (not the entire left sidebar)
+  - `CanvasViewport.tsx`: hover popovers for structures on the canvas
+  - `LayerPanel.tsx`: “Placement” section shows extended info for the currently selected structure to place
+  - Hover UX: `HOVER_DELAY_MS = 500` and `CLOSE_DELAY_MS = 150` (prevents the popover from closing while moving the cursor onto it)
+- **Missing pages**: When lookup status is `missing`, the UI simply omits the “Open on Wiki” button (graceful degradation).
 
 ### Key files
 
 - `src/data/catalog/wiki.ts` — wiki fetch, parse logic (for future metadata use)
-- `src/data/catalog/wikiMetadata.ts` — metadata types and storage
-- `src/data/catalog/cache.ts` — metadata caching
+- `src/data/catalog/wikiMetadata.ts` — MediaWiki API integration + caching for supplemental metadata
+- `src/data/catalog/cache.ts` — catalog caching (unrelated to wiki metadata)
 
 ---
 

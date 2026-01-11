@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { StructureDef, StructureCategory, TileLayout } from '@/data/types'
 import type { WikiStructureMetadata, WikiStructureLookupStatus } from '@/data/catalog/wikiMetadata'
 import styles from './StructureInfoPopover.module.css'
@@ -20,36 +20,23 @@ function WikiImage({
   className?: string
   containerClassName?: string
 }) {
-  const [status, setStatus] = useState<'loading' | 'loaded' | 'error'>('loading')
-  const imgRef = useRef<HTMLImageElement | null>(null)
+  const [hasError, setHasError] = useState(false)
 
   useEffect(() => {
-    setStatus('loading')
-  }, [src])
-
-  // If the image is already cached, onLoad might not fire reliably. Detect and update status.
-  useEffect(() => {
-    const img = imgRef.current
-    if (!img) return
-    if (!img.complete) return
-
-    setStatus(img.naturalWidth > 0 ? 'loaded' : 'error')
+    setHasError(false)
   }, [src])
 
   return (
     <div className={containerClassName}>
-      {status === 'loading' && <div className={styles.imageLoading}>Loading image...</div>}
-      {status === 'error' && <div className={styles.imageLoading}>Image unavailable.</div>}
-
-      {status !== 'error' && (
+      {hasError ? (
+        <div className={styles.imageLoading}>Image unavailable.</div>
+      ) : (
         <img
-          ref={imgRef}
           src={src}
           alt={alt}
           className={className}
           referrerPolicy="no-referrer"
-          onLoad={() => setStatus('loaded')}
-          onError={() => setStatus('error')}
+          onError={() => setHasError(true)}
         />
       )}
     </div>

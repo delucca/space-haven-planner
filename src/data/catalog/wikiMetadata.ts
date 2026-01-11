@@ -4,8 +4,8 @@
  * Provides supplemental metadata from the Space Haven wiki.
  * This is NOT used for building the catalog - the JAR file is the primary source.
  * Instead, this provides:
- * - Structure images (future)
- * - Extended descriptions (future)
+ * - Structure images
+ * - Extended descriptions
  * - Wiki page links
  *
  * Metadata is keyed by structure name for correlation with JAR-derived structures.
