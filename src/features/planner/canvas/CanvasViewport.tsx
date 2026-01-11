@@ -133,16 +133,14 @@ function getStructureSelectionBounds(
   return { x: struct.x, y: struct.y, width: w, height: h }
 }
 
-/** Check if a tile position is on any of the selected structures */
-function isTileOnSelectedStructure(
+/** Find the structure at a tile position (returns structure id or null) */
+function findStructureAtTile(
   tileX: number,
   tileY: number,
   structures: readonly { id: string; x: number; y: number; rotation: 0 | 90 | 180 | 270; structureId: string }[],
-  selectedIds: ReadonlySet<string>,
   catalog: Parameters<typeof findStructureById>[0]
-): boolean {
+): string | null {
   for (const struct of structures) {
-    if (!selectedIds.has(struct.id)) continue
     const found = findStructureById(catalog, struct.structureId)
     if (!found) continue
     const bounds = getStructureSelectionBounds(struct, found.structure)
@@ -152,10 +150,10 @@ function isTileOnSelectedStructure(
       tileY >= bounds.y &&
       tileY < bounds.y + bounds.height
     ) {
-      return true
+      return struct.id
     }
   }
-  return false
+  return null
 }
 
 export function CanvasViewport() {
@@ -452,18 +450,22 @@ export function CanvasViewport() {
       const tile = getTileFromMouse(canvas, e.clientX, e.clientY, zoom)
       dispatch({ type: 'SET_HOVERED_TILE', tile })
 
-      // In Select tool, check if clicking on a selected structure to start move
-      if (
-        tool === 'select' &&
-        selectedStructureIds.size > 0 &&
-        isTileOnSelectedStructure(tile.x, tile.y, structures, selectedStructureIds, catalog)
-      ) {
-        setIsMovingSelection(true)
-        setMoveDelta({ x: 0, y: 0 })
-        dragStartRef.current = { x: tile.x, y: tile.y }
-        dragEndRef.current = { x: tile.x, y: tile.y }
-        dispatch({ type: 'SET_DRAGGING', isDragging: true })
-        return
+      // In Select tool, check if clicking on any structure to start move
+      if (tool === 'select') {
+        const clickedStructureId = findStructureAtTile(tile.x, tile.y, structures, catalog)
+        if (clickedStructureId) {
+          // If clicking on a structure that's not selected, select it first
+          if (!selectedStructureIds.has(clickedStructureId)) {
+            dispatch({ type: 'SET_SELECTED_STRUCTURES', structureIds: [clickedStructureId] })
+          }
+          // Start moving
+          setIsMovingSelection(true)
+          setMoveDelta({ x: 0, y: 0 })
+          dragStartRef.current = { x: tile.x, y: tile.y }
+          dragEndRef.current = { x: tile.x, y: tile.y }
+          dispatch({ type: 'SET_DRAGGING', isDragging: true })
+          return
+        }
       }
 
       dispatch({ type: 'SET_DRAGGING', isDragging: true })
@@ -648,11 +650,11 @@ export function CanvasViewport() {
     setDragRect(null)
   }, [dispatch])
 
-  // Check if hovering over a selected structure (for cursor)
-  const isHoveringSelected = useMemo(() => {
-    if (tool !== 'select' || selectedStructureIds.size === 0 || !hoveredTile) return false
-    return isTileOnSelectedStructure(hoveredTile.x, hoveredTile.y, structures, selectedStructureIds, catalog)
-  }, [tool, selectedStructureIds, hoveredTile, structures, catalog])
+  // Check if hovering over any structure (for cursor) - in Select mode, any structure can be moved
+  const isHoveringStructure = useMemo(() => {
+    if (tool !== 'select' || !hoveredTile) return false
+    return findStructureAtTile(hoveredTile.x, hoveredTile.y, structures, catalog) !== null
+  }, [tool, hoveredTile, structures, catalog])
 
   // Determine cursor based on tool and state
   const getCursor = () => {
@@ -660,7 +662,7 @@ export function CanvasViewport() {
     if (isMovingSelection) return 'move'
     if (tool === 'erase') return 'crosshair'
     if (tool === 'hull') return 'cell'
-    if (tool === 'select') return isHoveringSelected ? 'move' : 'default'
+    if (tool === 'select') return isHoveringStructure ? 'move' : 'default'
     return 'pointer'
   }
 

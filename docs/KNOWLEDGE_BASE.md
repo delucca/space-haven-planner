@@ -215,12 +215,13 @@ Layout state is persisted in `localStorage` under key `space-haven-planner-layou
 The Select tool (`1`) is the default tool on app load. It provides:
 
 - **Box selection**: Drag on empty canvas to select structures within the rectangle
-- **Move selection**: Click and drag on a selected structure to move all selected structures
+- **Move any structure**: Click and drag on any structure to move it (auto-selects if not selected)
+- **Move multiple**: If clicking on an already-selected structure, moves all selected structures together
 - **Pan mode**: Hold `Space` and drag to pan/scroll the canvas
 - **Delete selected**: Press `Delete` or `Backspace` to delete selected structures (with confirmation)
 - **Selection display**: Selected structures appear in the right sidebar "Selected" section
 - **Clear selection**: Press `Escape` or click "Clear Selection" button
-- **Cursor feedback**: Shows `move` cursor when hovering over selected structures
+- **Cursor feedback**: Shows `move` cursor when hovering over any structure
 
 Selected structures are stored in `PlannerState.selectedStructureIds` (a `ReadonlySet<string>`).
 
