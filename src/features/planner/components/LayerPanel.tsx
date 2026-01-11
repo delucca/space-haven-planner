@@ -3,6 +3,8 @@ import { usePlanner } from '../state'
 import { findStructureById } from '@/data/catalog'
 import type { UserLayer, UserGroup, PlacedStructure } from '@/data/types'
 import { ConfirmDialog } from './ConfirmDialog'
+import { StructureInfoCard } from './StructureInfoCard'
+import { useWikiStructureMetadata } from '../hooks'
 import styles from './LayerPanel.module.css'
 
 interface EditingState {
@@ -698,26 +700,10 @@ export function LayerPanel() {
       </section>
 
       {/* Placement preview section */}
-      <section className={styles.section}>
-        <h3 className={styles.sectionTitle}>Placement</h3>
-        {selectedInfo ? (
-          <div className={styles.selectionInfo}>
-            <div className={styles.selectionName}>{selectedInfo.structure.name}</div>
-            <div className={styles.selectionDetails}>
-              Size: {selectedInfo.structure.size[0]}×{selectedInfo.structure.size[1]} tiles
-            </div>
-            <div className={styles.selectionDetails}>Rotation: {previewRotation}°</div>
-            <div
-              className={styles.selectionPreview}
-              style={{ backgroundColor: selectedInfo.structure.color }}
-            >
-              Preview
-            </div>
-          </div>
-        ) : (
-          <div className={styles.noSelection}>Select a structure from the palette</div>
-        )}
-      </section>
+      <PlacementSection
+        selectedInfo={selectedInfo}
+        previewRotation={previewRotation}
+      />
 
       {/* Help section */}
       <section className={styles.section}>
@@ -781,5 +767,44 @@ function StructureItem({
         ×
       </button>
     </div>
+  )
+}
+
+/**
+ * Placement section with extended wiki info
+ */
+function PlacementSection({
+  selectedInfo,
+  previewRotation,
+}: {
+  selectedInfo: ReturnType<typeof findStructureById>
+  previewRotation: number
+}) {
+  // Fetch wiki metadata for the selected structure
+  const { status: wikiStatus, metadata: wikiMetadata } = useWikiStructureMetadata(
+    selectedInfo?.structure.name ?? null
+  )
+
+  return (
+    <section className={styles.section}>
+      <h3 className={styles.sectionTitle}>Placement</h3>
+      {selectedInfo ? (
+        <div className={styles.placementContent}>
+          <StructureInfoCard
+            structure={selectedInfo.structure}
+            category={selectedInfo.category}
+            wikiStatus={wikiStatus}
+            wikiMetadata={wikiMetadata}
+            extended
+          />
+          <div className={styles.rotationInfo}>
+            <span className={styles.rotationLabel}>Rotation</span>
+            <span className={styles.rotationValue}>{previewRotation}°</span>
+          </div>
+        </div>
+      ) : (
+        <div className={styles.noSelection}>Select a structure from the palette</div>
+      )}
+    </section>
   )
 }

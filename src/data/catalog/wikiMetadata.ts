@@ -33,9 +33,14 @@ export interface WikiStructureMetadata {
 }
 
 /**
- * Cache key for wiki metadata
+ * Cache key for wiki metadata (batch)
  */
 const METADATA_CACHE_KEY = 'space-haven-planner-wiki-metadata'
+
+/**
+ * Cache key prefix for per-structure metadata
+ */
+const STRUCTURE_CACHE_KEY_PREFIX = 'space-haven-planner-wiki-structure-'
 
 /**
  * Cache TTL: 24 hours
@@ -43,11 +48,33 @@ const METADATA_CACHE_KEY = 'space-haven-planner-wiki-metadata'
 const CACHE_TTL_MS = 24 * 60 * 60 * 1000
 
 /**
- * Cached metadata structure
+ * Cached metadata structure (batch)
  */
 interface CachedMetadata {
   readonly data: Record<string, WikiStructureMetadata>
   readonly fetchedAt: number
+}
+
+/**
+ * Result status for per-structure lookup
+ */
+export type WikiStructureLookupStatus = 'found' | 'missing' | 'loading' | 'error'
+
+/**
+ * Per-structure cache entry (supports positive + negative caching)
+ */
+interface PerStructureCacheEntry {
+  readonly status: 'found' | 'missing'
+  readonly metadata: WikiStructureMetadata | null
+  readonly fetchedAt: number
+}
+
+/**
+ * Result of per-structure wiki metadata lookup
+ */
+export interface WikiStructureLookupResult {
+  readonly status: WikiStructureLookupStatus
+  readonly metadata: WikiStructureMetadata | null
 }
 
 /**
@@ -143,11 +170,24 @@ interface WikiPageInfo {
   revisions?: Array<{ revid: number }>
   original?: { source: string }
   extract?: string
+  images?: Array<{ ns: number; title: string }>
 }
 
-interface WikiQueryResponse {
+interface WikiImageInfo {
+  title: string
+  missing?: boolean
+  imageinfo?: Array<{ url: string }>
+}
+
+interface WikiPageQueryResponse {
   query?: {
     pages?: WikiPageInfo[]
+  }
+}
+
+interface WikiImageQueryResponse {
+  query?: {
+    pages?: WikiImageInfo[]
   }
 }
 
@@ -172,7 +212,7 @@ async function fetchMetadataBatch(names: string[]): Promise<Map<string, WikiStru
       return results
     }
 
-    const data: WikiQueryResponse = await response.json()
+    const data: WikiPageQueryResponse = await response.json()
     const pages = data.query?.pages
 
     if (!pages) {
@@ -264,4 +304,341 @@ export async function getWikiMetadata(
   saveCachedMetadata(fresh)
 
   return fresh
+}
+
+// =============================================================================
+// Per-structure lookup with positive + negative caching
+// =============================================================================
+
+/**
+ * Generate cache key for a structure name
+ */
+function getStructureCacheKey(structureName: string): string {
+  return STRUCTURE_CACHE_KEY_PREFIX + structureName.toLowerCase().replace(/[^a-z0-9]+/g, '_')
+}
+
+/**
+ * Load per-structure cache entry from localStorage
+ */
+function loadStructureCacheEntry(structureName: string): PerStructureCacheEntry | null {
+  try {
+    const key = getStructureCacheKey(structureName)
+    const stored = localStorage.getItem(key)
+    if (!stored) return null
+
+    const parsed = JSON.parse(stored) as PerStructureCacheEntry
+    if (
+      (parsed.status !== 'found' && parsed.status !== 'missing') ||
+      typeof parsed.fetchedAt !== 'number'
+    ) {
+      return null
+    }
+
+    return parsed
+  } catch {
+    return null
+  }
+}
+
+/**
+ * Save per-structure cache entry to localStorage
+ */
+function saveStructureCacheEntry(
+  structureName: string,
+  status: 'found' | 'missing',
+  metadata: WikiStructureMetadata | null
+): void {
+  try {
+    const key = getStructureCacheKey(structureName)
+    const entry: PerStructureCacheEntry = {
+      status,
+      metadata,
+      fetchedAt: Date.now(),
+    }
+    localStorage.setItem(key, JSON.stringify(entry))
+  } catch {
+    // Ignore storage errors
+  }
+}
+
+/**
+ * Build MediaWiki API URL for fetching a single page with redirects and images list
+ */
+function buildSinglePageInfoUrl(title: string): string {
+  const params = new URLSearchParams({
+    action: 'query',
+    format: 'json',
+    origin: '*',
+    formatversion: '2',
+    prop: 'revisions|images',
+    rvprop: 'ids',
+    imlimit: '20', // Get up to 20 images from the page
+    redirects: '1', // Follow redirects
+    titles: title,
+  })
+  return `${WIKI_API_URL}?${params.toString()}`
+}
+
+/**
+ * Build MediaWiki API URL for fetching image info (actual URL) for a file
+ */
+function buildImageInfoUrl(fileTitle: string): string {
+  const params = new URLSearchParams({
+    action: 'query',
+    format: 'json',
+    origin: '*',
+    formatversion: '2',
+    prop: 'imageinfo',
+    iiprop: 'url',
+    titles: fileTitle,
+  })
+  return `${WIKI_API_URL}?${params.toString()}`
+}
+
+/**
+ * Normalize a string for fuzzy matching (remove spaces, lowercase, remove special chars)
+ */
+function normalizeForMatching(str: string): string {
+  return str.toLowerCase().replace(/[^a-z0-9]/g, '')
+}
+
+/**
+ * Find the best matching image file from a list of images on a wiki page
+ * Prioritizes images whose filename matches the structure name
+ */
+function findBestMatchingImage(
+  structureName: string,
+  images: Array<{ ns: number; title: string }>
+): string | null {
+  if (!images || images.length === 0) return null
+
+  const normalizedName = normalizeForMatching(structureName)
+
+  // Filter to only image files (File: namespace)
+  const imageFiles = images.filter((img) => img.title.startsWith('File:'))
+
+  if (imageFiles.length === 0) return null
+
+  // Score each image based on how well it matches the structure name
+  const scored = imageFiles.map((img) => {
+    // Remove "File:" prefix and extension for matching
+    const filename = img.title.replace(/^File:/, '').replace(/\.[^.]+$/, '')
+    const normalizedFilename = normalizeForMatching(filename)
+
+    let score = 0
+
+    // Exact match (highest priority)
+    if (normalizedFilename === normalizedName) {
+      score = 100
+    }
+    // Filename contains the structure name
+    else if (normalizedFilename.includes(normalizedName)) {
+      score = 80
+    }
+    // Structure name contains the filename
+    else if (normalizedName.includes(normalizedFilename)) {
+      score = 60
+    }
+    // Partial word overlap
+    else {
+      const nameWords = structureName.toLowerCase().split(/\s+/)
+      const filenameWords = filename.toLowerCase().split(/(?=[A-Z])|\s+/)
+      const matchingWords = nameWords.filter((word) =>
+        filenameWords.some((fw) => fw.includes(word) || word.includes(fw))
+      )
+      score = matchingWords.length * 20
+    }
+
+    // Penalize generic images (footprint, icon, etc.)
+    const lowerFilename = filename.toLowerCase()
+    if (lowerFilename.includes('footprint') || lowerFilename.includes('icon')) {
+      score -= 10
+    }
+    // Penalize facility block images (FB prefix)
+    if (lowerFilename.startsWith('fb') || lowerFilename.startsWith('FB')) {
+      score -= 30
+    }
+
+    return { title: img.title, score }
+  })
+
+  // Sort by score descending and return the best match
+  scored.sort((a, b) => b.score - a.score)
+
+  // Only return if we have a reasonable match (score > 0)
+  return scored[0]?.score > 0 ? scored[0].title : null
+}
+
+/**
+ * Fetch the actual URL for an image file
+ */
+async function fetchImageUrl(fileTitle: string, signal?: AbortSignal): Promise<string | null> {
+  try {
+    const url = buildImageInfoUrl(fileTitle)
+    const response = await fetch(url, { signal })
+
+    if (!response.ok) return null
+
+    const data: WikiImageQueryResponse = await response.json()
+    const pages = data.query?.pages
+
+    if (!pages || pages.length === 0) return null
+
+    const page = pages[0]
+    if (page.missing) return null
+
+    const imageInfo = page.imageinfo?.[0]
+    return imageInfo?.url ?? null
+  } catch {
+    return null
+  }
+}
+
+/**
+ * Fetch wiki metadata for a single structure name
+ * Returns the metadata if found, null if missing/error
+ *
+ * This function:
+ * 1. Fetches page info including the list of images on the page
+ * 2. Finds the best matching image based on the structure name
+ * 3. Fetches the actual URL for that image
+ */
+async function fetchSingleStructureMetadata(
+  structureName: string,
+  signal?: AbortSignal
+): Promise<WikiStructureMetadata | null> {
+  try {
+    const url = buildSinglePageInfoUrl(structureName)
+    const response = await fetch(url, { signal })
+
+    if (!response.ok) {
+      console.warn(`Wiki metadata fetch failed for "${structureName}": ${response.status}`)
+      return null
+    }
+
+    const contentType = response.headers.get('content-type') || ''
+    if (!contentType.includes('application/json')) {
+      console.warn('Wiki API returned non-JSON response')
+      return null
+    }
+
+    const data: WikiPageQueryResponse = await response.json()
+    const pages = data.query?.pages
+
+    if (!pages || pages.length === 0) {
+      return null
+    }
+
+    const page = pages[0]
+    if (page.missing) {
+      return null
+    }
+
+    const revisionId = page.revisions?.[0]?.revid ?? 0
+
+    // Find the best matching image from the page's images
+    let imageUrl: string | null = null
+    if (page.images && page.images.length > 0) {
+      const bestImageTitle = findBestMatchingImage(structureName, page.images)
+      if (bestImageTitle) {
+        imageUrl = await fetchImageUrl(bestImageTitle, signal)
+      }
+    }
+
+    return {
+      pageTitle: page.title,
+      pageUrl: getWikiPageUrl(page.title),
+      imageUrl,
+      description: null, // We removed extracts since Fandom doesn't support it
+      revisionId,
+    }
+  } catch (error) {
+    // Don't log abort errors
+    if (error instanceof Error && error.name === 'AbortError') {
+      return null
+    }
+    console.warn(`Wiki metadata fetch error for "${structureName}":`, error)
+    return null
+  }
+}
+
+/**
+ * Get wiki metadata for a single structure with caching (positive + negative)
+ *
+ * This function:
+ * 1. Checks localStorage cache for the structure name
+ * 2. If cached (found or missing) and not stale, returns cached result
+ * 3. Otherwise fetches from wiki API and caches the result
+ *
+ * @param structureName - The structure name to look up
+ * @param signal - Optional AbortSignal to cancel the request
+ * @returns Promise resolving to lookup result with status and optional metadata
+ */
+export async function getWikiMetadataForStructure(
+  structureName: string,
+  signal?: AbortSignal
+): Promise<WikiStructureLookupResult> {
+  // Check per-structure cache first
+  const cached = loadStructureCacheEntry(structureName)
+  if (cached && !isMetadataCacheStale(cached.fetchedAt)) {
+    return {
+      status: cached.status,
+      metadata: cached.metadata,
+    }
+  }
+
+  // NOTE: We intentionally skip the batch cache here because it uses the old
+  // pageimages API which returns incorrect images (e.g., FBComfort.png instead
+  // of JukeBox.png for the Jukebox page). The per-structure cache uses the
+  // new image matching logic which finds the correct image.
+
+  // Fetch from wiki API
+  const metadata = await fetchSingleStructureMetadata(structureName, signal)
+
+  if (metadata) {
+    saveStructureCacheEntry(structureName, 'found', metadata)
+    return { status: 'found', metadata }
+  }
+
+  // Cache the negative result (missing)
+  saveStructureCacheEntry(structureName, 'missing', null)
+  return { status: 'missing', metadata: null }
+}
+
+/**
+ * Clear per-structure cache entry
+ * Useful for forcing a refresh
+ */
+export function clearStructureCacheEntry(structureName: string): void {
+  try {
+    const key = getStructureCacheKey(structureName)
+    localStorage.removeItem(key)
+  } catch {
+    // Ignore storage errors
+  }
+}
+
+/**
+ * Clear all wiki metadata caches (both batch and per-structure)
+ * Useful for forcing a refresh of all wiki data
+ */
+export function clearAllWikiCaches(): void {
+  try {
+    // Clear batch cache
+    localStorage.removeItem(METADATA_CACHE_KEY)
+
+    // Clear all per-structure caches
+    const keysToRemove: string[] = []
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i)
+      if (key?.startsWith(STRUCTURE_CACHE_KEY_PREFIX)) {
+        keysToRemove.push(key)
+      }
+    }
+    keysToRemove.forEach((key) => localStorage.removeItem(key))
+
+    console.log(`Cleared wiki caches: batch cache + ${keysToRemove.length} structure entries`)
+  } catch {
+    // Ignore storage errors
+  }
 }

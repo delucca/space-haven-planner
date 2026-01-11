@@ -1,7 +1,8 @@
 import { useRef, useEffect, useCallback, useState, useMemo } from 'react'
 import { usePlanner, isStructureInteractive, canPlaceAt } from '../state'
-import { findStructureById, getRotatedSize, type StructureCatalog, type PlacedStructure } from '@/data'
+import { findStructureById, getRotatedSize, type StructureCatalog, type PlacedStructure, type StructureDef, type StructureCategory } from '@/data'
 import { ConfirmDialog } from '../components/ConfirmDialog'
+import { StructureInfoPopover } from '../components/StructureInfoPopover'
 import {
   createRenderContext,
   renderScene,
@@ -11,6 +12,9 @@ import {
   type SelectionOverlayRect,
 } from './renderer'
 import styles from './CanvasViewport.module.css'
+
+/** Hover delay before showing popover (ms) */
+const HOVER_DELAY_MS = 500
 
 /** Check if event target is an input element */
 function isInputElement(target: EventTarget | null): boolean {
@@ -205,6 +209,37 @@ function findStructureAtTile(
   return null
 }
 
+/** Find the structure at a tile position and return full info */
+function findStructureInfoAtTile(
+  tileX: number,
+  tileY: number,
+  structures: readonly PlacedStructure[],
+  catalog: Parameters<typeof findStructureById>[0]
+): { structure: StructureDef; category: StructureCategory } | null {
+  for (const struct of structures) {
+    const found = findStructureById(catalog, struct.structureId)
+    if (!found) continue
+    const bounds = getStructureSelectionBounds(struct, found.structure)
+    if (
+      tileX >= bounds.x &&
+      tileX < bounds.x + bounds.width &&
+      tileY >= bounds.y &&
+      tileY < bounds.y + bounds.height
+    ) {
+      return { structure: found.structure, category: found.category }
+    }
+  }
+  return null
+}
+
+/** State for hovered structure popover on canvas */
+interface CanvasHoveredState {
+  structure: StructureDef
+  category: StructureCategory
+  anchorX: number
+  anchorY: number
+}
+
 export function CanvasViewport() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -225,6 +260,13 @@ export function CanvasViewport() {
   const dragHullEraseRef = useRef<boolean>(false)
   // For Space+drag panning
   const panStartRef = useRef<{ scrollLeft: number; scrollTop: number; clientX: number; clientY: number } | null>(null)
+  
+  // Hover popover state for canvas structures
+  const [canvasHoveredItem, setCanvasHoveredItem] = useState<CanvasHoveredState | null>(null)
+  const [isCanvasPopoverHovered, setIsCanvasPopoverHovered] = useState(false)
+  const canvasHoverTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const canvasMousePosRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 })
+  const lastHoveredTileRef = useRef<{ x: number; y: number } | null>(null)
 
   const {
     gridSize,
@@ -245,6 +287,39 @@ export function CanvasViewport() {
 
   // Create visibility state for rendering
   const visibilityState = useMemo(() => ({ userLayers, userGroups }), [userLayers, userGroups])
+
+  // Clear canvas hover timer
+  const clearCanvasHoverTimer = useCallback(() => {
+    if (canvasHoverTimerRef.current) {
+      clearTimeout(canvasHoverTimerRef.current)
+      canvasHoverTimerRef.current = null
+    }
+  }, [])
+
+  // Start hover timer for canvas popover
+  const startCanvasHoverTimer = useCallback(() => {
+    clearCanvasHoverTimer()
+    
+    canvasHoverTimerRef.current = setTimeout(() => {
+      const pos = canvasMousePosRef.current
+      const tile = lastHoveredTileRef.current
+      if (!tile) return
+      
+      const info = findStructureInfoAtTile(tile.x, tile.y, structures, catalog)
+      if (info) {
+        setCanvasHoveredItem({
+          structure: info.structure,
+          category: info.category,
+          anchorX: pos.x,
+          anchorY: pos.y,
+        })
+      }
+    }, HOVER_DELAY_MS)
+  }, [clearCanvasHoverTimer, structures, catalog])
+
+  // Close canvas popover when dragging/panning starts
+  // We handle this in the event handlers (handleMouseDown) instead of an effect
+  // to avoid the lint warning about setState in effects
 
   // Track Space key for panning and Delete/Backspace for deletion
   useEffect(() => {
@@ -441,6 +516,9 @@ export function CanvasViewport() {
       const canvas = canvasRef.current
       if (!canvas) return
 
+      // Always track mouse position for popover anchor
+      canvasMousePosRef.current = { x: e.clientX, y: e.clientY }
+
       // Handle Space+drag panning
       if (isPanning && panStartRef.current) {
         const scrollContainer = containerRef.current?.parentElement
@@ -455,6 +533,20 @@ export function CanvasViewport() {
 
       const tile = getTileFromMouse(canvas, e.clientX, e.clientY, zoom)
       dispatch({ type: 'SET_HOVERED_TILE', tile })
+
+      // Track tile changes for hover popover (restart timer when tile changes)
+      const lastTile = lastHoveredTileRef.current
+      if (!lastTile || lastTile.x !== tile.x || lastTile.y !== tile.y) {
+        lastHoveredTileRef.current = { x: tile.x, y: tile.y }
+        
+        // Close popover and restart timer if not hovering the popover
+        if (!isCanvasPopoverHovered) {
+          setCanvasHoveredItem(null)
+          if (!isDragging && !isPanning && !isMovingSelection) {
+            startCanvasHoverTimer()
+          }
+        }
+      }
 
       // Handle move selection drag
       if (isMovingSelection && dragStartRef.current) {
@@ -479,7 +571,7 @@ export function CanvasViewport() {
         }
       }
     },
-    [zoom, dispatch, isDragging, isPanning, isMovingSelection]
+    [zoom, dispatch, isDragging, isPanning, isMovingSelection, isCanvasPopoverHovered, startCanvasHoverTimer]
   )
 
   // Handle mouse down
@@ -489,6 +581,11 @@ export function CanvasViewport() {
 
       const canvas = canvasRef.current
       if (!canvas) return
+
+      // Clear canvas hover popover when starting any interaction
+      clearCanvasHoverTimer()
+      setCanvasHoveredItem(null)
+      setIsCanvasPopoverHovered(false)
 
       // Space+drag = panning (works in all tools)
       if (isSpaceHeld) {
@@ -551,7 +648,7 @@ export function CanvasViewport() {
       dragHullEraseRef.current = tool === 'hull' && e.shiftKey
       setDragRect({ x1: tile.x, y1: tile.y, x2: tile.x, y2: tile.y })
     },
-    [zoom, dispatch, tool, isSpaceHeld, selectedStructureIds, structures, catalog]
+    [zoom, dispatch, tool, isSpaceHeld, selectedStructureIds, structures, catalog, clearCanvasHoverTimer]
   )
 
   // Handle mouse up
@@ -725,13 +822,31 @@ export function CanvasViewport() {
     setMoveDelta(null)
     panStartRef.current = null
     setDragRect(null)
-  }, [dispatch])
+    
+    // Clear canvas hover popover
+    clearCanvasHoverTimer()
+    lastHoveredTileRef.current = null
+    if (!isCanvasPopoverHovered) {
+      setCanvasHoveredItem(null)
+    }
+  }, [dispatch, clearCanvasHoverTimer, isCanvasPopoverHovered])
 
   // Check if hovering over any structure (for cursor) - in Select mode, any structure can be moved
   const isHoveringStructure = useMemo(() => {
     if (tool !== 'select' || !hoveredTile) return false
     return findStructureAtTile(hoveredTile.x, hoveredTile.y, structures, catalog) !== null
   }, [tool, hoveredTile, structures, catalog])
+
+  // Handle canvas popover mouse enter
+  const handleCanvasPopoverMouseEnter = useCallback(() => {
+    setIsCanvasPopoverHovered(true)
+  }, [])
+
+  // Handle canvas popover mouse leave
+  const handleCanvasPopoverMouseLeave = useCallback(() => {
+    setIsCanvasPopoverHovered(false)
+    setCanvasHoveredItem(null)
+  }, [])
 
   // Determine cursor based on tool and state
   const getCursor = () => {
@@ -799,6 +914,18 @@ export function CanvasViewport() {
           setPendingDeleteSelection(false)
         }}
       />
+      
+      {/* Canvas hover popover */}
+      {canvasHoveredItem && (
+        <StructureInfoPopover
+          structure={canvasHoveredItem.structure}
+          category={canvasHoveredItem.category}
+          anchorX={canvasHoveredItem.anchorX}
+          anchorY={canvasHoveredItem.anchorY}
+          onMouseEnter={handleCanvasPopoverMouseEnter}
+          onMouseLeave={handleCanvasPopoverMouseLeave}
+        />
+      )}
     </div>
   )
 }

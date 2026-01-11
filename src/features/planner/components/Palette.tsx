@@ -1,12 +1,24 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useRef, useCallback } from 'react'
 import { usePlanner } from '../state'
-import type { StructureDef } from '@/data/types'
+import { StructureInfoPopover } from './StructureInfoPopover'
+import type { StructureDef, StructureCategory } from '@/data/types'
 import styles from './Palette.module.css'
+
+/** Hover delay before showing popover (ms) */
+const HOVER_DELAY_MS = 500
 
 interface SearchMatch {
   item: StructureDef
   categoryId: string
   categoryName: string
+}
+
+/** State for hovered item popover */
+interface HoveredItemState {
+  structure: StructureDef
+  category: StructureCategory
+  anchorX: number
+  anchorY: number
 }
 
 export function Palette() {
@@ -16,6 +28,15 @@ export function Palette() {
   const [searchQuery, setSearchQuery] = useState('')
   const trimmedQuery = searchQuery.trim().toLowerCase()
   const isSearching = trimmedQuery.length > 0
+
+  // Hover popover state
+  const [hoveredItem, setHoveredItem] = useState<HoveredItemState | null>(null)
+  const [isPopoverHovered, setIsPopoverHovered] = useState(false)
+  const hoverTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const pendingHoverRef = useRef<{ structure: StructureDef; category: StructureCategory } | null>(
+    null
+  )
+  const mousePositionRef = useRef({ x: 0, y: 0 })
 
   // Build flat list of matching items when searching
   const searchMatches = useMemo<SearchMatch[]>(() => {
@@ -40,15 +61,89 @@ export function Palette() {
     return matches
   }, [catalog.categories, trimmedQuery, isSearching])
 
+  // Clear hover timer
+  const clearHoverTimer = useCallback(() => {
+    if (hoverTimerRef.current) {
+      clearTimeout(hoverTimerRef.current)
+      hoverTimerRef.current = null
+    }
+    pendingHoverRef.current = null
+  }, [])
+
+  // Handle mouse enter on an item
+  const handleItemMouseEnter = useCallback(
+    (structure: StructureDef, category: StructureCategory, e: React.MouseEvent) => {
+      // Update mouse position
+      mousePositionRef.current = { x: e.clientX, y: e.clientY }
+
+      // Clear any existing timer
+      clearHoverTimer()
+
+      // Store pending hover info
+      pendingHoverRef.current = { structure, category }
+
+      // Start delay timer
+      hoverTimerRef.current = setTimeout(() => {
+        if (pendingHoverRef.current) {
+          setHoveredItem({
+            structure: pendingHoverRef.current.structure,
+            category: pendingHoverRef.current.category,
+            anchorX: mousePositionRef.current.x,
+            anchorY: mousePositionRef.current.y,
+          })
+        }
+      }, HOVER_DELAY_MS)
+    },
+    [clearHoverTimer]
+  )
+
+  // Handle mouse move on an item (update position for popover)
+  const handleItemMouseMove = useCallback((e: React.MouseEvent) => {
+    mousePositionRef.current = { x: e.clientX, y: e.clientY }
+  }, [])
+
+  // Handle mouse leave on an item
+  const handleItemMouseLeave = useCallback(() => {
+    clearHoverTimer()
+    // Only close if popover is not hovered
+    if (!isPopoverHovered) {
+      setHoveredItem(null)
+    }
+  }, [clearHoverTimer, isPopoverHovered])
+
+  // Handle popover mouse enter
+  const handlePopoverMouseEnter = useCallback(() => {
+    setIsPopoverHovered(true)
+  }, [])
+
+  // Handle popover mouse leave
+  const handlePopoverMouseLeave = useCallback(() => {
+    setIsPopoverHovered(false)
+    setHoveredItem(null)
+  }, [])
+
   const handleCategoryClick = (categoryId: string) => {
     dispatch({ type: 'TOGGLE_CATEGORY_EXPANDED', categoryId })
   }
 
   const handleStructureClick = (categoryId: string, structureId: string) => {
+    // Close popover on click
+    clearHoverTimer()
+    setHoveredItem(null)
+    setIsPopoverHovered(false)
+
     dispatch({ type: 'SELECT_STRUCTURE', categoryId, structureId })
     // Auto-switch to place tool when selecting a structure
     dispatch({ type: 'SET_TOOL', tool: 'place' })
   }
+
+  // Find category by ID for search results
+  const getCategoryById = useCallback(
+    (categoryId: string): StructureCategory | undefined => {
+      return catalog.categories.find((c) => c.id === categoryId)
+    },
+    [catalog.categories]
+  )
 
   return (
     <div className={styles.palette}>
@@ -72,12 +167,18 @@ export function Palette() {
               const isSelected =
                 selection?.categoryId === match.categoryId &&
                 selection?.structureId === match.item.id
+              const category = getCategoryById(match.categoryId)
 
               return (
                 <button
                   key={`${match.categoryId}-${match.item.id}`}
                   className={styles.item}
                   onClick={() => handleStructureClick(match.categoryId, match.item.id)}
+                  onMouseEnter={
+                    category ? (e) => handleItemMouseEnter(match.item, category, e) : undefined
+                  }
+                  onMouseMove={handleItemMouseMove}
+                  onMouseLeave={handleItemMouseLeave}
                   data-selected={isSelected}
                 >
                   <span className={styles.itemInfo}>
@@ -122,6 +223,9 @@ export function Palette() {
                       key={item.id}
                       className={styles.item}
                       onClick={() => handleStructureClick(category.id, item.id)}
+                      onMouseEnter={(e) => handleItemMouseEnter(item, category, e)}
+                      onMouseMove={handleItemMouseMove}
+                      onMouseLeave={handleItemMouseLeave}
                       data-selected={isSelected}
                     >
                       <span className={styles.itemInfo}>
@@ -141,6 +245,18 @@ export function Palette() {
             )}
           </div>
         ))
+      )}
+
+      {/* Hover popover */}
+      {hoveredItem && (
+        <StructureInfoPopover
+          structure={hoveredItem.structure}
+          category={hoveredItem.category}
+          anchorX={hoveredItem.anchorX}
+          anchorY={hoveredItem.anchorY}
+          onMouseEnter={handlePopoverMouseEnter}
+          onMouseLeave={handlePopoverMouseLeave}
+        />
       )}
     </div>
   )

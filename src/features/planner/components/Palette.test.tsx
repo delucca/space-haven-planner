@@ -1,10 +1,18 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, act, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { Palette } from './Palette'
 import { PlannerContext, type PlannerContextValue } from '../state/PlannerContext'
 import type { PlannerState } from '../state/types'
 import type { StructureCatalog } from '@/data/types'
+
+// Mock the wiki metadata hook
+vi.mock('../hooks/useWikiStructureMetadata', () => ({
+  useWikiStructureMetadata: vi.fn(() => ({
+    status: 'loading',
+    metadata: null,
+  })),
+}))
 
 const mockCatalog: StructureCatalog = {
   categories: [
@@ -76,6 +84,7 @@ function createMockState(overrides: Partial<PlannerState> = {}): PlannerState {
     isDragging: false,
     catalog: mockCatalog,
     hullTiles: new Set(),
+    selectedStructureIds: new Set(),
     catalogStatus: {
       source: 'jar_builtin_snapshot',
       isParsing: false,
@@ -191,6 +200,105 @@ describe('Palette', () => {
       await user.type(searchInput, 'SOLAR')
 
       expect(screen.getByText('Solar Panel')).toBeInTheDocument()
+    })
+  })
+
+  describe('hover popover', () => {
+    beforeEach(() => {
+      vi.useFakeTimers({ shouldAdvanceTime: true })
+    })
+
+    afterEach(() => {
+      vi.useRealTimers()
+    })
+
+    it('does not show popover immediately on hover', async () => {
+      const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime })
+      renderWithProvider(createMockState({ expandedCategories: new Set(['power']) }))
+
+      const item = screen.getByText('System Core X1')
+      await user.hover(item)
+
+      // Popover should not appear immediately
+      expect(screen.queryByText('Category')).not.toBeInTheDocument()
+    })
+
+    it('shows popover after hover delay', async () => {
+      const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime })
+      renderWithProvider(createMockState({ expandedCategories: new Set(['power']) }))
+
+      const item = screen.getByText('System Core X1')
+      await user.hover(item)
+
+      // Advance time past the 500ms hover delay
+      await act(async () => {
+        vi.advanceTimersByTime(600)
+      })
+
+      // Now the popover should be visible (it renders via portal to body)
+      // The StructureInfoCard shows the structure name in a specific element
+      await waitFor(() => {
+        // Look for the popover content - it should show the structure name
+        const popovers = document.querySelectorAll('[class*="popover"]')
+        expect(popovers.length).toBeGreaterThan(0)
+      })
+    })
+
+    it('hides popover when mouse leaves before delay', async () => {
+      const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime })
+      renderWithProvider(createMockState({ expandedCategories: new Set(['power']) }))
+
+      const item = screen.getByText('System Core X1')
+      await user.hover(item)
+
+      // Advance time but not past the delay
+      await act(async () => {
+        vi.advanceTimersByTime(300)
+      })
+
+      // Move mouse away
+      await user.unhover(item)
+
+      // Advance time past the original delay
+      await act(async () => {
+        vi.advanceTimersByTime(500)
+      })
+
+      // Popover should not appear
+      const popovers = document.querySelectorAll('[class*="popover"]')
+      expect(popovers.length).toBe(0)
+    })
+
+    it('hides popover on item click', async () => {
+      const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime })
+      const { dispatch } = renderWithProvider(
+        createMockState({ expandedCategories: new Set(['power']) })
+      )
+
+      const item = screen.getByText('System Core X1')
+      await user.hover(item)
+
+      // Wait for popover to appear
+      await act(async () => {
+        vi.advanceTimersByTime(600)
+      })
+
+      // Click the item
+      await user.click(item)
+
+      // Popover should be hidden
+      await waitFor(() => {
+        const popovers = document.querySelectorAll('[class*="popover"]')
+        expect(popovers.length).toBe(0)
+      })
+
+      // And the structure should be selected
+      expect(dispatch).toHaveBeenCalledWith(
+        expect.objectContaining({
+          type: 'SELECT_STRUCTURE',
+          structureId: 'system_core_x1',
+        })
+      )
     })
   })
 })
