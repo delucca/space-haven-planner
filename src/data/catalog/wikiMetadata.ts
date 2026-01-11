@@ -665,7 +665,6 @@ export function clearAllWikiCaches(): void {
     }
     keysToRemove.forEach((key) => localStorage.removeItem(key))
 
-    console.log(`Cleared wiki caches: batch cache + ${keysToRemove.length} structure entries`)
   } catch {
     // Ignore storage errors
   }

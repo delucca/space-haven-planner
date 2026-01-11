@@ -1,11 +1,13 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { StructureDef, StructureCategory, TileLayout } from '@/data/types'
 import type { WikiStructureMetadata, WikiStructureLookupStatus } from '@/data/catalog/wikiMetadata'
 import styles from './StructureInfoPopover.module.css'
 
 /**
- * WikiImage component that loads images directly.
- * Uses standard img tag - Fandom CDN has CORS headers that should allow loading.
+ * WikiImage component that loads images from Fandom's CDN.
+ *
+ * IMPORTANT: Fandom returns a 404 placeholder image when a 3rd-party page sends a Referer header
+ * (e.g. `http://localhost:5174/`). We must set `referrerPolicy="no-referrer"` to prevent hotlink blocking.
  */
 function WikiImage({
   src,
@@ -20,27 +22,25 @@ function WikiImage({
 }) {
   const [status, setStatus] = useState<'loading' | 'loaded' | 'error'>('loading')
 
-  // Don't render container if image failed to load
-  if (status === 'error') {
-    return null
-  }
+  useEffect(() => {
+    setStatus('loading')
+  }, [src])
 
   return (
     <div className={containerClassName}>
-      {status === 'loading' && (
-        <div className={styles.imageLoading}>Loading...</div>
+      {status === 'loading' && <div className={styles.imageLoading}>Loading image...</div>}
+      {status === 'error' && <div className={styles.imageLoading}>Image unavailable.</div>}
+
+      {status !== 'error' && (
+        <img
+          src={src}
+          alt={alt}
+          className={className}
+          referrerPolicy="no-referrer"
+          onLoad={() => setStatus('loaded')}
+          onError={() => setStatus('error')}
+        />
       )}
-      <img
-        src={src}
-        alt={alt}
-        className={className}
-        style={status === 'loading' ? { display: 'none' } : undefined}
-        onLoad={() => setStatus('loaded')}
-        onError={() => {
-          console.warn('[WikiImage] Failed to load:', src)
-          setStatus('error')
-        }}
-      />
     </div>
   )
 }

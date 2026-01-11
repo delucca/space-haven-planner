@@ -699,6 +699,7 @@ The wiki is **no longer the primary catalog source**. It now provides supplement
 - Wiki fetch/parse code exists in `src/data/catalog/wiki.ts`
 - Planned uses: structure images, extended descriptions, wiki page links
 - **Not used for**: structure sizes, categories, or core catalog data
+- **Fandom image hotlinking**: `static.wikia.nocookie.net` returns a **404 placeholder image** when the request includes a `Referer` like `http://localhost:5174/`. To reliably show images in-app, render them with `referrerPolicy="no-referrer"` so the browser omits the Referer header.
 
 ### Key files
 

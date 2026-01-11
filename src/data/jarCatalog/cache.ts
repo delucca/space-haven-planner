@@ -75,7 +75,7 @@ export function loadCachedJarCatalog(): JarCatalogData | null {
 
     // Check version
     if (data.version !== CACHE_VERSION) {
-      console.log('JAR catalog cache version mismatch, clearing')
+      console.warn('JAR catalog cache version mismatch, clearing')
       clearJarCatalogCache()
       return null
     }
