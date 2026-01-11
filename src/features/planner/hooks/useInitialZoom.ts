@@ -6,17 +6,37 @@ import { calculateFitZoomForViewport } from '../zoom'
 /**
  * Calculate and set the initial zoom level to fit the grid width within the viewport.
  * Runs on mount and whenever gridWidth changes.
+ *
+ * @param dispatch - The planner dispatch function
+ * @param gridWidth - The grid width in tiles
+ * @param canvasContentWidth - The measured content width of the canvas container (in pixels)
  */
-export function useInitialZoom(dispatch: Dispatch<PlannerAction>, gridWidth: number): void {
+export function useInitialZoom(
+  dispatch: Dispatch<PlannerAction>,
+  gridWidth: number,
+  canvasContentWidth: number
+): void {
   const lastGridWidthRef = useRef<number | null>(null)
+  const hasInitializedRef = useRef(false)
 
   useEffect(() => {
-    // Only recalculate if gridWidth changed (handles both initial mount and NEW_PROJECT)
+    // Wait for canvas to be measured
+    if (canvasContentWidth <= 0) return
+
+    // On first valid measurement, set initial zoom
+    if (!hasInitializedRef.current) {
+      hasInitializedRef.current = true
+      lastGridWidthRef.current = gridWidth
+      const fitZoom = calculateFitZoomForViewport(gridWidth, canvasContentWidth)
+      dispatch({ type: 'SET_ZOOM', zoom: fitZoom })
+      return
+    }
+
+    // Only recalculate if gridWidth changed (e.g., preset change)
     if (lastGridWidthRef.current === gridWidth) return
     lastGridWidthRef.current = gridWidth
 
-    const fitZoom = calculateFitZoomForViewport(gridWidth, window.innerWidth)
+    const fitZoom = calculateFitZoomForViewport(gridWidth, canvasContentWidth)
     dispatch({ type: 'SET_ZOOM', zoom: fitZoom })
-  }, [dispatch, gridWidth])
+  }, [dispatch, gridWidth, canvasContentWidth])
 }
-

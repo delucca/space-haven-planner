@@ -265,4 +265,3 @@ export async function getWikiMetadata(
 
   return fresh
 }
-

@@ -1,7 +1,19 @@
 import { describe, it, expect } from 'vitest'
-import { createInitialState, plannerReducer, canPlaceAt, isStructureVisible, isStructureInteractive } from './reducer'
+import {
+  createInitialState,
+  plannerReducer,
+  canPlaceAt,
+  isStructureVisible,
+  isStructureInteractive,
+} from './reducer'
 import type { PlannerState } from './types'
-import type { StructureCatalog, StructureCategory, StructureDef, LayerId, PlacedStructure } from '@/data/types'
+import type {
+  StructureCatalog,
+  StructureCategory,
+  StructureDef,
+  LayerId,
+  PlacedStructure,
+} from '@/data/types'
 
 // Create a minimal test catalog with a structure that has tile layout
 function createTestCatalog(): StructureCatalog {
@@ -292,20 +304,18 @@ describe('CAD-style Layers and Groups', () => {
   describe('Layer Management', () => {
     it('should create initial state with default user layer', () => {
       const state = createInitialState()
-      
+
       expect(state.userLayers.length).toBe(1)
-      expect(state.userLayers.map(l => l.id)).toEqual([
-        'layer-default',
-      ])
+      expect(state.userLayers.map((l) => l.id)).toEqual(['layer-default'])
       expect(state.userLayers[0].name).toBe('Default')
-      expect(state.userLayers.every(l => l.isVisible)).toBe(true)
-      expect(state.userLayers.every(l => !l.isLocked)).toBe(true)
+      expect(state.userLayers.every((l) => l.isVisible)).toBe(true)
+      expect(state.userLayers.every((l) => !l.isLocked)).toBe(true)
       expect(state.activeLayerId).toBe('layer-default')
     })
 
     it('should create a new layer', () => {
       let state = createInitialState()
-      
+
       state = plannerReducer(state, {
         type: 'CREATE_LAYER',
         name: 'Custom Layer',
@@ -319,51 +329,51 @@ describe('CAD-style Layers and Groups', () => {
 
     it('should rename a layer', () => {
       let state = createInitialState()
-      
+
       state = plannerReducer(state, {
         type: 'RENAME_LAYER',
         layerId: 'layer-default',
         name: 'Renamed Default',
       })
 
-      const defaultLayer = state.userLayers.find(l => l.id === 'layer-default')
+      const defaultLayer = state.userLayers.find((l) => l.id === 'layer-default')
       expect(defaultLayer?.name).toBe('Renamed Default')
     })
 
     it('should toggle layer visibility', () => {
       let state = createInitialState()
-      
+
       // Initially visible
-      expect(state.userLayers.find(l => l.id === 'layer-default')?.isVisible).toBe(true)
-      
+      expect(state.userLayers.find((l) => l.id === 'layer-default')?.isVisible).toBe(true)
+
       state = plannerReducer(state, {
         type: 'TOGGLE_LAYER_VISIBLE',
         layerId: 'layer-default',
       })
 
-      expect(state.userLayers.find(l => l.id === 'layer-default')?.isVisible).toBe(false)
-      
+      expect(state.userLayers.find((l) => l.id === 'layer-default')?.isVisible).toBe(false)
+
       // Toggle back
       state = plannerReducer(state, {
         type: 'TOGGLE_LAYER_VISIBLE',
         layerId: 'layer-default',
       })
 
-      expect(state.userLayers.find(l => l.id === 'layer-default')?.isVisible).toBe(true)
+      expect(state.userLayers.find((l) => l.id === 'layer-default')?.isVisible).toBe(true)
     })
 
     it('should toggle layer lock', () => {
       let state = createInitialState()
-      
+
       // Initially unlocked
-      expect(state.userLayers.find(l => l.id === 'layer-default')?.isLocked).toBe(false)
-      
+      expect(state.userLayers.find((l) => l.id === 'layer-default')?.isLocked).toBe(false)
+
       state = plannerReducer(state, {
         type: 'TOGGLE_LAYER_LOCK',
         layerId: 'layer-default',
       })
 
-      expect(state.userLayers.find(l => l.id === 'layer-default')?.isLocked).toBe(true)
+      expect(state.userLayers.find((l) => l.id === 'layer-default')?.isLocked).toBe(true)
     })
 
     it('should delete layer and all its items', () => {
@@ -388,7 +398,7 @@ describe('CAD-style Layers and Groups', () => {
       })
 
       // Layer should be gone
-      expect(state.userLayers.find(l => l.id === 'layer-systems')).toBeUndefined()
+      expect(state.userLayers.find((l) => l.id === 'layer-systems')).toBeUndefined()
       // Structure should be gone too
       expect(state.structures.length).toBe(0)
     })
@@ -397,7 +407,7 @@ describe('CAD-style Layers and Groups', () => {
   describe('Group Management', () => {
     it('should create a new group', () => {
       let state = createInitialState()
-      
+
       state = plannerReducer(state, {
         type: 'CREATE_GROUP',
         layerId: 'layer-default',
@@ -413,7 +423,7 @@ describe('CAD-style Layers and Groups', () => {
 
     it('should toggle group visibility', () => {
       let state = createInitialState()
-      
+
       // Create a group first
       state = plannerReducer(state, {
         type: 'CREATE_GROUP',
@@ -422,21 +432,21 @@ describe('CAD-style Layers and Groups', () => {
       })
 
       const groupId = state.userGroups[0].id
-      
+
       // Initially visible
       expect(state.userGroups[0].isVisible).toBe(true)
-      
+
       state = plannerReducer(state, {
         type: 'TOGGLE_GROUP_VISIBLE',
         groupId,
       })
 
-      expect(state.userGroups.find(g => g.id === groupId)?.isVisible).toBe(false)
+      expect(state.userGroups.find((g) => g.id === groupId)?.isVisible).toBe(false)
     })
 
     it('should toggle group lock', () => {
       let state = createInitialState()
-      
+
       // Create a group first
       state = plannerReducer(state, {
         type: 'CREATE_GROUP',
@@ -445,16 +455,16 @@ describe('CAD-style Layers and Groups', () => {
       })
 
       const groupId = state.userGroups[0].id
-      
+
       // Initially unlocked
       expect(state.userGroups[0].isLocked).toBe(false)
-      
+
       state = plannerReducer(state, {
         type: 'TOGGLE_GROUP_LOCK',
         groupId,
       })
 
-      expect(state.userGroups.find(g => g.id === groupId)?.isLocked).toBe(true)
+      expect(state.userGroups.find((g) => g.id === groupId)?.isLocked).toBe(true)
     })
 
     it('should delete group and all its items', () => {
@@ -488,7 +498,7 @@ describe('CAD-style Layers and Groups', () => {
       })
 
       // Group should be gone
-      expect(state.userGroups.find(g => g.id === groupId)).toBeUndefined()
+      expect(state.userGroups.find((g) => g.id === groupId)).toBeUndefined()
       // Structure should be gone too
       expect(state.structures.length).toBe(0)
     })
@@ -498,26 +508,26 @@ describe('CAD-style Layers and Groups', () => {
     it('should mark structure as visible when layer is visible', () => {
       const state = createInitialState()
       const struct = createTestStructure({ orgLayerId: 'layer-default' })
-      
+
       expect(isStructureVisible(state, struct)).toBe(true)
     })
 
     it('should mark structure as hidden when layer is hidden', () => {
       let state = createInitialState()
-      
+
       state = plannerReducer(state, {
         type: 'TOGGLE_LAYER_VISIBLE',
         layerId: 'layer-default',
       })
 
       const struct = createTestStructure({ orgLayerId: 'layer-default' })
-      
+
       expect(isStructureVisible(state, struct)).toBe(false)
     })
 
     it('should mark structure as hidden when group is hidden', () => {
       let state = createInitialState()
-      
+
       // Create a group
       state = plannerReducer(state, {
         type: 'CREATE_GROUP',
@@ -534,33 +544,33 @@ describe('CAD-style Layers and Groups', () => {
       })
 
       const struct = createTestStructure({ orgLayerId: 'layer-default', orgGroupId: groupId })
-      
+
       expect(isStructureVisible(state, struct)).toBe(false)
     })
 
     it('should mark structure as interactive when layer is visible and unlocked', () => {
       const state = createInitialState()
       const struct = createTestStructure({ orgLayerId: 'layer-default' })
-      
+
       expect(isStructureInteractive(state, struct)).toBe(true)
     })
 
     it('should mark structure as non-interactive when layer is locked', () => {
       let state = createInitialState()
-      
+
       state = plannerReducer(state, {
         type: 'TOGGLE_LAYER_LOCK',
         layerId: 'layer-default',
       })
 
       const struct = createTestStructure({ orgLayerId: 'layer-default' })
-      
+
       expect(isStructureInteractive(state, struct)).toBe(false)
     })
 
     it('should mark structure as non-interactive when group is locked', () => {
       let state = createInitialState()
-      
+
       // Create a group
       state = plannerReducer(state, {
         type: 'CREATE_GROUP',
@@ -577,7 +587,7 @@ describe('CAD-style Layers and Groups', () => {
       })
 
       const struct = createTestStructure({ orgLayerId: 'layer-default', orgGroupId: groupId })
-      
+
       expect(isStructureInteractive(state, struct)).toBe(false)
     })
 

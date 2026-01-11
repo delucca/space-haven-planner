@@ -1,4 +1,12 @@
-import type { GridSize, HullTile, PlacedStructure, Rotation, UserLayer, UserGroup, LayerId } from '@/data/types'
+import type {
+  GridSize,
+  HullTile,
+  PlacedStructure,
+  Rotation,
+  UserLayer,
+  UserGroup,
+  LayerId,
+} from '@/data/types'
 
 /** Current project file format version */
 export const PROJECT_VERSION = 4

@@ -244,4 +244,3 @@ describe('Project Serialization', () => {
     })
   })
 })
-

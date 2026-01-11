@@ -1,4 +1,4 @@
-import { useMemo, useState, useSyncExternalStore, useEffect } from 'react'
+import { useMemo, useState } from 'react'
 import { usePlanner } from '../state'
 import { GRID_PRESETS, ZOOM_MIN, ZOOM_MAX, ZOOM_STEP } from '@/data/presets'
 import type { ToolId } from '@/data/types'
@@ -21,43 +21,30 @@ function ToolButton({ id, label, active, onClick }: ToolButtonProps) {
   )
 }
 
-/** Subscribe to window resize events */
-function subscribeToResize(callback: () => void) {
-  window.addEventListener('resize', callback)
-  return () => window.removeEventListener('resize', callback)
+interface ToolbarProps {
+  /** The measured content width of the canvas container (in pixels) */
+  canvasContentWidth: number
 }
 
-/** Get current viewport width */
-function getViewportWidth() {
-  return window.innerWidth
-}
-
-export function Toolbar() {
+export function Toolbar({ canvasContentWidth }: ToolbarProps) {
   const { state, dispatch } = usePlanner()
   const { presetLabel, zoom, showGrid, tool, gridSize } = state
 
-  // Subscribe to viewport width changes for dynamic 100% calculation
-  const viewportWidth = useSyncExternalStore(subscribeToResize, getViewportWidth)
-
-  // Calculate the zoom that represents 100% (fit-to-width)
+  // Calculate the zoom that represents 100% (fit-to-width) using measured canvas width
   const fitZoom = useMemo(
-    () => calculateFitZoomForViewport(gridSize.width, viewportWidth),
-    [gridSize.width, viewportWidth]
+    () => calculateFitZoomForViewport(gridSize.width, canvasContentWidth),
+    [gridSize.width, canvasContentWidth]
   )
 
   // Convert current zoom to percentage relative to fit-to-width zoom
-  const zoomPercent = Math.round((zoom / fitZoom) * 100)
+  const zoomPercent = fitZoom > 0 ? Math.round((zoom / fitZoom) * 100) : 100
 
-  // Local state for zoom input editing
-  const [zoomInputValue, setZoomInputValue] = useState(String(zoomPercent))
+  // Local state for zoom input editing - track if user is actively editing
   const [isEditingZoom, setIsEditingZoom] = useState(false)
+  const [editingValue, setEditingValue] = useState('')
 
-  // Sync input value with actual zoom when not editing
-  useEffect(() => {
-    if (!isEditingZoom) {
-      setZoomInputValue(String(zoomPercent))
-    }
-  }, [zoomPercent, isEditingZoom])
+  // Derive displayed value: show editing value when editing, otherwise show computed percent
+  const displayedZoomValue = isEditingZoom ? editingValue : String(zoomPercent)
 
   // Build select options from presets
   const presetOptions: SelectOption[] = useMemo(
@@ -99,31 +86,31 @@ export function Toolbar() {
   }
 
   const handleZoomInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setZoomInputValue(e.target.value)
+    setEditingValue(e.target.value)
   }
 
   const handleZoomInputFocus = () => {
+    setEditingValue(String(zoomPercent))
     setIsEditingZoom(true)
   }
 
   const handleZoomInputBlur = () => {
-    setIsEditingZoom(false)
     applyZoomFromInput()
+    setIsEditingZoom(false)
   }
 
   const handleZoomInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       e.currentTarget.blur()
     } else if (e.key === 'Escape') {
-      setZoomInputValue(String(zoomPercent))
       setIsEditingZoom(false)
       e.currentTarget.blur()
     }
   }
 
   const applyZoomFromInput = () => {
-    const parsedPercent = parseInt(zoomInputValue, 10)
-    if (!isNaN(parsedPercent) && parsedPercent > 0) {
+    const parsedPercent = parseInt(editingValue, 10)
+    if (!isNaN(parsedPercent) && parsedPercent > 0 && fitZoom > 0) {
       // Convert percentage back to zoom (pixels per tile)
       const newZoom = Math.round((parsedPercent / 100) * fitZoom)
       // Clamp to valid range
@@ -163,7 +150,7 @@ export function Toolbar() {
           <input
             type="text"
             className={styles.zoomInput}
-            value={zoomInputValue}
+            value={displayedZoomValue}
             onChange={handleZoomInputChange}
             onFocus={handleZoomInputFocus}
             onBlur={handleZoomInputBlur}
@@ -203,12 +190,7 @@ export function Toolbar() {
           active={tool === 'erase'}
           onClick={() => handleToolChange('erase')}
         />
-        <ToolButton
-          id="grid"
-          label="🔲 Grid"
-          active={showGrid}
-          onClick={handleGridToggle}
-        />
+        <ToolButton id="grid" label="🔲 Grid" active={showGrid} onClick={handleGridToggle} />
       </div>
     </div>
   )

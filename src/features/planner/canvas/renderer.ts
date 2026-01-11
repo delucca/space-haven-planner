@@ -20,10 +20,7 @@ export interface VisibilityState {
 /**
  * Check if a structure is visible based on its layer and group visibility
  */
-function isStructureVisibleForRender(
-  visState: VisibilityState,
-  struct: PlacedStructure
-): boolean {
+function isStructureVisibleForRender(visState: VisibilityState, struct: PlacedStructure): boolean {
   // Check user layer visibility
   const layer = visState.userLayers.find((l) => l.id === struct.orgLayerId)
   if (!layer || !layer.isVisible) return false

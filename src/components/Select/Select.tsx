@@ -147,13 +147,8 @@ export function Select({
         if (e.key.length === 1 && e.key.match(/[a-z0-9]/i)) {
           const char = e.key.toLowerCase()
           const startIndex = focusedIndex + 1
-          const searchOptions = [
-            ...options.slice(startIndex),
-            ...options.slice(0, startIndex),
-          ]
-          const found = searchOptions.findIndex((opt) =>
-            opt.label.toLowerCase().startsWith(char)
-          )
+          const searchOptions = [...options.slice(startIndex), ...options.slice(0, startIndex)]
+          const found = searchOptions.findIndex((opt) => opt.label.toLowerCase().startsWith(char))
           if (found >= 0) {
             const actualIndex = (startIndex + found) % options.length
             setFocusedIndex(actualIndex)
@@ -184,9 +179,7 @@ export function Select({
         aria-controls={listboxId}
         aria-label={ariaLabel}
       >
-        <span className={styles.value}>
-          {selectedOption?.label ?? placeholder}
-        </span>
+        <span className={styles.value}>{selectedOption?.label ?? placeholder}</span>
         <span className={styles.arrow} data-open={isOpen}>
           ▾
         </span>
@@ -218,9 +211,7 @@ export function Select({
               onMouseEnter={() => handleOptionMouseEnter(index)}
             >
               {option.label}
-              {option.value === value && (
-                <span className={styles.checkmark}>✓</span>
-              )}
+              {option.value === value && <span className={styles.checkmark}>✓</span>}
             </li>
           ))}
         </ul>
@@ -228,4 +219,3 @@ export function Select({
     </div>
   )
 }
-

@@ -666,10 +666,13 @@ export function plannerReducer(state: PlannerState, action: PlannerAction): Plan
 
     case 'LOAD_USER_LAYERS': {
       // Determine activeLayerId: use provided value, or fall back to first layer
-      const newActiveLayerId = action.activeLayerId !== undefined 
-        ? action.activeLayerId 
-        : (action.layers.length > 0 ? action.layers[0].id : null)
-      
+      const newActiveLayerId =
+        action.activeLayerId !== undefined
+          ? action.activeLayerId
+          : action.layers.length > 0
+            ? action.layers[0].id
+            : null
+
       return {
         ...state,
         userLayers: action.layers,

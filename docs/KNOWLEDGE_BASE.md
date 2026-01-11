@@ -119,10 +119,10 @@ On app load (and when the grid width changes, e.g. switching canvas preset), the
 
 - Handled by `useInitialZoom` hook (`src/features/planner/hooks/useInitialZoom.ts`)
 - Uses shared helper `calculateFitZoomForViewport(...)` (`src/features/planner/zoom.ts`)
-- Accounts for: left panel (280px), right panel (320px), canvas container padding (48px), canvas border (4px)
-- Formula: `optimalZoom = floor((viewportWidth - sidePanels - padding - border) / gridWidth)`
+- **Measured dynamically**: Uses `ResizeObserver` to measure the actual canvas container content width
+- Formula: `optimalZoom = floor((canvasContentWidth - canvasBorder) / gridWidth)`
 - Result is clamped by the reducer to `ZOOM_MIN`–`ZOOM_MAX` (not snapped to `ZOOM_STEP`)
-- Recalculates when `gridWidth` changes
+- Recalculates when `gridWidth` changes (not on sidebar resize/collapse)
 - **NEW_PROJECT preserves** the current `zoom` (and canvas preset) to avoid jarring zoom jumps
 
 #### Zoom control UI
@@ -130,11 +130,72 @@ On app load (and when the grid width changes, e.g. switching canvas preset), the
 The toolbar displays zoom as +/− buttons with an **editable percentage input** in between:
 
 - **100%** = the zoom level at which the grid exactly fits the available canvas width
-- Percentage is **dynamic**: recalculates on viewport resize and preset change
+- Percentage is **dynamic**: recalculates when canvas container width changes (sidebar resize/collapse, window resize, preset change)
+- **Important**: Sidebar resize/collapse changes only the displayed %, NOT the actual zoom value (pixels per tile)
 - **Editable input**: Click the percentage to type a custom value (Enter to apply, Escape to cancel)
 - Input values are converted back to pixels-per-tile and clamped to `ZOOM_MIN`–`ZOOM_MAX` (not snapped to `ZOOM_STEP`)
-- Uses `useSyncExternalStore` to subscribe to window resize events
+- Uses `useElementContentWidth` hook with `ResizeObserver` to measure canvas container width
 - Calculation uses `calculateFitZoomForViewport(...)` (`src/features/planner/zoom.ts`) so the 100% baseline matches `useInitialZoom`
+
+### Layout system
+
+The planner has a flexible layout with resizable and collapsible sidebars.
+
+#### Sidebar panels
+
+| Panel | Default Width | Min Width | Max Width | Content |
+| ----- | ------------- | --------- | --------- | ------- |
+| Left  | 280px         | 220px     | 520px     | Palette (structure catalog) |
+| Right | 320px         | 240px     | 640px     | Layer panel |
+
+#### Layout controls
+
+Icon buttons in the toolbar header allow toggling sidebar visibility:
+
+- **Left sidebar toggle**: Show/hide the left (Palette) panel
+- **Both sidebars toggle**: Show/hide both panels at once
+- **Right sidebar toggle**: Show/hide the right (Layer) panel
+
+#### Resize handles
+
+Thin drag handles between panels allow resizing:
+
+- Drag left handle to resize the left panel
+- Drag right handle to resize the right panel
+- Visual feedback: handle highlights blue on hover and during drag
+- Text selection is disabled during resize
+
+#### Peek overlays (collapsed sidebars)
+
+When a sidebar is collapsed:
+
+- An invisible 8px hotspot at the screen edge triggers peek
+- Hovering the hotspot shows the sidebar as a **fixed overlay** (does not affect layout)
+- The overlay has a shadow and appears above the canvas
+- Moving the mouse away from the overlay hides it
+- **Important**: Peek overlays do NOT affect the zoom baseline (canvas width unchanged)
+
+#### Persistence
+
+Layout state is persisted in `localStorage` under key `space-haven-planner-layout`:
+
+```typescript
+{
+  leftWidth: number,
+  rightWidth: number,
+  isLeftCollapsed: boolean,
+  isRightCollapsed: boolean
+}
+```
+
+#### Key files
+
+| File | Purpose |
+| ---- | ------- |
+| `src/features/planner/PlannerPage.tsx` | Layout state, resize/collapse logic |
+| `src/features/planner/PlannerPage.module.css` | Panel, resize handle, peek overlay styles |
+| `src/features/planner/components/LayoutControls.tsx` | Sidebar toggle icon buttons |
+| `src/features/planner/hooks/useElementContentWidth.ts` | ResizeObserver-based width measurement |
 
 ### Tools
 
@@ -387,8 +448,7 @@ pnpm preview     # serve the built app locally
   - **Space restrictions for airlocks/cargo ports**: These structures have large "Space" restriction areas that define where space must be. All Space restriction tiles are included (not just adjacent ones) and rendered as red blocked areas.
   - **Gap filling in structures**: The converter fills gaps within the core bounding box to ensure solid rectangles. Without this, structures like airlocks would appear as scattered tiles.
   - **FloorDeco tiles**: Treated as `access` tiles (crew can walk on them), not `construction`. This affects collision and rendering.
-- **Layout constants alignment**: The fit-to-width zoom math uses layout constants in `src/features/planner/zoom.ts`. If `PlannerPage.module.css` or `CanvasViewport.module.css` changes, update these constants to match.
-  - **JAR category IDs are not sequential**: The JAR uses non-sequential category IDs (e.g., 1506, 1507, 1508, 1516, 1519, 1522, 2880, 3359, 4243). Do NOT assume sequential IDs when mapping categories.
+- **JAR category IDs are not sequential**: The JAR uses non-sequential category IDs (e.g., 1506, 1507, 1508, 1516, 1519, 1522, 2880, 3359, 4243). Do NOT assume sequential IDs when mapping categories.
   - **Category display order is descending**: The game displays categories with higher `order` values first (leftmost). This is counterintuitive but matches the game UI.
   - **MainCat filtering is essential**: Only include structures from MainCat 1512 (OBJECTS). Structures from MainCat 1525 (SANDBOX) are debug/internal items that shouldn't appear in the planner. The parser extracts `parentId` from `<mainCat id="..."/>` child element.
   - **Duplicate structure names across MainCats**: The same structure name (e.g., "X1 Wall") can exist in multiple MainCats with different `mid` values. Always filter by MainCat to avoid duplicates.

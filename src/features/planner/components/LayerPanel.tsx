@@ -16,13 +16,24 @@ const EyeIcon = ({ visible }: { visible: boolean }) => (
   <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
     {visible ? (
       <>
-        <path d="M7 3C3.5 3 1 7 1 7C1 7 3.5 11 7 11C10.5 11 13 7 13 7C13 7 10.5 3 7 3Z" stroke="currentColor" strokeWidth="1.2" fill="none"/>
-        <circle cx="7" cy="7" r="2" stroke="currentColor" strokeWidth="1.2" fill="none"/>
+        <path
+          d="M7 3C3.5 3 1 7 1 7C1 7 3.5 11 7 11C10.5 11 13 7 13 7C13 7 10.5 3 7 3Z"
+          stroke="currentColor"
+          strokeWidth="1.2"
+          fill="none"
+        />
+        <circle cx="7" cy="7" r="2" stroke="currentColor" strokeWidth="1.2" fill="none" />
       </>
     ) : (
       <>
-        <path d="M7 3C3.5 3 1 7 1 7C1 7 3.5 11 7 11C10.5 11 13 7 13 7C13 7 10.5 3 7 3Z" stroke="currentColor" strokeWidth="1.2" fill="none" opacity="0.3"/>
-        <line x1="2" y1="12" x2="12" y2="2" stroke="currentColor" strokeWidth="1.2"/>
+        <path
+          d="M7 3C3.5 3 1 7 1 7C1 7 3.5 11 7 11C10.5 11 13 7 13 7C13 7 10.5 3 7 3Z"
+          stroke="currentColor"
+          strokeWidth="1.2"
+          fill="none"
+          opacity="0.3"
+        />
+        <line x1="2" y1="12" x2="12" y2="2" stroke="currentColor" strokeWidth="1.2" />
       </>
     )}
   </svg>
@@ -32,14 +43,42 @@ const LockIcon = ({ locked }: { locked: boolean }) => (
   <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
     {locked ? (
       <>
-        <rect x="3" y="6" width="8" height="6" rx="1" stroke="currentColor" strokeWidth="1.2" fill="none"/>
-        <path d="M5 6V4C5 2.89543 5.89543 2 7 2C8.10457 2 9 2.89543 9 4V6" stroke="currentColor" strokeWidth="1.2"/>
-        <circle cx="7" cy="9" r="1" fill="currentColor"/>
+        <rect
+          x="3"
+          y="6"
+          width="8"
+          height="6"
+          rx="1"
+          stroke="currentColor"
+          strokeWidth="1.2"
+          fill="none"
+        />
+        <path
+          d="M5 6V4C5 2.89543 5.89543 2 7 2C8.10457 2 9 2.89543 9 4V6"
+          stroke="currentColor"
+          strokeWidth="1.2"
+        />
+        <circle cx="7" cy="9" r="1" fill="currentColor" />
       </>
     ) : (
       <>
-        <rect x="3" y="6" width="8" height="6" rx="1" stroke="currentColor" strokeWidth="1.2" fill="none" opacity="0.3"/>
-        <path d="M5 6V4C5 2.89543 5.89543 2 7 2C8.10457 2 9 2.89543 9 4" stroke="currentColor" strokeWidth="1.2" opacity="0.3"/>
+        <rect
+          x="3"
+          y="6"
+          width="8"
+          height="6"
+          rx="1"
+          stroke="currentColor"
+          strokeWidth="1.2"
+          fill="none"
+          opacity="0.3"
+        />
+        <path
+          d="M5 6V4C5 2.89543 5.89543 2 7 2C8.10457 2 9 2.89543 9 4"
+          stroke="currentColor"
+          strokeWidth="1.2"
+          opacity="0.3"
+        />
       </>
     )}
   </svg>
@@ -88,9 +127,7 @@ export function LayerPanel() {
   // Get groups in a layer
   const getGroupsInLayer = useCallback(
     (layerId: string) => {
-      return userGroups
-        .filter((g) => g.layerId === layerId)
-        .sort((a, b) => a.order - b.order)
+      return userGroups.filter((g) => g.layerId === layerId).sort((a, b) => a.order - b.order)
     },
     [userGroups]
   )
@@ -214,7 +251,7 @@ export function LayerPanel() {
     // Find the target layer's order and swap positions
     const targetLayer = userLayers.find((l) => l.id === targetLayerId)
     const draggedLayer = userLayers.find((l) => l.id === draggedLayerId)
-    
+
     if (targetLayer && draggedLayer) {
       // Swap orders
       dispatch({ type: 'REORDER_LAYER', layerId: draggedLayerId, newOrder: targetLayer.order })
@@ -528,8 +565,8 @@ export function LayerPanel() {
                     )}
 
                     {/* Add group button - hidden when layer is locked */}
-                    {!layer.isLocked && (
-                      newGroupLayerId === layer.id ? (
+                    {!layer.isLocked &&
+                      (newGroupLayerId === layer.id ? (
                         <div className={styles.newGroupForm}>
                           <input
                             type="text"
@@ -569,8 +606,7 @@ export function LayerPanel() {
                         >
                           + Add Group
                         </button>
-                      )
-                    )}
+                      ))}
                   </div>
                 )}
               </div>

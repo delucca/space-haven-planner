@@ -132,11 +132,21 @@ export type PlannerAction =
   | { type: 'REORDER_GROUP'; groupId: string; newOrder: number }
 
   // Structure organization actions
-  | { type: 'MOVE_STRUCTURE_TO_GROUP'; structureId: string; layerId: string; groupId: string | null }
+  | {
+      type: 'MOVE_STRUCTURE_TO_GROUP'
+      structureId: string
+      layerId: string
+      groupId: string | null
+    }
   | { type: 'DELETE_STRUCTURE'; structureId: string }
 
   // Load user layers/groups (for project load/autosave)
-  | { type: 'LOAD_USER_LAYERS'; layers: UserLayer[]; groups: UserGroup[]; activeLayerId?: string | null }
+  | {
+      type: 'LOAD_USER_LAYERS'
+      layers: UserLayer[]
+      groups: UserGroup[]
+      activeLayerId?: string | null
+    }
 
   // Structure placement actions
   | { type: 'PLACE_STRUCTURE'; structure: PlacedStructure }

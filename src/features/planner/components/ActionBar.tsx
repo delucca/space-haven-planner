@@ -42,7 +42,15 @@ export function ActionBar() {
       state.activeLayerId
     )
     downloadProjectJSON(project)
-  }, [state.gridSize, state.presetLabel, state.structures, state.hullTiles, state.userLayers, state.userGroups, state.activeLayerId])
+  }, [
+    state.gridSize,
+    state.presetLabel,
+    state.structures,
+    state.hullTiles,
+    state.userLayers,
+    state.userGroups,
+    state.activeLayerId,
+  ])
 
   const handleLoadClick = useCallback(() => {
     fileInputRef.current?.click()
@@ -73,7 +81,12 @@ export function ActionBar() {
         // Load user layers and groups (v4+)
         const userLayers = deserializeUserLayers(project.userLayers)
         const userGroups = deserializeUserGroups(project.userGroups)
-        dispatch({ type: 'LOAD_USER_LAYERS', layers: userLayers, groups: userGroups, activeLayerId: project.activeLayerId })
+        dispatch({
+          type: 'LOAD_USER_LAYERS',
+          layers: userLayers,
+          groups: userGroups,
+          activeLayerId: project.activeLayerId,
+        })
       } catch (err) {
         console.error('Failed to load project:', err)
         alert(`Failed to load project: ${err instanceof Error ? err.message : String(err)}`)
@@ -100,7 +113,14 @@ export function ActionBar() {
       console.error('Failed to export PNG:', err)
       alert('Failed to export PNG')
     }
-  }, [state.gridSize, state.structures, state.hullTiles, state.catalog, state.userLayers, state.userGroups])
+  }, [
+    state.gridSize,
+    state.structures,
+    state.hullTiles,
+    state.catalog,
+    state.userLayers,
+    state.userGroups,
+  ])
 
   const handleClear = useCallback(() => {
     const hasAnything = state.structures.length > 0 || state.hullTiles.size > 0
