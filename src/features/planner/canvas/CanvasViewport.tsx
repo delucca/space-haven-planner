@@ -16,6 +16,9 @@ import styles from './CanvasViewport.module.css'
 /** Hover delay before showing popover (ms) */
 const HOVER_DELAY_MS = 500
 
+/** Delay before closing popover when mouse leaves (ms) - allows moving to popover */
+const CLOSE_DELAY_MS = 150
+
 /** Check if event target is an input element */
 function isInputElement(target: EventTarget | null): boolean {
   return (
@@ -263,8 +266,8 @@ export function CanvasViewport() {
   
   // Hover popover state for canvas structures
   const [canvasHoveredItem, setCanvasHoveredItem] = useState<CanvasHoveredState | null>(null)
-  const [isCanvasPopoverHovered, setIsCanvasPopoverHovered] = useState(false)
   const canvasHoverTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const canvasCloseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const canvasMousePosRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 })
   const lastHoveredTileRef = useRef<{ x: number; y: number } | null>(null)
 
@@ -296,8 +299,26 @@ export function CanvasViewport() {
     }
   }, [])
 
+  // Clear canvas close timer
+  const clearCanvasCloseTimer = useCallback(() => {
+    if (canvasCloseTimerRef.current) {
+      clearTimeout(canvasCloseTimerRef.current)
+      canvasCloseTimerRef.current = null
+    }
+  }, [])
+
+  // Schedule canvas popover close with delay
+  const scheduleCanvasClose = useCallback(() => {
+    clearCanvasCloseTimer()
+    canvasCloseTimerRef.current = setTimeout(() => {
+      setCanvasHoveredItem(null)
+    }, CLOSE_DELAY_MS)
+  }, [clearCanvasCloseTimer])
+
   // Start hover timer for canvas popover
   const startCanvasHoverTimer = useCallback(() => {
+    // Cancel any pending close
+    clearCanvasCloseTimer()
     clearCanvasHoverTimer()
     
     canvasHoverTimerRef.current = setTimeout(() => {
@@ -315,7 +336,7 @@ export function CanvasViewport() {
         })
       }
     }, HOVER_DELAY_MS)
-  }, [clearCanvasHoverTimer, structures, catalog])
+  }, [clearCanvasCloseTimer, clearCanvasHoverTimer, structures, catalog])
 
   // Close canvas popover when dragging/panning starts
   // We handle this in the event handlers (handleMouseDown) instead of an effect
@@ -539,12 +560,10 @@ export function CanvasViewport() {
       if (!lastTile || lastTile.x !== tile.x || lastTile.y !== tile.y) {
         lastHoveredTileRef.current = { x: tile.x, y: tile.y }
         
-        // Close popover and restart timer if not hovering the popover
-        if (!isCanvasPopoverHovered) {
-          setCanvasHoveredItem(null)
-          if (!isDragging && !isPanning && !isMovingSelection) {
-            startCanvasHoverTimer()
-          }
+        // Close popover and restart timer when tile changes
+        setCanvasHoveredItem(null)
+        if (!isDragging && !isPanning && !isMovingSelection) {
+          startCanvasHoverTimer()
         }
       }
 
@@ -571,7 +590,7 @@ export function CanvasViewport() {
         }
       }
     },
-    [zoom, dispatch, isDragging, isPanning, isMovingSelection, isCanvasPopoverHovered, startCanvasHoverTimer]
+    [zoom, dispatch, isDragging, isPanning, isMovingSelection, startCanvasHoverTimer]
   )
 
   // Handle mouse down
@@ -584,8 +603,8 @@ export function CanvasViewport() {
 
       // Clear canvas hover popover when starting any interaction
       clearCanvasHoverTimer()
+      clearCanvasCloseTimer()
       setCanvasHoveredItem(null)
-      setIsCanvasPopoverHovered(false)
 
       // Space+drag = panning (works in all tools)
       if (isSpaceHeld) {
@@ -823,13 +842,11 @@ export function CanvasViewport() {
     panStartRef.current = null
     setDragRect(null)
     
-    // Clear canvas hover popover
+    // Clear canvas hover popover with delay
     clearCanvasHoverTimer()
     lastHoveredTileRef.current = null
-    if (!isCanvasPopoverHovered) {
-      setCanvasHoveredItem(null)
-    }
-  }, [dispatch, clearCanvasHoverTimer, isCanvasPopoverHovered])
+    scheduleCanvasClose()
+  }, [dispatch, clearCanvasHoverTimer, scheduleCanvasClose])
 
   // Check if hovering over any structure (for cursor) - in Select mode, any structure can be moved
   const isHoveringStructure = useMemo(() => {
@@ -839,14 +856,15 @@ export function CanvasViewport() {
 
   // Handle canvas popover mouse enter
   const handleCanvasPopoverMouseEnter = useCallback(() => {
-    setIsCanvasPopoverHovered(true)
-  }, [])
+    // Cancel any pending close when mouse enters popover
+    clearCanvasCloseTimer()
+  }, [clearCanvasCloseTimer])
 
   // Handle canvas popover mouse leave
   const handleCanvasPopoverMouseLeave = useCallback(() => {
-    setIsCanvasPopoverHovered(false)
-    setCanvasHoveredItem(null)
-  }, [])
+    // Schedule close with delay
+    scheduleCanvasClose()
+  }, [scheduleCanvasClose])
 
   // Determine cursor based on tool and state
   const getCursor = () => {

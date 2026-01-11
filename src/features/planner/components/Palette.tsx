@@ -7,6 +7,9 @@ import styles from './Palette.module.css'
 /** Hover delay before showing popover (ms) */
 const HOVER_DELAY_MS = 500
 
+/** Delay before closing popover when mouse leaves (ms) - allows moving to popover */
+const CLOSE_DELAY_MS = 150
+
 interface SearchMatch {
   item: StructureDef
   categoryId: string
@@ -31,8 +34,8 @@ export function Palette() {
 
   // Hover popover state
   const [hoveredItem, setHoveredItem] = useState<HoveredItemState | null>(null)
-  const [isPopoverHovered, setIsPopoverHovered] = useState(false)
   const hoverTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const pendingHoverRef = useRef<{ structure: StructureDef; category: StructureCategory } | null>(
     null
   )
@@ -70,13 +73,32 @@ export function Palette() {
     pendingHoverRef.current = null
   }, [])
 
+  // Clear close timer
+  const clearCloseTimer = useCallback(() => {
+    if (closeTimerRef.current) {
+      clearTimeout(closeTimerRef.current)
+      closeTimerRef.current = null
+    }
+  }, [])
+
+  // Schedule popover close with delay (allows mouse to reach popover)
+  const scheduleClose = useCallback(() => {
+    clearCloseTimer()
+    closeTimerRef.current = setTimeout(() => {
+      setHoveredItem(null)
+    }, CLOSE_DELAY_MS)
+  }, [clearCloseTimer])
+
   // Handle mouse enter on an item
   const handleItemMouseEnter = useCallback(
     (structure: StructureDef, category: StructureCategory, e: React.MouseEvent) => {
       // Update mouse position
       mousePositionRef.current = { x: e.clientX, y: e.clientY }
 
-      // Clear any existing timer
+      // Cancel any pending close
+      clearCloseTimer()
+
+      // Clear any existing hover timer
       clearHoverTimer()
 
       // Store pending hover info
@@ -94,7 +116,7 @@ export function Palette() {
         }
       }, HOVER_DELAY_MS)
     },
-    [clearHoverTimer]
+    [clearHoverTimer, clearCloseTimer]
   )
 
   // Handle mouse move on an item (update position for popover)
@@ -105,22 +127,21 @@ export function Palette() {
   // Handle mouse leave on an item
   const handleItemMouseLeave = useCallback(() => {
     clearHoverTimer()
-    // Only close if popover is not hovered
-    if (!isPopoverHovered) {
-      setHoveredItem(null)
-    }
-  }, [clearHoverTimer, isPopoverHovered])
+    // Schedule close with delay to allow mouse to reach popover
+    scheduleClose()
+  }, [clearHoverTimer, scheduleClose])
 
   // Handle popover mouse enter
   const handlePopoverMouseEnter = useCallback(() => {
-    setIsPopoverHovered(true)
-  }, [])
+    // Cancel any pending close when mouse enters popover
+    clearCloseTimer()
+  }, [clearCloseTimer])
 
   // Handle popover mouse leave
   const handlePopoverMouseLeave = useCallback(() => {
-    setIsPopoverHovered(false)
-    setHoveredItem(null)
-  }, [])
+    // Schedule close with delay
+    scheduleClose()
+  }, [scheduleClose])
 
   const handleCategoryClick = (categoryId: string) => {
     dispatch({ type: 'TOGGLE_CATEGORY_EXPANDED', categoryId })
@@ -129,8 +150,8 @@ export function Palette() {
   const handleStructureClick = (categoryId: string, structureId: string) => {
     // Close popover on click
     clearHoverTimer()
+    clearCloseTimer()
     setHoveredItem(null)
-    setIsPopoverHovered(false)
 
     dispatch({ type: 'SELECT_STRUCTURE', categoryId, structureId })
     // Auto-switch to place tool when selecting a structure
