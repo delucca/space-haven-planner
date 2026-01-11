@@ -472,8 +472,10 @@ pnpm preview     # serve the built app locally
   - **Space restrictions for airlocks/cargo ports**: These structures have large "Space" restriction areas that define where space must be. All Space restriction tiles are included (not just adjacent ones) and rendered as red blocked areas.
   - **Gap filling in structures**: The converter fills gaps within the core bounding box to ensure solid rectangles. Without this, structures like airlocks would appear as scattered tiles.
   - **FloorDeco tiles**: Treated as `access` tiles (crew can walk on them), not `construction`. This affects collision and rendering.
+- **Missing imports cause runtime crashes**: TypeScript may not catch all missing imports (especially when functions are exported from barrel files). If the app crashes with `ReferenceError: Can't find variable: X`, check that the function is imported in the file using it. Example: `canPlaceAt` must be imported from `../state` in `CanvasViewport.tsx`.
 - **JAR category IDs are not sequential**: The JAR uses non-sequential category IDs (e.g., 1506, 1507, 1508, 1516, 1519, 1522, 2880, 3359, 4243). Do NOT assume sequential IDs when mapping categories.
   - **Category display order is descending**: The game displays categories with higher `order` values first (leftmost). This is counterintuitive but matches the game UI.
+  - **Duplicate `JAR_CATEGORY_MAP`**: The category mapping exists in TWO files: `src/data/jarCatalog/converter.ts` (for runtime JAR uploads) and `scripts/generate-jar-catalog.ts` (for snapshot generation). **Always update both** when changing categories, colors, or exclusions.
   - **MainCat filtering is essential**: Only include structures from MainCat 1512 (OBJECTS). Structures from MainCat 1525 (SANDBOX) are debug/internal items that shouldn't appear in the planner. The parser extracts `parentId` from `<mainCat id="..."/>` child element.
   - **Duplicate structure names across MainCats**: The same structure name (e.g., "X1 Wall") can exist in multiple MainCats with different `mid` values. Always filter by MainCat to avoid duplicates.
 
@@ -574,24 +576,38 @@ The converter filters structures by checking if their `subCatId` belongs to a Su
 
 The converter maps JAR SubCat IDs (under MainCat 1512 = OBJECTS) to internal category IDs:
 
-| JAR SubCat ID | Name TID | Game Name    | Internal ID    | JAR Order |
-| ------------- | -------- | ------------ | -------------- | --------- |
-| 4243          | 8018     | MISSION      | `mission`      | 20        |
-| 1520          | 883      | WEAPON       | `weapon`       | 13        |
-| 1519          | 882      | SYSTEM       | `system`       | 10        |
-| 2880          | 4345     | ROBOTS       | `robots`       | 10        |
-| 1521          | 884      | AIRLOCK      | `airlock`      | 9         |
-| 1517          | 877      | STORAGE      | `storage`      | 8         |
-| 1515          | 879      | FOOD         | `food`         | 7         |
-| 1510          | 870      | RESOURCE     | `resource`     | 6         |
-| 1516          | 878      | POWER        | `power`        | 5         |
-| 1508          | 869      | LIFE SUPPORT | `life_support` | 4         |
-| 1507          | 868      | FACILITY     | `facility`     | 3         |
-| 3359          | 5127     | DECORATIONS  | `decorations`  | 2         |
-| 1506          | 867      | FURNITURE    | `furniture`    | 2         |
-| 1522          | 885      | WALL         | `wall`         | 1         |
+| JAR SubCat ID | Name TID | Game Name    | Internal ID    | JAR Order | Status    |
+| ------------- | -------- | ------------ | -------------- | --------- | --------- |
+| 4243          | 8018     | MISSION      | —              | 20        | ❌ Excluded |
+| 1520          | 883      | WEAPON       | `weapon`       | 13        | ✅ Included |
+| 1519          | 882      | SYSTEM       | `system`       | 10        | ✅ Included |
+| 2880          | 4345     | ROBOTS       | `robots`       | 10        | ✅ Included |
+| 1521          | 884      | AIRLOCK      | `airlock`      | 9         | ✅ Included |
+| 1517          | 877      | STORAGE      | `storage`      | 8         | ✅ Included |
+| 1515          | 879      | FOOD         | `food`         | 7         | ✅ Included |
+| 1510          | 870      | RESOURCE     | `resource`     | 6         | ✅ Included |
+| 1516          | 878      | POWER        | `power`        | 5         | ✅ Included |
+| 1508          | 869      | LIFE SUPPORT | `life_support` | 4         | ✅ Included |
+| 1507          | 868      | FACILITY     | `facility`     | 3         | ✅ Included |
+| 3359          | 5127     | DECORATIONS  | `decorations`  | 2         | ✅ Included |
+| 1506          | 867      | FURNITURE    | `furniture`    | 2         | ✅ Included |
+| 1522          | 885      | WALL         | `wall`         | 1         | ✅ Included |
 
 The "Other" category exists as a fallback but should remain empty if all OBJECTS SubCats are mapped.
+
+#### Excluded categories
+
+Some JAR categories are intentionally excluded from the planner:
+
+| Category ID | Name    | Reason                                              |
+| ----------- | ------- | --------------------------------------------------- |
+| 4243        | MISSION | Mission-specific items not useful for ship planning |
+
+To exclude a category, add its ID to `EXCLUDED_CATEGORY_IDS` in both:
+- `src/data/jarCatalog/converter.ts`
+- `scripts/generate-jar-catalog.ts`
+
+Then regenerate the built-in snapshot.
 
 #### Display order
 
@@ -641,6 +657,28 @@ This regenerates `src/data/jarCatalog/builtinSnapshot.ts` with the latest struct
 ### Structure deduplication
 
 Structures with the same name AND same size are merged (deduplicated) within each category. This handles color variants and duplicate entries in the JAR.
+
+### Item colors
+
+All items within a category share the same color (the category's color). This is defined in `JAR_CATEGORY_MAP`:
+
+| Category     | Color     | Hex       |
+| ------------ | --------- | --------- |
+| Wall         | Dark blue | `#3a4a5c` |
+| Furniture    | Tan       | `#aa8877` |
+| Decorations  | Mauve     | `#aa7788` |
+| Facility     | Steel     | `#6688aa` |
+| Life Support | Teal      | `#44aa88` |
+| Power        | Orange    | `#cc8844` |
+| Resource     | Amber     | `#aa8844` |
+| Food         | Green     | `#66aa44` |
+| Storage      | Olive     | `#888866` |
+| Airlock      | Purple    | `#8866aa` |
+| System       | Red       | `#cc4444` |
+| Robots       | Cyan      | `#55aaaa` |
+| Weapon       | Pink      | `#cc4466` |
+
+To change a category's color, update `JAR_CATEGORY_MAP` in both converter files and regenerate the snapshot.
 
 ### Hull tool
 
@@ -724,7 +762,8 @@ The wiki is **no longer the primary catalog source**. It now provides supplement
   - [ ] `pnpm lint`
   - [ ] `pnpm format:check`
   - [ ] `pnpm test:run` (add/adjust tests as needed)
-  - [ ] `pnpm build`
+  - [ ] `pnpm build` (catches TypeScript errors and missing imports)
   - [ ] If changing the project file format: bump/migrate `PROJECT_VERSION` and keep load backward-compatible
   - [ ] If changing JAR parsing: update tests in `parser.test.ts` and `converter.test.ts`
   - [ ] If changing tile layout logic: regenerate `builtinSnapshot.ts` and verify structures render correctly
+  - [ ] If changing category mapping: update both `converter.ts` AND `scripts/generate-jar-catalog.ts` (they have duplicate `JAR_CATEGORY_MAP`)

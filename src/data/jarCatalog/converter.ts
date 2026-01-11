@@ -74,9 +74,16 @@ const JAR_CATEGORY_MAP: Record<
   2880: { id: 'robots', name: 'Robots', color: '#55aaaa', defaultLayer: 'Systems', order: 10 },
   // order=13: WEAPON (not typically used for ship building)
   1520: { id: 'weapon', name: 'Weapon', color: '#cc4466', defaultLayer: 'Systems', order: 13 },
-  // order=20: MISSION (mission-specific items)
-  4243: { id: 'mission', name: 'Mission', color: '#aa66cc', defaultLayer: 'Systems', order: 20 },
+  // NOTE: MISSION category (4243) intentionally excluded - mission-specific items not useful for ship planning
 }
+
+/**
+ * Category IDs to completely exclude from the catalog
+ * Structures in these categories won't appear anywhere (not even in "Other")
+ */
+const EXCLUDED_CATEGORY_IDS = new Set<number>([
+  4243, // MISSION - mission-specific items not useful for ship planning
+])
 
 /**
  * Default category for structures without a known category
@@ -94,20 +101,17 @@ const DEFAULT_CATEGORY = {
 const DEFAULT_SIZE: Size = [2, 2]
 
 /**
- * Generate a deterministic color from a string (structure name)
+ * Get the color for a category by its ID
  */
-function generateColor(name: string): string {
-  let hash = 0
-  for (let i = 0; i < name.length; i++) {
-    hash = name.charCodeAt(i) + ((hash << 5) - hash)
+function getCategoryColor(categoryId: string): string {
+  // Check JAR_CATEGORY_MAP first
+  for (const catMeta of Object.values(JAR_CATEGORY_MAP)) {
+    if (catMeta.id === categoryId) {
+      return catMeta.color
+    }
   }
-
-  // Generate a muted color in HSL space
-  const hue = Math.abs(hash % 360)
-  const saturation = 40 + (Math.abs(hash >> 8) % 30) // 40-70%
-  const lightness = 35 + (Math.abs(hash >> 16) % 20) // 35-55%
-
-  return `hsl(${hue}, ${saturation}%, ${lightness}%)`
+  // Fall back to default category color
+  return DEFAULT_CATEGORY.color
 }
 
 /**
@@ -167,6 +171,11 @@ export function convertToStructureCatalog(jarData: ParsedJarData): StructureCata
       continue
     }
 
+    // Skip structures from excluded categories (e.g., mission-specific items)
+    if (EXCLUDED_CATEGORY_IDS.has(rawStruct.subCatId)) {
+      continue
+    }
+
     const structureDef = convertStructure(rawStruct, texts, categoryLookup)
     if (structureDef) {
       const categoryId = structureDef.categoryId
@@ -213,8 +222,8 @@ export function convertToStructureCatalog(jarData: ParsedJarData): StructureCata
 
   // Category order based on JAR order attribute (game displays in DESCENDING order)
   // Screenshot shows: SYSTEM, AIRLOCK, STORAGE, FOOD, RESOURCE, POWER, LIFE SUPPORT, FACILITY, DECORATIONS, FURNITURE, WALL
+  // NOTE: 'mission' category excluded - mission-specific items not useful for ship planning
   const categoryOrder = [
-    'mission', // order=20
     'weapon', // order=13
     'system', // order=10
     'robots', // order=10
@@ -371,8 +380,8 @@ function convertStructure(
   // Determine size
   const size: Size = raw.size ? [raw.size.width, raw.size.height] : DEFAULT_SIZE
 
-  // Generate color from name
-  const color = generateColor(name)
+  // Use category color for all items in the category
+  const color = getCategoryColor(categoryId)
 
   // Convert tile layout if available
   const tileLayout = convertTileLayout(raw.tiles, raw.linkedTiles, raw.restrictions, size)

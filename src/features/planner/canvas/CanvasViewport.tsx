@@ -1,5 +1,5 @@
 import { useRef, useEffect, useCallback, useState, useMemo } from 'react'
-import { usePlanner, isStructureInteractive } from '../state'
+import { usePlanner, isStructureInteractive, canPlaceAt } from '../state'
 import { findStructureById, getRotatedSize, type StructureCatalog, type PlacedStructure } from '@/data'
 import { ConfirmDialog } from '../components/ConfirmDialog'
 import {

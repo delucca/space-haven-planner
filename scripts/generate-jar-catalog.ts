@@ -110,9 +110,16 @@ const JAR_CATEGORY_MAP: Record<
   2880: { id: 'robots', name: 'Robots', color: '#55aaaa', defaultLayer: 'Systems', order: 10 },
   // order=13: WEAPON (not typically used for ship building)
   1520: { id: 'weapon', name: 'Weapon', color: '#cc4466', defaultLayer: 'Systems', order: 13 },
-  // order=20: MISSION (mission-specific items)
-  4243: { id: 'mission', name: 'Mission', color: '#aa66cc', defaultLayer: 'Systems', order: 20 },
+  // NOTE: MISSION category (4243) intentionally excluded - mission-specific items not useful for ship planning
 }
+
+/**
+ * Category IDs to completely exclude from the catalog
+ * Structures in these categories won't appear anywhere (not even in "Other")
+ */
+const EXCLUDED_CATEGORY_IDS = new Set<number>([
+  4243, // MISSION - mission-specific items not useful for ship planning
+])
 
 const DEFAULT_CATEGORY = {
   id: 'other',
@@ -121,15 +128,18 @@ const DEFAULT_CATEGORY = {
   defaultLayer: 'Rooms',
 }
 
-function generateColor(name: string): string {
-  let hash = 0
-  for (let i = 0; i < name.length; i++) {
-    hash = name.charCodeAt(i) + ((hash << 5) - hash)
+/**
+ * Get the color for a category by its ID
+ */
+function getCategoryColor(categoryId: string): string {
+  // Check JAR_CATEGORY_MAP first
+  for (const catMeta of Object.values(JAR_CATEGORY_MAP)) {
+    if (catMeta.id === categoryId) {
+      return catMeta.color
+    }
   }
-  const hue = Math.abs(hash % 360)
-  const saturation = 40 + (Math.abs(hash >> 8) % 30)
-  const lightness = 35 + (Math.abs(hash >> 16) % 20)
-  return `hsl(${hue}, ${saturation}%, ${lightness}%)`
+  // Fall back to default category color
+  return DEFAULT_CATEGORY.color
 }
 
 function parseTextsXml(xml: string): Map<number, string> {
@@ -614,6 +624,11 @@ function convertToStructureCatalog(jarData: ParsedJarData): StructureCatalog {
       continue
     }
     
+    // Skip structures from excluded categories (e.g., mission-specific items)
+    if (EXCLUDED_CATEGORY_IDS.has(raw.subCatId)) {
+      continue
+    }
+    
     const name = texts.get(raw.nameTid)
     if (!name) continue
     
@@ -633,7 +648,8 @@ function convertToStructureCatalog(jarData: ParsedJarData): StructureCatalog {
     }
     seen.add(dedupeKey)
     
-    const color = generateColor(name)
+    // Use category color for all items in the category
+    const color = getCategoryColor(categoryId)
     
     // Convert tile layout
     const tileLayout = convertTileLayout(raw.tiles, raw.linkedTiles, raw.restrictions, size)
@@ -663,8 +679,8 @@ function convertToStructureCatalog(jarData: ParsedJarData): StructureCatalog {
   const resultCategories: StructureCategory[] = []
   // Category order based on JAR order attribute (game displays in DESCENDING order)
   // Screenshot shows: SYSTEM, AIRLOCK, STORAGE, FOOD, RESOURCE, POWER, LIFE SUPPORT, FACILITY, DECORATIONS, FURNITURE, WALL
+  // NOTE: 'mission' category excluded - mission-specific items not useful for ship planning
   const categoryOrder = [
-    'mission',     // order=20
     'weapon',      // order=13
     'system',      // order=10
     'robots',      // order=10

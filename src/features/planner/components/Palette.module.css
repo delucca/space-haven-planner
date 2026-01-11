@@ -88,6 +88,11 @@
   background-color: #238636;
 }
 
+/* Ensure size text is readable when selected */
+.item[data-selected='true'] .itemSize {
+  color: rgba(255, 255, 255, 0.85);
+}
+
 .itemInfo {
   display: flex;
   align-items: center;
@@ -99,6 +104,9 @@
   height: 10px;
   border-radius: 2px;
   flex-shrink: 0;
+  /* White border to make color swatch visible against dark backgrounds */
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-sizing: border-box;
 }
 
 .itemName {
