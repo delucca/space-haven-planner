@@ -107,6 +107,7 @@ Handled by `useKeyboardShortcuts` hook (`src/features/planner/hooks/useKeyboardS
 | `3`                   | Place tool                                   |
 | `4`                   | Erase tool                                   |
 | `Space` + drag        | Pan canvas (works in all tools)              |
+| `Shift` + click       | Add/remove structure from selection (Select) |
 | `Delete` / `Backspace`| Delete selected structures (in Select mode)  |
 | `Escape`              | Clear selection (palette + grid selection)   |
 
@@ -204,11 +205,13 @@ Layout state is persisted in `localStorage` under key `space-haven-planner-layou
 
 | Tool     | Purpose                                                                                    | Default                                 |
 | -------- | ------------------------------------------------------------------------------------------ | --------------------------------------- |
-| `select` | Box-select structures; drag selected to move; Space+drag to pan; Delete/Backspace removes  | ✓ (selected on load)                    |
+| `select` | Click to move structures; box-select; Shift+click to multi-select; Delete/Backspace removes | ✓ (selected on load)                    |
 | `hull`   | Drag-select to fill 1×1 hull tiles on mouseup (Shift = erase hull tiles)                   |                                         |
 | `place`  | Click to place selected structure; drag-select highlights existing objects (no action yet) | Auto-selected when clicking a structure |
 | `erase`  | Drag-select highlights; on mouseup deletes selection (confirm unless hull-only)            |                                         |
 | `grid`   | Toggle button to show/hide grid lines on the canvas                                        | ✓ (grid visible on load)                |
+
+**Note**: `Space` + drag pans the canvas in **all tools**.
 
 #### Select tool behavior
 
