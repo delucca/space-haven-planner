@@ -96,7 +96,7 @@ function PlannerContent() {
   useInitialZoom(dispatch, state.gridSize.width, canvasContentWidth)
 
   // Enable keyboard shortcuts
-  useKeyboardShortcuts(dispatch, state.zoom)
+  useKeyboardShortcuts(dispatch, state.zoom, state.gridSize.width, canvasContentWidth)
 
   // Enable localStorage autosave
   useAutosave(state, dispatch)

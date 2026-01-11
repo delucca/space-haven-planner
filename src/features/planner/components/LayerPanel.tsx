@@ -687,7 +687,7 @@ export function LayerPanel() {
           <p>• Click structure to select</p>
           <p>• Click grid to place</p>
           <p>• Q/E to rotate</p>
-          <p>• +/- to zoom in/out</p>
+          <p>• +/- to zoom, 0 to reset</p>
           <p>• 1/2/3 for Hull/Place/Erase</p>
           <p>• Double-click to rename</p>
         </div>

@@ -2,10 +2,14 @@ import { renderHook } from '@testing-library/react'
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { useKeyboardShortcuts } from './useKeyboardShortcuts'
 import { ZOOM_STEP } from '@/data/presets'
+import { calculateFitZoomForViewport } from '../zoom'
 
 describe('useKeyboardShortcuts', () => {
   const mockDispatch = vi.fn()
   const baseZoom = 12
+  // Default grid and canvas dimensions for tests
+  const defaultGridWidth = 54
+  const defaultCanvasWidth = 1000
 
   beforeEach(() => {
     mockDispatch.mockClear()
@@ -28,7 +32,9 @@ describe('useKeyboardShortcuts', () => {
 
   describe('zoom shortcuts', () => {
     it('zooms in with + key', () => {
-      renderHook(() => useKeyboardShortcuts(mockDispatch, baseZoom))
+      renderHook(() =>
+        useKeyboardShortcuts(mockDispatch, baseZoom, defaultGridWidth, defaultCanvasWidth)
+      )
 
       fireKeyDown('+')
 
@@ -39,7 +45,9 @@ describe('useKeyboardShortcuts', () => {
     })
 
     it('zooms in with = key (unshifted +)', () => {
-      renderHook(() => useKeyboardShortcuts(mockDispatch, baseZoom))
+      renderHook(() =>
+        useKeyboardShortcuts(mockDispatch, baseZoom, defaultGridWidth, defaultCanvasWidth)
+      )
 
       fireKeyDown('=')
 
@@ -50,7 +58,9 @@ describe('useKeyboardShortcuts', () => {
     })
 
     it('zooms out with - key', () => {
-      renderHook(() => useKeyboardShortcuts(mockDispatch, baseZoom))
+      renderHook(() =>
+        useKeyboardShortcuts(mockDispatch, baseZoom, defaultGridWidth, defaultCanvasWidth)
+      )
 
       fireKeyDown('-')
 
@@ -61,7 +71,9 @@ describe('useKeyboardShortcuts', () => {
     })
 
     it('zooms out with _ key (shifted -)', () => {
-      renderHook(() => useKeyboardShortcuts(mockDispatch, baseZoom))
+      renderHook(() =>
+        useKeyboardShortcuts(mockDispatch, baseZoom, defaultGridWidth, defaultCanvasWidth)
+      )
 
       fireKeyDown('_')
 
@@ -72,7 +84,9 @@ describe('useKeyboardShortcuts', () => {
     })
 
     it('zooms in with Ctrl++', () => {
-      renderHook(() => useKeyboardShortcuts(mockDispatch, baseZoom))
+      renderHook(() =>
+        useKeyboardShortcuts(mockDispatch, baseZoom, defaultGridWidth, defaultCanvasWidth)
+      )
 
       fireKeyDown('+', { ctrlKey: true })
 
@@ -83,7 +97,9 @@ describe('useKeyboardShortcuts', () => {
     })
 
     it('zooms in with Ctrl+=', () => {
-      renderHook(() => useKeyboardShortcuts(mockDispatch, baseZoom))
+      renderHook(() =>
+        useKeyboardShortcuts(mockDispatch, baseZoom, defaultGridWidth, defaultCanvasWidth)
+      )
 
       fireKeyDown('=', { ctrlKey: true })
 
@@ -94,7 +110,9 @@ describe('useKeyboardShortcuts', () => {
     })
 
     it('zooms out with Ctrl+-', () => {
-      renderHook(() => useKeyboardShortcuts(mockDispatch, baseZoom))
+      renderHook(() =>
+        useKeyboardShortcuts(mockDispatch, baseZoom, defaultGridWidth, defaultCanvasWidth)
+      )
 
       fireKeyDown('-', { ctrlKey: true })
 
@@ -105,7 +123,9 @@ describe('useKeyboardShortcuts', () => {
     })
 
     it('zooms in with Cmd++ (metaKey)', () => {
-      renderHook(() => useKeyboardShortcuts(mockDispatch, baseZoom))
+      renderHook(() =>
+        useKeyboardShortcuts(mockDispatch, baseZoom, defaultGridWidth, defaultCanvasWidth)
+      )
 
       fireKeyDown('+', { metaKey: true })
 
@@ -116,7 +136,9 @@ describe('useKeyboardShortcuts', () => {
     })
 
     it('zooms out with Cmd+- (metaKey)', () => {
-      renderHook(() => useKeyboardShortcuts(mockDispatch, baseZoom))
+      renderHook(() =>
+        useKeyboardShortcuts(mockDispatch, baseZoom, defaultGridWidth, defaultCanvasWidth)
+      )
 
       fireKeyDown('-', { metaKey: true })
 
@@ -125,11 +147,55 @@ describe('useKeyboardShortcuts', () => {
         zoom: baseZoom - ZOOM_STEP,
       })
     })
+
+    it('resets zoom to 100% with 0 key', () => {
+      renderHook(() =>
+        useKeyboardShortcuts(mockDispatch, baseZoom, defaultGridWidth, defaultCanvasWidth)
+      )
+
+      fireKeyDown('0')
+
+      const expectedFitZoom = calculateFitZoomForViewport(defaultGridWidth, defaultCanvasWidth)
+      expect(mockDispatch).toHaveBeenCalledWith({
+        type: 'SET_ZOOM',
+        zoom: expectedFitZoom,
+      })
+    })
+
+    it('resets zoom to 100% with Ctrl+0', () => {
+      renderHook(() =>
+        useKeyboardShortcuts(mockDispatch, baseZoom, defaultGridWidth, defaultCanvasWidth)
+      )
+
+      fireKeyDown('0', { ctrlKey: true })
+
+      const expectedFitZoom = calculateFitZoomForViewport(defaultGridWidth, defaultCanvasWidth)
+      expect(mockDispatch).toHaveBeenCalledWith({
+        type: 'SET_ZOOM',
+        zoom: expectedFitZoom,
+      })
+    })
+
+    it('resets zoom to 100% with Cmd+0 (metaKey)', () => {
+      renderHook(() =>
+        useKeyboardShortcuts(mockDispatch, baseZoom, defaultGridWidth, defaultCanvasWidth)
+      )
+
+      fireKeyDown('0', { metaKey: true })
+
+      const expectedFitZoom = calculateFitZoomForViewport(defaultGridWidth, defaultCanvasWidth)
+      expect(mockDispatch).toHaveBeenCalledWith({
+        type: 'SET_ZOOM',
+        zoom: expectedFitZoom,
+      })
+    })
   })
 
   describe('rotation shortcuts', () => {
     it('rotates counter-clockwise with q', () => {
-      renderHook(() => useKeyboardShortcuts(mockDispatch, baseZoom))
+      renderHook(() =>
+        useKeyboardShortcuts(mockDispatch, baseZoom, defaultGridWidth, defaultCanvasWidth)
+      )
 
       fireKeyDown('q')
 
@@ -140,7 +206,9 @@ describe('useKeyboardShortcuts', () => {
     })
 
     it('rotates counter-clockwise with Q (uppercase)', () => {
-      renderHook(() => useKeyboardShortcuts(mockDispatch, baseZoom))
+      renderHook(() =>
+        useKeyboardShortcuts(mockDispatch, baseZoom, defaultGridWidth, defaultCanvasWidth)
+      )
 
       fireKeyDown('Q')
 
@@ -151,7 +219,9 @@ describe('useKeyboardShortcuts', () => {
     })
 
     it('rotates clockwise with e', () => {
-      renderHook(() => useKeyboardShortcuts(mockDispatch, baseZoom))
+      renderHook(() =>
+        useKeyboardShortcuts(mockDispatch, baseZoom, defaultGridWidth, defaultCanvasWidth)
+      )
 
       fireKeyDown('e')
 
@@ -162,7 +232,9 @@ describe('useKeyboardShortcuts', () => {
     })
 
     it('rotates clockwise with E (uppercase)', () => {
-      renderHook(() => useKeyboardShortcuts(mockDispatch, baseZoom))
+      renderHook(() =>
+        useKeyboardShortcuts(mockDispatch, baseZoom, defaultGridWidth, defaultCanvasWidth)
+      )
 
       fireKeyDown('E')
 
@@ -175,7 +247,9 @@ describe('useKeyboardShortcuts', () => {
 
   describe('tool shortcuts', () => {
     it('switches to hull tool with 1', () => {
-      renderHook(() => useKeyboardShortcuts(mockDispatch, baseZoom))
+      renderHook(() =>
+        useKeyboardShortcuts(mockDispatch, baseZoom, defaultGridWidth, defaultCanvasWidth)
+      )
 
       fireKeyDown('1')
 
@@ -186,7 +260,9 @@ describe('useKeyboardShortcuts', () => {
     })
 
     it('switches to place tool with 2', () => {
-      renderHook(() => useKeyboardShortcuts(mockDispatch, baseZoom))
+      renderHook(() =>
+        useKeyboardShortcuts(mockDispatch, baseZoom, defaultGridWidth, defaultCanvasWidth)
+      )
 
       fireKeyDown('2')
 
@@ -197,7 +273,9 @@ describe('useKeyboardShortcuts', () => {
     })
 
     it('switches to erase tool with 3', () => {
-      renderHook(() => useKeyboardShortcuts(mockDispatch, baseZoom))
+      renderHook(() =>
+        useKeyboardShortcuts(mockDispatch, baseZoom, defaultGridWidth, defaultCanvasWidth)
+      )
 
       fireKeyDown('3')
 
@@ -210,7 +288,9 @@ describe('useKeyboardShortcuts', () => {
 
   describe('selection shortcuts', () => {
     it('clears selection with Escape', () => {
-      renderHook(() => useKeyboardShortcuts(mockDispatch, baseZoom))
+      renderHook(() =>
+        useKeyboardShortcuts(mockDispatch, baseZoom, defaultGridWidth, defaultCanvasWidth)
+      )
 
       fireKeyDown('Escape')
 
@@ -222,7 +302,9 @@ describe('useKeyboardShortcuts', () => {
 
   describe('input field handling', () => {
     it('ignores shortcuts when typing in input field', () => {
-      renderHook(() => useKeyboardShortcuts(mockDispatch, baseZoom))
+      renderHook(() =>
+        useKeyboardShortcuts(mockDispatch, baseZoom, defaultGridWidth, defaultCanvasWidth)
+      )
 
       const input = document.createElement('input')
       document.body.appendChild(input)
@@ -242,7 +324,9 @@ describe('useKeyboardShortcuts', () => {
     })
 
     it('ignores shortcuts when typing in textarea', () => {
-      renderHook(() => useKeyboardShortcuts(mockDispatch, baseZoom))
+      renderHook(() =>
+        useKeyboardShortcuts(mockDispatch, baseZoom, defaultGridWidth, defaultCanvasWidth)
+      )
 
       const textarea = document.createElement('textarea')
       document.body.appendChild(textarea)
@@ -262,7 +346,9 @@ describe('useKeyboardShortcuts', () => {
     })
 
     it('ignores shortcuts when typing in select', () => {
-      renderHook(() => useKeyboardShortcuts(mockDispatch, baseZoom))
+      renderHook(() =>
+        useKeyboardShortcuts(mockDispatch, baseZoom, defaultGridWidth, defaultCanvasWidth)
+      )
 
       const select = document.createElement('select')
       document.body.appendChild(select)
@@ -286,7 +372,9 @@ describe('useKeyboardShortcuts', () => {
     it('removes event listener on unmount', () => {
       const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener')
 
-      const { unmount } = renderHook(() => useKeyboardShortcuts(mockDispatch, baseZoom))
+      const { unmount } = renderHook(() =>
+        useKeyboardShortcuts(mockDispatch, baseZoom, defaultGridWidth, defaultCanvasWidth)
+      )
       unmount()
 
       expect(removeEventListenerSpy).toHaveBeenCalledWith('keydown', expect.any(Function))

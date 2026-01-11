@@ -2,13 +2,21 @@ import { useEffect, useCallback } from 'react'
 import type { Dispatch } from 'react'
 import type { PlannerAction, PlannerState } from '../state/types'
 import { ZOOM_STEP } from '@/data/presets'
+import { calculateFitZoomForViewport } from '../zoom'
 
 /**
  * Hook to handle keyboard shortcuts for the planner
+ *
+ * @param dispatch - The planner dispatch function
+ * @param zoom - Current zoom level (pixels per tile)
+ * @param gridWidth - The grid width in tiles
+ * @param canvasContentWidth - The measured content width of the canvas container (in pixels)
  */
 export function useKeyboardShortcuts(
   dispatch: Dispatch<PlannerAction>,
-  zoom: PlannerState['zoom']
+  zoom: PlannerState['zoom'],
+  gridWidth: number,
+  canvasContentWidth: number
 ) {
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -18,6 +26,14 @@ export function useKeyboardShortcuts(
         e.target instanceof HTMLTextAreaElement ||
         e.target instanceof HTMLSelectElement
       ) {
+        return
+      }
+
+      // Zoom reset with Ctrl/Cmd+0 (reset to 100%)
+      if ((e.ctrlKey || e.metaKey) && e.key === '0') {
+        e.preventDefault()
+        const fitZoom = calculateFitZoomForViewport(gridWidth, canvasContentWidth)
+        dispatch({ type: 'SET_ZOOM', zoom: fitZoom })
         return
       }
 
@@ -36,6 +52,13 @@ export function useKeyboardShortcuts(
       }
 
       switch (e.key) {
+        // Zoom reset (without modifier) - reset to 100%
+        case '0':
+          e.preventDefault()
+          const fitZoom = calculateFitZoomForViewport(gridWidth, canvasContentWidth)
+          dispatch({ type: 'SET_ZOOM', zoom: fitZoom })
+          break
+
         // Zoom (without modifier)
         case '+':
         case '=':
@@ -81,7 +104,7 @@ export function useKeyboardShortcuts(
           break
       }
     },
-    [dispatch, zoom]
+    [dispatch, zoom, gridWidth, canvasContentWidth]
   )
 
   useEffect(() => {
