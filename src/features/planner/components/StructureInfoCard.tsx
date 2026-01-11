@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { StructureDef, StructureCategory, TileLayout } from '@/data/types'
 import type { WikiStructureMetadata, WikiStructureLookupStatus } from '@/data/catalog/wikiMetadata'
 import styles from './StructureInfoPopover.module.css'
@@ -21,9 +21,19 @@ function WikiImage({
   containerClassName?: string
 }) {
   const [status, setStatus] = useState<'loading' | 'loaded' | 'error'>('loading')
+  const imgRef = useRef<HTMLImageElement | null>(null)
 
   useEffect(() => {
     setStatus('loading')
+  }, [src])
+
+  // If the image is already cached, onLoad might not fire reliably. Detect and update status.
+  useEffect(() => {
+    const img = imgRef.current
+    if (!img) return
+    if (!img.complete) return
+
+    setStatus(img.naturalWidth > 0 ? 'loaded' : 'error')
   }, [src])
 
   return (
@@ -33,6 +43,7 @@ function WikiImage({
 
       {status !== 'error' && (
         <img
+          ref={imgRef}
           src={src}
           alt={alt}
           className={className}

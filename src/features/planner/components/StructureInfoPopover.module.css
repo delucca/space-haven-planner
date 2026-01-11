@@ -43,10 +43,12 @@
 .imageContainer {
   width: 100%;
   max-height: 120px;
+  min-height: 60px;
   overflow: hidden;
   border-radius: var(--border-radius-sm);
   background-color: var(--color-bg-tertiary);
   margin-bottom: var(--spacing-xs);
+  position: relative;
 }
 
 .image {
@@ -61,10 +63,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 60px;
+  position: absolute;
+  inset: 0;
   font-size: var(--font-size-xs);
   color: var(--color-text-muted);
   font-style: italic;
+  pointer-events: none;
 }
 
 /* Header with color swatch and name */
