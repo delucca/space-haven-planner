@@ -95,17 +95,20 @@ const options: SelectOption[] = [
 
 Handled by `useKeyboardShortcuts` hook (`src/features/planner/hooks/useKeyboardShortcuts.ts`):
 
-| Shortcut         | Action                   |
-| ---------------- | ------------------------ |
-| `+` / `=`        | Zoom in                  |
-| `-` / `_`        | Zoom out                 |
-| `Ctrl/Cmd + +/-` | Zoom in/out (also works) |
-| `Q`              | Rotate counter-clockwise |
-| `E`              | Rotate clockwise         |
-| `1`              | Select Hull tool         |
-| `2`              | Select Place tool        |
-| `3`              | Select Erase tool        |
-| `Escape`         | Clear selection          |
+| Shortcut              | Action                                       |
+| --------------------- | -------------------------------------------- |
+| `+` / `=`             | Zoom in                                      |
+| `-` / `_`             | Zoom out                                     |
+| `Ctrl/Cmd + +/-`      | Zoom in/out (also works)                     |
+| `Q`                   | Rotate counter-clockwise                     |
+| `E`                   | Rotate clockwise                             |
+| `1`                   | Select tool (default)                        |
+| `2`                   | Hull tool                                    |
+| `3`                   | Place tool                                   |
+| `4`                   | Erase tool                                   |
+| `Space` + drag        | Pan canvas (in Select mode)                  |
+| `Delete` / `Backspace`| Delete selected structures (in Select mode)  |
+| `Escape`              | Clear selection (palette + grid selection)   |
 
 **Note**: Shortcuts are disabled when focus is in input/textarea/select elements.
 
@@ -199,12 +202,25 @@ Layout state is persisted in `localStorage` under key `space-haven-planner-layou
 
 ### Tools
 
-| Tool    | Purpose                                                                                    | Default                                 |
-| ------- | ------------------------------------------------------------------------------------------ | --------------------------------------- |
-| `hull`  | Drag-select to fill 1×1 hull tiles on mouseup (Shift = erase hull tiles)                   | ✓ (selected on load)                    |
-| `place` | Click to place selected structure; drag-select highlights existing objects (no action yet) | Auto-selected when clicking a structure |
-| `erase` | Drag-select highlights; on mouseup deletes selection (confirm unless hull-only)            |                                         |
-| `grid`  | Toggle button to show/hide grid lines on the canvas                                        | ✓ (grid visible on load)                |
+| Tool     | Purpose                                                                                    | Default                                 |
+| -------- | ------------------------------------------------------------------------------------------ | --------------------------------------- |
+| `select` | Box-select structures; Space+drag to pan; Delete/Backspace removes selected                | ✓ (selected on load)                    |
+| `hull`   | Drag-select to fill 1×1 hull tiles on mouseup (Shift = erase hull tiles)                   |                                         |
+| `place`  | Click to place selected structure; drag-select highlights existing objects (no action yet) | Auto-selected when clicking a structure |
+| `erase`  | Drag-select highlights; on mouseup deletes selection (confirm unless hull-only)            |                                         |
+| `grid`   | Toggle button to show/hide grid lines on the canvas                                        | ✓ (grid visible on load)                |
+
+#### Select tool behavior
+
+The Select tool (`1`) is the default tool on app load. It provides:
+
+- **Box selection**: Drag on the canvas to select structures within the rectangle
+- **Pan mode**: Hold `Space` and drag to pan/scroll the canvas
+- **Delete selected**: Press `Delete` or `Backspace` to delete selected structures (with confirmation)
+- **Selection display**: Selected structures appear in the right sidebar "Selected" section
+- **Clear selection**: Press `Escape` or click "Clear Selection" button
+
+Selected structures are stored in `PlannerState.selectedStructureIds` (a `ReadonlySet<string>`).
 
 ### Grid rendering
 

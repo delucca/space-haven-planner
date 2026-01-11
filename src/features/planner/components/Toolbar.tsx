@@ -173,6 +173,12 @@ export function Toolbar({ canvasContentWidth }: ToolbarProps) {
       {/* Tools */}
       <div className={styles.group}>
         <ToolButton
+          id="select"
+          label="🖱️ Select"
+          active={tool === 'select'}
+          onClick={() => handleToolChange('select')}
+        />
+        <ToolButton
           id="hull"
           label="🧱 Hull"
           active={tool === 'hull'}

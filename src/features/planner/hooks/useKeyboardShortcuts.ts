@@ -53,11 +53,12 @@ export function useKeyboardShortcuts(
 
       switch (e.key) {
         // Zoom reset (without modifier) - reset to 100%
-        case '0':
+        case '0': {
           e.preventDefault()
           const fitZoom = calculateFitZoomForViewport(gridWidth, canvasContentWidth)
           dispatch({ type: 'SET_ZOOM', zoom: fitZoom })
           break
+        }
 
         // Zoom (without modifier)
         case '+':
@@ -83,16 +84,20 @@ export function useKeyboardShortcuts(
           dispatch({ type: 'ROTATE_PREVIEW', direction: 'cw' })
           break
 
-        // Tools
+        // Tools (1=Select, 2=Hull, 3=Place, 4=Erase)
         case '1':
           e.preventDefault()
-          dispatch({ type: 'SET_TOOL', tool: 'hull' })
+          dispatch({ type: 'SET_TOOL', tool: 'select' })
           break
         case '2':
           e.preventDefault()
-          dispatch({ type: 'SET_TOOL', tool: 'place' })
+          dispatch({ type: 'SET_TOOL', tool: 'hull' })
           break
         case '3':
+          e.preventDefault()
+          dispatch({ type: 'SET_TOOL', tool: 'place' })
+          break
+        case '4':
           e.preventDefault()
           dispatch({ type: 'SET_TOOL', tool: 'erase' })
           break

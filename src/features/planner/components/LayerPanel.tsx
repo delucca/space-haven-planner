@@ -97,6 +97,7 @@ export function LayerPanel() {
     expandedGroupIds,
     selection,
     previewRotation,
+    selectedStructureIds,
   } = state
 
   const [editing, setEditing] = useState<EditingState | null>(null)
@@ -267,8 +268,11 @@ export function LayerPanel() {
     setDragOverLayerId(null)
   }
 
-  // Get selected structure info for preview
+  // Get selected structure info for placement preview
   const selectedInfo = selection ? findStructureById(catalog, selection.structureId) : null
+
+  // Get selected grid structures (from Select tool)
+  const selectedGridStructures = structures.filter((s) => selectedStructureIds.has(s.id))
 
   // Sort layers by order
   const sortedLayers = [...userLayers].sort((a, b) => a.order - b.order)
@@ -658,9 +662,44 @@ export function LayerPanel() {
         )}
       </section>
 
-      {/* Selection info section */}
+      {/* Selected grid structures (from Select tool) */}
       <section className={styles.section}>
-        <h3 className={styles.sectionTitle}>Selected</h3>
+        <h3 className={styles.sectionTitle}>Selected ({selectedGridStructures.length})</h3>
+        {selectedGridStructures.length > 0 ? (
+          <div className={styles.selectedList}>
+            {selectedGridStructures.map((struct) => {
+              const found = findStructureById(catalog, struct.structureId)
+              if (!found) return null
+              return (
+                <div key={struct.id} className={styles.selectedItem}>
+                  <span
+                    className={styles.itemColor}
+                    style={{ backgroundColor: found.structure.color }}
+                  />
+                  <span className={styles.itemName}>{found.structure.name}</span>
+                  <span className={styles.itemCoords}>
+                    ({struct.x}, {struct.y})
+                  </span>
+                </div>
+              )
+            })}
+            <button
+              className={styles.clearSelectionBtn}
+              onClick={() => dispatch({ type: 'CLEAR_SELECTED_STRUCTURES' })}
+            >
+              Clear Selection
+            </button>
+          </div>
+        ) : (
+          <div className={styles.noSelection}>
+            Use Select tool (1) to box-select structures
+          </div>
+        )}
+      </section>
+
+      {/* Placement preview section */}
+      <section className={styles.section}>
+        <h3 className={styles.sectionTitle}>Placement</h3>
         {selectedInfo ? (
           <div className={styles.selectionInfo}>
             <div className={styles.selectionName}>{selectedInfo.structure.name}</div>
@@ -684,11 +723,12 @@ export function LayerPanel() {
       <section className={styles.section}>
         <h3 className={styles.sectionTitle}>Help</h3>
         <div className={styles.helpText}>
-          <p>• Click structure to select</p>
-          <p>• Click grid to place</p>
+          <p>• Click palette item to place</p>
           <p>• Q/E to rotate</p>
           <p>• +/- to zoom, 0 to reset</p>
-          <p>• 1/2/3 for Hull/Place/Erase</p>
+          <p>• 1/2/3/4 for Select/Hull/Place/Erase</p>
+          <p>• Space+drag to pan (Select mode)</p>
+          <p>• Del/Backspace to delete selected</p>
           <p>• Double-click to rename</p>
         </div>
       </section>

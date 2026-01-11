@@ -75,7 +75,7 @@ export function createInitialState(): PlannerState {
     presetLabel: DEFAULT_PRESET.label,
     zoom: DEFAULT_ZOOM,
     showGrid: true,
-    tool: 'hull',
+    tool: 'select',
     selection: null,
     previewRotation: 0,
     visibleLayers: new Set(LAYERS),
@@ -91,6 +91,7 @@ export function createInitialState(): PlannerState {
     hullTiles: new Set(),
     hoveredTile: null,
     isDragging: false,
+    selectedStructureIds: new Set(),
     catalog: getBuiltinCatalog(),
     catalogStatus: createInitialCatalogStatus(),
   }
@@ -401,6 +402,7 @@ export function plannerReducer(state: PlannerState, action: PlannerAction): Plan
       return {
         ...state,
         selection: null,
+        selectedStructureIds: new Set(),
       }
 
     case 'ROTATE_PREVIEW':
@@ -661,6 +663,22 @@ export function plannerReducer(state: PlannerState, action: PlannerAction): Plan
       return {
         ...state,
         structures: state.structures.filter((s) => s.id !== action.structureId),
+        // Also remove from grid selection if selected
+        selectedStructureIds: state.selectedStructureIds.has(action.structureId)
+          ? new Set([...state.selectedStructureIds].filter((id) => id !== action.structureId))
+          : state.selectedStructureIds,
+      }
+    }
+
+    case 'DELETE_STRUCTURES': {
+      const idsToDelete = new Set(action.structureIds)
+      return {
+        ...state,
+        structures: state.structures.filter((s) => !idsToDelete.has(s.id)),
+        // Clear selection for deleted structures
+        selectedStructureIds: new Set(
+          [...state.selectedStructureIds].filter((id) => !idsToDelete.has(id))
+        ),
       }
     }
 
@@ -991,6 +1009,19 @@ export function plannerReducer(state: PlannerState, action: PlannerAction): Plan
       return {
         ...state,
         isDragging: action.isDragging,
+      }
+
+    // Grid selection actions (Select tool)
+    case 'SET_SELECTED_STRUCTURES':
+      return {
+        ...state,
+        selectedStructureIds: new Set(action.structureIds),
+      }
+
+    case 'CLEAR_SELECTED_STRUCTURES':
+      return {
+        ...state,
+        selectedStructureIds: new Set(),
       }
 
     // Project actions

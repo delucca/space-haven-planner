@@ -9,7 +9,7 @@ export type Rotation = 0 | 90 | 180 | 270
 export type LayerId = 'Hull' | 'Rooms' | 'Systems' | 'Furniture'
 
 /** Tool identifiers for interaction modes */
-export type ToolId = 'place' | 'erase' | 'hull'
+export type ToolId = 'select' | 'place' | 'erase' | 'hull'
 
 /** A hull tile position (1x1 basic hull block) */
 export interface HullTile {

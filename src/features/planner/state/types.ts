@@ -87,6 +87,9 @@ export interface PlannerState {
   readonly hoveredTile: HoverState | null
   readonly isDragging: boolean
 
+  // Grid selection (selected placed structures via Select tool)
+  readonly selectedStructureIds: ReadonlySet<string>
+
   // Catalog (JAR-based)
   readonly catalog: StructureCatalog
   readonly catalogStatus: CatalogStatus
@@ -139,6 +142,11 @@ export type PlannerAction =
       groupId: string | null
     }
   | { type: 'DELETE_STRUCTURE'; structureId: string }
+  | { type: 'DELETE_STRUCTURES'; structureIds: readonly string[] }
+
+  // Grid selection actions (Select tool)
+  | { type: 'SET_SELECTED_STRUCTURES'; structureIds: readonly string[] }
+  | { type: 'CLEAR_SELECTED_STRUCTURES' }
 
   // Load user layers/groups (for project load/autosave)
   | {

@@ -1,4 +1,4 @@
-import { useRef, useEffect, useCallback, useState } from 'react'
+import { useRef, useEffect, useCallback, useState, useMemo } from 'react'
 import { usePlanner, canPlaceAt, isStructureInteractive } from '../state'
 import { findStructureById, getRotatedSize } from '@/data'
 import { ConfirmDialog } from '../components/ConfirmDialog'
@@ -11,6 +11,15 @@ import {
   type SelectionOverlayRect,
 } from './renderer'
 import styles from './CanvasViewport.module.css'
+
+/** Check if event target is an input element */
+function isInputElement(target: EventTarget | null): boolean {
+  return (
+    target instanceof HTMLInputElement ||
+    target instanceof HTMLTextAreaElement ||
+    target instanceof HTMLSelectElement
+  )
+}
 
 function generateId(): string {
   return `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`
@@ -126,6 +135,7 @@ function getStructureSelectionBounds(
 
 export function CanvasViewport() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
   const { state, dispatch } = usePlanner()
   const [dragRect, setDragRect] = useState<SelectionOverlayRect | null>(null)
   const [pendingErase, setPendingErase] = useState<null | {
@@ -133,9 +143,14 @@ export function CanvasViewport() {
     structureCount: number
     hullCount: number
   }>(null)
+  const [pendingDeleteSelection, setPendingDeleteSelection] = useState(false)
+  const [isSpaceHeld, setIsSpaceHeld] = useState(false)
+  const [isPanning, setIsPanning] = useState(false)
   const dragStartRef = useRef<{ x: number; y: number } | null>(null)
   const dragEndRef = useRef<{ x: number; y: number } | null>(null)
   const dragHullEraseRef = useRef<boolean>(false)
+  // For Space+drag panning
+  const panStartRef = useRef<{ scrollLeft: number; scrollTop: number; clientX: number; clientY: number } | null>(null)
 
   const {
     gridSize,
@@ -151,10 +166,44 @@ export function CanvasViewport() {
     userGroups,
     hoveredTile,
     isDragging,
+    selectedStructureIds,
   } = state
 
   // Create visibility state for rendering
-  const visibilityState = { userLayers, userGroups }
+  const visibilityState = useMemo(() => ({ userLayers, userGroups }), [userLayers, userGroups])
+
+  // Track Space key for panning and Delete/Backspace for deletion
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (isInputElement(e.target)) return
+
+      if (e.key === ' ' || e.code === 'Space') {
+        e.preventDefault()
+        setIsSpaceHeld(true)
+      }
+
+      // Delete/Backspace to delete selected structures
+      if ((e.key === 'Delete' || e.key === 'Backspace') && selectedStructureIds.size > 0) {
+        e.preventDefault()
+        setPendingDeleteSelection(true)
+      }
+    }
+
+    const handleKeyUp = (e: KeyboardEvent) => {
+      if (e.key === ' ' || e.code === 'Space') {
+        setIsSpaceHeld(false)
+        setIsPanning(false)
+        panStartRef.current = null
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    window.addEventListener('keyup', handleKeyUp)
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+      window.removeEventListener('keyup', handleKeyUp)
+    }
+  }, [selectedStructureIds.size])
 
   // Calculate preview info
   const getPreviewInfo = useCallback((): PreviewInfo | null => {
@@ -182,7 +231,7 @@ export function CanvasViewport() {
       rotation: previewRotation,
       tileLayout: found.structure.tileLayout,
     }
-  }, [selection, hoveredTile, tool, catalog, previewRotation, state])
+  }, [selection, hoveredTile, tool, catalog, previewRotation, state, isDragging])
 
   // Render loop
   useEffect(() => {
@@ -197,7 +246,7 @@ export function CanvasViewport() {
 
     renderScene(rc, structures, hullTiles, catalog, visibilityState, showGrid, preview, hullPreview)
 
-    if (isDragging && dragRect) {
+    if (isDragging && dragRect && !isPanning) {
       const clamped = clampRect(dragRect, gridSize)
       const normalized = normalizeRect(clamped)
 
@@ -208,11 +257,11 @@ export function CanvasViewport() {
           hullTiles,
         })
       } else {
-        // Only show interactive structures in selection overlay (for erase tool)
+        // Only show interactive structures in selection overlay (for erase/select tools)
         const structureBounds: { x: number; y: number; width: number; height: number }[] = []
         for (const struct of structures) {
-          // For erase tool, only show interactive structures
-          if (tool === 'erase' && !isStructureInteractive(state, struct)) continue
+          // For erase/select tool, only show interactive structures
+          if ((tool === 'erase' || tool === 'select') && !isStructureInteractive(state, struct)) continue
 
           const found = findStructureById(catalog, struct.structureId)
           if (!found) continue
@@ -229,6 +278,32 @@ export function CanvasViewport() {
         })
       }
     }
+
+    // Render selection highlight for already-selected structures (Select tool)
+    if (selectedStructureIds.size > 0 && !isDragging) {
+      const selectedBounds: { x: number; y: number; width: number; height: number }[] = []
+      for (const struct of structures) {
+        if (!selectedStructureIds.has(struct.id)) continue
+        const found = findStructureById(catalog, struct.structureId)
+        if (!found) continue
+        selectedBounds.push(getStructureSelectionBounds(struct, found.structure))
+      }
+      if (selectedBounds.length > 0) {
+        // Draw selection highlight around selected structures
+        const { ctx, zoom: z } = rc
+        ctx.strokeStyle = '#58a6ff'
+        ctx.lineWidth = 2
+        ctx.setLineDash([4, 2])
+        for (const bounds of selectedBounds) {
+          const px = bounds.x * z
+          const py = bounds.y * z
+          const pw = bounds.width * z
+          const ph = bounds.height * z
+          ctx.strokeRect(px + 1, py + 1, pw - 2, ph - 2)
+        }
+        ctx.setLineDash([])
+      }
+    }
   }, [
     gridSize,
     zoom,
@@ -242,6 +317,9 @@ export function CanvasViewport() {
     hoveredTile,
     isDragging,
     dragRect,
+    selectedStructureIds,
+    isPanning,
+    state,
   ])
 
   // Handle mouse move
@@ -249,6 +327,18 @@ export function CanvasViewport() {
     (e: React.MouseEvent<HTMLCanvasElement>) => {
       const canvas = canvasRef.current
       if (!canvas) return
+
+      // Handle Space+drag panning
+      if (isPanning && panStartRef.current) {
+        const scrollContainer = containerRef.current?.parentElement
+        if (scrollContainer) {
+          const dx = e.clientX - panStartRef.current.clientX
+          const dy = e.clientY - panStartRef.current.clientY
+          scrollContainer.scrollLeft = panStartRef.current.scrollLeft - dx
+          scrollContainer.scrollTop = panStartRef.current.scrollTop - dy
+        }
+        return
+      }
 
       const tile = getTileFromMouse(canvas, e.clientX, e.clientY, zoom)
       dispatch({ type: 'SET_HOVERED_TILE', tile })
@@ -267,7 +357,7 @@ export function CanvasViewport() {
         }
       }
     },
-    [zoom, dispatch, isDragging]
+    [zoom, dispatch, isDragging, isPanning]
   )
 
   // Handle mouse down
@@ -278,6 +368,21 @@ export function CanvasViewport() {
       const canvas = canvasRef.current
       if (!canvas) return
 
+      // Space+drag = panning (in Select tool)
+      if (isSpaceHeld && tool === 'select') {
+        const scrollContainer = containerRef.current?.parentElement
+        if (scrollContainer) {
+          setIsPanning(true)
+          panStartRef.current = {
+            scrollLeft: scrollContainer.scrollLeft,
+            scrollTop: scrollContainer.scrollTop,
+            clientX: e.clientX,
+            clientY: e.clientY,
+          }
+        }
+        return
+      }
+
       const tile = getTileFromMouse(canvas, e.clientX, e.clientY, zoom)
       dispatch({ type: 'SET_HOVERED_TILE', tile })
       dispatch({ type: 'SET_DRAGGING', isDragging: true })
@@ -286,11 +391,18 @@ export function CanvasViewport() {
       dragHullEraseRef.current = tool === 'hull' && e.shiftKey
       setDragRect({ x1: tile.x, y1: tile.y, x2: tile.x, y2: tile.y })
     },
-    [zoom, dispatch, tool]
+    [zoom, dispatch, tool, isSpaceHeld]
   )
 
   // Handle mouse up
   const handleMouseUp = useCallback(() => {
+    // Handle end of panning
+    if (isPanning) {
+      setIsPanning(false)
+      panStartRef.current = null
+      return
+    }
+
     if (!isDragging) return
 
     const start = dragStartRef.current
@@ -328,6 +440,21 @@ export function CanvasViewport() {
           y2: normalized.y2,
         })
       }
+      return
+    }
+
+    if (tool === 'select') {
+      // Box-select interactive structures in the selection rect
+      const selectedIds: string[] = []
+      for (const struct of structures) {
+        if (!isStructureInteractive(state, struct)) continue
+        const found = findStructureById(catalog, struct.structureId)
+        if (!found) continue
+        if (structureIntersectsRectByTiles(normalized, struct, found.structure)) {
+          selectedIds.push(struct.id)
+        }
+      }
+      dispatch({ type: 'SET_SELECTED_STRUCTURES', structureIds: selectedIds })
       return
     }
 
@@ -400,6 +527,7 @@ export function CanvasViewport() {
   }, [
     dispatch,
     isDragging,
+    isPanning,
     tool,
     gridSize,
     selection,
@@ -407,6 +535,7 @@ export function CanvasViewport() {
     previewRotation,
     hullTiles,
     structures,
+    state,
   ])
 
   // Handle mouse leave
@@ -416,11 +545,22 @@ export function CanvasViewport() {
     dragStartRef.current = null
     dragEndRef.current = null
     dragHullEraseRef.current = false
+    setIsPanning(false)
+    panStartRef.current = null
     setDragRect(null)
   }, [dispatch])
 
+  // Determine cursor based on tool and state
+  const getCursor = () => {
+    if (isSpaceHeld && tool === 'select') return isPanning ? 'grabbing' : 'grab'
+    if (tool === 'erase') return 'crosshair'
+    if (tool === 'hull') return 'cell'
+    if (tool === 'select') return 'default'
+    return 'pointer'
+  }
+
   return (
-    <div className={styles.container}>
+    <div className={styles.container} ref={containerRef}>
       <canvas
         ref={canvasRef}
         className={styles.canvas}
@@ -429,7 +569,7 @@ export function CanvasViewport() {
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseLeave}
         style={{
-          cursor: tool === 'erase' ? 'crosshair' : tool === 'hull' ? 'cell' : 'pointer',
+          cursor: getCursor(),
         }}
       />
       <ConfirmDialog
@@ -457,6 +597,21 @@ export function CanvasViewport() {
             y2: pendingErase.rect.y2,
           })
           setPendingErase(null)
+        }}
+      />
+      <ConfirmDialog
+        isOpen={pendingDeleteSelection}
+        title="🗑️ Delete Selected"
+        message={`Delete ${selectedStructureIds.size} selected structure${selectedStructureIds.size === 1 ? '' : 's'}? This cannot be undone.`}
+        confirmLabel="Delete"
+        variant="danger"
+        onClose={() => setPendingDeleteSelection(false)}
+        onConfirm={() => {
+          dispatch({
+            type: 'DELETE_STRUCTURES',
+            structureIds: [...selectedStructureIds],
+          })
+          setPendingDeleteSelection(false)
         }}
       />
     </div>
