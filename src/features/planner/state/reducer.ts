@@ -1029,16 +1029,48 @@ export function plannerReducer(state: PlannerState, action: PlannerAction): Plan
       const { deltaX, deltaY } = action
       if (deltaX === 0 && deltaY === 0) return state
 
-      // Move all selected structures by delta
+      // Validate move for all selected structures before applying
+      // All structures must be able to move to their new positions
+      for (const struct of state.structures) {
+        if (!state.selectedStructureIds.has(struct.id)) continue
+
+        const found = findStructureById(state.catalog, struct.structureId)
+        if (!found) continue
+
+        const newX = struct.x + deltaX
+        const newY = struct.y + deltaY
+        const [width, height] = getRotatedSize(found.structure.size, struct.rotation)
+
+        // Bounds check
+        if (
+          newX < 0 ||
+          newY < 0 ||
+          newX + width > state.gridSize.width ||
+          newY + height > state.gridSize.height
+        ) {
+          return state // Invalid move - cancel
+        }
+
+        // Collision check (exclude all selected structures from collision detection)
+        const hasCollisionWithOthers = hasCollision(
+          {
+            ...state,
+            structures: state.structures.filter((s) => !state.selectedStructureIds.has(s.id)),
+          },
+          found.structure,
+          newX,
+          newY,
+          struct.rotation
+        )
+        if (hasCollisionWithOthers) {
+          return state // Invalid move - cancel
+        }
+      }
+
+      // All validations passed - apply the move
       const movedStructures = state.structures.map((s) => {
         if (!state.selectedStructureIds.has(s.id)) return s
-        const newX = s.x + deltaX
-        const newY = s.y + deltaY
-        // Bounds check - keep structure in grid
-        if (newX < 0 || newY < 0) return s
-        // Note: We don't check collision here to allow free movement
-        // Users can overlap structures temporarily while arranging
-        return { ...s, x: newX, y: newY }
+        return { ...s, x: s.x + deltaX, y: s.y + deltaY }
       })
 
       return {

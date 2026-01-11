@@ -1,6 +1,6 @@
 import { useRef, useEffect, useCallback, useState, useMemo } from 'react'
-import { usePlanner, canPlaceAt, isStructureInteractive } from '../state'
-import { findStructureById, getRotatedSize } from '@/data'
+import { usePlanner, isStructureInteractive } from '../state'
+import { findStructureById, getRotatedSize, type StructureCatalog, type PlacedStructure } from '@/data'
 import { ConfirmDialog } from '../components/ConfirmDialog'
 import {
   createRenderContext,
@@ -131,6 +131,55 @@ function getStructureSelectionBounds(
 
   const [w, h] = getRotatedSize(structureDef.size, struct.rotation)
   return { x: struct.x, y: struct.y, width: w, height: h }
+}
+
+/** Check if moving selected structures by delta would be valid (bounds + collision) */
+function isMoveValid(
+  selectedIds: ReadonlySet<string>,
+  structures: readonly PlacedStructure[],
+  catalog: StructureCatalog,
+  gridSize: { width: number; height: number },
+  deltaX: number,
+  deltaY: number
+): boolean {
+  // Get IDs of non-selected structures for collision checking
+  const nonSelectedStructures = structures.filter((s) => !selectedIds.has(s.id))
+
+  for (const struct of structures) {
+    if (!selectedIds.has(struct.id)) continue
+
+    const found = findStructureById(catalog, struct.structureId)
+    if (!found) continue
+
+    const newX = struct.x + deltaX
+    const newY = struct.y + deltaY
+    const [width, height] = getRotatedSize(found.structure.size, struct.rotation)
+
+    // Bounds check
+    if (newX < 0 || newY < 0 || newX + width > gridSize.width || newY + height > gridSize.height) {
+      return false
+    }
+
+    // Simple bounding box collision check against non-selected structures
+    // (Full tile-level collision is done in reducer, this is just for preview feedback)
+    for (const other of nonSelectedStructures) {
+      const otherFound = findStructureById(catalog, other.structureId)
+      if (!otherFound) continue
+      const [otherW, otherH] = getRotatedSize(otherFound.structure.size, other.rotation)
+
+      // Check bounding box overlap
+      if (
+        newX < other.x + otherW &&
+        newX + width > other.x &&
+        newY < other.y + otherH &&
+        newY + height > other.y
+      ) {
+        return false
+      }
+    }
+  }
+
+  return true
 }
 
 /** Find the structure at a tile position (returns structure id or null) */
@@ -310,6 +359,13 @@ export function CanvasViewport() {
       const deltaX = isMovingSelection && moveDelta ? moveDelta.x : 0
       const deltaY = isMovingSelection && moveDelta ? moveDelta.y : 0
 
+      // Check if the move is valid (for visual feedback)
+      const moveIsValid =
+        !isMovingSelection ||
+        !moveDelta ||
+        (moveDelta.x === 0 && moveDelta.y === 0) ||
+        isMoveValid(selectedStructureIds, structures, catalog, gridSize, deltaX, deltaY)
+
       const selectedBounds: { x: number; y: number; width: number; height: number }[] = []
       for (const struct of structures) {
         if (!selectedStructureIds.has(struct.id)) continue
@@ -337,14 +393,16 @@ export function CanvasViewport() {
             const py = (bounds.y + deltaY) * z
             const pw = bounds.width * z
             const ph = bounds.height * z
-            ctx.fillStyle = found.structure.color
+            // Red tint if move is invalid, otherwise use structure color
+            ctx.fillStyle = moveIsValid ? found.structure.color : '#ff4444'
             ctx.fillRect(px, py, pw, ph)
           }
           ctx.globalAlpha = 1.0
         }
 
         // Draw selection highlight around selected structures (at preview position)
-        ctx.strokeStyle = '#58a6ff'
+        // Red border if move is invalid
+        ctx.strokeStyle = moveIsValid ? '#58a6ff' : '#ff4444'
         ctx.lineWidth = 2
         ctx.setLineDash([4, 2])
         for (const bounds of selectedBounds) {
