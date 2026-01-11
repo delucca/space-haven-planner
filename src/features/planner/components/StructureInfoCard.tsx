@@ -1,13 +1,12 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import type { StructureDef, StructureCategory, TileLayout } from '@/data/types'
 import type { WikiStructureMetadata, WikiStructureLookupStatus } from '@/data/catalog/wikiMetadata'
 import styles from './StructureInfoPopover.module.css'
 
 /**
- * WikiImage component that handles loading states and errors gracefully.
- * Fandom's CDN serves images with access-control-allow-origin: * so we can
- * use crossOrigin="anonymous". We also use referrerPolicy="no-referrer" to
- * avoid potential hotlinking blocks.
+ * WikiImage component that fetches images via fetch() to bypass referrer issues.
+ * Fandom's CDN sometimes blocks images based on referrer, so we fetch as blob
+ * and create an object URL.
  */
 function WikiImage({
   src,
@@ -20,34 +19,69 @@ function WikiImage({
   className?: string
   containerClassName?: string
 }) {
+  const [blobUrl, setBlobUrl] = useState<string | null>(null)
   const [status, setStatus] = useState<'loading' | 'loaded' | 'error'>('loading')
-  const [retryCount, setRetryCount] = useState(0)
 
-  // Don't render container if image failed to load after retries
+  useEffect(() => {
+    let cancelled = false
+    let objectUrl: string | null = null
+
+    const fetchImage = async () => {
+      try {
+        // Fetch the image with no referrer to bypass hotlink protection
+        const response = await fetch(src, {
+          referrerPolicy: 'no-referrer',
+          mode: 'cors',
+        })
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`)
+        }
+
+        const blob = await response.blob()
+        
+        if (cancelled) return
+
+        objectUrl = URL.createObjectURL(blob)
+        setBlobUrl(objectUrl)
+        setStatus('loaded')
+      } catch (error) {
+        if (cancelled) return
+        console.warn('[WikiImage] Failed to fetch:', src, error)
+        setStatus('error')
+      }
+    }
+
+    fetchImage()
+
+    return () => {
+      cancelled = true
+      if (objectUrl) {
+        URL.revokeObjectURL(objectUrl)
+      }
+    }
+  }, [src])
+
+  // Don't render container if image failed to load
   if (status === 'error') {
     return null
+  }
+
+  // Show loading state while fetching
+  if (status === 'loading' || !blobUrl) {
+    return (
+      <div className={containerClassName}>
+        <div className={styles.imageLoading}>Loading...</div>
+      </div>
+    )
   }
 
   return (
     <div className={containerClassName}>
       <img
-        // Key changes when retrying to force a fresh load
-        key={`${src}-${retryCount}`}
-        src={src}
+        src={blobUrl}
         alt={alt}
         className={className}
-        // Note: crossOrigin can cause issues with some CDNs, try without it first
-        referrerPolicy="no-referrer"
-        onLoad={() => setStatus('loaded')}
-        onError={() => {
-          // Retry once without any special attributes
-          if (retryCount === 0) {
-            setRetryCount(1)
-          } else {
-            console.warn('[WikiImage] Failed to load after retry:', src)
-            setStatus('error')
-          }
-        }}
       />
     </div>
   )
