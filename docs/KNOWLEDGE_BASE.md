@@ -95,23 +95,41 @@ const options: SelectOption[] = [
 
 Handled by `useKeyboardShortcuts` hook (`src/features/planner/hooks/useKeyboardShortcuts.ts`):
 
-| Shortcut              | Action                                       |
-| --------------------- | -------------------------------------------- |
-| `+` / `=`             | Zoom in                                      |
-| `-` / `_`             | Zoom out                                     |
-| `Ctrl/Cmd + +/-`      | Zoom in/out (also works)                     |
-| `Q`                   | Rotate counter-clockwise                     |
-| `E`                   | Rotate clockwise                             |
-| `1`                   | Select tool (default)                        |
-| `2`                   | Hull tool                                    |
-| `3`                   | Place tool                                   |
-| `4`                   | Erase tool                                   |
-| `Space` + drag        | Pan canvas (works in all tools)              |
-| `Shift` + click       | Add/remove structure from selection (Select) |
-| `Delete` / `Backspace`| Delete selected structures (in Select mode)  |
-| `Escape`              | Clear selection (palette + grid selection)   |
+| Shortcut                    | Action                                       |
+| --------------------------- | -------------------------------------------- |
+| `Ctrl/Cmd + Z`              | Undo (canvas + organization changes)         |
+| `Ctrl + Y` / `Ctrl/Cmd + Shift + Z` | Redo                                 |
+| `+` / `=`                   | Zoom in                                      |
+| `-` / `_`                   | Zoom out                                     |
+| `Ctrl/Cmd + +/-`            | Zoom in/out (also works)                     |
+| `Q`                         | Rotate counter-clockwise                     |
+| `E`                         | Rotate clockwise                             |
+| `1`                         | Select tool (default)                        |
+| `2`                         | Hull tool                                    |
+| `3`                         | Place tool                                   |
+| `4`                         | Erase tool                                   |
+| `Space` + drag              | Pan canvas (works in all tools)              |
+| `Shift` + click             | Add/remove structure from selection (Select) |
+| `Delete` / `Backspace`      | Delete selected structures (in Select mode)  |
+| `Escape`                    | Clear selection (palette + grid selection)   |
 
 **Note**: Shortcuts are disabled when focus is in input/textarea/select elements.
+
+#### Undo/Redo scope
+
+Undo/redo operates on **model + organization state only** (not view state):
+
+**Undoable actions**:
+- Canvas edits: place structures, erase (rect + delete selected), move selection, hull paint/erase, clear-all
+- Organization edits: create/rename/delete/reorder layers & groups, toggle visibility/lock, move structures between groups, change active layer/group
+
+**NOT undoable** (view-only actions):
+- Zoom changes, tool switching, grid toggle, palette expand/collapse, catalog changes
+
+**History resets** (clears undo/redo stacks):
+- NEW_PROJECT, LOAD_STRUCTURES, LOAD_HULL_TILES, LOAD_USER_LAYERS, LOAD_PROJECT, SET_PRESET
+
+**Implementation**: The `historyReducer` wraps `plannerReducer` and stores snapshots of undoable fields (`structures`, `hullTiles`, `userLayers`, `userGroups`, `activeLayerId`, `activeGroupId`). Max history depth is 50 entries.
 
 ### Zoom system
 
@@ -436,6 +454,7 @@ pnpm preview     # serve the built app locally
     - `src/features/planner/hooks/useKeyboardShortcuts.test.ts` — keyboard shortcut handling
     - `src/features/planner/components/Palette.test.tsx` — palette UI (search, category expand/collapse)
     - `src/features/planner/state/reducer.test.ts` — state reducer and collision detection
+    - `src/features/planner/state/history.test.ts` — undo/redo history reducer
 
 ---
 

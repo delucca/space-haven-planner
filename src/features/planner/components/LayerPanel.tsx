@@ -715,6 +715,8 @@ export function LayerPanel() {
           <p>• 1/2/3/4 for Select/Hull/Place/Erase</p>
           <p>• Space+drag to pan (Select mode)</p>
           <p>• Del/Backspace to delete selected</p>
+          <p>• Ctrl/Cmd+Z to undo</p>
+          <p>• Ctrl+Y / Ctrl/Cmd+Shift+Z to redo</p>
           <p>• Double-click to rename</p>
         </div>
       </section>
@@ -725,7 +727,7 @@ export function LayerPanel() {
         title={`Delete ${deleteConfirm?.type === 'layer' ? 'Layer' : 'Group'}`}
         message={
           deleteConfirm
-            ? `Delete "${deleteConfirm.name}" and all its contents? This cannot be undone.`
+            ? `Delete "${deleteConfirm.name}" and all its contents? You can undo with Ctrl/Cmd+Z.`
             : ''
         }
         confirmLabel="Delete"

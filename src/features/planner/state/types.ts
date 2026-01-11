@@ -184,3 +184,7 @@ export type PlannerAction =
   | { type: 'SET_CATALOG_STATUS'; status: Partial<CatalogStatus> }
   | { type: 'REQUEST_JAR_PARSE' } // Start parsing a user-uploaded JAR
   | { type: 'RESET_TO_BUILTIN_CATALOG' } // Clear user JAR and reset to built-in
+
+  // History actions (undo/redo)
+  | { type: 'UNDO' }
+  | { type: 'REDO' }

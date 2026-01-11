@@ -1,13 +1,30 @@
-import { useReducer, type ReactNode } from 'react'
+import { useReducer, useCallback, type ReactNode, type Dispatch } from 'react'
 import { PlannerContext } from './PlannerContext'
-import { plannerReducer, createInitialState } from './reducer'
+import { historyReducer, createInitialHistoryState } from './history'
+import type { PlannerAction } from './types'
 
 interface PlannerProviderProps {
   children: ReactNode
 }
 
 export function PlannerProvider({ children }: PlannerProviderProps) {
-  const [state, dispatch] = useReducer(plannerReducer, undefined, createInitialState)
+  const [historyState, historyDispatch] = useReducer(
+    historyReducer,
+    undefined,
+    createInitialHistoryState
+  )
 
-  return <PlannerContext.Provider value={{ state, dispatch }}>{children}</PlannerContext.Provider>
+  // Wrap dispatch to pass actions to the history reducer
+  const dispatch: Dispatch<PlannerAction> = useCallback(
+    (action: PlannerAction) => {
+      historyDispatch(action)
+    },
+    [historyDispatch]
+  )
+
+  return (
+    <PlannerContext.Provider value={{ state: historyState.state, dispatch }}>
+      {children}
+    </PlannerContext.Provider>
+  )
 }

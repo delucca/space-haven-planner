@@ -177,7 +177,7 @@ export function ActionBar() {
 
   const confirmMessage =
     confirmKind === 'clear_all'
-      ? 'Are you sure you want to clear everything (structures + hull tiles)? This cannot be undone.'
+      ? 'Are you sure you want to clear everything (structures + hull tiles)? You can undo with Ctrl/Cmd+Z.'
       : confirmKind === 'new_project'
         ? 'Are you sure you want to start a new project? This will remove all structures and hull tiles, and any unsaved changes will be lost.'
         : confirmKind === 'reset_catalog'

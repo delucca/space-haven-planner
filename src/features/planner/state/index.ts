@@ -1,4 +1,5 @@
 export * from './types'
 export * from './reducer'
+export * from './history'
 export { PlannerProvider } from './PlannerProvider'
 export * from './hooks'

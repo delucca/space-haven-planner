@@ -899,7 +899,7 @@ export function CanvasViewport() {
                 pendingErase.hullCount > 0
                   ? ` and ${pendingErase.hullCount} hull tile${pendingErase.hullCount === 1 ? '' : 's'}`
                   : ''
-              }? This cannot be undone.`
+              }? You can undo with Ctrl/Cmd+Z.`
             : ''
         }
         confirmLabel="Delete"
@@ -920,7 +920,7 @@ export function CanvasViewport() {
       <ConfirmDialog
         isOpen={pendingDeleteSelection}
         title="🗑️ Delete Selected"
-        message={`Delete ${selectedStructureIds.size} selected structure${selectedStructureIds.size === 1 ? '' : 's'}? This cannot be undone.`}
+        message={`Delete ${selectedStructureIds.size} selected structure${selectedStructureIds.size === 1 ? '' : 's'}? You can undo with Ctrl/Cmd+Z.`}
         confirmLabel="Delete"
         variant="danger"
         onClose={() => setPendingDeleteSelection(false)}

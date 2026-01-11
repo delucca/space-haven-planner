@@ -313,6 +313,135 @@ describe('useKeyboardShortcuts', () => {
     })
   })
 
+  describe('undo/redo shortcuts', () => {
+    it('dispatches UNDO with Ctrl+Z', () => {
+      renderHook(() =>
+        useKeyboardShortcuts(mockDispatch, baseZoom, defaultGridWidth, defaultCanvasWidth)
+      )
+
+      fireKeyDown('z', { ctrlKey: true })
+
+      expect(mockDispatch).toHaveBeenCalledWith({ type: 'UNDO' })
+    })
+
+    it('dispatches UNDO with Cmd+Z (metaKey)', () => {
+      renderHook(() =>
+        useKeyboardShortcuts(mockDispatch, baseZoom, defaultGridWidth, defaultCanvasWidth)
+      )
+
+      fireKeyDown('z', { metaKey: true })
+
+      expect(mockDispatch).toHaveBeenCalledWith({ type: 'UNDO' })
+    })
+
+    it('dispatches UNDO with Ctrl+Z (uppercase Z)', () => {
+      renderHook(() =>
+        useKeyboardShortcuts(mockDispatch, baseZoom, defaultGridWidth, defaultCanvasWidth)
+      )
+
+      fireKeyDown('Z', { ctrlKey: true })
+
+      expect(mockDispatch).toHaveBeenCalledWith({ type: 'UNDO' })
+    })
+
+    it('dispatches REDO with Ctrl+Y', () => {
+      renderHook(() =>
+        useKeyboardShortcuts(mockDispatch, baseZoom, defaultGridWidth, defaultCanvasWidth)
+      )
+
+      fireKeyDown('y', { ctrlKey: true })
+
+      expect(mockDispatch).toHaveBeenCalledWith({ type: 'REDO' })
+    })
+
+    it('dispatches REDO with Ctrl+Y (uppercase Y)', () => {
+      renderHook(() =>
+        useKeyboardShortcuts(mockDispatch, baseZoom, defaultGridWidth, defaultCanvasWidth)
+      )
+
+      fireKeyDown('Y', { ctrlKey: true })
+
+      expect(mockDispatch).toHaveBeenCalledWith({ type: 'REDO' })
+    })
+
+    it('dispatches REDO with Ctrl+Shift+Z', () => {
+      renderHook(() =>
+        useKeyboardShortcuts(mockDispatch, baseZoom, defaultGridWidth, defaultCanvasWidth)
+      )
+
+      fireKeyDown('z', { ctrlKey: true, shiftKey: true })
+
+      expect(mockDispatch).toHaveBeenCalledWith({ type: 'REDO' })
+    })
+
+    it('dispatches REDO with Cmd+Shift+Z (metaKey)', () => {
+      renderHook(() =>
+        useKeyboardShortcuts(mockDispatch, baseZoom, defaultGridWidth, defaultCanvasWidth)
+      )
+
+      fireKeyDown('z', { metaKey: true, shiftKey: true })
+
+      expect(mockDispatch).toHaveBeenCalledWith({ type: 'REDO' })
+    })
+
+    it('does not dispatch UNDO when Shift is held (Ctrl+Shift+Z is redo)', () => {
+      renderHook(() =>
+        useKeyboardShortcuts(mockDispatch, baseZoom, defaultGridWidth, defaultCanvasWidth)
+      )
+
+      fireKeyDown('z', { ctrlKey: true, shiftKey: true })
+
+      expect(mockDispatch).not.toHaveBeenCalledWith({ type: 'UNDO' })
+      expect(mockDispatch).toHaveBeenCalledWith({ type: 'REDO' })
+    })
+
+    it('ignores Ctrl+Z in input fields', () => {
+      renderHook(() =>
+        useKeyboardShortcuts(mockDispatch, baseZoom, defaultGridWidth, defaultCanvasWidth)
+      )
+
+      const input = document.createElement('input')
+      document.body.appendChild(input)
+      input.focus()
+
+      const event = new KeyboardEvent('keydown', {
+        key: 'z',
+        ctrlKey: true,
+        bubbles: true,
+        cancelable: true,
+      })
+      Object.defineProperty(event, 'target', { value: input, writable: false })
+      window.dispatchEvent(event)
+
+      expect(mockDispatch).not.toHaveBeenCalled()
+
+      document.body.removeChild(input)
+    })
+
+    it('ignores Ctrl+Y in textarea', () => {
+      renderHook(() =>
+        useKeyboardShortcuts(mockDispatch, baseZoom, defaultGridWidth, defaultCanvasWidth)
+      )
+
+      const textarea = document.createElement('textarea')
+      document.body.appendChild(textarea)
+      textarea.focus()
+
+      const event = new KeyboardEvent('keydown', {
+        key: 'y',
+        ctrlKey: true,
+        bubbles: true,
+        cancelable: true,
+      })
+      Object.defineProperty(event, 'target', { value: textarea, writable: false })
+      window.dispatchEvent(event)
+
+      expect(mockDispatch).not.toHaveBeenCalled()
+
+      document.body.removeChild(textarea)
+    })
+  })
+
   describe('input field handling', () => {
     it('ignores shortcuts when typing in input field', () => {
       renderHook(() =>

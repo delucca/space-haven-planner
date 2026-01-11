@@ -29,6 +29,23 @@ export function useKeyboardShortcuts(
         return
       }
 
+      // Undo with Ctrl/Cmd+Z (without Shift)
+      if ((e.ctrlKey || e.metaKey) && (e.key === 'z' || e.key === 'Z') && !e.shiftKey) {
+        e.preventDefault()
+        dispatch({ type: 'UNDO' })
+        return
+      }
+
+      // Redo with Ctrl/Cmd+Shift+Z or Ctrl+Y
+      if (
+        ((e.ctrlKey || e.metaKey) && (e.key === 'z' || e.key === 'Z') && e.shiftKey) ||
+        (e.ctrlKey && (e.key === 'y' || e.key === 'Y'))
+      ) {
+        e.preventDefault()
+        dispatch({ type: 'REDO' })
+        return
+      }
+
       // Zoom reset with Ctrl/Cmd+0 (reset to 100%)
       if ((e.ctrlKey || e.metaKey) && e.key === '0') {
         e.preventDefault()
