@@ -1024,6 +1024,29 @@ export function plannerReducer(state: PlannerState, action: PlannerAction): Plan
         selectedStructureIds: new Set(),
       }
 
+    case 'MOVE_SELECTED_STRUCTURES': {
+      if (state.selectedStructureIds.size === 0) return state
+      const { deltaX, deltaY } = action
+      if (deltaX === 0 && deltaY === 0) return state
+
+      // Move all selected structures by delta
+      const movedStructures = state.structures.map((s) => {
+        if (!state.selectedStructureIds.has(s.id)) return s
+        const newX = s.x + deltaX
+        const newY = s.y + deltaY
+        // Bounds check - keep structure in grid
+        if (newX < 0 || newY < 0) return s
+        // Note: We don't check collision here to allow free movement
+        // Users can overlap structures temporarily while arranging
+        return { ...s, x: newX, y: newY }
+      })
+
+      return {
+        ...state,
+        structures: movedStructures,
+      }
+    }
+
     // Project actions
     case 'LOAD_PROJECT':
       return {

@@ -204,7 +204,7 @@ Layout state is persisted in `localStorage` under key `space-haven-planner-layou
 
 | Tool     | Purpose                                                                                    | Default                                 |
 | -------- | ------------------------------------------------------------------------------------------ | --------------------------------------- |
-| `select` | Box-select structures; Space+drag to pan; Delete/Backspace removes selected                | ✓ (selected on load)                    |
+| `select` | Box-select structures; drag selected to move; Space+drag to pan; Delete/Backspace removes  | ✓ (selected on load)                    |
 | `hull`   | Drag-select to fill 1×1 hull tiles on mouseup (Shift = erase hull tiles)                   |                                         |
 | `place`  | Click to place selected structure; drag-select highlights existing objects (no action yet) | Auto-selected when clicking a structure |
 | `erase`  | Drag-select highlights; on mouseup deletes selection (confirm unless hull-only)            |                                         |
@@ -214,11 +214,13 @@ Layout state is persisted in `localStorage` under key `space-haven-planner-layou
 
 The Select tool (`1`) is the default tool on app load. It provides:
 
-- **Box selection**: Drag on the canvas to select structures within the rectangle
+- **Box selection**: Drag on empty canvas to select structures within the rectangle
+- **Move selection**: Click and drag on a selected structure to move all selected structures
 - **Pan mode**: Hold `Space` and drag to pan/scroll the canvas
 - **Delete selected**: Press `Delete` or `Backspace` to delete selected structures (with confirmation)
 - **Selection display**: Selected structures appear in the right sidebar "Selected" section
 - **Clear selection**: Press `Escape` or click "Clear Selection" button
+- **Cursor feedback**: Shows `move` cursor when hovering over selected structures
 
 Selected structures are stored in `PlannerState.selectedStructureIds` (a `ReadonlySet<string>`).
 

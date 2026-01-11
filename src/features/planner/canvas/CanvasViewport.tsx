@@ -133,6 +133,31 @@ function getStructureSelectionBounds(
   return { x: struct.x, y: struct.y, width: w, height: h }
 }
 
+/** Check if a tile position is on any of the selected structures */
+function isTileOnSelectedStructure(
+  tileX: number,
+  tileY: number,
+  structures: readonly { id: string; x: number; y: number; rotation: 0 | 90 | 180 | 270; structureId: string }[],
+  selectedIds: ReadonlySet<string>,
+  catalog: Parameters<typeof findStructureById>[0]
+): boolean {
+  for (const struct of structures) {
+    if (!selectedIds.has(struct.id)) continue
+    const found = findStructureById(catalog, struct.structureId)
+    if (!found) continue
+    const bounds = getStructureSelectionBounds(struct, found.structure)
+    if (
+      tileX >= bounds.x &&
+      tileX < bounds.x + bounds.width &&
+      tileY >= bounds.y &&
+      tileY < bounds.y + bounds.height
+    ) {
+      return true
+    }
+  }
+  return false
+}
+
 export function CanvasViewport() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -146,6 +171,8 @@ export function CanvasViewport() {
   const [pendingDeleteSelection, setPendingDeleteSelection] = useState(false)
   const [isSpaceHeld, setIsSpaceHeld] = useState(false)
   const [isPanning, setIsPanning] = useState(false)
+  const [isMovingSelection, setIsMovingSelection] = useState(false)
+  const [moveDelta, setMoveDelta] = useState<{ x: number; y: number } | null>(null)
   const dragStartRef = useRef<{ x: number; y: number } | null>(null)
   const dragEndRef = useRef<{ x: number; y: number } | null>(null)
   const dragHullEraseRef = useRef<boolean>(false)
@@ -280,17 +307,45 @@ export function CanvasViewport() {
     }
 
     // Render selection highlight for already-selected structures (Select tool)
-    if (selectedStructureIds.size > 0 && !isDragging) {
+    if (selectedStructureIds.size > 0) {
+      const { ctx, zoom: z } = rc
+      const deltaX = isMovingSelection && moveDelta ? moveDelta.x : 0
+      const deltaY = isMovingSelection && moveDelta ? moveDelta.y : 0
+
       const selectedBounds: { x: number; y: number; width: number; height: number }[] = []
       for (const struct of structures) {
         if (!selectedStructureIds.has(struct.id)) continue
         const found = findStructureById(catalog, struct.structureId)
         if (!found) continue
-        selectedBounds.push(getStructureSelectionBounds(struct, found.structure))
+        const bounds = getStructureSelectionBounds(struct, found.structure)
+        // Apply move delta for preview
+        selectedBounds.push({
+          ...bounds,
+          x: bounds.x + deltaX,
+          y: bounds.y + deltaY,
+        })
       }
+
       if (selectedBounds.length > 0) {
-        // Draw selection highlight around selected structures
-        const { ctx, zoom: z } = rc
+        // If moving, draw semi-transparent preview of structures at new position
+        if (isMovingSelection && moveDelta && (moveDelta.x !== 0 || moveDelta.y !== 0)) {
+          ctx.globalAlpha = 0.5
+          for (const struct of structures) {
+            if (!selectedStructureIds.has(struct.id)) continue
+            const found = findStructureById(catalog, struct.structureId)
+            if (!found) continue
+            const bounds = getStructureSelectionBounds(struct, found.structure)
+            const px = (bounds.x + deltaX) * z
+            const py = (bounds.y + deltaY) * z
+            const pw = bounds.width * z
+            const ph = bounds.height * z
+            ctx.fillStyle = found.structure.color
+            ctx.fillRect(px, py, pw, ph)
+          }
+          ctx.globalAlpha = 1.0
+        }
+
+        // Draw selection highlight around selected structures (at preview position)
         ctx.strokeStyle = '#58a6ff'
         ctx.lineWidth = 2
         ctx.setLineDash([4, 2])
@@ -319,6 +374,8 @@ export function CanvasViewport() {
     dragRect,
     selectedStructureIds,
     isPanning,
+    isMovingSelection,
+    moveDelta,
     state,
   ])
 
@@ -343,6 +400,15 @@ export function CanvasViewport() {
       const tile = getTileFromMouse(canvas, e.clientX, e.clientY, zoom)
       dispatch({ type: 'SET_HOVERED_TILE', tile })
 
+      // Handle move selection drag
+      if (isMovingSelection && dragStartRef.current) {
+        const deltaX = tile.x - dragStartRef.current.x
+        const deltaY = tile.y - dragStartRef.current.y
+        setMoveDelta({ x: deltaX, y: deltaY })
+        dragEndRef.current = { x: tile.x, y: tile.y }
+        return
+      }
+
       // Handle dragging
       if (isDragging && dragStartRef.current) {
         const last = dragEndRef.current
@@ -357,7 +423,7 @@ export function CanvasViewport() {
         }
       }
     },
-    [zoom, dispatch, isDragging, isPanning]
+    [zoom, dispatch, isDragging, isPanning, isMovingSelection]
   )
 
   // Handle mouse down
@@ -385,13 +451,28 @@ export function CanvasViewport() {
 
       const tile = getTileFromMouse(canvas, e.clientX, e.clientY, zoom)
       dispatch({ type: 'SET_HOVERED_TILE', tile })
+
+      // In Select tool, check if clicking on a selected structure to start move
+      if (
+        tool === 'select' &&
+        selectedStructureIds.size > 0 &&
+        isTileOnSelectedStructure(tile.x, tile.y, structures, selectedStructureIds, catalog)
+      ) {
+        setIsMovingSelection(true)
+        setMoveDelta({ x: 0, y: 0 })
+        dragStartRef.current = { x: tile.x, y: tile.y }
+        dragEndRef.current = { x: tile.x, y: tile.y }
+        dispatch({ type: 'SET_DRAGGING', isDragging: true })
+        return
+      }
+
       dispatch({ type: 'SET_DRAGGING', isDragging: true })
       dragStartRef.current = { x: tile.x, y: tile.y }
       dragEndRef.current = { x: tile.x, y: tile.y }
       dragHullEraseRef.current = tool === 'hull' && e.shiftKey
       setDragRect({ x1: tile.x, y1: tile.y, x2: tile.x, y2: tile.y })
     },
-    [zoom, dispatch, tool, isSpaceHeld]
+    [zoom, dispatch, tool, isSpaceHeld, selectedStructureIds, structures, catalog]
   )
 
   // Handle mouse up
@@ -400,6 +481,19 @@ export function CanvasViewport() {
     if (isPanning) {
       setIsPanning(false)
       panStartRef.current = null
+      return
+    }
+
+    // Handle end of move selection
+    if (isMovingSelection) {
+      if (moveDelta && (moveDelta.x !== 0 || moveDelta.y !== 0)) {
+        dispatch({ type: 'MOVE_SELECTED_STRUCTURES', deltaX: moveDelta.x, deltaY: moveDelta.y })
+      }
+      setIsMovingSelection(false)
+      setMoveDelta(null)
+      dispatch({ type: 'SET_DRAGGING', isDragging: false })
+      dragStartRef.current = null
+      dragEndRef.current = null
       return
     }
 
@@ -528,6 +622,8 @@ export function CanvasViewport() {
     dispatch,
     isDragging,
     isPanning,
+    isMovingSelection,
+    moveDelta,
     tool,
     gridSize,
     selection,
@@ -546,16 +642,25 @@ export function CanvasViewport() {
     dragEndRef.current = null
     dragHullEraseRef.current = false
     setIsPanning(false)
+    setIsMovingSelection(false)
+    setMoveDelta(null)
     panStartRef.current = null
     setDragRect(null)
   }, [dispatch])
 
+  // Check if hovering over a selected structure (for cursor)
+  const isHoveringSelected = useMemo(() => {
+    if (tool !== 'select' || selectedStructureIds.size === 0 || !hoveredTile) return false
+    return isTileOnSelectedStructure(hoveredTile.x, hoveredTile.y, structures, selectedStructureIds, catalog)
+  }, [tool, selectedStructureIds, hoveredTile, structures, catalog])
+
   // Determine cursor based on tool and state
   const getCursor = () => {
     if (isSpaceHeld && tool === 'select') return isPanning ? 'grabbing' : 'grab'
+    if (isMovingSelection) return 'move'
     if (tool === 'erase') return 'crosshair'
     if (tool === 'hull') return 'cell'
-    if (tool === 'select') return 'default'
+    if (tool === 'select') return isHoveringSelected ? 'move' : 'default'
     return 'pointer'
   }
 

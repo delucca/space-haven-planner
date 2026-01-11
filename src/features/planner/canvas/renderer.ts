@@ -452,14 +452,9 @@ export function renderStructures(
  * Hull tiles are rendered as floor, and wall tiles are automatically placed
  * in adjacent empty grid spaces on the perimeter.
  */
-export function renderHullTiles(
-  rc: RenderContext,
-  hullTiles: ReadonlySet<string>,
-  visibilityState: VisibilityState
-): void {
-  // Hull tiles are on the Hull layer - check if the hull layer is visible
-  const hullLayer = visibilityState.userLayers.find((l) => l.id === 'layer-hull')
-  if (!hullLayer || !hullLayer.isVisible) return
+export function renderHullTiles(rc: RenderContext, hullTiles: ReadonlySet<string>): void {
+  // Hull tiles are always visible (they're painted directly, not tied to user layers)
+  // Note: In the future, we could add a hull visibility toggle if needed
 
   const { ctx, zoom } = rc
 
@@ -774,7 +769,7 @@ export function renderScene(
   }
 
   // Render hull tiles first (below structures)
-  renderHullTiles(rc, hullTiles, visibilityState)
+  renderHullTiles(rc, hullTiles)
 
   renderStructures(rc, structures, catalog, visibilityState)
 
@@ -818,7 +813,7 @@ export function exportToPNG(
   clearCanvas(rc)
   renderGrid(rc)
   renderCenterLines(rc)
-  renderHullTiles(rc, hullTiles, visibilityState)
+  renderHullTiles(rc, hullTiles)
   renderStructures(rc, structures, catalog, visibilityState)
 
   return canvas.toDataURL('image/png')
