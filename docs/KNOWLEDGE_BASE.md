@@ -215,6 +215,7 @@ Layout state is persisted in `localStorage` under key `space-haven-planner-layou
 The Select tool (`1`) is the default tool on app load. It provides:
 
 - **Box selection**: Drag on empty canvas to select structures within the rectangle
+- **Shift+click**: Add/remove structures from selection (toggle)
 - **Move any structure**: Click and drag on any structure to move it (auto-selects if not selected)
 - **Move multiple**: If clicking on an already-selected structure, moves all selected structures together
 - **Move validation**: Moves are validated against bounds and collisions; invalid moves show red preview and snap back

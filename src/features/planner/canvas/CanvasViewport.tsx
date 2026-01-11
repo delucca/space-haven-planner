@@ -512,8 +512,27 @@ export function CanvasViewport() {
       if (tool === 'select') {
         const clickedStructureId = findStructureAtTile(tile.x, tile.y, structures, catalog)
         if (clickedStructureId) {
-          // If clicking on a structure that's not selected, select it first
-          if (!selectedStructureIds.has(clickedStructureId)) {
+          const isAlreadySelected = selectedStructureIds.has(clickedStructureId)
+
+          // Shift+click: add/toggle structure in selection
+          if (e.shiftKey) {
+            if (isAlreadySelected) {
+              // Remove from selection
+              const newSelection = [...selectedStructureIds].filter((id) => id !== clickedStructureId)
+              dispatch({ type: 'SET_SELECTED_STRUCTURES', structureIds: newSelection })
+            } else {
+              // Add to selection
+              dispatch({
+                type: 'SET_SELECTED_STRUCTURES',
+                structureIds: [...selectedStructureIds, clickedStructureId],
+              })
+            }
+            // Don't start moving on shift+click, just update selection
+            return
+          }
+
+          // Regular click: select only this structure (if not already selected)
+          if (!isAlreadySelected) {
             dispatch({ type: 'SET_SELECTED_STRUCTURES', structureIds: [clickedStructureId] })
           }
           // Start moving
