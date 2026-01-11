@@ -1,6 +1,57 @@
+import { useState } from 'react'
 import type { StructureDef, StructureCategory, TileLayout } from '@/data/types'
 import type { WikiStructureMetadata, WikiStructureLookupStatus } from '@/data/catalog/wikiMetadata'
 import styles from './StructureInfoPopover.module.css'
+
+/**
+ * WikiImage component that handles loading states and errors gracefully.
+ * Fandom's CDN serves images with access-control-allow-origin: * so we can
+ * use crossOrigin="anonymous". We also use referrerPolicy="no-referrer" to
+ * avoid potential hotlinking blocks.
+ */
+function WikiImage({
+  src,
+  alt,
+  className,
+  containerClassName,
+}: {
+  src: string
+  alt: string
+  className?: string
+  containerClassName?: string
+}) {
+  const [status, setStatus] = useState<'loading' | 'loaded' | 'error'>('loading')
+  const [retryCount, setRetryCount] = useState(0)
+
+  // Don't render container if image failed to load after retries
+  if (status === 'error') {
+    return null
+  }
+
+  return (
+    <div className={containerClassName}>
+      <img
+        // Key changes when retrying to force a fresh load
+        key={`${src}-${retryCount}`}
+        src={src}
+        alt={alt}
+        className={className}
+        // Note: crossOrigin can cause issues with some CDNs, try without it first
+        referrerPolicy="no-referrer"
+        onLoad={() => setStatus('loaded')}
+        onError={() => {
+          // Retry once without any special attributes
+          if (retryCount === 0) {
+            setRetryCount(1)
+          } else {
+            console.warn('[WikiImage] Failed to load after retry:', src)
+            setStatus('error')
+          }
+        }}
+      />
+    </div>
+  )
+}
 
 /**
  * Props for StructureInfoCard
@@ -59,20 +110,12 @@ export function StructureInfoCard({
     <div className={styles.card} data-extended={extended || undefined}>
       {/* Wiki image (if available) */}
       {hasWiki && wikiMetadata.imageUrl && (
-        <div className={styles.imageContainer}>
-          <img
-            src={wikiMetadata.imageUrl}
-            alt={structure.name}
-            className={styles.image}
-            loading="lazy"
-            referrerPolicy="no-referrer"
-            onError={(e) => {
-              // Hide broken image container on load failure
-              const container = e.currentTarget.parentElement
-              if (container) container.style.display = 'none'
-            }}
-          />
-        </div>
+        <WikiImage
+          src={wikiMetadata.imageUrl}
+          alt={structure.name}
+          className={styles.image}
+          containerClassName={styles.imageContainer}
+        />
       )}
 
       {/* Header: name + color swatch */}
