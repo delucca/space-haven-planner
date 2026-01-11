@@ -1,12 +1,11 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import type { StructureDef, StructureCategory, TileLayout } from '@/data/types'
 import type { WikiStructureMetadata, WikiStructureLookupStatus } from '@/data/catalog/wikiMetadata'
 import styles from './StructureInfoPopover.module.css'
 
 /**
- * WikiImage component that fetches images via fetch() to bypass referrer issues.
- * Fandom's CDN sometimes blocks images based on referrer, so we fetch as blob
- * and create an object URL.
+ * WikiImage component that loads images directly.
+ * Uses standard img tag - Fandom CDN has CORS headers that should allow loading.
  */
 function WikiImage({
   src,
@@ -19,69 +18,28 @@ function WikiImage({
   className?: string
   containerClassName?: string
 }) {
-  const [blobUrl, setBlobUrl] = useState<string | null>(null)
   const [status, setStatus] = useState<'loading' | 'loaded' | 'error'>('loading')
-
-  useEffect(() => {
-    let cancelled = false
-    let objectUrl: string | null = null
-
-    const fetchImage = async () => {
-      try {
-        // Fetch the image with no referrer to bypass hotlink protection
-        const response = await fetch(src, {
-          referrerPolicy: 'no-referrer',
-          mode: 'cors',
-        })
-
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status}`)
-        }
-
-        const blob = await response.blob()
-        
-        if (cancelled) return
-
-        objectUrl = URL.createObjectURL(blob)
-        setBlobUrl(objectUrl)
-        setStatus('loaded')
-      } catch (error) {
-        if (cancelled) return
-        console.warn('[WikiImage] Failed to fetch:', src, error)
-        setStatus('error')
-      }
-    }
-
-    fetchImage()
-
-    return () => {
-      cancelled = true
-      if (objectUrl) {
-        URL.revokeObjectURL(objectUrl)
-      }
-    }
-  }, [src])
 
   // Don't render container if image failed to load
   if (status === 'error') {
     return null
   }
 
-  // Show loading state while fetching
-  if (status === 'loading' || !blobUrl) {
-    return (
-      <div className={containerClassName}>
-        <div className={styles.imageLoading}>Loading...</div>
-      </div>
-    )
-  }
-
   return (
     <div className={containerClassName}>
+      {status === 'loading' && (
+        <div className={styles.imageLoading}>Loading...</div>
+      )}
       <img
-        src={blobUrl}
+        src={src}
         alt={alt}
         className={className}
+        style={status === 'loading' ? { display: 'none' } : undefined}
+        onLoad={() => setStatus('loaded')}
+        onError={() => {
+          console.warn('[WikiImage] Failed to load:', src)
+          setStatus('error')
+        }}
       />
     </div>
   )

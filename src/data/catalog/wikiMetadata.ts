@@ -381,6 +381,7 @@ function buildSinglePageInfoUrl(title: string): string {
 
 /**
  * Build MediaWiki API URL for fetching image info (actual URL) for a file
+ * We request a thumbnail URL (scale-to-width-down) which works better with CORS
  */
 function buildImageInfoUrl(fileTitle: string): string {
   const params = new URLSearchParams({
@@ -390,9 +391,32 @@ function buildImageInfoUrl(fileTitle: string): string {
     formatversion: '2',
     prop: 'imageinfo',
     iiprop: 'url',
+    // Request a thumbnail - this uses a different CDN path that works better
+    iiurlwidth: '200',
     titles: fileTitle,
   })
   return `${WIKI_API_URL}?${params.toString()}`
+}
+
+/**
+ * Transform a Fandom image URL to use the thumbnail format
+ * This helps bypass some CDN restrictions
+ */
+function toThumbnailUrl(url: string): string {
+  // If URL already has scale-to-width-down, return as-is
+  if (url.includes('scale-to-width-down')) {
+    return url
+  }
+  
+  // Transform: .../revision/latest?cb=... to .../revision/latest/scale-to-width-down/200?cb=...
+  const match = url.match(/^(.+\/revision\/latest)(\?cb=.+)?$/)
+  if (match) {
+    const base = match[1]
+    const cb = match[2] || ''
+    return `${base}/scale-to-width-down/200${cb}`
+  }
+  
+  return url
 }
 
 /**
@@ -471,6 +495,7 @@ function findBestMatchingImage(
 
 /**
  * Fetch the actual URL for an image file
+ * Returns a thumbnail URL that works better with browser CORS restrictions
  */
 async function fetchImageUrl(fileTitle: string, signal?: AbortSignal): Promise<string | null> {
   try {
@@ -488,7 +513,10 @@ async function fetchImageUrl(fileTitle: string, signal?: AbortSignal): Promise<s
     if (page.missing) return null
 
     const imageInfo = page.imageinfo?.[0]
-    return imageInfo?.url ?? null
+    const imageUrl = imageInfo?.url ?? null
+    
+    // Transform to thumbnail URL for better CORS compatibility
+    return imageUrl ? toThumbnailUrl(imageUrl) : null
   } catch {
     return null
   }
