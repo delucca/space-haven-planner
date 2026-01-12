@@ -91,6 +91,25 @@ const options: SelectOption[] = [
 />
 ```
 
+#### FloatingSupportButton component (`src/components/FloatingSupportButton/`)
+
+A floating "Buy me a coffee" button fixed to the bottom-right corner of the viewport. Always visible (z-index 1000), opens Buy Me a Coffee in a new tab.
+
+- **Purpose**: Donationware support link (per `docs/CONSTITUTION.md` monetization section)
+- **Styling**: Buy Me a Coffee yellow gradient (`#ffdd00` → `#ffcc00`), hover lift effect, accessible focus ring
+- **Security**: `target="_blank"` + `rel="noopener noreferrer"`
+- **Accessibility**: `aria-label="Support this project - Buy me a coffee"`
+- **Reduced motion**: Respects `prefers-reduced-motion` (disables transform animations)
+- **Extensibility**: Named generically ("FloatingSupportButton") so it can later become a popover/modal with multiple support options (Canny feedback, contact, etc.)
+
+Usage (already mounted in `PlannerPage.tsx`):
+```tsx
+import { FloatingSupportButton } from '@/components'
+
+// Inside component return:
+<FloatingSupportButton />
+```
+
 ### Keyboard shortcuts
 
 Handled by `useKeyboardShortcuts` hook (`src/features/planner/hooks/useKeyboardShortcuts.ts`):
@@ -455,6 +474,7 @@ pnpm preview     # serve the built app locally
     - `src/features/planner/components/Palette.test.tsx` — palette UI (search, category expand/collapse)
     - `src/features/planner/state/reducer.test.ts` — state reducer and collision detection
     - `src/features/planner/state/history.test.ts` — undo/redo history reducer
+    - `src/components/FloatingSupportButton/FloatingSupportButton.test.tsx` — support button link/accessibility
 
 ---
 
