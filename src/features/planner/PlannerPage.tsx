@@ -9,6 +9,7 @@ import {
   useInitialZoom,
   useElementContentWidth,
 } from './hooks'
+import { FloatingSupportButton } from '@/components'
 import styles from './PlannerPage.module.css'
 
 // Layout constants
@@ -309,6 +310,9 @@ function PlannerContent() {
           </aside>
         </>
       )}
+
+      {/* Floating support button - always visible */}
+      <FloatingSupportButton />
     </div>
   )
 }
