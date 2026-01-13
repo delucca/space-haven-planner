@@ -17,6 +17,7 @@ import {
   saveJarCatalogCache,
   type JarSourceInfo,
 } from '@/data/jarCatalog'
+import { capture } from '@/lib/analytics'
 
 /**
  * Return type for the useJarImport hook
@@ -91,6 +92,12 @@ export function useJarImport(dispatch: Dispatch<PlannerAction>): JarImportResult
             jarFileName: file.name,
           } as Partial<CatalogStatus>,
         })
+
+        // Track successful JAR import
+        capture('jar_import_success', {
+          file_size: file.size,
+          game_version: parsedData.gameVersion ?? null,
+        })
       } catch (error) {
         const message = error instanceof Error ? error.message : 'Unknown error parsing JAR file'
 
@@ -101,6 +108,8 @@ export function useJarImport(dispatch: Dispatch<PlannerAction>): JarImportResult
             isParsing: false,
           } as Partial<CatalogStatus>,
         })
+
+        capture('jar_import_error')
       }
     },
     [dispatch]

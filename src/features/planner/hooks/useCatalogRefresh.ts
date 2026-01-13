@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import type { Dispatch } from 'react'
 import type { PlannerState, PlannerAction, CatalogStatus } from '../state/types'
 import { loadCachedJarCatalog, getBuiltinCatalog } from '@/data/jarCatalog'
+import { capture } from '@/lib/analytics'
 
 /**
  * Hook to handle catalog loading from cache on mount
@@ -32,6 +33,7 @@ export function useCatalogRefresh(_state: PlannerState, dispatch: Dispatch<Plann
           jarFileName: jarCache.sourceInfo.fileName,
         } as Partial<CatalogStatus>,
       })
+      capture('catalog_loaded', { source: 'jar_user_cache' })
       return
     }
 
@@ -41,5 +43,6 @@ export function useCatalogRefresh(_state: PlannerState, dispatch: Dispatch<Plann
       catalog: getBuiltinCatalog(),
       source: 'jar_builtin_snapshot',
     })
+    capture('catalog_loaded', { source: 'jar_builtin_snapshot' })
   }, [dispatch])
 }

@@ -14,6 +14,7 @@ import {
   deserializeUserGroups,
 } from '@/lib/serialization'
 import { clearJarCatalogCache } from '@/data/jarCatalog'
+import { capture } from '@/lib/analytics'
 import { JarImportDialog } from './JarImportDialog'
 import { ConfirmDialog } from './ConfirmDialog'
 import styles from './ActionBar.module.css'
@@ -42,6 +43,11 @@ export function ActionBar() {
       state.activeLayerId
     )
     downloadProjectJSON(project)
+    capture('project_save_json', {
+      structures_count: state.structures.length,
+      hull_tiles_count: state.hullTiles.size,
+      preset: state.presetLabel,
+    })
   }, [
     state.gridSize,
     state.presetLabel,
@@ -87,9 +93,16 @@ export function ActionBar() {
           groups: userGroups,
           activeLayerId: project.activeLayerId,
         })
+
+        capture('project_load_success', {
+          structures_count: structures.length,
+          hull_tiles_count: hullTiles.length,
+          preset: project.preset,
+        })
       } catch (err) {
         console.error('Failed to load project:', err)
         alert(`Failed to load project: ${err instanceof Error ? err.message : String(err)}`)
+        capture('project_load_error')
       }
 
       // Reset file input
@@ -109,9 +122,15 @@ export function ActionBar() {
         EXPORT_SCALE
       )
       downloadDataURL(dataURL, 'spacehaven-ship.png')
+      capture('export_png_success', {
+        structures_count: state.structures.length,
+        hull_tiles_count: state.hullTiles.size,
+        preset: state.presetLabel,
+      })
     } catch (err) {
       console.error('Failed to export PNG:', err)
       alert('Failed to export PNG')
+      capture('export_png_error')
     }
   }, [
     state.gridSize,
@@ -120,6 +139,7 @@ export function ActionBar() {
     state.catalog,
     state.userLayers,
     state.userGroups,
+    state.presetLabel,
   ])
 
   const handleClear = useCallback(() => {
@@ -134,6 +154,7 @@ export function ActionBar() {
     if (!hasAnything) {
       dispatch({ type: 'NEW_PROJECT' })
       clearAutosave()
+      capture('project_new')
       return
     }
 
@@ -151,18 +172,21 @@ export function ActionBar() {
   const handleConfirm = useCallback(() => {
     if (confirmKind === 'clear_all') {
       dispatch({ type: 'CLEAR_ALL_STRUCTURES' })
+      capture('project_clear_all')
       return
     }
 
     if (confirmKind === 'new_project') {
       dispatch({ type: 'NEW_PROJECT' })
       clearAutosave()
+      capture('project_new')
       return
     }
 
     if (confirmKind === 'reset_catalog') {
       clearJarCatalogCache()
       dispatch({ type: 'RESET_TO_BUILTIN_CATALOG' })
+      capture('catalog_reset')
     }
   }, [confirmKind, dispatch])
 

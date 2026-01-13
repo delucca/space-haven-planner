@@ -1,3 +1,4 @@
+import { capture } from '@/lib/analytics'
 import styles from './FloatingSupportButton.module.css'
 
 const BMAC_URL = 'https://buymeacoffee.com/delucca'
@@ -10,6 +11,14 @@ const CANNY_URL = 'https://space-haven-planner.canny.io'
  * - "Buy me a coffee" link that opens in a new tab
  */
 export function FloatingSupportButton() {
+  const handleFeedbackClick = () => {
+    capture('support_click', { target: 'feedback' })
+  }
+
+  const handleCoffeeClick = () => {
+    capture('support_click', { target: 'coffee' })
+  }
+
   return (
     <div className={styles.stack}>
       <a
@@ -18,6 +27,7 @@ export function FloatingSupportButton() {
         rel="noopener noreferrer"
         className={`${styles.button} ${styles.feedbackButton}`}
         aria-label="Send feedback or request features"
+        onClick={handleFeedbackClick}
       >
         <span className={styles.icon} aria-hidden="true">
           💬
@@ -31,6 +41,7 @@ export function FloatingSupportButton() {
         rel="noopener noreferrer"
         className={`${styles.button} ${styles.coffeeButton}`}
         aria-label="Support this project - Buy me a coffee"
+        onClick={handleCoffeeClick}
       >
         <span className={styles.icon} aria-hidden="true">
           ☕

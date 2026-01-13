@@ -9,6 +9,7 @@ import {
   deserializeUserLayers,
   deserializeUserGroups,
 } from '@/lib/serialization'
+import { capture } from '@/lib/analytics'
 
 const STORAGE_KEY = 'space-haven-planner-autosave'
 const DEBOUNCE_MS = 1000
@@ -98,8 +99,16 @@ export function useAutosave(state: PlannerState, dispatch: Dispatch<PlannerActio
         groups: userGroups,
         activeLayerId: project.activeLayerId,
       })
+
+      // Track successful autosave restore
+      capture('autosave_loaded', {
+        structures_count: structures.length,
+        hull_tiles_count: hullTiles.length,
+        preset: project.preset,
+      })
     } catch (err) {
       console.warn('Failed to load autosave from localStorage:', err)
+      capture('autosave_load_error')
     }
   }, [dispatch])
 }

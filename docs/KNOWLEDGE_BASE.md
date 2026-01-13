@@ -464,7 +464,21 @@ pnpm preview     # serve the built app locally
   - User-triggered file errors show `alert(...)` (load/export).
   - Autosave failures warn and keep the app usable (`console.warn` + best-effort).
   - Context hooks fail fast if misused (throw outside provider).
-- **Logging/observability**: `console.warn`/`console.error` only (no telemetry).
+- **Logging/observability**:
+  - Console: `console.warn`/`console.error` for dev debugging.
+  - **Analytics (PostHog)**: Optional product analytics via `src/lib/analytics/`. Disabled by default—enabled only when `VITE_POSTHOG_KEY` env var is set.
+    - Configuration: Set `VITE_POSTHOG_KEY` and optionally `VITE_POSTHOG_HOST` (defaults to `https://app.posthog.com`).
+    - Privacy: Autocapture and session recording are disabled. Only curated events are tracked. Respects browser DNT setting.
+    - Events tracked:
+      - `autosave_loaded` / `autosave_load_error` — autosave restore on app load
+      - `catalog_loaded` — catalog source (builtin vs user JAR cache)
+      - `jar_import_success` / `jar_import_error` — user JAR import
+      - `structure_placed` — structure placement (includes `ms_since_app_start` for first placement)
+      - `project_save_json` / `project_load_success` / `project_load_error` — project file operations
+      - `export_png_success` / `export_png_error` — PNG export
+      - `project_new` / `project_clear_all` / `catalog_reset` — project lifecycle
+      - `support_click` — feedback/coffee link clicks
+    - Usage: Import `capture` from `@/lib/analytics` and call with event name + optional properties (small scalars only).
 - **Testing strategy**:
   - Vitest + Testing Library are configured (see `vite.config.ts`, `src/test/setup.ts`).
   - Tests should be added as `src/**/*.{test,spec}.{ts,tsx}`.
@@ -481,6 +495,7 @@ pnpm preview     # serve the built app locally
     - `src/features/planner/state/reducer.test.ts` — state reducer and collision detection
     - `src/features/planner/state/history.test.ts` — undo/redo history reducer
     - `src/components/FloatingSupportButton/FloatingSupportButton.test.tsx` — floating support links (coffee + feedback)
+    - `src/lib/analytics/analytics.test.ts` — analytics wrapper (PostHog init, capture, no-op when disabled)
 
 ---
 

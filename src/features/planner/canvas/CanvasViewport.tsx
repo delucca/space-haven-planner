@@ -18,7 +18,11 @@ import {
   type PreviewInfo,
   type SelectionOverlayRect,
 } from './renderer'
+import { capture, getMsSinceAppStart } from '@/lib/analytics'
 import styles from './CanvasViewport.module.css'
+
+/** Track if first structure has been placed (module-level for persistence across re-renders) */
+let hasPlacedFirstStructure = false
 
 /** Hover delay before showing popover (ms) */
 const HOVER_DELAY_MS = 500
@@ -785,7 +789,9 @@ export function CanvasViewport() {
       const found = findStructureById(catalog, selection.structureId)
       if (!found) return
 
-      // Don't check canPlaceAt here - let the reducer handle collision detection
+      // Check if placement will succeed (for analytics)
+      const willSucceed = canPlaceAt(state, selection.structureId, start.x, start.y, previewRotation)
+
       // The reducer will auto-assign orgLayerId and orgGroupId based on active selection or category
       dispatch({
         type: 'PLACE_STRUCTURE',
@@ -801,6 +807,24 @@ export function CanvasViewport() {
           orgGroupId: null,
         },
       })
+
+      // Track successful placement
+      if (willSucceed) {
+        const props: Record<string, string | number | boolean | null> = {
+          category_id: selection.categoryId,
+          structure_id: selection.structureId,
+          rotation: previewRotation,
+        }
+
+        // Track time to first placement
+        if (!hasPlacedFirstStructure) {
+          hasPlacedFirstStructure = true
+          props.ms_since_app_start = getMsSinceAppStart()
+          props.is_first_placement = true
+        }
+
+        capture('structure_placed', props)
+      }
       return
     }
 

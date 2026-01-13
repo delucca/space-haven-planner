@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "fflate": "^0.8.2",
+    "posthog-js": "1.319.0",
     "react": "19.2.3",
     "react-dom": "19.2.3"
   },
