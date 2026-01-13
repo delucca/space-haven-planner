@@ -181,6 +181,7 @@ The planner is free to use. Monetization is **donationware**:
 
 ## Legal / attribution
 
+- This project’s **source code is licensed under the MIT License** (see `LICENSE`).
 - This is a fan-made tool and is **not affiliated with Bugbyte Ltd.**
 - “Space Haven” is a trademark of its respective owner(s).
 - Data pulled from the community wiki should be attributed and cached responsibly.

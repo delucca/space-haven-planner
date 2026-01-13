@@ -28,6 +28,8 @@ Space Haven Planner is an **unofficial**, **free**, **web-only** ship layout pla
 It’s a **client-only** React + TypeScript SPA that lets users choose a canvas preset, place/erase/rotate Space Haven structures on a tile grid (with bounds + collision validation), **autosaves locally**, and exports layouts as **JSON** and **PNG**.
 There are **no accounts** and **no server-side state**; it should keep working offline after first load.
 
+**License**: MIT (see `LICENSE`).
+
 ### Who uses it
 
 Space Haven players:

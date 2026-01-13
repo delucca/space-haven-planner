@@ -70,6 +70,8 @@ pnpm format         # Prettier format
 
 ## License
 
+MIT License (see `LICENSE`).
+
 This is an unofficial fan project. "Space Haven" is a trademark of Bugbyte Ltd.
 
 ---
