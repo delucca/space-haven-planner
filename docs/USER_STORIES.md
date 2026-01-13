@@ -40,15 +40,16 @@
 
 **Must Have (MVP):**
 
-- [ ] Planner loads immediately in-browser
-- [ ] Choose canvas preset (1x1 .. 3x2)
-- [ ] See structure palette, select structure, place on grid
-- [ ] Autosave + restore from localStorage
+- [x] Planner loads immediately in-browser
+- [x] Choose canvas preset (1x1 .. 3x2 / 2x3)
+- [x] See structure palette, select structure, place on grid
+- [x] Autosave + restore from localStorage
 
 **Should Have (v2):**
 
-- [ ] “New project” to reset current plan
-- [ ] Import from JSON or share link on first screen
+- [x] “New project” to reset current plan
+- [x] Import from JSON
+- [ ] Share link entry point on first screen
 
 **Could Have (Future):**
 
@@ -66,9 +67,9 @@
 
 **Must Have (MVP):**
 
-- [ ] Place/erase structures with collision + bounds validation
-- [ ] Rotate structures using keyboard (Q/E) before placing
-- [ ] Export PNG and save JSON
+- [x] Place/erase structures with collision + bounds validation
+- [x] Rotate structures using keyboard (Q/E) before placing
+- [x] Export PNG and save JSON
 
 **Should Have (v2):**
 
@@ -76,7 +77,7 @@
 
 **Could Have (Future):**
 
-- [ ] Fast “paint mode” for hull/walls with smart placement rules
+- [x] Fast “paint mode” for hull tiles (drag-to-fill + erase)
 
 **Won’t Have (Excluded):**
 
@@ -90,15 +91,15 @@
 
 **Must Have (MVP):**
 
-- [ ] Layer visibility toggles (Hull / Rooms / Systems / Furniture)
-- [ ] Category → layer auto-assignment (no manual layer picking for MVP)
-- [ ] Move tool (pick up and reposition a placed structure)
+- [x] Layer/group visibility and lock toggles (user layers + groups)
+- [x] Category → system-layer auto-assignment (Hull/Rooms/Systems/Furniture)
+- [x] Move tool (pick up and reposition a placed structure)
 
 **Should Have (v2):**
 
-- [ ] Undo/redo
-- [ ] Palette search/filter (“oxygen”, “bed”, “hangar”…)
-- [ ] Multi-select + group move
+- [x] Undo/redo
+- [x] Palette search/filter (“oxygen”, “bed”, “hangar”…)
+- [x] Multi-select + group move
 
 **Could Have (Future):**
 
@@ -118,7 +119,7 @@
 **Must Have (MVP):**
 
 - [ ] Shareable link that recreates the layout on open
-- [ ] Export PNG for posting
+- [x] Export PNG for posting
 
 **Should Have (v2):**
 

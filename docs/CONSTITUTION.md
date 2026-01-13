@@ -87,14 +87,10 @@ A **placed structure** is an instance on the canvas:
 
 ### Layers
 
-Layers exist to toggle visibility and reduce cognitive load:
+There are two “layer” concepts in the current implementation:
 
-- Hull
-- Rooms
-- Systems
-- Furniture
-
-Rule for MVP: **layer is derived from the structure category** (no “place on any layer”).
+- **System layer (`layer`)**: game-aligned layer (`Hull | Rooms | Systems | Furniture`) derived from the catalog category’s `defaultLayer` (no manual picking for MVP).
+- **Organization layer/group (`orgLayerId` / `orgGroupId`)**: CAD-style user-defined layers and groups shown in the right panel; these control visibility/locking and organization.
 
 ### Collisions
 

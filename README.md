@@ -20,14 +20,14 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
 
 ## Features
 
-- **Tile-based grid** with preset canvas sizes (1×1 to 3×3 units)
-- **111 structures** across 11 categories (power, life support, hull, etc.)
+- **Tile-based grid** with preset canvas sizes (1×1 up to 3×2 / 2×3 units)
+- **Structure catalog from Space Haven `spacehaven.jar`** (built-in snapshot + optional user import)
 - **Collision detection** prevents overlapping placements
 - **Rotation** (Q/E keys) with footprint-aware validation
 - **CAD-style layers** with visibility, lock, and drag-reorder
 - **Autosave** to localStorage—pick up where you left off
 - **Export** as JSON (editable) or PNG (shareable)
-- **Keyboard shortcuts**: 1 (hull), 2 (place), 3 (erase), Q/E (rotate), +/- (zoom), Escape (deselect)
+- **Keyboard shortcuts**: 1/2/3/4 (Select/Hull/Place/Erase), Q/E (rotate), +/- (zoom), 0 (reset), Ctrl/Cmd+Z (undo), Escape (deselect)
 
 ---
 
