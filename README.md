@@ -76,6 +76,8 @@ This is an unofficial fan project. "Space Haven" is a trademark of Bugbyte Ltd.
 
 ## Support
 
-If you find this tool useful, consider [buying me a coffee](https://buymeacoffee.com/delucca) ☕
+If you find this tool useful:
+- Use the in-app **Feedback** button to suggest features or report issues
+- Consider [buying me a coffee](https://buymeacoffee.com/delucca) ☕
 
 

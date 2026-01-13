@@ -3,38 +3,84 @@ import { render, screen } from '@testing-library/react'
 import { FloatingSupportButton } from './FloatingSupportButton'
 
 describe('FloatingSupportButton', () => {
-  it('renders an anchor element with the correct href', () => {
-    render(<FloatingSupportButton />)
+  describe('Buy me a coffee link', () => {
+    it('renders an anchor element with the correct href', () => {
+      render(<FloatingSupportButton />)
 
-    const link = screen.getByRole('link', { name: /buy me a coffee/i })
-    expect(link).toHaveAttribute('href', 'https://buymeacoffee.com/delucca')
+      const link = screen.getByRole('link', { name: /buy me a coffee/i })
+      expect(link).toHaveAttribute('href', 'https://buymeacoffee.com/delucca')
+    })
+
+    it('opens in a new tab with security attributes', () => {
+      render(<FloatingSupportButton />)
+
+      const link = screen.getByRole('link', { name: /buy me a coffee/i })
+      expect(link).toHaveAttribute('target', '_blank')
+      expect(link).toHaveAttribute('rel', 'noopener noreferrer')
+    })
+
+    it('has an accessible aria-label', () => {
+      render(<FloatingSupportButton />)
+
+      const link = screen.getByRole('link', { name: /support this project/i })
+      expect(link).toBeInTheDocument()
+    })
+
+    it('displays visible label text', () => {
+      render(<FloatingSupportButton />)
+
+      expect(screen.getByText('Buy me a coffee')).toBeInTheDocument()
+    })
+
+    it('displays the coffee emoji icon', () => {
+      render(<FloatingSupportButton />)
+
+      expect(screen.getByText('☕')).toBeInTheDocument()
+    })
   })
 
-  it('opens in a new tab with security attributes', () => {
-    render(<FloatingSupportButton />)
+  describe('Feedback link', () => {
+    it('renders an anchor element with the correct href', () => {
+      render(<FloatingSupportButton />)
 
-    const link = screen.getByRole('link', { name: /buy me a coffee/i })
-    expect(link).toHaveAttribute('target', '_blank')
-    expect(link).toHaveAttribute('rel', 'noopener noreferrer')
+      const link = screen.getByRole('link', { name: /feedback/i })
+      expect(link).toHaveAttribute('href', 'https://space-haven-planner.canny.io')
+    })
+
+    it('opens in a new tab with security attributes', () => {
+      render(<FloatingSupportButton />)
+
+      const link = screen.getByRole('link', { name: /feedback/i })
+      expect(link).toHaveAttribute('target', '_blank')
+      expect(link).toHaveAttribute('rel', 'noopener noreferrer')
+    })
+
+    it('has an accessible aria-label', () => {
+      render(<FloatingSupportButton />)
+
+      const link = screen.getByRole('link', { name: /send feedback or request features/i })
+      expect(link).toBeInTheDocument()
+    })
+
+    it('displays visible label text', () => {
+      render(<FloatingSupportButton />)
+
+      expect(screen.getByText('Feedback')).toBeInTheDocument()
+    })
+
+    it('displays the speech bubble emoji icon', () => {
+      render(<FloatingSupportButton />)
+
+      expect(screen.getByText('💬')).toBeInTheDocument()
+    })
   })
 
-  it('has an accessible aria-label', () => {
-    render(<FloatingSupportButton />)
+  describe('Stacked layout', () => {
+    it('renders both links', () => {
+      render(<FloatingSupportButton />)
 
-    const link = screen.getByRole('link', { name: /support this project/i })
-    expect(link).toBeInTheDocument()
-  })
-
-  it('displays visible label text', () => {
-    render(<FloatingSupportButton />)
-
-    expect(screen.getByText('Buy me a coffee')).toBeInTheDocument()
-  })
-
-  it('displays the coffee emoji icon', () => {
-    render(<FloatingSupportButton />)
-
-    expect(screen.getByText('☕')).toBeInTheDocument()
+      expect(screen.getByRole('link', { name: /feedback/i })).toBeInTheDocument()
+      expect(screen.getByRole('link', { name: /buy me a coffee/i })).toBeInTheDocument()
+    })
   })
 })
-

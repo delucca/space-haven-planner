@@ -93,14 +93,20 @@ const options: SelectOption[] = [
 
 #### FloatingSupportButton component (`src/components/FloatingSupportButton/`)
 
-A floating "Buy me a coffee" button fixed to the bottom-right corner of the viewport. Always visible (z-index 1000), opens Buy Me a Coffee in a new tab.
+A stack of floating link buttons fixed to the bottom-right corner of the viewport. Always visible (z-index 1000).
 
-- **Purpose**: Donationware support link (per `docs/CONSTITUTION.md` monetization section)
-- **Styling**: Buy Me a Coffee yellow gradient (`#ffdd00` → `#ffcc00`), hover lift effect, accessible focus ring
-- **Security**: `target="_blank"` + `rel="noopener noreferrer"`
-- **Accessibility**: `aria-label="Support this project - Buy me a coffee"`
-- **Reduced motion**: Respects `prefers-reduced-motion` (disables transform animations)
-- **Extensibility**: Named generically ("FloatingSupportButton") so it can later become a popover/modal with multiple support options (Canny feedback, contact, etc.)
+**Links (top to bottom):**
+1. **Feedback** (purple) — Opens Canny board (`https://space-haven-planner.canny.io`) in a new tab for feedback/feature requests/support
+2. **Buy me a coffee** (yellow) — Opens Buy Me a Coffee in a new tab
+
+**Key files:**
+- `FloatingSupportButton.tsx` — Main component with stacked link buttons
+- `FloatingSupportButton.module.css` — Styles for both buttons (`.feedbackButton`, `.coffeeButton`)
+
+**Styling:**
+- Feedback button: Accent blue background (`var(--color-accent-blue)`)
+- Coffee button: Yellow gradient (`#ffdd00` → `#ffcc00`), dark text
+- Both: Hover lift effect, accessible focus ring, respects `prefers-reduced-motion`
 
 Usage (already mounted in `PlannerPage.tsx`):
 ```tsx
@@ -474,7 +480,7 @@ pnpm preview     # serve the built app locally
     - `src/features/planner/components/Palette.test.tsx` — palette UI (search, category expand/collapse)
     - `src/features/planner/state/reducer.test.ts` — state reducer and collision detection
     - `src/features/planner/state/history.test.ts` — undo/redo history reducer
-    - `src/components/FloatingSupportButton/FloatingSupportButton.test.tsx` — support button link/accessibility
+    - `src/components/FloatingSupportButton/FloatingSupportButton.test.tsx` — floating support links (coffee + feedback)
 
 ---
 

@@ -407,7 +407,7 @@ function toThumbnailUrl(url: string): string {
   if (url.includes('scale-to-width-down')) {
     return url
   }
-  
+
   // Transform: .../revision/latest?cb=... to .../revision/latest/scale-to-width-down/200?cb=...
   const match = url.match(/^(.+\/revision\/latest)(\?cb=.+)?$/)
   if (match) {
@@ -415,7 +415,7 @@ function toThumbnailUrl(url: string): string {
     const cb = match[2] || ''
     return `${base}/scale-to-width-down/200${cb}`
   }
-  
+
   return url
 }
 
@@ -514,7 +514,7 @@ async function fetchImageUrl(fileTitle: string, signal?: AbortSignal): Promise<s
 
     const imageInfo = page.imageinfo?.[0]
     const imageUrl = imageInfo?.url ?? null
-    
+
     // Transform to thumbnail URL for better CORS compatibility
     return imageUrl ? toThumbnailUrl(imageUrl) : null
   } catch {
@@ -664,7 +664,6 @@ export function clearAllWikiCaches(): void {
       }
     }
     keysToRemove.forEach((key) => localStorage.removeItem(key))
-
   } catch {
     // Ignore storage errors
   }

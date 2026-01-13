@@ -693,17 +693,12 @@ export function LayerPanel() {
             </button>
           </div>
         ) : (
-          <div className={styles.noSelection}>
-            Use Select tool (1) to box-select structures
-          </div>
+          <div className={styles.noSelection}>Use Select tool (1) to box-select structures</div>
         )}
       </section>
 
       {/* Placement preview section */}
-      <PlacementSection
-        selectedInfo={selectedInfo}
-        previewRotation={previewRotation}
-      />
+      <PlacementSection selectedInfo={selectedInfo} previewRotation={previewRotation} />
 
       {/* Help section */}
       <section className={styles.section}>

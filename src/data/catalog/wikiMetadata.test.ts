@@ -417,4 +417,3 @@ describe('clearStructureCacheEntry', () => {
     expect(() => clearStructureCacheEntry('Solar Panel')).not.toThrow()
   })
 })
-

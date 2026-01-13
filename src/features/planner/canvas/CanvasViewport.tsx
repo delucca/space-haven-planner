@@ -1,6 +1,13 @@
 import { useRef, useEffect, useCallback, useState, useMemo } from 'react'
 import { usePlanner, isStructureInteractive, canPlaceAt } from '../state'
-import { findStructureById, getRotatedSize, type StructureCatalog, type PlacedStructure, type StructureDef, type StructureCategory } from '@/data'
+import {
+  findStructureById,
+  getRotatedSize,
+  type StructureCatalog,
+  type PlacedStructure,
+  type StructureDef,
+  type StructureCategory,
+} from '@/data'
 import { ConfirmDialog } from '../components/ConfirmDialog'
 import { StructureInfoPopover } from '../components/StructureInfoPopover'
 import {
@@ -193,7 +200,13 @@ function isMoveValid(
 function findStructureAtTile(
   tileX: number,
   tileY: number,
-  structures: readonly { id: string; x: number; y: number; rotation: 0 | 90 | 180 | 270; structureId: string }[],
+  structures: readonly {
+    id: string
+    x: number
+    y: number
+    rotation: 0 | 90 | 180 | 270
+    structureId: string
+  }[],
   catalog: Parameters<typeof findStructureById>[0]
 ): string | null {
   for (const struct of structures) {
@@ -262,8 +275,13 @@ export function CanvasViewport() {
   const dragEndRef = useRef<{ x: number; y: number } | null>(null)
   const dragHullEraseRef = useRef<boolean>(false)
   // For Space+drag panning
-  const panStartRef = useRef<{ scrollLeft: number; scrollTop: number; clientX: number; clientY: number } | null>(null)
-  
+  const panStartRef = useRef<{
+    scrollLeft: number
+    scrollTop: number
+    clientX: number
+    clientY: number
+  } | null>(null)
+
   // Hover popover state for canvas structures
   const [canvasHoveredItem, setCanvasHoveredItem] = useState<CanvasHoveredState | null>(null)
   const canvasHoverTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -320,12 +338,12 @@ export function CanvasViewport() {
     // Cancel any pending close
     clearCanvasCloseTimer()
     clearCanvasHoverTimer()
-    
+
     canvasHoverTimerRef.current = setTimeout(() => {
       const pos = canvasMousePosRef.current
       const tile = lastHoveredTileRef.current
       if (!tile) return
-      
+
       const info = findStructureInfoAtTile(tile.x, tile.y, structures, catalog)
       if (info) {
         setCanvasHoveredItem({
@@ -431,7 +449,8 @@ export function CanvasViewport() {
         const structureBounds: { x: number; y: number; width: number; height: number }[] = []
         for (const struct of structures) {
           // For erase/select tool, only show interactive structures
-          if ((tool === 'erase' || tool === 'select') && !isStructureInteractive(state, struct)) continue
+          if ((tool === 'erase' || tool === 'select') && !isStructureInteractive(state, struct))
+            continue
 
           const found = findStructureById(catalog, struct.structureId)
           if (!found) continue
@@ -559,7 +578,7 @@ export function CanvasViewport() {
       const lastTile = lastHoveredTileRef.current
       if (!lastTile || lastTile.x !== tile.x || lastTile.y !== tile.y) {
         lastHoveredTileRef.current = { x: tile.x, y: tile.y }
-        
+
         // Close popover and restart timer when tile changes
         setCanvasHoveredItem(null)
         if (!isDragging && !isPanning && !isMovingSelection) {
@@ -634,7 +653,9 @@ export function CanvasViewport() {
           if (e.shiftKey) {
             if (isAlreadySelected) {
               // Remove from selection
-              const newSelection = [...selectedStructureIds].filter((id) => id !== clickedStructureId)
+              const newSelection = [...selectedStructureIds].filter(
+                (id) => id !== clickedStructureId
+              )
               dispatch({ type: 'SET_SELECTED_STRUCTURES', structureIds: newSelection })
             } else {
               // Add to selection
@@ -667,7 +688,16 @@ export function CanvasViewport() {
       dragHullEraseRef.current = tool === 'hull' && e.shiftKey
       setDragRect({ x1: tile.x, y1: tile.y, x2: tile.x, y2: tile.y })
     },
-    [zoom, dispatch, tool, isSpaceHeld, selectedStructureIds, structures, catalog, clearCanvasHoverTimer]
+    [
+      zoom,
+      dispatch,
+      tool,
+      isSpaceHeld,
+      selectedStructureIds,
+      structures,
+      catalog,
+      clearCanvasHoverTimer,
+    ]
   )
 
   // Handle mouse up
@@ -841,7 +871,7 @@ export function CanvasViewport() {
     setMoveDelta(null)
     panStartRef.current = null
     setDragRect(null)
-    
+
     // Clear canvas hover popover with delay
     clearCanvasHoverTimer()
     lastHoveredTileRef.current = null
@@ -932,7 +962,7 @@ export function CanvasViewport() {
           setPendingDeleteSelection(false)
         }}
       />
-      
+
       {/* Canvas hover popover */}
       {canvasHoveredItem && (
         <StructureInfoPopover
