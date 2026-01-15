@@ -410,3 +410,5 @@ Use cases marked **(Planned)** are not implemented yet.
 ## Structure Catalog Coverage
 - The number of structures and categories depends on the Space Haven version and which catalog source is active (built-in snapshot vs user-imported JAR).
 
+
+

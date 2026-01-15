@@ -1,7 +1,7 @@
 import { useRef, useCallback, useState } from 'react'
 import { usePlanner } from '../state'
 import { exportToPNG } from '../canvas'
-import { clearAutosave, useJarImport } from '../hooks'
+import { clearAutosave, useJarImport, useSaveImport } from '../hooks'
 import { EXPORT_SCALE } from '@/data/presets'
 import {
   createProjectFile,
@@ -16,6 +16,7 @@ import {
 import { clearJarCatalogCache } from '@/data/jarCatalog'
 import { capture } from '@/lib/analytics'
 import { JarImportDialog } from './JarImportDialog'
+import { SaveImportDialog } from './SaveImportDialog'
 import { ConfirmDialog } from './ConfirmDialog'
 import styles from './ActionBar.module.css'
 
@@ -27,6 +28,16 @@ export function ActionBar() {
     fileInputRef: jarInputRef,
     onFileInputChange: onJarInputChange,
   } = useJarImport(dispatch)
+  const {
+    state: saveImportState,
+    openDialog: openSaveDialog,
+    closeDialog: closeSaveDialog,
+    selectFile: selectSaveFile,
+    importShip,
+    reset: resetSaveImport,
+    fileInputRef: saveInputRef,
+    onFileInputChange: onSaveInputChange,
+  } = useSaveImport(dispatch, state.catalog)
   const [isJarDialogOpen, setIsJarDialogOpen] = useState(false)
   const [confirmKind, setConfirmKind] = useState<
     null | 'clear_all' | 'new_project' | 'reset_catalog'
@@ -246,6 +257,12 @@ export function ActionBar() {
         onChange={onJarInputChange}
         style={{ display: 'none' }}
       />
+      <input
+        ref={saveInputRef}
+        type="file"
+        onChange={onSaveInputChange}
+        style={{ display: 'none' }}
+      />
 
       <div className={styles.group}>
         <button className={styles.button} onClick={handleNewProject}>
@@ -266,6 +283,13 @@ export function ActionBar() {
       </div>
 
       <div className={styles.group}>
+        <button
+          className={styles.button}
+          onClick={openSaveDialog}
+          title="Import a ship layout from your Space Haven save file"
+        >
+          🚀 Import Save
+        </button>
         <button
           className={styles.button}
           onClick={handleOpenJarDialog}
@@ -290,6 +314,17 @@ export function ActionBar() {
         isParsing={state.catalogStatus.isParsing}
         onClose={handleCloseJarDialog}
         onSelectFile={selectJarFile}
+      />
+      <SaveImportDialog
+        isOpen={saveImportState.isDialogOpen}
+        onClose={closeSaveDialog}
+        onImport={importShip}
+        parseResult={saveImportState.parseResult}
+        isLoading={saveImportState.isLoading}
+        error={saveImportState.error}
+        conversionResult={saveImportState.conversionResult}
+        onSelectFile={selectSaveFile}
+        onReset={resetSaveImport}
       />
       <ConfirmDialog
         isOpen={confirmKind !== null}

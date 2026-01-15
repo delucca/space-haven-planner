@@ -130,3 +130,5 @@ export function StructureInfoPopover({
 
   return createPortal(popoverContent, document.body)
 }
+
+

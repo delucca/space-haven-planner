@@ -38,3 +38,5 @@ export function useElementContentWidth(ref: RefObject<HTMLElement | null>): numb
 
   return width
 }
+
+

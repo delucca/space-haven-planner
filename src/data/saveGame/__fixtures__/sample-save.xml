@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data>
+  <ships>
+    <!-- Player-owned ship: Small Vessel -->
+    <ship sid="1" sname="Small Vessel" sx="27" sy="27" ox="0" oy="0">
+      <settings owner="Player"/>
+      <!-- Hull/floor tiles (m=1148) -->
+      <e x="5" y="5" m="1148"/>
+      <e x="6" y="5" m="1148"/>
+      <e x="7" y="5" m="1148"/>
+      <e x="5" y="6" m="1148"/>
+      <e x="6" y="6" m="1148"/>
+      <e x="7" y="6" m="1148"/>
+      <!-- Single-tile structure (m=632 = Storage Container) -->
+      <e x="5" y="5" m="632" rot="R0"/>
+      <!-- Multi-tile structure (m=2131 = Power Generator, 2x2) -->
+      <e x="6" y="5" m="2131" rot="R90">
+        <l ind="0" x="6" y="5"/>
+        <l ind="1" x="7" y="5"/>
+        <l ind="2" x="6" y="6"/>
+        <l ind="3" x="7" y="6"/>
+      </e>
+      <!-- Unknown structure (not in catalog) -->
+      <e x="10" y="10" m="99999" rot="R0"/>
+    </ship>
+    
+    <!-- Player-owned ship: Large Cruiser -->
+    <ship sid="2" sname="Large Cruiser" sx="56" sy="56" ox="0" oy="0">
+      <settings owner="Player"/>
+      <e x="10" y="10" m="1148"/>
+      <e x="11" y="10" m="1148"/>
+    </ship>
+    
+    <!-- NPC ship (not player-owned) -->
+    <ship sid="100" sname="Pirate Raider" sx="30" sy="30" ox="0" oy="0">
+      <settings owner="Enemy"/>
+      <e x="5" y="5" m="1148"/>
+    </ship>
+    
+    <!-- Derelict ship (no owner) -->
+    <ship sid="101" sname="Abandoned Wreck" sx="20" sy="20" ox="0" oy="0">
+      <settings/>
+      <e x="2" y="2" m="1148"/>
+    </ship>
+  </ships>
+</data>
+
+
+
