@@ -1,7 +1,7 @@
 import { capture } from '@/lib/analytics'
 import styles from './FloatingSupportButton.module.css'
 
-const BMAC_URL = 'https://buymeacoffee.com/delucca'
+const BMAC_URL = 'https://buymeacoffee.com/spacehavenplanner'
 const CANNY_URL = 'https://space-haven-planner.canny.io'
 
 /**

@@ -80,6 +80,6 @@ This is an unofficial fan project. "Space Haven" is a trademark of Bugbyte Ltd.
 
 If you find this tool useful:
 - Use the in-app **Feedback** button to suggest features or report issues
-- Consider [buying me a coffee](https://buymeacoffee.com/delucca) ☕
+- Consider [buying me a coffee](https://buymeacoffee.com/spacehavenplanner) ☕
 
 

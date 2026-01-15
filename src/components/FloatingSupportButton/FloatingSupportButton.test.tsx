@@ -8,7 +8,7 @@ describe('FloatingSupportButton', () => {
       render(<FloatingSupportButton />)
 
       const link = screen.getByRole('link', { name: /buy me a coffee/i })
-      expect(link).toHaveAttribute('href', 'https://buymeacoffee.com/delucca')
+      expect(link).toHaveAttribute('href', 'https://buymeacoffee.com/spacehavenplanner')
     })
 
     it('opens in a new tab with security attributes', () => {
