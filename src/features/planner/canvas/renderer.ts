@@ -8,6 +8,7 @@ import type {
   UserGroup,
 } from '@/data/types'
 import { findStructureById, getRotatedSize } from '@/data'
+import { computePerimeterEdges, isInnerHullTile } from './hullPerimeter'
 
 /**
  * Visibility state needed for rendering
@@ -49,6 +50,7 @@ const COLORS = {
   structureTextShadow: '#000000',
   hullTile: '#3a4a5c',
   hullTileInner: '#2a3a4c', // Slightly darker for inner tiles
+  hullGridLine: 'rgba(255, 255, 255, 0.08)', // Subtle internal grid for hull tiles
   hullWall: '#5a6a7c',
   hullPreview: 'rgba(74, 90, 108, 0.6)',
   hullPreviewBorder: '#6a8a9c',
@@ -447,66 +449,25 @@ export function renderStructures(
 }
 
 /**
- * Render all hull tiles with auto-generated walls (1 tile thick) on outer edges
+ * Render all hull tiles as a merged surface with perimeter walls as edge segments.
  *
- * Hull tiles are rendered as floor, and wall tiles are automatically placed
- * in adjacent empty grid spaces on the perimeter.
+ * Hull tiles are rendered as a continuous floor (no internal seams between adjacent tiles).
+ * Auto-walls are drawn as edge segments along the perimeter using 4-neighbor adjacency
+ * (no diagonal wall tiles). This creates a cleaner, more game-like appearance.
  */
 export function renderHullTiles(rc: RenderContext, hullTiles: ReadonlySet<string>): void {
   // Hull tiles are always visible (they're painted directly, not tied to user layers)
-  // Note: In the future, we could add a hull visibility toggle if needed
+  if (hullTiles.size === 0) return
 
   const { ctx, zoom } = rc
 
-  // Collect wall positions (adjacent empty tiles that border hull tiles)
-  const wallPositions = new Set<string>()
+  // Wall edge thickness (in pixels, scales with zoom)
+  const wallThickness = Math.max(2, Math.floor(zoom * 0.15))
 
-  for (const key of hullTiles) {
-    const [xStr, yStr] = key.split(',')
-    const tileX = parseInt(xStr, 10)
-    const tileY = parseInt(yStr, 10)
+  // Compute perimeter edges using 4-neighbor adjacency
+  const edges = computePerimeterEdges(hullTiles)
 
-    // Check all 8 directions (including diagonals for corners)
-    const neighbors = [
-      [tileX, tileY - 1], // top
-      [tileX, tileY + 1], // bottom
-      [tileX - 1, tileY], // left
-      [tileX + 1, tileY], // right
-      [tileX - 1, tileY - 1], // top-left
-      [tileX + 1, tileY - 1], // top-right
-      [tileX - 1, tileY + 1], // bottom-left
-      [tileX + 1, tileY + 1], // bottom-right
-    ]
-
-    for (const [nx, ny] of neighbors) {
-      const neighborKey = `${nx},${ny}`
-      // If neighbor is empty (not a hull tile), it's a wall position
-      if (!hullTiles.has(neighborKey)) {
-        wallPositions.add(neighborKey)
-      }
-    }
-  }
-
-  // Render wall tiles first (they go around the hull)
-  ctx.fillStyle = COLORS.hullWall
-  for (const key of wallPositions) {
-    const [xStr, yStr] = key.split(',')
-    const wallX = parseInt(xStr, 10)
-    const wallY = parseInt(yStr, 10)
-
-    const x = wallX * zoom
-    const y = wallY * zoom
-
-    ctx.fillRect(x, y, zoom, zoom)
-
-    // Add subtle border
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)'
-    ctx.lineWidth = 1
-    ctx.strokeRect(x + 0.5, y + 0.5, zoom - 1, zoom - 1)
-  }
-
-  // Render hull floor tiles on top
-  ctx.fillStyle = COLORS.hullTile
+  // 1) Render hull floor tiles as a merged surface
   for (const key of hullTiles) {
     const [xStr, yStr] = key.split(',')
     const tileX = parseInt(xStr, 10)
@@ -515,12 +476,68 @@ export function renderHullTiles(rc: RenderContext, hullTiles: ReadonlySet<string
     const x = tileX * zoom
     const y = tileY * zoom
 
+    // Use slightly darker color for inner tiles (fully surrounded) for subtle depth
+    const isInner = isInnerHullTile(hullTiles, tileX, tileY)
+    ctx.fillStyle = isInner ? COLORS.hullTileInner : COLORS.hullTile
     ctx.fillRect(x, y, zoom, zoom)
+  }
 
-    // Add subtle inner border for floor tiles
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)'
-    ctx.lineWidth = 1
-    ctx.strokeRect(x + 0.5, y + 0.5, zoom - 1, zoom - 1)
+  // 2) Render subtle internal grid lines between adjacent hull tiles (helps with placement)
+  ctx.strokeStyle = COLORS.hullGridLine
+  ctx.lineWidth = 1
+  for (const key of hullTiles) {
+    const [xStr, yStr] = key.split(',')
+    const tileX = parseInt(xStr, 10)
+    const tileY = parseInt(yStr, 10)
+
+    const x = tileX * zoom
+    const y = tileY * zoom
+
+    // Draw internal grid lines only where there's an adjacent hull tile
+    // This creates grid lines inside the hull region without affecting the perimeter
+    // Only draw right and bottom edges to avoid double-drawing shared edges
+
+    // Right edge - draw if there's a hull neighbor to the east
+    if (hullTiles.has(`${tileX + 1},${tileY}`)) {
+      ctx.beginPath()
+      ctx.moveTo(x + zoom + 0.5, y)
+      ctx.lineTo(x + zoom + 0.5, y + zoom)
+      ctx.stroke()
+    }
+
+    // Bottom edge - draw if there's a hull neighbor to the south
+    if (hullTiles.has(`${tileX},${tileY + 1}`)) {
+      ctx.beginPath()
+      ctx.moveTo(x, y + zoom + 0.5)
+      ctx.lineTo(x + zoom, y + zoom + 0.5)
+      ctx.stroke()
+    }
+  }
+
+  // 3) Render perimeter walls as edge segments inside hull tiles
+  ctx.fillStyle = COLORS.hullWall
+  for (const edge of edges) {
+    const x = edge.x * zoom
+    const y = edge.y * zoom
+
+    switch (edge.direction) {
+      case 'north':
+        // Top edge strip
+        ctx.fillRect(x, y, zoom, wallThickness)
+        break
+      case 'south':
+        // Bottom edge strip
+        ctx.fillRect(x, y + zoom - wallThickness, zoom, wallThickness)
+        break
+      case 'west':
+        // Left edge strip
+        ctx.fillRect(x, y, wallThickness, zoom)
+        break
+      case 'east':
+        // Right edge strip
+        ctx.fillRect(x + zoom - wallThickness, y, wallThickness, zoom)
+        break
+    }
   }
 }
 

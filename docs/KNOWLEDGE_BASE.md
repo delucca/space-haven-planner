@@ -294,9 +294,18 @@ Hull tiles are separate from structures:
 
 - **Painted directly** on the grid (not from catalog)
 - **Stored as** `Set<string>` of "x,y" keys in `PlannerState.hullTiles`
-- **Auto-walls**: Walls automatically render on hull perimeter
-- **Merged perimeters**: Adjacent hull tiles share walls (only outer edges get walls)
+- **Merged surface**: Adjacent hull tiles render as a continuous floor (no internal seams/borders between tiles)
+- **Inner tile shading**: Tiles fully surrounded by hull (4-neighbor check) use a slightly darker color for subtle depth
+- **Internal grid lines**: Subtle grid lines (`rgba(255, 255, 255, 0.08)`) are drawn between adjacent hull tiles to aid placement without creating visual seams
+- **Auto-walls as edge segments**: Perimeter walls are drawn as thin strips along the edges of hull tiles using 4-neighbor adjacency (no diagonal wall tiles). This creates a clean, game-like perimeter without expanding the ship footprint.
 - **Erasable**: Erase tool removes hull tiles as well as structures (confirmation is required unless the selection contains only hull tiles)
+
+#### Hull rendering implementation
+
+The hull rendering logic lives in `src/features/planner/canvas/renderer.ts` (`renderHullTiles`) and uses pure helpers from `src/features/planner/canvas/hullPerimeter.ts`:
+
+- `computePerimeterEdges(hullTiles)`: Returns an array of `{ x, y, direction }` edges for tiles with missing cardinal neighbors
+- `isInnerHullTile(hullTiles, x, y)`: Returns true if a tile has hull neighbors on all 4 cardinal sides
 
 ### CAD-style layer system
 
@@ -496,6 +505,7 @@ pnpm preview     # serve the built app locally
     - `src/features/planner/components/Palette.test.tsx` — palette UI (search, category expand/collapse)
     - `src/features/planner/state/reducer.test.ts` — state reducer and collision detection
     - `src/features/planner/state/history.test.ts` — undo/redo history reducer
+    - `src/features/planner/canvas/hullPerimeter.test.ts` — hull perimeter edge computation (4-neighbor adjacency)
     - `src/components/FloatingSupportButton/FloatingSupportButton.test.tsx` — floating support links (coffee + feedback)
     - `src/lib/analytics/analytics.test.ts` — analytics wrapper (PostHog init, capture, no-op when disabled)
 
@@ -752,6 +762,33 @@ Hull blocks are not in the JAR's build menu (they're in "Edit mode" in-game). Th
 
 ---
 
+## Future feature considerations
+
+### Comfort simulation
+
+User-requested feature to visualize comfort levels on the ship layout. Investigation findings:
+
+**Game mechanics (known):**
+- Three comfort modes: Work, Leisure, Sleep (separate overlays)
+- Positive comfort: flat value, no distance decay (since Alpha 14)
+- Negative comfort: decays with distance, partially blocked by walls
+- Walls reduce but don't fully block discomfort—buffer space helps
+- Multiple negative sources stack their debuffs
+
+**Implementation requirements:**
+1. Extend JAR parser to extract comfort-related attributes (likely `envEffect` or similar XML elements)
+2. Reverse-engineer propagation rules (exact wall attenuation formula unknown)
+3. Build heatmap overlay with Work/Leisure/Sleep toggle
+
+**Open questions:**
+- What XML attributes in the JAR define comfort values?
+- What's the exact wall attenuation formula?
+- How do multiple overlapping sources combine?
+
+**Canny post**: [Simulate comfort levels and discomfort distribution](https://space-haven-planner.canny.io/feedback-support/p/simulate-comfort-levels-and-discomfort-distribution)
+
+---
+
 ## Wiki integration (supplemental metadata)
 
 The wiki is **no longer the primary catalog source**. It now provides supplemental metadata only.
@@ -814,6 +851,55 @@ The wiki is **no longer the primary catalog source**. It now provides supplement
 - **SubCat**: Sub-category in the JAR's build menu hierarchy; contains the `order` attribute for display sorting.
 - **MainCat**: Main category tab in the JAR (OBJECTS = 1512, EDIT = 1513, SANDBOX = 1525). Only structures from MainCat 1512 appear in the planner.
 - **tid**: Text ID reference in the JAR; points to localized strings in `library/texts`.
+- **Comfort system**: Game mechanic with three modes (Work, Leisure, Sleep). Positive comfort doesn't decay with distance; negative comfort decays and is partially blocked by walls. Not yet implemented in the planner.
+
+---
+
+## External integrations
+
+### Canny (feedback management)
+
+The project uses [Canny](https://canny.io) for user feedback and roadmap management.
+
+- **Board URL**: `https://space-haven-planner.canny.io/feedback-support`
+- **Roadmap**: "Roadmap" board contains prioritized feature requests
+- **API**: REST API at `https://canny.io/api/v1/` (requires API key)
+
+#### Canny API usage patterns
+
+```bash
+# List posts on a board
+curl -X POST https://canny.io/api/v1/posts/list \
+  -d "apiKey=YOUR_KEY&boardID=BOARD_ID&limit=100"
+
+# Create a post
+curl -X POST https://canny.io/api/v1/posts/create \
+  -H "Content-Type: application/json" \
+  -d '{"apiKey":"KEY","boardID":"ID","title":"...","details":"...","authorID":"..."}'
+
+# Add/remove tags (requires tag ID, not name)
+curl -X POST https://canny.io/api/v1/posts/add_tag \
+  -H "Content-Type: application/json" \
+  -d '{"apiKey":"KEY","postID":"ID","tagID":"TAG_ID"}'
+```
+
+#### Canny API gotchas
+
+- **Tag operations require tag IDs**: Use `tags/list` to get IDs first; `tagName` doesn't work
+- **Custom fields (Impact/Effort)**: Not supported via public API on most plans; must be set via UI
+- **Internal comments**: Require higher-tier plan; use public comments instead
+- **Roadmap reordering**: Not exposed in public API; use UI for manual ordering
+
+#### Roadmap tags (current)
+
+| Tag | Purpose |
+|-----|---------|
+| `systems` | Power, comfort, life support features |
+| `rendering` | Canvas, display, visual features |
+| `tools` | Placement, measurement, manipulation tools |
+| `serialization` | Save/load, import/export features |
+| `ux` | General UX improvements |
+| `sharing` | Public galleries, templates |
 
 ---
 
