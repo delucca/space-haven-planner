@@ -35,12 +35,13 @@ Open [http://localhost:5173](http://localhost:5173) in your browser.
 
 | Document | Purpose |
 |----------|---------|
-| [`docs/KNOWLEDGE_BASE.md`](docs/KNOWLEDGE_BASE.md) | Architecture, workflows, conventions, gotchas |
 | [`docs/CONSTITUTION.md`](docs/CONSTITUTION.md) | Project facts, domain model, decisions |
 | [`docs/USE_CASES.md`](docs/USE_CASES.md) | Feature spec and use cases |
 | [`docs/PMF.md`](docs/PMF.md) | Product-market fit narrative |
 | [`docs/USER_STORIES.md`](docs/USER_STORIES.md) | User story map |
 | [`AGENTS.md`](AGENTS.md) | AI agent collaboration protocols |
+
+For durable architecture/workflows/conventions/gotchas, use the **memory-index MCP** to search and read canonical markdown under `~/.memory/contexts/<context>/`.
 
 ---
 

@@ -6,7 +6,7 @@
  * - Disables autocapture and session recording
  * - Tracks only curated product events
  *
- * @see docs/KNOWLEDGE_BASE.md for event taxonomy and configuration
+ * @see The memory-index MCP / `~/.memory/contexts/<context>/` for event taxonomy and configuration
  */
 
 import posthog from 'posthog-js'
