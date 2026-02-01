@@ -3,7 +3,7 @@
 **Universal collaboration protocols for AI agents**
 
 > **Project-specific facts**: see `docs/CONSTITUTION.md`  
-> **Durable repo knowledge**: see `docs/KNOWLEDGE_BASE.md` (keep it updated)
+> **Durable project/context knowledge**: use the **memory-index MCP** → search, then read canonical markdown in `~/.memory` (commit + push)
 
 ---
 
@@ -24,13 +24,36 @@
 - Use `codebase_search`/`grep`/`web_search`/MCP tools before writing code
 - **Dependencies**: Use Context7 (`resolve-library-id` → `get-library-docs`)
 - Find existing implementations, patterns, conventions
+- **Project/context knowledge (routing-first)**:
+  - Infer a stable context name:
+    - If `pwd` is inside `~/Workspaces/src/<context>/...` (or `~/Workspace/src/<context>/...`), use `<context>`.
+    - **If you are adding a new entry and `pwd` is NOT inside `~/Workspaces/src/...`, use `delucca` as the context.**
+    - Otherwise (non-entry routing), fall back to git remote → `org/repo`.
+  - Query the **memory-index MCP** first to get **canonical repo-relative markdown paths**:
+    - Use `memory_search` with both:
+      - keyword queries (exact strings, acronyms, IDs, error codes)
+      - natural-language questions (semantic intent)
+    - If it’s not clear what to search for, **ask the user** what keywords/question to send.
+  - Immediately `memory_read` the returned paths and use those files as the source of truth.
+  - If the MCP is unavailable/errors/has no hits, follow `~/.memory/docs/handbook/retrieval-playbook.md` (manual grep by `type:`/`confidence:`/`tags`/`aliases`/`keywords`, then open the canonical entry files)
+- **Memory sources (content artifacts only):**
+  - If an entry cites a small external **content artifact** (PDF, image, short doc) and it’s safe/allowed to store it here, copy it into `~/.memory/contexts/<context>/sources/` and cite it as `sources/<filename>` within entries for that context (keep it flat; optionally prefix filenames like `<Category>__<file>`).
+  - If the source is **external** (workspace code paths, huge books, large artifacts, restricted docs), cite **name-only** (citation/title/filename). Do not include absolute paths like `/home/...` or workspace paths like `../Workspaces/...`.
+  - Do not copy source code/config into `sources/`; cite repo-relative workspace paths (e.g. `../Workspaces/src/<repo>/...`) plus exact commands instead.
 
 ### 2. RESEARCH & UNDERSTAND
 - Read relevant files completely - don't skim
 - Use `.aid` folder if it exists
 - Understand **why** current code works the way it does
-- Read `docs/KNOWLEDGE_BASE.md` (if present) to bootstrap repo context
-- When you learn durable repo knowledge, update `docs/KNOWLEDGE_BASE.md`
+- For project/context background, read relevant canonical markdown under `~/.memory/contexts/<context>/`
+- If you learn something durable about the project/context, persist it in `~/.memory` and **commit + push** (follow the `~/.memory` repo structure and templates)
+
+**Entry metadata (for retrieval):**
+- When creating a new memory entry, use the canonical format in `docs/handbook/entry-format.md`.
+- Frontmatter should include `type` + `confidence`, and may include:
+  - `tags` (0–6): broad, stable topics (lowercase kebab-case)
+  - `aliases` (0–5): alternate names for the *same* concept (acronyms/renames)
+  - `keywords` (0–12): search hooks (error codes, component names, tool names)
 
 ### 3. REUSE FIRST
 - Extend existing patterns before creating new
@@ -136,7 +159,7 @@ Query latest via: Context7 → BrightData → web_search
 - ❌ Swallow errors
 - ❌ Loop >3 attempts without asking
 - ❌ Breaking changes without approval
-- ❌ Auto-commit without explicit request
+- ❌ Auto-commit code changes in the current repo without explicit request (when you add durable knowledge to `~/.memory`, committing/pushing `~/.memory` is expected)
 - ❌ **Workarounds/hacks** (fix root cause properly)
 
 ### Decision Thresholds
