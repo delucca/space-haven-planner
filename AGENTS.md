@@ -3,7 +3,7 @@
 **Universal collaboration protocols for AI agents**
 
 > **Project-specific facts**: see `docs/CONSTITUTION.md`  
-> **Durable project/context knowledge**: use the **memory-index MCP** → search, then read canonical markdown in `~/.memory` (commit + push)
+> **Durable project/context knowledge**: use the **os** MCP server → search, then read canonical markdown in `~/.os/memory` (commit + push)
 
 ---
 
@@ -29,15 +29,15 @@
     - If `pwd` is inside `~/Workspaces/src/<context>/...` (or `~/Workspace/src/<context>/...`), use `<context>`.
     - **If you are adding a new entry and `pwd` is NOT inside `~/Workspaces/src/...`, use `delucca` as the context.**
     - Otherwise (non-entry routing), fall back to git remote → `org/repo`.
-  - Query the **memory-index MCP** first to get **canonical repo-relative markdown paths**:
+  - Query the **os** MCP server first to get **canonical repo-relative markdown paths**:
     - Use `memory_search` with both:
       - keyword queries (exact strings, acronyms, IDs, error codes)
       - natural-language questions (semantic intent)
     - If it’s not clear what to search for, **ask the user** what keywords/question to send.
   - Immediately `memory_read` the returned paths and use those files as the source of truth.
-  - If the MCP is unavailable/errors/has no hits, follow `~/.memory/docs/handbook/retrieval-playbook.md` (manual grep by `type:`/`confidence:`/`tags`/`aliases`/`keywords`, then open the canonical entry files)
+  - If the MCP is unavailable/errors/has no hits, follow `~/.os/memory/docs/handbook/retrieval-playbook.md` (manual grep by `type:`/`confidence:`/`tags`/`aliases`/`keywords`, then open the canonical entry files)
 - **Memory sources (content artifacts only):**
-  - If an entry cites a small external **content artifact** (PDF, image, short doc) and it’s safe/allowed to store it here, copy it into `~/.memory/contexts/<context>/sources/` and cite it as `sources/<filename>` within entries for that context (keep it flat; optionally prefix filenames like `<Category>__<file>`).
+  - If an entry cites a small external **content artifact** (PDF, image, short doc) and it’s safe/allowed to store it here, copy it into `~/.os/memory/<context>/sources/` and cite it as `sources/<filename>` within entries for that context (keep it flat; optionally prefix filenames like `<Category>__<file>`).
   - If the source is **external** (workspace code paths, huge books, large artifacts, restricted docs), cite **name-only** (citation/title/filename). Do not include absolute paths like `/home/...` or workspace paths like `../Workspaces/...`.
   - Do not copy source code/config into `sources/`; cite repo-relative workspace paths (e.g. `../Workspaces/src/<repo>/...`) plus exact commands instead.
 
@@ -45,8 +45,8 @@
 - Read relevant files completely - don't skim
 - Use `.aid` folder if it exists
 - Understand **why** current code works the way it does
-- For project/context background, read relevant canonical markdown under `~/.memory/contexts/<context>/`
-- If you learn something durable about the project/context, persist it in `~/.memory` and **commit + push** (follow the `~/.memory` repo structure and templates)
+- For project/context background, read relevant canonical markdown under `~/.os/memory/<context>/`
+- If you learn something durable about the project/context, persist it in `~/.os/memory` and **commit + push** (follow the `~/.os` repo structure and templates)
 
 **Entry metadata (for retrieval):**
 - When creating a new memory entry, use the canonical format in `docs/handbook/entry-format.md`.
@@ -159,7 +159,7 @@ Query latest via: Context7 → BrightData → web_search
 - ❌ Swallow errors
 - ❌ Loop >3 attempts without asking
 - ❌ Breaking changes without approval
-- ❌ Auto-commit code changes in the current repo without explicit request (when you add durable knowledge to `~/.memory`, committing/pushing `~/.memory` is expected)
+- ❌ Auto-commit code changes in the current repo without explicit request (when you add durable knowledge to `~/.os/memory`, committing/pushing `~/.os` is expected)
 - ❌ **Workarounds/hacks** (fix root cause properly)
 
 ### Decision Thresholds
