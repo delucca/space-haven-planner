@@ -1,18 +1,12 @@
-/* Container for stacked floating buttons */
-.stack {
-  position: fixed;
-  bottom: var(--spacing-lg);
-  right: var(--spacing-lg);
-  z-index: 1000;
-
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: var(--spacing-sm);
-}
+/* Floating support buttons sit in opposite bottom corners so they read as
+   independent CTAs (feedback vs. tip) rather than a stack of options. */
 
 /* Base button styles (shared) */
 .button {
+  position: fixed;
+  bottom: var(--spacing-lg);
+  z-index: 1000;
+
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);
@@ -31,7 +25,8 @@
   transition:
     transform var(--transition-fast),
     box-shadow var(--transition-fast),
-    background var(--transition-fast);
+    background var(--transition-fast),
+    scale var(--transition-fast);
 }
 
 .button:focus-visible {
@@ -43,24 +38,28 @@
   transform: translateY(0);
 }
 
-/* Respect reduced motion preference */
-@media (prefers-reduced-motion: reduce) {
-  .button {
-    transition: none;
+/* One-shot entry animation on mount.
+   Uses `translate` (not `transform`) so hover's transform: translateY stays free. */
+@keyframes entrySlideUp {
+  from {
+    opacity: 0;
+    translate: 0 16px;
   }
-
-  .button:hover {
-    transform: none;
+  to {
+    opacity: 1;
+    translate: 0 0;
   }
 }
 
-/* Feedback button - purple/violet theme */
+/* Feedback button - purple/violet theme, anchored bottom-LEFT */
 .feedbackButton {
+  left: var(--spacing-lg);
   background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
   color: #ffffff;
   box-shadow:
     0 4px 12px rgba(139, 92, 246, 0.3),
     0 2px 4px rgba(0, 0, 0, 0.2);
+  animation: entrySlideUp 500ms ease-out 400ms both;
 }
 
 .feedbackButton:hover {
@@ -77,13 +76,39 @@
     0 1px 2px rgba(0, 0, 0, 0.15);
 }
 
-/* Coffee button - yellow theme (original) */
+/* Coffee button - yellow theme, anchored bottom-RIGHT.
+   `isolation: isolate` creates a stacking context so the breathe ::before
+   (z-index: -1) stays scoped behind this button only. */
 .coffeeButton {
+  right: var(--spacing-lg);
+  isolation: isolate;
   background: linear-gradient(135deg, #ffdd00 0%, #ffcc00 100%);
   color: #0d0d0d;
   box-shadow:
     0 4px 12px rgba(255, 204, 0, 0.3),
     0 2px 4px rgba(0, 0, 0, 0.2);
+  animation: entrySlideUp 500ms ease-out 550ms both;
+}
+
+/* Idle breathe — soft pulsing glow ring on a pseudo-element so it doesn't
+   collide with the button's own box-shadow during the attention pulse. */
+.coffeeButton::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: -1;
+  animation: coffeeBreathe 3.5s ease-in-out infinite;
+}
+
+@keyframes coffeeBreathe {
+  0%, 100% {
+    box-shadow: 0 0 12px 0 rgba(255, 204, 0, 0.25);
+  }
+  50% {
+    box-shadow: 0 0 26px 6px rgba(255, 204, 0, 0.55);
+  }
 }
 
 .coffeeButton:hover {
@@ -100,6 +125,74 @@
     0 1px 2px rgba(0, 0, 0, 0.15);
 }
 
+/* Attention pulse — class-toggled state, ~4s every ~60s.
+   Stronger glow + slight scale + brighter background. Text label rotates
+   from a pool in JS. The breathe ::before keeps running underneath. */
+.pulsing {
+  scale: 1.04;
+  box-shadow:
+    0 10px 28px rgba(255, 204, 0, 0.7),
+    0 4px 10px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, #ffec4d 0%, #ffd633 100%);
+}
+
+/* Steam wisps — small dots rising from the ☕ at the end of every label.
+   Visible motion lasts ~2.25s of each 15s loop, staggered between wisps.
+   Anchored to the right where the cup emoji always lands. */
+.steam {
+  position: absolute;
+  top: -8px;
+  right: var(--spacing-md);
+  width: 24px;
+  height: 22px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.steamWisp {
+  position: absolute;
+  bottom: 0;
+  width: 7px;
+  height: 7px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 50%;
+  filter: blur(1px);
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.6);
+  opacity: 0;
+  animation: steamRise 15s ease-out infinite;
+}
+
+.steamWisp:nth-child(1) {
+  left: 4px;
+}
+
+.steamWisp:nth-child(2) {
+  left: 13px;
+  animation-delay: 0.7s;
+}
+
+@keyframes steamRise {
+  0% {
+    opacity: 0;
+    transform: translate(0, 4px) scale(0.4);
+  }
+  3% {
+    opacity: 0.85;
+  }
+  10% {
+    opacity: 0.5;
+    transform: translate(2px, -10px) scale(1);
+  }
+  15% {
+    opacity: 0;
+    transform: translate(4px, -18px) scale(1.4);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(4px, -18px) scale(1.4);
+  }
+}
+
 .icon {
   font-size: 16px;
   line-height: 1;
@@ -107,4 +200,23 @@
 
 .label {
   line-height: 1;
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .button {
+    transition: none;
+    animation: none;
+  }
+  .button:hover {
+    transform: none;
+  }
+  .coffeeButton::before,
+  .steamWisp {
+    animation: none;
+    opacity: 0;
+  }
+  .pulsing {
+    scale: 1;
+  }
 }

@@ -29,13 +29,13 @@ describe('FloatingSupportButton', () => {
     it('displays visible label text', () => {
       render(<FloatingSupportButton />)
 
-      expect(screen.getByText('Buy me a coffee')).toBeInTheDocument()
+      expect(screen.getByText(/support this project/i)).toBeInTheDocument()
     })
 
     it('displays the coffee emoji icon', () => {
       render(<FloatingSupportButton />)
 
-      expect(screen.getByText('☕')).toBeInTheDocument()
+      expect(screen.getByText(/☕/)).toBeInTheDocument()
     })
   })
 
