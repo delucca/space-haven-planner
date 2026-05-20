@@ -40,6 +40,8 @@ const RESET_HISTORY_ACTIONS = new Set<PlannerAction['type']>([
   'LOAD_USER_LAYERS',
   'LOAD_PROJECT',
   'SET_PRESET',
+  'SET_WIDTH',
+  'SET_HEIGHT'
 ])
 
 /**

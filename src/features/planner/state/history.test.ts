@@ -331,12 +331,54 @@ describe('historyReducer', () => {
       historyState = historyReducer(historyState, {
         type: 'SET_PRESET',
         presetLabel: '3x3',
-        gridSize: { width: 81, height: 81 },
+        width: 3,
+        height: 3,
+        gridSize: { width: 3, height: 3 },
       })
 
       expect(historyState.past.length).toBe(0)
       expect(historyState.future.length).toBe(0)
     })
+    it('clears history on SET_WIDTH', () => {
+      let historyState = createTestHistoryState()
+
+      // Build up some history
+      historyState = historyReducer(historyState, {
+        type: 'PLACE_STRUCTURE',
+        structure: createTestStructure('struct-1', 5, 5),
+      })
+
+      expect(historyState.past.length).toBe(1)
+
+      // Change preset
+      historyState = historyReducer(historyState, {
+        type: 'SET_WIDTH',
+        width: 3
+      })
+
+      expect(historyState.past.length).toBe(0)
+      expect(historyState.future.length).toBe(0)
+    })    
+    it('clears history on SET_HEIGHT', () => {
+      let historyState = createTestHistoryState()
+
+      // Build up some history
+      historyState = historyReducer(historyState, {
+        type: 'PLACE_STRUCTURE',
+        structure: createTestStructure('struct-1', 5, 5),
+      })
+
+      expect(historyState.past.length).toBe(1)
+
+      // Change preset
+      historyState = historyReducer(historyState, {
+        type: 'SET_HEIGHT',
+        height: 3,
+      })
+
+      expect(historyState.past.length).toBe(0)
+      expect(historyState.future.length).toBe(0)
+    })    
   })
 
   describe('undoable actions', () => {

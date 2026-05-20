@@ -26,6 +26,8 @@ export function useAutosave(state: PlannerState, dispatch: Dispatch<PlannerActio
     const project = createProjectFile(
       state.gridSize,
       state.presetLabel,
+      state.width,
+      state.height,
       state.structures,
       state.hullTiles,
       state.userLayers,
@@ -40,6 +42,8 @@ export function useAutosave(state: PlannerState, dispatch: Dispatch<PlannerActio
   }, [
     state.gridSize,
     state.presetLabel,
+    state.width,
+    state.height,
     state.structures,
     state.hullTiles,
     state.userLayers,
@@ -80,6 +84,8 @@ export function useAutosave(state: PlannerState, dispatch: Dispatch<PlannerActio
       dispatch({
         type: 'SET_PRESET',
         presetLabel: project.preset,
+        width: project.width,
+        height: project.height,
         gridSize: project.gridSize,
       })
 

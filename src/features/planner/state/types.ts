@@ -53,6 +53,8 @@ export interface PlannerState {
   // Grid configuration
   readonly gridSize: GridSize
   readonly presetLabel: string
+  readonly width: number
+  readonly height: number
   readonly zoom: number
   readonly showGrid: boolean
 
@@ -100,7 +102,9 @@ export interface PlannerState {
  */
 export type PlannerAction =
   // Grid actions
-  | { type: 'SET_PRESET'; presetLabel: string; gridSize: GridSize }
+  | { type: 'SET_PRESET'; presetLabel: string; width: number, height: number, gridSize: GridSize }
+  | { type: 'SET_WIDTH'; width: number }
+  | { type: 'SET_HEIGHT'; height: number }
   | { type: 'SET_ZOOM'; zoom: number }
   | { type: 'TOGGLE_GRID' }
 
