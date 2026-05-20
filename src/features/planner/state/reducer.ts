@@ -71,8 +71,10 @@ export function parseHullTileKey(key: string): { x: number; y: number } {
  */
 export function createInitialState(): PlannerState {
   return {
-    gridSize: { width: DEFAULT_PRESET.width, height: DEFAULT_PRESET.height },
+    gridSize: { width: Number(DEFAULT_PRESET.width) * 27, height: Number(DEFAULT_PRESET.height) * 27 },
     presetLabel: DEFAULT_PRESET.label,
+    width: DEFAULT_PRESET.width,
+    height: DEFAULT_PRESET.height,
     zoom: DEFAULT_ZOOM,
     showGrid: true,
     tool: 'select',
@@ -366,6 +368,28 @@ export function plannerReducer(state: PlannerState, action: PlannerAction): Plan
         ...state,
         presetLabel: action.presetLabel,
         gridSize: action.gridSize,
+        width: action.width,
+        height: action.height,
+      }
+    
+    case 'SET_WIDTH':
+      return {
+        ...state,
+        gridSize: {
+          ...state.gridSize,
+          width: action.width * 27,
+        },
+        width: action.width,
+      }
+    
+    case 'SET_HEIGHT':
+      return {
+        ...state,
+        gridSize: {
+          ...state.gridSize,
+          height: action.height * 27,
+        },
+        height: action.height,
       }
 
     case 'SET_ZOOM':
@@ -1095,6 +1119,8 @@ export function plannerReducer(state: PlannerState, action: PlannerAction): Plan
         ...createInitialState(),
         gridSize: state.gridSize,
         presetLabel: state.presetLabel,
+        width: state.width,
+        height: state.height,
         zoom: state.zoom,
         showGrid: state.showGrid,
         catalog: state.catalog, // Keep current catalog

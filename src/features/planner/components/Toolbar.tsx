@@ -28,7 +28,7 @@ interface ToolbarProps {
 
 export function Toolbar({ canvasContentWidth }: ToolbarProps) {
   const { state, dispatch } = usePlanner()
-  const { presetLabel, zoom, showGrid, tool, gridSize } = state
+  const { presetLabel, width, height, zoom, showGrid, tool, gridSize } = state
 
   // Calculate the zoom that represents 100% (fit-to-width) using measured canvas width
   const fitZoom = useMemo(
@@ -51,7 +51,7 @@ export function Toolbar({ canvasContentWidth }: ToolbarProps) {
     () =>
       GRID_PRESETS.map((preset) => ({
         value: preset.label,
-        label: `${preset.label} (${preset.width}×${preset.height})`,
+        label: `${preset.label} (${preset.width * 27}×${preset.height * 27})`,
       })),
     []
   )
@@ -62,9 +62,25 @@ export function Toolbar({ canvasContentWidth }: ToolbarProps) {
       dispatch({
         type: 'SET_PRESET',
         presetLabel: preset.label,
-        gridSize: { width: preset.width, height: preset.height },
+        width: preset.width,
+        height: preset.height,
+        gridSize: { width: preset.width * 27, height: preset.height * 27 },
       })
     }
+  }
+
+  const handleWidthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch({
+      type: 'SET_WIDTH',
+      width: Number(e.target.value)
+    })
+  }
+
+  const handleHeightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch({
+      type: 'SET_HEIGHT',
+      height: Number(e.target.value)
+    })
   }
 
   const handleZoomIn = () => {
@@ -134,6 +150,30 @@ export function Toolbar({ canvasContentWidth }: ToolbarProps) {
           aria-label="Canvas size"
         />
       </div>
+
+      {/* Canvas width */}
+      <div className={styles.group}>
+        <span className={styles.label}>Width:</span>
+        <input
+          type='number'
+          className={styles.widthHeightInput}
+          value={width}
+          onChange={handleWidthChange}
+          aria-label="Canvas width"
+        />
+      </div>      
+
+      {/* Canvas height */}
+      <div className={styles.group}>
+        <span className={styles.label}>Height:</span>
+        <input
+          type='number'
+          className={styles.widthHeightInput}
+          value={height}
+          onChange={handleHeightChange}
+          aria-label="Canvas height"
+          />
+      </div>  
 
       {/* Zoom */}
       <div className={styles.zoomControl}>

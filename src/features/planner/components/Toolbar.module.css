@@ -82,6 +82,23 @@
   margin-left: 1px;
 }
 
+.widthHeightInput {
+  width: 36px;
+  padding: 0;
+  font-size: var(--font-size-sm);
+  font-family: inherit;
+  color: var(--color-text-primary);
+  background-color: transparent;
+  border: none;
+  text-align: right;
+  outline: none;
+}
+
+.widthHeightInput:focus {
+  background-color: var(--color-bg-secondary);
+  border-radius: 2px;
+}
+
 .toolButton {
   height: 28px;
   padding: 0 var(--spacing-md);

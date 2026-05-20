@@ -36,6 +36,8 @@ export function ActionBar() {
     const project = createProjectFile(
       state.gridSize,
       state.presetLabel,
+      state.width,
+      state.height,
       state.structures,
       state.hullTiles,
       state.userLayers,
@@ -51,6 +53,8 @@ export function ActionBar() {
   }, [
     state.gridSize,
     state.presetLabel,
+    state.width,
+    state.height,
     state.structures,
     state.hullTiles,
     state.userLayers,
@@ -74,6 +78,8 @@ export function ActionBar() {
         dispatch({
           type: 'SET_PRESET',
           presetLabel: project.preset,
+          width: project.width,
+          height: project.height,
           gridSize: project.gridSize,
         })
 
@@ -147,7 +153,7 @@ export function ActionBar() {
     if (!hasAnything) return
 
     setConfirmKind('clear_all')
-  }, [state.structures.length, state.hullTiles.size, dispatch])
+  }, [state.structures.length, state.hullTiles.size])
 
   const handleNewProject = useCallback(() => {
     const hasAnything = state.structures.length > 0 || state.hullTiles.size > 0
@@ -163,7 +169,7 @@ export function ActionBar() {
 
   const handleResetCatalog = useCallback(() => {
     setConfirmKind('reset_catalog')
-  }, [dispatch])
+  }, [])
 
   const handleCloseConfirm = useCallback(() => {
     setConfirmKind(null)

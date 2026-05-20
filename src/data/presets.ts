@@ -5,14 +5,15 @@ import type { GridPreset, LayerId } from './types'
  * Each unit = 27 tiles (e.g., 2x2 = 54×54 tiles)
  */
 export const GRID_PRESETS: readonly GridPreset[] = [
-  { label: '1x1', width: 27, height: 27 },
-  { label: '2x1', width: 54, height: 27 },
-  { label: '1x2', width: 27, height: 54 },
-  { label: '2x2', width: 54, height: 54 },
-  { label: '3x1', width: 81, height: 27 },
-  { label: '1x3', width: 27, height: 81 },
-  { label: '3x2', width: 81, height: 54 },
-  { label: '2x3', width: 54, height: 81 },
+  { label: '1x1', width: 1, height: 1 },
+  { label: '2x1', width: 2, height: 1 },
+  { label: '1x2', width: 1, height: 2 },
+  { label: '2x2', width: 2, height: 2 },
+  { label: '3x1', width: 3, height: 1 },
+  { label: '1x3', width: 1, height: 3 },
+  { label: '3x2', width: 3, height: 2 },
+  { label: '2x3', width: 2, height: 3 },
+  { label: '3x3', width: 3, height: 3 },
 ] as const
 
 /** Default grid preset (2x2) */

@@ -18,6 +18,8 @@ export interface ProjectFile {
   version: number
   gridSize: GridSize
   preset: string
+  width: number
+  height: number
   structures: SerializedStructure[]
   hullTiles?: SerializedHullTile[] // Optional for backwards compatibility
   // v4+ fields for CAD-style layers
@@ -222,7 +224,9 @@ export function deserializeHullTiles(data: SerializedHullTile[] | undefined): Hu
  */
 export function createProjectFile(
   gridSize: GridSize,
-  preset: string,
+  preset: string,  
+  width: number,
+  height: number,
   structures: readonly PlacedStructure[],
   hullTiles: ReadonlySet<string>,
   userLayers?: readonly UserLayer[],
@@ -233,6 +237,8 @@ export function createProjectFile(
     version: PROJECT_VERSION,
     gridSize,
     preset,
+    width: width,
+    height: height,
     structures: serializeStructures(structures),
     hullTiles: serializeHullTiles(hullTiles),
     userLayers: userLayers ? serializeUserLayers(userLayers) : undefined,
@@ -367,6 +373,8 @@ export function parseProjectFile(data: unknown): ProjectFile {
       height: gridSize.height as number,
     },
     preset: obj.preset as string,
+    width: obj.width as number,
+    height: obj.height as number,
     structures,
     hullTiles,
     userLayers,
